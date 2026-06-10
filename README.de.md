@@ -42,6 +42,8 @@ Material *und* deine gespielten Partien von **Stockfish** prüfen.
   Durchblättern jeder Partie.
 - **PGN laden** (einzelne Datei oder ganzer Ordner). Deine PGN bleibt
   Originalmaterial; Trainingsdaten bleiben lokal und privat.
+- **Deutsch / Englisch** — jederzeit umschaltbar über das Menü
+  „Ansicht → Sprache" (greift nach Neustart). Auch die Eröffnungsnamen werden übersetzt.
 
 ## Voraussetzungen
 

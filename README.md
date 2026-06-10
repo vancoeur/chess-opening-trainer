@@ -40,6 +40,8 @@ repertoires (White and Black), drill the moves you keep getting wrong, and have
   **where you blundered** — with a board viewer to step through each game.
 - **Load PGN** (single file or whole folder). Your PGN stays original material;
   training data stays local and private.
+- **English / German interface** — switch any time via the “View → Language”
+  menu (takes effect after a restart). Opening names are translated too.
 
 ## Requirements
 
