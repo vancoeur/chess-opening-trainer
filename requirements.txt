@@ -1,0 +1,11 @@
+# Laufzeit-Abhängigkeiten (Opening Trainer, Qt-Oberfläche)
+PySide6>=6.5
+chess>=1.11        # python-chess (GPL-3.0+) — Import-Name: "chess"
+
+# Stockfish ist KEIN pip-Paket: die App liefert es als Binary mit
+# (assets/engine/stockfish) oder findet eine System-Installation
+# (z. B. "brew install stockfish").
+
+# --- Nur für Entwicklung/Bauen (bei Bedarf separat installieren) ---
+# pytest         # Tests:  python3 -m pytest -q
+# pyinstaller    # App bauen:  ./build_app.sh

@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+data/*.json
+
+# Qt build artifacts
+build/
+dist/
+*.spec
+.claude/
+
+# Mitgeliefertes Stockfish-Binary (gross, plattformspezifisch) - nicht versionieren
+assets/engine/
