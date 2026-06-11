@@ -2,6 +2,8 @@
 
 **English** · [Deutsch](README.de.md)
 
+[![Support on Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20this%20project-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/vancoeur)
+
 A personal chess **opening trainer** for the Mac — practice your own
 repertoires (White and Black), drill the moves you keep getting wrong, and have
 **Stockfish** check your lines and your played games.

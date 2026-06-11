@@ -2,6 +2,8 @@
 
 [English](README.md) · **Deutsch**
 
+[![Auf Ko-fi unterstützen](https://img.shields.io/badge/Ko--fi-Projekt%20unterst%C3%BCtzen-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/vancoeur)
+
 Ein persönlicher Schach-**Eröffnungstrainer** für den Mac — übe deine eigenen
 Repertoires (Weiß und Schwarz), wiederhole gezielt Fehlzüge und lass dein
 Material *und* deine gespielten Partien von **Stockfish** prüfen.
