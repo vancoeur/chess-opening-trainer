@@ -2,7 +2,7 @@
 
 [English](README.md) · **Deutsch**
 
-[![Auf Ko-fi unterstützen](https://img.shields.io/badge/Ko--fi-Projekt%20unterst%C3%BCtzen-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/vancoeur)
+[![Auf Ko-fi unterstützen](https://img.shields.io/badge/Ko--fi-Projekt%20unterst%C3%BCtzen-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/Vancoeur)
 
 Ein persönlicher Schach-**Eröffnungstrainer** für den Mac — übe deine eigenen
 Repertoires (Weiß und Schwarz), wiederhole gezielt Fehlzüge und lass dein
@@ -105,7 +105,7 @@ Cburnett-Figuren).
 
 Opening Trainer ist kostenlos und quelloffen — und bleibt es. Wenn es deinem
 Schach hilft und du Danke sagen möchtest, freue ich mich über
-[einen Kaffee auf Ko-fi](https://ko-fi.com/vancoeur) ☕ — völlig freiwillig und
+[einen Kaffee auf Ko-fi](https://ko-fi.com/Vancoeur) ☕ — völlig freiwillig und
 hält das Projekt am Leben.
 
 ## Aufbau (Kurzüberblick)

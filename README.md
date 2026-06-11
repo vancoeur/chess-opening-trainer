@@ -2,7 +2,7 @@
 
 **English** · [Deutsch](README.de.md)
 
-[![Support on Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20this%20project-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/vancoeur)
+[![Support on Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20this%20project-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/Vancoeur)
 
 A personal chess **opening trainer** for the Mac — practice your own
 repertoires (White and Black), drill the moves you keep getting wrong, and have
@@ -101,7 +101,7 @@ Third-party components and their licenses are listed in [`NOTICE.md`](NOTICE.md)
 
 Opening Trainer is free and open source, and always will be. If it helps your
 chess and you’d like to say thanks, you can
-[buy me a coffee on Ko-fi](https://ko-fi.com/vancoeur) ☕ — completely optional,
+[buy me a coffee on Ko-fi](https://ko-fi.com/Vancoeur) ☕ — completely optional,
 hugely appreciated, and it keeps the project going.
 
 ## Layout (overview)
