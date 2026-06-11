@@ -95,6 +95,13 @@ must come with it and recipients get the same freedoms.
 Third-party components and their licenses are listed in [`NOTICE.md`](NOTICE.md)
 (Stockfish, python-chess, Qt/PySide6, Cburnett pieces).
 
+## Support
+
+Opening Trainer is free and open source, and always will be. If it helps your
+chess and you’d like to say thanks, you can
+[buy me a coffee on Ko-fi](https://ko-fi.com/vancoeur) ☕ — completely optional,
+hugely appreciated, and it keeps the project going.
+
 ## Layout (overview)
 
 - `qt_main.py` — entry point of the Qt interface

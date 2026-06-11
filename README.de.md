@@ -99,6 +99,13 @@ Mitverwendete fremde Bestandteile und ihre Lizenzen sind in
 [`NOTICE.md`](NOTICE.md) aufgeführt (Stockfish, python-chess, Qt/PySide6,
 Cburnett-Figuren).
 
+## Unterstützen
+
+Opening Trainer ist kostenlos und quelloffen — und bleibt es. Wenn es deinem
+Schach hilft und du Danke sagen möchtest, freue ich mich über
+[einen Kaffee auf Ko-fi](https://ko-fi.com/vancoeur) ☕ — völlig freiwillig und
+hält das Projekt am Leben.
+
 ## Aufbau (Kurzüberblick)
 
 - `qt_main.py` — Startpunkt der Qt-Oberfläche
