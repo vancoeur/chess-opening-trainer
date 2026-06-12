@@ -11,7 +11,7 @@ repertoires (White and Black), drill the moves you keep getting wrong, and have
 > Modern Qt/PySide6 interface. Stockfish is bundled — the app runs on its own,
 > no extra installation. The interface is available in **English and German**.
 
-![Screenshot](docs/screenshot.png)
+![Screenshot](docs/screenshot.en.png)
 
 ## Download (ready-to-run app)
 
