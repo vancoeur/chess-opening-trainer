@@ -12,7 +12,7 @@ Material *und* deine gespielten Partien von **Stockfish** prüfen.
 > eigenständig, ohne weitere Installation. Die Oberfläche gibt es auf
 > **Deutsch und Englisch**.
 
-![Screenshot](docs/screenshot.png)
+![Screenshot](docs/screenshot.de.png)
 
 ## Download (fertige App)
 
