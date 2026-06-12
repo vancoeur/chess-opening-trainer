@@ -13,6 +13,24 @@ repertoires (White and Black), drill the moves you keep getting wrong, and have
 
 ![Screenshot](docs/screenshot.png)
 
+## Download (ready-to-run app)
+
+**[⬇ Download the latest release](https://github.com/vancoeur/chess-opening-trainer/releases/latest)** — unzip and drag `Opening Trainer.app` into your `Applications` folder. Requires a Mac with **Apple Silicon** (M1 or newer); Intel Macs are not supported by this build.
+
+> **⚠️ Important — first launch (Gatekeeper):**
+> The app is **not signed or notarised** (this is a free, open-source project without
+> an Apple Developer subscription). macOS will therefore **block the first start**
+> with a message like *“Opening Trainer” can’t be opened*. This is expected — the app
+> is safe, and you can inspect every line of its source code right here.
+>
+> To open it the **first time**:
+> 1. **Right-click** (or Ctrl-click) `Opening Trainer.app` → **Open** → confirm **Open**.
+> 2. If your macOS version offers no “Open” button there: open
+>    **System Settings → Privacy & Security**, scroll down to
+>    *“Opening Trainer” was blocked…* and click **“Open Anyway”**, then confirm.
+>
+> This is needed **only once** — afterwards the app starts normally by double-click.
+
 ## What it does
 
 - **Practice openings** on the board (drag or click-click), with automatic
