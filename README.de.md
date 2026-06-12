@@ -14,6 +14,10 @@ Material *und* deine gespielten Partien von **Stockfish** prüfen.
 
 ![Screenshot](docs/screenshot.de.png)
 
+**Der erste Start in 13 Sekunden** — ein Klick auf die Beispiel-Eröffnungen, und das Training läuft:
+
+![Demo: erster Start, Beispiel-Eröffnungen, Training mit Bewertungs-Leiste](docs/demo.de.gif)
+
 ## Download (fertige App)
 
 **[⬇ Neueste Version herunterladen](https://github.com/vancoeur/chess-opening-trainer/releases/latest)** — entpacken und `Opening Trainer.app` in den Ordner `Programme` ziehen. Benötigt einen Mac mit **Apple Silicon** (M1 oder neuer); Intel-Macs werden von diesem Build nicht unterstützt.

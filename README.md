@@ -13,6 +13,10 @@ repertoires (White and Black), drill the moves you keep getting wrong, and have
 
 ![Screenshot](docs/screenshot.en.png)
 
+**First start in 13 seconds** — one click on the sample openings and you’re training:
+
+![Demo: first start, sample openings, training with engine evaluation](docs/demo.en.gif)
+
 ## Download (ready-to-run app)
 
 **[⬇ Download the latest release](https://github.com/vancoeur/chess-opening-trainer/releases/latest)** — unzip and drag `Opening Trainer.app` into your `Applications` folder. Requires a Mac with **Apple Silicon** (M1 or newer); Intel Macs are not supported by this build.
