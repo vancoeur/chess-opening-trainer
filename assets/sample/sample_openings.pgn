@@ -1,0 +1,17 @@
+[Event "Opening Trainer — Beispiele"]
+[Result "*"]
+[ChapterName "Italienische Partie — Hauptvariante"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d3 d6 6. O-O O-O 7. Re1 a6 8. a4 Ba7 9. h3 Be6 10. Bxe6 fxe6 11. Nbd2 *
+
+[Event "Opening Trainer — Beispiele"]
+[Result "*"]
+[ChapterName "Caro-Kann — Klassische Variante"]
+
+1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. h4 h6 7. Nf3 Nd7 8. h5 Bh7 9. Bd3 Bxd3 10. Qxd3 e6 *
+
+[Event "Opening Trainer — Beispiele"]
+[Result "*"]
+[ChapterName "Damengambit Abgelehnt — Klassisches System"]
+
+1. d4 d5 2. c4 e6 3. Nc3 Nf6 4. Bg5 Be7 5. e3 O-O 6. Nf3 Nbd7 7. Rc1 c6 8. Bd3 dxc4 9. Bxc4 Nd5 *

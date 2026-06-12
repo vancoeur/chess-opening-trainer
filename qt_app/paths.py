@@ -26,6 +26,11 @@ def app_icon_path() -> Path:
     return assets_root() / "app_icon.png"
 
 
+def sample_pgn_path() -> Path:
+    """Mitgelieferte Beispiel-Eröffnungen (assets/sample/sample_openings.pgn)."""
+    return assets_root() / "sample" / "sample_openings.pgn"
+
+
 def bundled_stockfish() -> Path | None:
     """Pfad zur mitgelieferten Stockfish-Programmdatei (assets/engine/stockfish).
 

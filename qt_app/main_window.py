@@ -29,7 +29,7 @@ from opening_trainer.mastery import mastery_bucket, summarize_mastery
 from opening_trainer.explorer import parse_explorer_response, percent
 from opening_trainer.game_review import build_repertoire_book, review_game
 from opening_trainer.opening_names_en import to_english
-from qt_app.paths import data_dir
+from qt_app.paths import data_dir, sample_pgn_path
 
 STYLE = """
 QWidget { background: #f6f6f3; color: #23241f; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; font-size: 14px; }
@@ -393,7 +393,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self._drill_board = None
 
         self._eval_settings = QtCore.QSettings("OpeningTrainer", "OpeningTrainer")
-        i18n.set_language(self._eval_settings.value("language", "de", type=str))
+        # Ohne gespeicherte Wahl folgt die Sprache der Systemsprache des Macs.
+        _sys_lang = "de" if QtCore.QLocale.system().name().startswith("de") else "en"
+        i18n.set_language(self._eval_settings.value("language", _sys_lang, type=str))
         self._show_eval_bar = self._eval_settings.value("show_eval_bar", True, type=bool)
         self._eval_bar_thread = None
         self._eval_bar_worker = None
@@ -657,6 +659,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.hint.setObjectName("hint")
         self.hint.setWordWrap(True)
 
+        # Nur sichtbar, solange keine Eröffnungen geladen sind (Erst-Start).
+        self.sample_btn = QtWidgets.QPushButton(
+            t("🎁  Beispiel-Eröffnungen ausprobieren", "🎁  Try the sample openings")
+        )
+        self.sample_btn.clicked.connect(self._load_sample_lines)
+        self.sample_btn.hide()
+
         self.status = QtWidgets.QLabel("")
         self.status.setObjectName("status")
         self.status.setWordWrap(True)
@@ -711,6 +720,7 @@ class MainWindow(QtWidgets.QMainWindow):
         side.addWidget(self.eyebrow)
         side.addWidget(self.name_label)
         side.addWidget(self.hint)
+        side.addWidget(self.sample_btn, 0, QtCore.Qt.AlignLeft)
         side.addSpacing(8)
         side.addLayout(btn_row)
         side.addWidget(self.status)
@@ -2316,14 +2326,24 @@ class MainWindow(QtWidgets.QMainWindow):
     def _start_next(self) -> None:
         self._update_error_count()
         if not self.lines:
-            self.name_label.setText("Noch keine Eröffnungen")
-            self.hint.setText("Klick unten auf „Alle Eröffnungen ansehen …“ und dort auf „PGN laden …“, um deine PGN zu laden.")
+            self.name_label.setText(t("Noch keine Eröffnungen", "No openings yet"))
+            self.hint.setText(t(
+                "Lade dein eigenes Repertoire über „Alle Eröffnungen ansehen …“ → „PGN laden …“ — "
+                "oder probier die App sofort mit drei Beispiel-Eröffnungen aus.",
+                "Load your own repertoire via “Browse all openings …” → “Load PGN …” — "
+                "or try the app right away with three sample openings.",
+            ))
             self.due_label.setText("")
+            self.sample_btn.setVisible(True)
             self.board.set_board(chess.Board())
             return
+        self.sample_btn.setVisible(False)
         if not self._queue:
-            self.name_label.setText("Alles erledigt 🎉")
-            self.hint.setText("Für heute ist nichts mehr fällig. Schau morgen wieder vorbei.")
+            self.name_label.setText(t("Alles erledigt 🎉", "All done 🎉"))
+            self.hint.setText(t(
+                "Für heute ist nichts mehr fällig. Schau morgen wieder vorbei.",
+                "Nothing more is due today. Come back tomorrow.",
+            ))
             self.status.setText("")
             self.board.set_board(chess.Board())
             self._update_due_label()
@@ -2970,6 +2990,43 @@ class MainWindow(QtWidgets.QMainWindow):
         self.opening_sides.set_side(line.source_name, line.name, side)
         self.opening_sides.save(self.sides_path)
         self._set_side_filter(self._side_filter)  # Liste, Titel und Zähler auffrischen
+
+    # Seiten der mitgelieferten Beispiele: Italienisch übt man als Weiß,
+    # Caro-Kann und Damengambit-Abgelehnt als Schwarz.
+    _SAMPLE_SIDES = {
+        "Italienische Partie — Hauptvariante": "white",
+        "Caro-Kann — Klassische Variante": "black",
+        "Damengambit Abgelehnt — Klassisches System": "black",
+    }
+
+    def _load_sample_lines(self) -> None:
+        path = sample_pgn_path()
+        if not path.exists():
+            QtWidgets.QMessageBox.warning(
+                self, t("Beispiele fehlen", "Samples missing"),
+                t("Die Beispiel-Datei wurde nicht gefunden.", "The sample file was not found."),
+            )
+            return
+        try:
+            lines = load_pgn_file(path)
+        except Exception as exc:  # noqa: BLE001
+            QtWidgets.QMessageBox.warning(self, t("Laden fehlgeschlagen", "Loading failed"), str(exc))
+            return
+        self.lines = lines
+        self.settings_store.update(
+            last_pgn_path=str(path),
+            last_pgn_folder=str(path.parent),
+            last_pgn_kind="file",
+        )
+        self.settings_store.save(self.settings_path)
+        for line in lines:
+            side = self._SAMPLE_SIDES.get(line.name)
+            if side and self.opening_sides.side_of(line.source_name, line.name) is None:
+                self.opening_sides.set_side(line.source_name, line.name, side)
+        self.opening_sides.save(self.sides_path)
+        self._refill_queue()
+        self._refresh_library()
+        self._start_next()
 
     def _load_pgn_dialog(self) -> None:
         path, _ = QtWidgets.QFileDialog.getOpenFileName(

@@ -32,6 +32,8 @@ Material *und* deine gespielten Partien von **Stockfish** prüfen.
 >
 > Das ist **nur einmal** nötig — danach startet die App ganz normal per Doppelklick.
 
+Die App bringt **drei Beispiel-Eröffnungen** mit (Italienische Partie, Caro-Kann, Damengambit Abgelehnt) — du kannst also sofort alles ausprobieren und dein eigenes PGN-Repertoire laden, wann immer du so weit bist. Die Oberfläche folgt der Systemsprache (Deutsch/Englisch) und lässt sich jederzeit umschalten.
+
 ## Was die App kann
 
 - **Eröffnungen üben** am Brett (Ziehen oder Klick-Klick), mit automatischen

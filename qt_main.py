@@ -20,7 +20,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from qt_app.main_window import MainWindow
 from qt_app.paths import app_icon_path
 
-APP_VERSION = "1.0"
+APP_VERSION = "1.0.1"
 
 
 def _ensure_qt_plugin_path() -> None:

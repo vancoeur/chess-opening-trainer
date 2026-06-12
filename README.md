@@ -31,6 +31,8 @@ repertoires (White and Black), drill the moves you keep getting wrong, and have
 >
 > This is needed **only once** — afterwards the app starts normally by double-click.
 
+The app ships with **three sample openings** (Italian Game, Caro-Kann, Queen’s Gambit Declined) so you can try everything immediately — load your own PGN repertoire whenever you’re ready. The interface follows your system language (English/German) and can be switched any time.
+
 ## What it does
 
 - **Practice openings** on the board (drag or click-click), with automatic
