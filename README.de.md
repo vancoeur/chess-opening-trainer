@@ -51,7 +51,7 @@ Die App bringt **drei Beispiel-Eröffnungen** mit (Italienische Partie, Caro-Kan
   oder noch nie geübt wurden, mit Filter nach Kategorie.
 - **Notizen** — zu jeder Eröffnung einen persönlichen Merktext hinterlegen.
 - **Stockfish-Funktionen:**
-  - **Repertoire-TÜV** — prüft jede zugeordnete Linie und meldet verdächtige
+  - **Repertoire-Prüfung** — prüft jede zugeordnete Linie und meldet verdächtige
     Züge deiner Seite (Patzer/Ungenauigkeiten), damit du dir keine Fehler
     einprägst. Jeder Fund ist anklickbar zum Üben.
   - **„War mein Zug gut?"** — weichst du beim Üben vom Repertoire-Zug ab, sagt

@@ -68,7 +68,7 @@ QLineEdit#search:focus { border-color: #6f8a4f; }
 """
 
 
-APP_VERSION = "1.0.2"
+APP_VERSION = "1.0.3"
 REPO_URL = "https://github.com/vancoeur/chess-opening-trainer"
 
 # Stichwort -> Eröffnungs-Familie (erste passende Übereinstimmung gewinnt)
@@ -182,7 +182,7 @@ class _TuvWorker(QtCore.QObject):
 
 class _EvalBarWorker(QtCore.QObject):
     """Bewertet im Hintergrund-Thread fortlaufend die aktuelle Stellung für die
-    Bewertungs-Leiste. Eigene Stockfish-Instanz, damit es den TÜV/Übe-Eval nicht
+    Bewertungs-Leiste. Eigene Stockfish-Instanz, damit es die Prüfung/Übe-Eval nicht
     stört. Veraltete Anfragen filtert der Hauptthread per FEN-Abgleich heraus."""
 
     evaluated = QtCore.Signal(str, int, int)   # fen, cp (Weiß-Sicht), mate (signiert)
@@ -528,7 +528,7 @@ class MainWindow(QtWidgets.QMainWindow):
             "probier zuerst die <b>Beispiel-Eröffnungen</b> auf dem Startbildschirm.</li>"
             "<li><b>Üben:</b> Spiel die richtigen Züge aufs Brett. Die App plant "
             "Wiederholungen automatisch (»heute dran«).</li>"
-            "<li><b>Stockfish ist eingebaut:</b> Repertoire-TÜV, »War mein Zug gut?«, "
+            "<li><b>Stockfish ist eingebaut:</b> Repertoire-Prüfung, »War mein Zug gut?«, "
             "Bewertungs-Leiste und Sparring — nichts zu installieren.</li>"
             "<li><b>Lichess-Explorer:</b> braucht einen kostenlosen Token — der Knopf "
             "»🔑 Lichess-Token« richtet ihn in einem Klick ein.</li>"
@@ -923,7 +923,7 @@ class MainWindow(QtWidgets.QMainWindow):
         outer.addWidget(self.stats_list, 1)
         return page
 
-    # ---- Repertoire-TÜV (Stockfish) -------------------------------------
+    # ---- Repertoire-Prüfung (Stockfish) ---------------------------------
     def _build_tuv_page(self) -> QtWidgets.QWidget:
         page = QtWidgets.QWidget()
         outer = QtWidgets.QVBoxLayout(page)
@@ -938,7 +938,7 @@ class MainWindow(QtWidgets.QMainWindow):
         header.addStretch(1)
         outer.addLayout(header)
 
-        title = QtWidgets.QLabel(t("Repertoire-TÜV", "Repertoire check"))
+        title = QtWidgets.QLabel(t("Repertoire-Prüfung", "Repertoire check"))
         title.setObjectName("name")
         outer.addWidget(title)
 
