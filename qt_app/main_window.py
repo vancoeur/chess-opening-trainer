@@ -438,6 +438,27 @@ class MainWindow(QtWidgets.QMainWindow):
     # --- Menü / Tastatur / Fenster ---------------------------------------
 
     def _build_menu(self) -> None:
+        file_menu = self.menuBar().addMenu(t("Datei", "File"))
+        load_act = file_menu.addAction(t("PGN laden …", "Load PGN …"))
+        load_act.setShortcut(QtGui.QKeySequence.StandardKey.Open)          # ⌘O
+        load_act.triggered.connect(lambda: self._load_pgn_dialog())
+        folder_act = file_menu.addAction(t("Ordner laden …", "Load folder …"))
+        folder_act.setShortcut(QtGui.QKeySequence("Shift+Ctrl+O"))         # ⇧⌘O
+        folder_act.triggered.connect(lambda: self._load_folder_dialog())
+
+        go_menu = self.menuBar().addMenu(t("Gehe zu", "Go"))
+        for label_de, label_en, shortcut, slot in [
+            ("Start", "Home", "Ctrl+1", lambda: self.stack.setCurrentIndex(0)),
+            ("Alle Eröffnungen", "All openings", "Ctrl+2", self._open_library),
+            ("Auswertung", "Analysis", "Ctrl+3", self._open_stats),
+            ("Fortschritt", "Progress", "Ctrl+4", self._open_progress),
+            ("Partien auswerten", "Review games", "Ctrl+5", self._open_game_review),
+            ("Repertoire-Prüfung", "Repertoire check", "Ctrl+6", self._open_tuv),
+        ]:
+            act = go_menu.addAction(t(label_de, label_en))
+            act.setShortcut(QtGui.QKeySequence(shortcut))
+            act.triggered.connect(lambda _=False, s=slot: s())
+
         view_menu = self.menuBar().addMenu(t("Ansicht", "View"))
         self._eval_bar_action = view_menu.addAction(t("Bewertungs-Leiste anzeigen", "Show evaluation bar"))
         self._eval_bar_action.setCheckable(True)
