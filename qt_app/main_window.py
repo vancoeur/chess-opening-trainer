@@ -68,7 +68,8 @@ QLineEdit#search:focus { border-color: #6f8a4f; }
 """
 
 
-APP_VERSION = "1.0"
+APP_VERSION = "1.0.2"
+REPO_URL = "https://github.com/vancoeur/chess-opening-trainer"
 
 # Stichwort -> Eröffnungs-Familie (erste passende Übereinstimmung gewinnt)
 _FAMILY_KEYWORDS = [
@@ -448,6 +449,13 @@ class MainWindow(QtWidgets.QMainWindow):
             self._lang_actions[code] = act
 
         help_menu = self.menuBar().addMenu(t("Hilfe", "Help"))
+        start_act = help_menu.addAction(t("Erste Schritte", "Getting started"))
+        start_act.triggered.connect(self._show_getting_started)
+        web_act = help_menu.addAction(t("Projektseite öffnen (GitHub)", "Open project website (GitHub)"))
+        web_act.triggered.connect(
+            lambda: QtGui.QDesktopServices.openUrl(QtCore.QUrl(REPO_URL))
+        )
+        help_menu.addSeparator()
         act = help_menu.addAction(t("Über Opening Trainer", "About Opening Trainer"))
         act.setMenuRole(QtGui.QAction.MenuRole.AboutRole)
         act.triggered.connect(self._show_about)
@@ -507,6 +515,44 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _display_name(self, line) -> str:
         return self._tname(line.name)
+
+    def _show_getting_started(self) -> None:
+        box = QtWidgets.QMessageBox(self)
+        box.setWindowTitle(t("Erste Schritte", "Getting started"))
+        box.setTextFormat(QtCore.Qt.TextFormat.RichText)
+        box.setText(t(
+            "<b>So legst du los:</b>"
+            "<ul>"
+            "<li><b>Eigenes Repertoire laden:</b> »Alle Eröffnungen ansehen …« → "
+            "»PGN laden …« — z. B. eine als PGN exportierte Lichess-Studie. Oder "
+            "probier zuerst die <b>Beispiel-Eröffnungen</b> auf dem Startbildschirm.</li>"
+            "<li><b>Üben:</b> Spiel die richtigen Züge aufs Brett. Die App plant "
+            "Wiederholungen automatisch (»heute dran«).</li>"
+            "<li><b>Stockfish ist eingebaut:</b> Repertoire-TÜV, »War mein Zug gut?«, "
+            "Bewertungs-Leiste und Sparring — nichts zu installieren.</li>"
+            "<li><b>Lichess-Explorer:</b> braucht einen kostenlosen Token — der Knopf "
+            "»🔑 Lichess-Token« richtet ihn in einem Klick ein.</li>"
+            "<li><b>Partien auswerten:</b> lade eine PGN deiner gespielten Partien und "
+            "sieh, wo du vom Repertoire abgewichen bist und wo du gepatzt hast.</li>"
+            "<li><b>Sprache:</b> Menü »Ansicht → Sprache« (gilt nach Neustart).</li>"
+            "</ul>",
+            "<b>How to get started:</b>"
+            "<ul>"
+            "<li><b>Load your own repertoire:</b> “Browse all openings …” → "
+            "“Load PGN …” — e.g. a Lichess study exported as PGN. Or try the "
+            "<b>sample openings</b> on the start screen first.</li>"
+            "<li><b>Practice:</b> play the correct moves on the board. The app "
+            "schedules reviews automatically (“due today”).</li>"
+            "<li><b>Stockfish is built in:</b> repertoire check, “was my move good?”, "
+            "evaluation bar and sparring — nothing to install.</li>"
+            "<li><b>Lichess explorer:</b> needs a free token — the “🔑 Lichess token” "
+            "button sets it up in one click.</li>"
+            "<li><b>Review your games:</b> load a PGN of your played games and see "
+            "where you left your repertoire and where you blundered.</li>"
+            "<li><b>Language:</b> “View → Language” menu (takes effect after restart).</li>"
+            "</ul>",
+        ))
+        box.exec()
 
     def _show_about(self) -> None:
         QtWidgets.QMessageBox.about(
