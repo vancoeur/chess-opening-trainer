@@ -473,6 +473,20 @@ class MainWindow(QtWidgets.QMainWindow):
             ),
         )
 
+    @staticmethod
+    def _add_board_with_eval(layout, board, eval_bar) -> None:
+        """Setzt die Bewertungs-Leiste links und das Brett rechts ins Layout —
+        die Leiste exakt auf Höhe des 8×8-Felds (bündig an den Brett-Ecken,
+        nicht im Koordinatenrand darüber/darunter). Dafür wird sie um den
+        oberen Rand des Bretts nach unten versetzt."""
+        col = QtWidgets.QVBoxLayout()
+        col.setContentsMargins(0, board.board_offset(), 0, 0)
+        col.setSpacing(0)
+        col.addWidget(eval_bar)
+        col.addStretch(1)
+        layout.addLayout(col)
+        layout.addWidget(board, 0, QtCore.Qt.AlignTop)
+
     def _toggle_eval_bar(self, on: bool) -> None:
         self._show_eval_bar = on
         self._eval_settings.setValue("show_eval_bar", on)
@@ -684,11 +698,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.board.set_flipped(self.train_color == chess.BLACK)
         self.board.moveRequested.connect(self._on_move)
 
-        self.eval_bar = EvalBar(height=self.board.height())
+        self.eval_bar = EvalBar(height=self.board.board_pixels())
         self.eval_bar.set_flipped(self.train_color == chess.BLACK)
         self.eval_bar.setVisible(self._show_eval_bar)
-        layout.addWidget(self.eval_bar, 0, QtCore.Qt.AlignTop)
-        layout.addWidget(self.board, 0, QtCore.Qt.AlignTop)
+        self._add_board_with_eval(layout, self.board, self.eval_bar)
 
         side = QtWidgets.QVBoxLayout()
         side.setSpacing(12)
@@ -1125,9 +1138,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.spar_board = BoardView(square_size=74)
         self.spar_board.moveRequested.connect(self._sparring_user_move)
-        self.spar_eval = EvalBar(height=self.spar_board.height())
-        layout.addWidget(self.spar_eval, 0, QtCore.Qt.AlignTop)
-        layout.addWidget(self.spar_board, 0, QtCore.Qt.AlignTop)
+        self.spar_eval = EvalBar(height=self.spar_board.board_pixels())
+        self._add_board_with_eval(layout, self.spar_board, self.spar_eval)
 
         side = QtWidgets.QVBoxLayout()
         side.setSpacing(12)

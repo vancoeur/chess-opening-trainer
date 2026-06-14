@@ -55,6 +55,14 @@ class BoardView(QtWidgets.QWidget):
         side = self._geo.canvas_size
         self.setFixedSize(side, side)
 
+    def board_pixels(self) -> int:
+        """Kantenlänge des eigentlichen 8×8-Spielfelds (ohne Koordinatenrand)."""
+        return self._geo.board_size
+
+    def board_offset(self) -> int:
+        """Abstand der oberen Brettkante von der Oberkante des Widgets (Rand)."""
+        return self._geo.margin
+
     def _load_pieces(self, size: int) -> dict:
         """Figuren als scharfe Vektorgrafik (SVG) rendern, Retina-bewusst.
         Logische Größe = Feldgröße; gezeichnet wird mit (size*dpr) Pixeln, damit
