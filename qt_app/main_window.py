@@ -22,7 +22,9 @@ from opening_trainer.session_log import overall_progress
 from opening_trainer.engine_review import sparring_strength, is_blunder_move
 from opening_trainer.scheduler import review as schedule_review
 from opening_trainer.training_state import TrainingState
-from qt_app.board_view import BoardView, EvalBar, MasteryBar, WdlBar
+from qt_app.board_view import (
+    BoardView, EvalBar, MasteryBar, WdlBar, BOARD_THEMES, set_board_theme,
+)
 from qt_app import i18n
 from qt_app.i18n import t
 from opening_trainer.mastery import mastery_bucket, summarize_mastery
@@ -397,6 +399,11 @@ class MainWindow(QtWidgets.QMainWindow):
         # Ohne gespeicherte Wahl folgt die Sprache der Systemsprache des Macs.
         _sys_lang = "de" if QtCore.QLocale.system().name().startswith("de") else "en"
         i18n.set_language(self._eval_settings.value("language", _sys_lang, type=str))
+        # Brettfarbe aus den Einstellungen anwenden, bevor die Bretter gebaut werden.
+        self._board_theme = self._eval_settings.value("board_theme", "green", type=str)
+        if self._board_theme not in BOARD_THEMES:
+            self._board_theme = "green"
+        set_board_theme(self._board_theme)
         self._show_eval_bar = self._eval_settings.value("show_eval_bar", True, type=bool)
         self._eval_bar_thread = None
         self._eval_bar_worker = None
@@ -437,6 +444,20 @@ class MainWindow(QtWidgets.QMainWindow):
         self._eval_bar_action.setChecked(self._show_eval_bar)
         self._eval_bar_action.toggled.connect(self._toggle_eval_bar)
 
+        theme_menu = view_menu.addMenu(t("Brettfarbe", "Board color"))
+        theme_group = QtGui.QActionGroup(self)
+        for code, label in [
+            ("green", t("Grün", "Green")),
+            ("brown", t("Holz", "Wood")),
+            ("blue", t("Blau", "Blue")),
+            ("grey", t("Grau", "Grey")),
+        ]:
+            act = theme_menu.addAction(label)
+            act.setCheckable(True)
+            act.setChecked(self._board_theme == code)
+            act.triggered.connect(lambda _=False, c=code: self._set_board_theme(c))
+            theme_group.addAction(act)
+
         lang_menu = view_menu.addMenu(t("Sprache", "Language"))
         self._lang_actions = {}
         group = QtGui.QActionGroup(self)
@@ -472,6 +493,16 @@ class MainWindow(QtWidgets.QMainWindow):
                 "The language will take effect the next time you start Opening Trainer.",
             ),
         )
+
+    def _set_board_theme(self, code: str) -> None:
+        """Brettfarbe live umschalten — alle vorhandenen Bretter neu zeichnen."""
+        self._board_theme = code
+        self._eval_settings.setValue("board_theme", code)
+        set_board_theme(code)
+        for name in ("board", "spar_board", "explorer_board", "viewer_board"):
+            board = getattr(self, name, None)
+            if board is not None:
+                board.update()
 
     @staticmethod
     def _add_board_with_eval(layout, board, eval_bar) -> None:

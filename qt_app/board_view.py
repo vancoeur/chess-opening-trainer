@@ -17,6 +17,16 @@ _PIECE_FILE = {
     (chess.BLACK, chess.QUEEN): "bQ", (chess.BLACK, chess.KING): "bK",
 }
 
+# Wählbare Brettfarben (helles Feld, dunkles Feld). Reihenfolge = Menü-Reihenfolge.
+BOARD_THEMES: dict[str, tuple[str, str]] = {
+    "green": ("#ebecd0", "#779556"),   # Standard (Lichess-Grün)
+    "brown": ("#f0d9b5", "#b58863"),   # Holz/Braun
+    "blue":  ("#dee3e6", "#8ca2ad"),   # Blau
+    "grey":  ("#e8e8e8", "#8f8f8f"),   # Grau
+}
+
+# Aktuelle Feldfarben — werden vom Zeichnen direkt gelesen und von
+# set_board_theme() in-place geändert (alle Bretter teilen sie sich).
 LIGHT = QtGui.QColor("#ebecd0")
 DARK = QtGui.QColor("#779556")
 LAST = QtGui.QColor(245, 235, 90, 150)
@@ -24,6 +34,14 @@ WRONG = QtGui.QColor(224, 102, 102, 150)
 SOLUTION = QtGui.QColor(120, 200, 120, 150)
 COORD_LIGHT = QtGui.QColor("#ebecd0")
 COORD_DARK = QtGui.QColor("#779556")
+
+
+def set_board_theme(name: str) -> None:
+    """Setzt die aktuelle Brettfarbe (mutiert die geteilten LIGHT/DARK-Objekte).
+    Danach müssen vorhandene Bretter mit ``update()`` neu gezeichnet werden."""
+    light, dark = BOARD_THEMES.get(name, BOARD_THEMES["green"])
+    LIGHT.setNamedColor(light)
+    DARK.setNamedColor(dark)
 
 
 class BoardView(QtWidgets.QWidget):
