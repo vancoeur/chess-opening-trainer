@@ -1582,24 +1582,61 @@ class MainWindow(QtWidgets.QMainWindow):
         self._explorer_update_nav()
         self._explorer_fetch(self._explorer_board.fen())
 
+    # Direktlink zur Lichess-Token-Erstellung: Beschreibung vorausgefüllt, KEINE
+    # Berechtigungen (scopes leer) → der Token kann nichts im Namen des Nutzers
+    # tun, dient nur zur Identifikation beim Explorer-Abruf.
+    _LICHESS_TOKEN_URL = (
+        "https://lichess.org/account/oauth/token/create?description=Opening+Trainer"
+    )
+
     def _edit_lichess_token(self) -> None:
-        text, ok = QtWidgets.QInputDialog.getText(
-            self,
-            t("Lichess-Token", "Lichess token"),
-            t(
-                "Dein Lichess API-Token (beginnt mit lip_…).\n"
-                "Kostenlos erstellen auf lichess.org → Einstellungen → API-Zugriffstoken\n"
-                "(keine Berechtigungen nötig). Wird nur lokal gespeichert.",
-                "Your Lichess API token (starts with lip_…).\n"
-                "Create one free at lichess.org → Settings → API access tokens\n"
-                "(no permissions needed). Stored only locally.",
-            ),
-            QtWidgets.QLineEdit.EchoMode.Normal,
-            self._lichess_token,
+        dlg = QtWidgets.QDialog(self)
+        dlg.setWindowTitle(t("Lichess-Token", "Lichess token"))
+        lay = QtWidgets.QVBoxLayout(dlg)
+
+        info = QtWidgets.QLabel(t(
+            "Der Lichess-Explorer braucht einen kostenlosen API-Token "
+            "(beginnt mit »lip_…«). Er wird nur lokal gespeichert.\n\n"
+            "1. Unten auf »Token bei Lichess erstellen« klicken — die Seite öffnet "
+            "sich im Browser, schon richtig vorausgefüllt (keine Berechtigungen "
+            "nötig). Dort einfach auf »Create« klicken.\n"
+            "2. Den angezeigten Token kopieren.\n"
+            "3. Hier unten einfügen und auf OK klicken.",
+            "The Lichess explorer needs a free API token (starts with “lip_…”). "
+            "It is stored only locally.\n\n"
+            "1. Click “Create token on Lichess” below — the page opens in your "
+            "browser, already filled in correctly (no permissions needed). Just "
+            "click “Create” there.\n"
+            "2. Copy the token it shows you.\n"
+            "3. Paste it below and click OK.",
+        ))
+        info.setWordWrap(True)
+        lay.addWidget(info)
+
+        create_btn = QtWidgets.QPushButton(
+            t("🔗  Token bei Lichess erstellen", "🔗  Create token on Lichess")
         )
-        if not ok:
+        create_btn.clicked.connect(
+            lambda: QtGui.QDesktopServices.openUrl(QtCore.QUrl(self._LICHESS_TOKEN_URL))
+        )
+        lay.addWidget(create_btn)
+
+        field = QtWidgets.QLineEdit(self._lichess_token)
+        field.setPlaceholderText("lip_…")
+        lay.addWidget(field)
+
+        buttons = QtWidgets.QDialogButtonBox(
+            QtWidgets.QDialogButtonBox.StandardButton.Ok
+            | QtWidgets.QDialogButtonBox.StandardButton.Cancel
+        )
+        buttons.accepted.connect(dlg.accept)
+        buttons.rejected.connect(dlg.reject)
+        lay.addWidget(buttons)
+        field.setFocus()
+
+        if dlg.exec() != QtWidgets.QDialog.DialogCode.Accepted:
             return
-        self._lichess_token = text.strip()
+        self._lichess_token = field.text().strip()
         self._eval_settings.setValue("lichess_token", self._lichess_token)
         self._explorer_cache.clear()
         if self._explorer_board is not None:
