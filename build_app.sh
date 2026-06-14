@@ -39,6 +39,19 @@ python3 -m PyInstaller \
   --add-data "assets:assets" \
   qt_main.py
 
+# Echte Programmversion (aus APP_VERSION) ins App-Paket schreiben, damit der
+# Finder unter "Informationen" die richtige Version zeigt (PyInstaller setzt
+# sonst 0.0.0).
+APP_VERSION="$(grep -E '^APP_VERSION = ' qt_app/main_window.py | head -1 | sed -E 's/.*"([^"]+)".*/\1/')"
+plist="dist/Opening Trainer.app/Contents/Info.plist"
+if [ -n "$APP_VERSION" ] && [ -f "$plist" ]; then
+  for key in CFBundleShortVersionString CFBundleVersion; do
+    /usr/libexec/PlistBuddy -c "Set :$key $APP_VERSION" "$plist" 2>/dev/null \
+      || /usr/libexec/PlistBuddy -c "Add :$key string $APP_VERSION" "$plist"
+  done
+  echo "Version im Paket gesetzt: $APP_VERSION"
+fi
+
 echo
 echo "Fertig: dist/Opening Trainer.app"
 echo "Starten:  open 'dist/Opening Trainer.app'   (oder doppelklicken)"
