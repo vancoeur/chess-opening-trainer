@@ -415,6 +415,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._tree_trainer = None      # PositionTrainer für das Baum-Üben
         self._tree_drill_wrong = False
         self._drill_tree = None        # aktuell geübter Baum
+        self._drill_manual = False     # True: Gegnerzüge selbst spielen
         self._had_wrong = False
         self._queue: list = []
         self._drill = False
@@ -962,6 +963,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.tree_drill_combo = QtWidgets.QComboBox()
         self.tree_drill_combo.currentIndexChanged.connect(self._drill_combo_changed)
         side.addWidget(self.tree_drill_combo)
+        self.drill_manual_check = QtWidgets.QCheckBox(
+            t("Gegnerzüge selbst spielen", "Play the opponent's moves myself"))
+        self.drill_manual_check.toggled.connect(self._drill_toggle_manual)
+        side.addWidget(self.drill_manual_check)
         self.tree_drill_name = self._plain_label("—")
         self.tree_drill_name.setObjectName("name")
         self.tree_drill_name.setWordWrap(True)
@@ -1022,11 +1027,18 @@ class MainWindow(QtWidgets.QMainWindow):
         from opening_trainer.position_training import PositionTrainer
         side = chess.WHITE if tree.side == "white" else chess.BLACK
         # Gegner wählt an Verzweigungen zufällig -> über mehrere Durchläufe werden
-        # ALLE vorbereiteten Äste geübt.
-        self._tree_trainer = PositionTrainer(tree, side, opponent_pick=random.choice)
+        # ALLE vorbereiteten Äste geübt. Im manuellen Modus spielt der Nutzer Weiß selbst.
+        self._tree_trainer = PositionTrainer(
+            tree, side, opponent_pick=random.choice, auto_opponent=not self._drill_manual)
         self._tree_drill_wrong = False
         self.tree_drill_board.train_color = side
+        self.tree_drill_board.edit_mode = self._drill_manual   # manuell: beide Farben ziehbar
         self._tree_drill_present()
+
+    def _drill_toggle_manual(self, checked: bool) -> None:
+        self._drill_manual = checked
+        if self._drill_tree is not None:
+            self._start_tree_drill(self._drill_tree)
 
     def _drill_refresh_combo(self) -> None:
         self.tree_drill_combo.blockSignals(True)
@@ -1058,6 +1070,12 @@ class MainWindow(QtWidgets.QMainWindow):
         if tr.is_finished():
             self.tree_drill_status.setText(t("Linie zu Ende 🎉 — »Neu« startet von vorn.",
                                              "End of line 🎉 — »Restart« to begin again."))
+        elif not tr.is_user_turn():
+            opp = self._tcolor(chess.WHITE if tr.side == chess.BLACK else chess.BLACK)
+            opts = ", ".join(sorted(tr.opponent_moves().values()))
+            self.tree_drill_status.setText(t(
+                f"{opp} am Zug — spiel eine deiner vorbereiteten Optionen: {opts}",
+                f"{opp} to move — play one of your prepared options: {opts}"))
         else:
             self.tree_drill_status.setText(t("Du bist am Zug.", "Your move."))
 
@@ -1069,6 +1087,19 @@ class MainWindow(QtWidgets.QMainWindow):
             move = tr.board.find_move(from_square, to_square)
         except ValueError:
             return
+
+        if not tr.is_user_turn():
+            # Manueller Modus: der Nutzer spielt den Gegnerzug (muss ein Ast sein).
+            if tr.play_opponent_move_uci(move.uci()):
+                self._tree_drill_present()
+            else:
+                self.tree_drill_board.flash_wrong(to_square)
+                opts = ", ".join(sorted(tr.opponent_moves().values())) or "—"
+                self.tree_drill_status.setText(t(
+                    "Das ist nicht vorbereitet. Spiel eine deiner Optionen: " + opts,
+                    "That move isn't prepared. Play one of your options: " + opts))
+            return
+
         fen_before = tr.board.fen()
         epd_before = tr.board.epd()
         result = tr.play_user_move_uci(move.uci())

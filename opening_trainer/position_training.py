@@ -23,11 +23,14 @@ def _start_board(tree: RepertoireTree) -> chess.Board:
 
 class PositionTrainer:
     def __init__(self, tree: RepertoireTree, side: chess.Color, start_node_id: str | None = None,
-                 opponent_pick=None) -> None:
+                 opponent_pick=None, auto_opponent: bool = True) -> None:
         self.tree = tree
         self.side = side
-        # Welcher Gegnerzug an einer Verzweigung gespielt wird. Standard: Hauptlinie
-        # (deterministisch/testbar). Der Drill kann hier zufällig wählen, um ALLE
+        # auto_opponent=True: Gegnerzüge werden automatisch gespielt (Standard).
+        # False: der Nutzer spielt die Gegnerzüge selbst (muss ein vorbereiteter Ast sein).
+        self.auto_opponent = auto_opponent
+        # Welcher Gegnerzug an einer Verzweigung automatisch gespielt wird. Standard:
+        # Hauptlinie (deterministisch/testbar); der Drill wählt hier zufällig, um ALLE
         # vorbereiteten Äste abzudecken.
         self._opponent_pick = opponent_pick or (lambda children: children[0])
         self.board = _start_board(tree)
@@ -46,12 +49,16 @@ class PositionTrainer:
         self._auto_advance()
 
     # --- Navigation -----------------------------------------------------
-    def _is_user_turn(self) -> bool:
+    def is_user_turn(self) -> bool:
         return self.board.turn == self.side
+
+    _is_user_turn = is_user_turn  # Alias (Altname intern)
 
     def _auto_advance(self) -> list[tuple[str, str]]:
         """Spielt Gegnerzüge (Hauptlinie) bis die trainierte Seite am Zug ist."""
         replies: list[tuple[str, str]] = []
+        if not self.auto_opponent:
+            return replies
         while not self._is_user_turn():
             children = self.tree.children_of(self.node.id)
             if not children:
@@ -68,20 +75,23 @@ class PositionTrainer:
         return replies
 
     def is_finished(self) -> bool:
-        return not self._is_user_turn() or not self.tree.children_of(self.node.id)
+        """Linie zu Ende = aktueller Knoten hat keine Kinder mehr (egal wer am Zug)."""
+        return not self.tree.children_of(self.node.id)
 
     def current_epd(self) -> str | None:
         """EPD der Stellung, in der die trainierte Seite jetzt ziehen muss."""
-        return None if self.is_finished() else self.board.epd()
+        if self.is_finished() or not self.is_user_turn():
+            return None
+        return self.board.epd()
 
     def expected_moves(self) -> set[str]:
         """Vorgesehene eigene Züge (UCI) in der aktuellen Stellung."""
-        if self.is_finished():
+        if self.is_finished() or not self.is_user_turn():
             return set()
         return {c.move_uci for c in self.tree.children_of(self.node.id) if c.move_uci}
 
     def expected_solution(self) -> Solution | None:
-        if self.is_finished():
+        if self.is_finished() or not self.is_user_turn():
             return None
         child = self.tree.children_of(self.node.id)[0]
         move = chess.Move.from_uci(child.move_uci)
@@ -89,12 +99,42 @@ class PositionTrainer:
             return None
         return Solution(san=self.board.san(move), uci=child.move_uci)
 
+    # --- Gegnerzüge selbst spielen (manueller Modus) --------------------
+    def opponent_moves(self) -> dict[str, str]:
+        """Vorbereitete Gegnerzüge (uci -> san) in der aktuellen Gegner-Stellung."""
+        if self.is_user_turn() or self.is_finished():
+            return {}
+        out: dict[str, str] = {}
+        for c in self.tree.children_of(self.node.id):
+            move = chess.Move.from_uci(c.move_uci) if c.move_uci else None
+            if move is not None and move in self.board.legal_moves:
+                out[c.move_uci] = self.board.san(move)
+        return out
+
+    def play_opponent_move_uci(self, move_uci: str) -> bool:
+        """Spielt einen Gegnerzug — muss ein vorbereiteter Ast sein. True bei Erfolg."""
+        if self.is_user_turn() or self.is_finished():
+            return False
+        child = self.tree.child_with_move(self.node.id, move_uci)
+        if child is None or not child.move_uci:
+            return False
+        try:
+            move = chess.Move.from_uci(move_uci)
+        except ValueError:
+            return False
+        if move not in self.board.legal_moves:
+            return False
+        self.board.push(move)
+        self.node = child
+        self.last_move_uci = move_uci
+        return True
+
     # --- Spielen --------------------------------------------------------
     def play_user_move_uci(self, move_uci: str) -> MoveResult:
         self.last_wrong_uci = None
         self.last_card_epd = None
 
-        if self.is_finished():
+        if self.is_finished() or not self.is_user_turn():
             return MoveResult(kind="finished", message="Linie ist bereits beendet.")
 
         try:

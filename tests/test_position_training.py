@@ -91,6 +91,32 @@ def test_opponent_pick_covers_variations():
     assert var.expected_moves() == {"g1f3"}
 
 
+def test_manual_opponent_mode_user_drives_both_sides():
+    # Schwarz-Repertoire mit zwei Weiß-Optionen nach 1.e4 c6
+    t = RepertoireTree.new("caro", BLACK)
+    e4 = t.add_child(t.root_id, "e2e4")
+    c6 = t.add_child(e4.id, "c7c6")
+    d4 = t.add_child(c6.id, "d2d4")
+    t.add_child(d4.id, "d7d5")
+    nf3 = t.add_child(c6.id, "g1f3")
+    t.add_child(nf3.id, "d7d5")
+
+    tr = PositionTrainer(t, chess.BLACK, auto_opponent=False)
+    assert not tr.is_user_turn()                       # Weiß (Gegner) am Zug, NICHT auto
+    assert set(tr.opponent_moves()) == {"e2e4"}
+    assert tr.play_opponent_move_uci("e2e4")
+    assert tr.is_user_turn()
+    assert tr.expected_moves() == {"c7c6"}
+    assert tr.play_user_move_uci("c7c6").kind == "correct"
+    # Jetzt Weiß mit ZWEI vorbereiteten Optionen — der Nutzer wählt
+    assert set(tr.opponent_moves()) == {"d2d4", "g1f3"}
+    assert not tr.play_opponent_move_uci("b1c3")       # kein vorbereiteter Ast
+    assert tr.play_opponent_move_uci("g1f3")           # Nf3-Variante ansteuern
+    assert tr.expected_moves() == {"d7d5"}
+    assert tr.play_user_move_uci("d7d5").kind == "correct"
+    assert tr.is_finished()
+
+
 def test_integration_grades_position_and_records_stat():
     t = _tree(WHITE, ["e2e4", "e7e5", "g1f3"])
     sched = PositionScheduleStore()
