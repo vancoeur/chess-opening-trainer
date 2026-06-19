@@ -406,6 +406,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.editor_tree = None        # aktuell bearbeiteter RepertoireTree
         self.editor_node = None        # aktueller Knoten (ID) im Editor
         self._editor_pos = chess.Board()
+        self._tree_trainer = None      # PositionTrainer für das Baum-Üben
+        self._tree_drill_wrong = False
         self._had_wrong = False
         self._queue: list = []
         self._drill = False
@@ -651,6 +653,11 @@ class MainWindow(QtWidgets.QMainWindow):
         side_row.addWidget(self.editor_side_combo, 1)
         side.addLayout(side_row)
 
+        train_btn = QtWidgets.QPushButton(t("▶  Diesen Baum üben", "▶  Train this tree"))
+        train_btn.setObjectName("primary")
+        train_btn.clicked.connect(self._start_tree_drill)
+        side.addWidget(train_btn, 0, QtCore.Qt.AlignLeft)
+
         self.editor_hint = self._plain_label(t(
             "Spiel Züge aufs Brett, um Varianten anzuhängen. Klick einen Zug in der Liste, um dorthin zu springen.",
             "Play moves on the board to add lines. Click a move in the list to jump there.",
@@ -868,6 +875,130 @@ class MainWindow(QtWidgets.QMainWindow):
 
         walk(tree.root, 0)
 
+    # ---- Baum üben (positions-basiert, additiv neben dem normalen Training) ----
+    def _build_tree_drill_page(self) -> QtWidgets.QWidget:
+        page = QtWidgets.QWidget()
+        layout = QtWidgets.QHBoxLayout(page)
+        layout.setContentsMargins(20, 20, 20, 20)
+        layout.setSpacing(24)
+
+        self.tree_drill_board = BoardView(square_size=70)
+        self.tree_drill_board.moveRequested.connect(self._tree_drill_on_move)
+        layout.addWidget(self.tree_drill_board, 0, QtCore.Qt.AlignTop)
+
+        side = QtWidgets.QVBoxLayout()
+        side.setSpacing(12)
+        eyebrow = QtWidgets.QLabel(t("BAUM ÜBEN", "TRAIN TREE"))
+        eyebrow.setObjectName("eyebrow")
+        side.addWidget(eyebrow)
+        self.tree_drill_name = self._plain_label("—")
+        self.tree_drill_name.setObjectName("name")
+        self.tree_drill_name.setWordWrap(True)
+        side.addWidget(self.tree_drill_name)
+        self.tree_drill_status = self._plain_label("")
+        self.tree_drill_status.setObjectName("status")
+        self.tree_drill_status.setWordWrap(True)
+        self.tree_drill_status.setMinimumHeight(48)
+        side.addWidget(self.tree_drill_status)
+
+        btns = QtWidgets.QHBoxLayout()
+        sol = QtWidgets.QPushButton(t("Lösung zeigen", "Show solution"))
+        sol.clicked.connect(self._tree_drill_solution)
+        again = QtWidgets.QPushButton(t("Neu", "Restart"))
+        again.clicked.connect(self._tree_drill_restart)
+        btns.addWidget(sol)
+        btns.addWidget(again)
+        side.addLayout(btns)
+        side.addStretch(1)
+
+        back = QtWidgets.QPushButton(t("‹  Zurück zum Editor", "‹  Back to editor"))
+        back.setObjectName("more")
+        back.clicked.connect(lambda: self.stack.setCurrentIndex(9))
+        side.addWidget(back, 0, QtCore.Qt.AlignLeft)
+
+        layout.addLayout(side, 1)
+        return page
+
+    def _start_tree_drill(self) -> None:
+        tree = self.editor_tree
+        if tree is None:
+            return
+        if tree.side not in ("white", "black"):
+            QtWidgets.QMessageBox.information(
+                self, t("Seite fehlt", "Side missing"),
+                t("Setz zuerst die Seite (Weiß/Schwarz) dieses Baums — dann kannst du ihn üben.",
+                  "Set this tree's side (White/Black) first — then you can train it."))
+            return
+        from opening_trainer.position_training import PositionTrainer
+        side = chess.WHITE if tree.side == "white" else chess.BLACK
+        self._tree_trainer = PositionTrainer(tree, side)
+        self._tree_drill_wrong = False
+        self.tree_drill_name.setText(self._tname(tree.name))
+        self.tree_drill_board.train_color = side
+        self._tree_drill_present()
+        self.stack.setCurrentIndex(10)
+
+    def _tree_drill_present(self) -> None:
+        tr = self._tree_trainer
+        if tr is None:
+            return
+        last = None
+        if tr.last_move_uci:
+            m = chess.Move.from_uci(tr.last_move_uci)
+            last = (m.from_square, m.to_square)
+        self.tree_drill_board.set_flipped(tr.side == chess.BLACK)
+        self.tree_drill_board.set_board(tr.board, last_move=last)
+        if tr.is_finished():
+            self.tree_drill_status.setText(t("Linie zu Ende 🎉 — »Neu« startet von vorn.",
+                                             "End of line 🎉 — »Restart« to begin again."))
+        else:
+            self.tree_drill_status.setText(t("Du bist am Zug.", "Your move."))
+
+    def _tree_drill_on_move(self, from_square: int, to_square: int) -> None:
+        tr = self._tree_trainer
+        if tr is None or tr.is_finished():
+            return
+        try:
+            move = tr.board.find_move(from_square, to_square)
+        except ValueError:
+            return
+        fen_before = tr.board.fen()
+        epd_before = tr.board.epd()
+        result = tr.play_user_move_uci(move.uci())
+
+        if result.kind == "wrong":
+            self._tree_drill_wrong = True
+            self.tree_drill_board.flash_wrong(to_square)
+            hint = ("  " + t("Richtig wäre:", "Correct would be:") + " " + result.expected_san) if result.expected_san else ""
+            self.tree_drill_status.setText(t("Noch nicht.", "Not yet.") + hint)
+            return
+
+        if result.kind == "correct":
+            passed = not self._tree_drill_wrong
+            today = date.today()
+            card = self.position_schedule.card_for(epd_before)
+            self.position_schedule.set_card(epd_before, schedule_review(card, passed, today))
+            self.position_schedule.save(self.position_schedule_path)
+            self.stats_store.add_event(
+                source_name="", line_name=tr.tree.name, fen_before=fen_before,
+                expected_san=result.expected_san, played_san=result.played_san, correct=passed)
+            self.stats_store.save(self.stats_path)
+            self._tree_drill_wrong = False
+            self._tree_drill_present()
+
+    def _tree_drill_restart(self) -> None:
+        if self.editor_tree is not None:
+            self._start_tree_drill()
+
+    def _tree_drill_solution(self) -> None:
+        tr = self._tree_trainer
+        if tr is None:
+            return
+        sol = tr.expected_solution()
+        if sol is not None:
+            self._tree_drill_wrong = True       # Lösung gezeigt => zählt als nicht bestanden
+            self.tree_drill_status.setText(t("Lösung:", "Solution:") + " " + sol.san)
+
     def _show_getting_started(self) -> None:
         box = QtWidgets.QMessageBox(self)
         box.setWindowTitle(t("Erste Schritte", "Getting started"))
@@ -1023,6 +1154,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stack.addWidget(self._build_game_review_page())  # 7
         self.stack.addWidget(self._build_game_viewer_page())  # 8
         self.stack.addWidget(self._build_editor_page())       # 9
+        self.stack.addWidget(self._build_tree_drill_page())   # 10
         self.setStyleSheet(STYLE)
         self.resize(1000, 700)
 
