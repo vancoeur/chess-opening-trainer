@@ -447,13 +447,18 @@ class MasteryBar(QtWidgets.QWidget):
 
     def paintEvent(self, event) -> None:  # noqa: N802
         p = QtGui.QPainter(self)
-        p.setRenderHint(QtGui.QPainter.Antialiasing, False)
+        p.setRenderHint(QtGui.QPainter.Antialiasing, True)
         w, h = self.width(), self.height()
+        rect = QtCore.QRectF(0.5, 0.5, w - 1, h - 1)
+        path = QtGui.QPainterPath()
+        path.addRoundedRect(rect, 5, 5)
+        p.setClipPath(path)
         counts = [self._sitzt, self._wackelt, self._neu]
         colors = [self._GREEN, self._YELLOW, self._GREY]
         total = sum(counts)
         if total <= 0:
             p.fillRect(0, 0, w, h, self._GREY)
+            self._draw_border(p, rect)
             p.end()
             return
         present = [i for i in range(3) if counts[i] > 0]
@@ -477,7 +482,17 @@ class MasteryBar(QtWidgets.QWidget):
             seg = (w - x) if k == len(present) - 1 else int(round(widths[i]))
             p.fillRect(x, 0, seg, h, colors[i])
             x += seg
+        self._draw_border(p, rect)
         p.end()
+
+    @staticmethod
+    def _draw_border(p, rect) -> None:
+        p.setClipping(False)
+        pen = QtGui.QPen(QtGui.QColor("#c2c4b8"))
+        pen.setWidth(1)
+        p.setPen(pen)
+        p.setBrush(QtCore.Qt.NoBrush)
+        p.drawRoundedRect(rect, 5, 5)
 
 
 class WdlBar(QtWidgets.QWidget):

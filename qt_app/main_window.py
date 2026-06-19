@@ -46,8 +46,8 @@ QLabel#note    { color: #6b6f66; font-size: 13px; font-style: italic; }
 QLabel#status  { font-size: 15px; color: #3a3d35; }
 QLabel#due     { color: #8a8f80; font-size: 13px; }
 QLabel#empty   { color: #9a9f90; font-size: 16px; }
-QPushButton { background: #ffffff; border: 1px solid #dadbd2; border-radius: 9px; padding: 10px 16px; }
-QPushButton:hover { background: #eef0e8; }
+QPushButton { background: #ffffff; border: 1px solid #c2cdb0; border-radius: 9px; padding: 9px 15px; color: #4f6a38; font-weight: 600; }
+QPushButton:hover { background: #eef2e8; border-color: #779556; }
 QPushButton:pressed { background: #e2e6d8; }
 QPushButton:disabled { background: #f2f2ee; color: #bcbcb3; border-color: #e8e8e1; }
 QPushButton#primary { background: #779556; border: none; color: white; font-weight: 600; }
@@ -1441,15 +1441,8 @@ class MainWindow(QtWidgets.QMainWindow):
         back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
         header.addWidget(back, 0, QtCore.Qt.AlignLeft)
         header.addStretch(1)
-        self.games_open_btn = QtWidgets.QPushButton(t("Partien auswerten …", "Review games …"))
-        self.games_open_btn.clicked.connect(self._open_game_review)
-        header.addWidget(self.games_open_btn, 0, QtCore.Qt.AlignRight)
-        self.progress_open_btn = QtWidgets.QPushButton(t("Fortschritt …", "Progress …"))
-        self.progress_open_btn.clicked.connect(self._open_progress)
-        header.addWidget(self.progress_open_btn, 0, QtCore.Qt.AlignRight)
-        self.tuv_open_btn = QtWidgets.QPushButton(t("Repertoire prüfen (Stockfish) …", "Check repertoire (Stockfish) …"))
-        self.tuv_open_btn.clicked.connect(self._open_tuv)
-        header.addWidget(self.tuv_open_btn, 0, QtCore.Qt.AlignRight)
+        # Navigation zu Fortschritt / Partien / Repertoire-Prüfung steckt jetzt im
+        # Menü „Gehe zu" (⌘4/⌘5/⌘6) — keine doppelten Knöpfe mehr hier.
         outer.addLayout(header)
 
         title = QtWidgets.QLabel(t("Auswertung", "Analysis"))
