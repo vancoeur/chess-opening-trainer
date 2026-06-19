@@ -74,6 +74,23 @@ def test_card_epd_matches_book_position():
     assert tr.last_card_epd == epd0
 
 
+def test_opponent_pick_covers_variations():
+    t = RepertoireTree.new("branch", WHITE)
+    e4 = t.add_child(t.root_id, "e2e4")
+    e5 = t.add_child(e4.id, "e7e5")
+    t.add_child(e5.id, "b1c3")                 # Antwort auf 1...e5
+    c5 = t.add_child(e4.id, "c7c5")            # Nebenvariante des Gegners
+    t.add_child(c5.id, "g1f3")                 # Antwort auf 1...c5
+
+    main = PositionTrainer(t, chess.WHITE)     # Standard: Gegner spielt Hauptlinie e5
+    main.play_user_move_uci("e2e4")
+    assert main.expected_moves() == {"b1c3"}
+
+    var = PositionTrainer(t, chess.WHITE, opponent_pick=lambda cs: cs[1])  # Gegner spielt c5
+    var.play_user_move_uci("e2e4")
+    assert var.expected_moves() == {"g1f3"}
+
+
 def test_integration_grades_position_and_records_stat():
     t = _tree(WHITE, ["e2e4", "e7e5", "g1f3"])
     sched = PositionScheduleStore()

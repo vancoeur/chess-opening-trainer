@@ -22,9 +22,14 @@ def _start_board(tree: RepertoireTree) -> chess.Board:
 
 
 class PositionTrainer:
-    def __init__(self, tree: RepertoireTree, side: chess.Color, start_node_id: str | None = None) -> None:
+    def __init__(self, tree: RepertoireTree, side: chess.Color, start_node_id: str | None = None,
+                 opponent_pick=None) -> None:
         self.tree = tree
         self.side = side
+        # Welcher Gegnerzug an einer Verzweigung gespielt wird. Standard: Hauptlinie
+        # (deterministisch/testbar). Der Drill kann hier zufällig wählen, um ALLE
+        # vorbereiteten Äste abzudecken.
+        self._opponent_pick = opponent_pick or (lambda children: children[0])
         self.board = _start_board(tree)
         self.node = tree.root
         self.last_move_uci: str | None = None
@@ -51,7 +56,7 @@ class PositionTrainer:
             children = self.tree.children_of(self.node.id)
             if not children:
                 break
-            child = children[0]
+            child = self._opponent_pick(children)
             move = chess.Move.from_uci(child.move_uci) if child.move_uci else None
             if move is None or move not in self.board.legal_moves:
                 break

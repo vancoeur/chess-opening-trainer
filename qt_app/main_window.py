@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import date
 from pathlib import Path
+import random
 
 import json
 
@@ -411,6 +412,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._editor_pos = chess.Board()
         self._tree_trainer = None      # PositionTrainer für das Baum-Üben
         self._tree_drill_wrong = False
+        self._drill_tree = None        # aktuell geübter Baum
         self._had_wrong = False
         self._queue: list = []
         self._drill = False
@@ -485,6 +487,9 @@ class MainWindow(QtWidgets.QMainWindow):
         editor_act = go_menu.addAction(t("Repertoire-Editor", "Repertoire editor"))
         editor_act.setShortcut(QtGui.QKeySequence("Ctrl+E"))
         editor_act.triggered.connect(self._open_editor)
+        drill_act = go_menu.addAction(t("Bäume üben", "Train trees"))
+        drill_act.setShortcut(QtGui.QKeySequence("Ctrl+T"))
+        drill_act.triggered.connect(self._open_tree_drill)
 
         view_menu = self.menuBar().addMenu(t("Ansicht", "View"))
         self._eval_bar_action = view_menu.addAction(t("Bewertungs-Leiste anzeigen", "Show evaluation bar"))
@@ -658,7 +663,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         train_btn = QtWidgets.QPushButton(t("▶  Diesen Baum üben", "▶  Train this tree"))
         train_btn.setObjectName("primary")
-        train_btn.clicked.connect(self._start_tree_drill)
+        train_btn.clicked.connect(lambda: self._start_tree_drill(self.editor_tree))
         side.addWidget(train_btn, 0, QtCore.Qt.AlignLeft)
 
         self.editor_hint = self._plain_label(t(
@@ -894,6 +899,9 @@ class MainWindow(QtWidgets.QMainWindow):
         eyebrow = QtWidgets.QLabel(t("BAUM ÜBEN", "TRAIN TREE"))
         eyebrow.setObjectName("eyebrow")
         side.addWidget(eyebrow)
+        self.tree_drill_combo = QtWidgets.QComboBox()
+        self.tree_drill_combo.currentIndexChanged.connect(self._drill_combo_changed)
+        side.addWidget(self.tree_drill_combo)
         self.tree_drill_name = self._plain_label("—")
         self.tree_drill_name.setObjectName("name")
         self.tree_drill_name.setWordWrap(True)
@@ -922,24 +930,60 @@ class MainWindow(QtWidgets.QMainWindow):
         layout.addLayout(side, 1)
         return page
 
-    def _start_tree_drill(self) -> None:
-        tree = self.editor_tree
+    def _open_tree_drill(self) -> None:
+        """Menü-Einstieg „Bäume üben": einen Baum wählen und drillen."""
+        tree = self._drill_tree or self.editor_tree
+        if tree is None or tree.id not in self.tree_store.trees:
+            trees = self.tree_store.all()
+            tree = trees[0] if trees else None
+        if tree is None:
+            QtWidgets.QMessageBox.information(
+                self, t("Keine Bäume", "No trees"),
+                t("Lege zuerst im Repertoire-Editor (⌘E) einen Baum an.",
+                  "Create a tree in the repertoire editor (Cmd-E) first."))
+            return
+        self._start_tree_drill(tree)
+
+    def _start_tree_drill(self, tree=None) -> None:
+        tree = tree if tree is not None else (self._drill_tree or self.editor_tree)
         if tree is None:
             return
+        self._drill_tree = tree
+        self._drill_refresh_combo()
+        self.tree_drill_name.setText(self._tname(tree.name))
+        self.stack.setCurrentIndex(10)
         if tree.side not in ("white", "black"):
-            QtWidgets.QMessageBox.information(
-                self, t("Seite fehlt", "Side missing"),
-                t("Setz zuerst die Seite (Weiß/Schwarz) dieses Baums — dann kannst du ihn üben.",
-                  "Set this tree's side (White/Black) first — then you can train it."))
+            self._tree_trainer = None
+            self.tree_drill_board.set_board(chess.Board())
+            self.tree_drill_status.setText(t(
+                "Diesem Baum fehlt die Seite. Setz sie im Editor auf Weiß oder Schwarz.",
+                "This tree has no side yet. Set it to White or Black in the editor."))
             return
         from opening_trainer.position_training import PositionTrainer
         side = chess.WHITE if tree.side == "white" else chess.BLACK
-        self._tree_trainer = PositionTrainer(tree, side)
+        # Gegner wählt an Verzweigungen zufällig -> über mehrere Durchläufe werden
+        # ALLE vorbereiteten Äste geübt.
+        self._tree_trainer = PositionTrainer(tree, side, opponent_pick=random.choice)
         self._tree_drill_wrong = False
-        self.tree_drill_name.setText(self._tname(tree.name))
         self.tree_drill_board.train_color = side
         self._tree_drill_present()
-        self.stack.setCurrentIndex(10)
+
+    def _drill_refresh_combo(self) -> None:
+        self.tree_drill_combo.blockSignals(True)
+        self.tree_drill_combo.clear()
+        for tr in self.tree_store.all():
+            self.tree_drill_combo.addItem(self._tname(tr.name) or t("(ohne Namen)", "(unnamed)"), tr.id)
+        if self._drill_tree is not None:
+            idx = self.tree_drill_combo.findData(self._drill_tree.id)
+            if idx >= 0:
+                self.tree_drill_combo.setCurrentIndex(idx)
+        self.tree_drill_combo.blockSignals(False)
+
+    def _drill_combo_changed(self, _index: int) -> None:
+        tid = self.tree_drill_combo.currentData()
+        tree = self.tree_store.get(tid) if tid else None
+        if tree is not None and (self._drill_tree is None or tree.id != self._drill_tree.id):
+            self._start_tree_drill(tree)
 
     def _tree_drill_present(self) -> None:
         tr = self._tree_trainer
@@ -990,8 +1034,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self._tree_drill_present()
 
     def _tree_drill_restart(self) -> None:
-        if self.editor_tree is not None:
-            self._start_tree_drill()
+        if self._drill_tree is not None:
+            self._start_tree_drill(self._drill_tree)
 
     def _tree_drill_solution(self) -> None:
         tr = self._tree_trainer
