@@ -61,8 +61,9 @@ QLabel#rowname { font-size: 15px; font-weight: 600; color: #23241f; }
 QLabel#rowsub  { font-size: 12px; color: #8a8f80; }
 QWidget#libraryrow { background: transparent; }
 QListWidget#library { background: transparent; border: none; }
-QListWidget#library::item { background: #ffffff; border: 1px solid #e4e5dd; border-radius: 8px; margin: 2px 0; }
-QListWidget#library::item:hover { background: #f0f2ea; }
+QListWidget#library::item { background: transparent; border: none; margin: 2px 0; }
+QListWidget#library::item:enabled { background: #ffffff; border: 1px solid #e4e5dd; border-radius: 8px; }
+QListWidget#library::item:hover:enabled { background: #f0f2ea; }
 QListWidget#library::item:selected { background: #eef3e8; border: 1px solid #779556; }
 QPushButton#seg { background: #ffffff; border: 1px solid #dadbd2; border-radius: 8px; padding: 7px 14px; color: #3a3d35; }
 QPushButton#seg:hover { background: #eef0e8; }
