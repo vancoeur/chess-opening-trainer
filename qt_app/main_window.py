@@ -22,6 +22,9 @@ from opening_trainer.session_log import overall_progress
 from opening_trainer.engine_review import sparring_strength, is_blunder_move
 from opening_trainer.scheduler import review as schedule_review
 from opening_trainer.training_state import TrainingState
+from opening_trainer.repertoire_tree_store import RepertoireTreeStore
+from opening_trainer.position_schedule_store import PositionScheduleStore
+from opening_trainer.migration_v2 import run_migration
 from qt_app.board_view import (
     BoardView, EvalBar, MasteryBar, WdlBar, BOARD_THEMES, set_board_theme,
 )
@@ -385,6 +388,18 @@ class MainWindow(QtWidgets.QMainWindow):
         self.lines = self._load_lines()
         self._migrate_sides_from_groups()
         self.train_color = chess.BLACK if self.settings_store.settings.train_color == "black" else chess.WHITE
+
+        # Repertoire-Bäume (neue, baum-basierte Datenhaltung): einmalige, idempotente
+        # Migration der linearen Bestandsdaten, danach laden. ADDITIV — die bisherige
+        # lineare Trainingslogik bleibt vorerst aktiv (Umstellung folgt separat).
+        self.trees_path = data / "repertoire_trees.json"
+        self.position_schedule_path = data / "position_schedule.json"
+        try:
+            run_migration(data, self.lines)
+        except Exception:  # noqa: BLE001 — die Migration darf den Start nie verhindern
+            pass
+        self.tree_store = RepertoireTreeStore.load(self.trees_path)
+        self.position_schedule = PositionScheduleStore.load(self.position_schedule_path)
 
         self.training: TrainingState | None = None
         self.current_line = None
