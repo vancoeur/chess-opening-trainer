@@ -71,6 +71,12 @@ def utc_now_iso() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
+def _epd_of_fen(fen: str) -> str:
+    """EPD (transpositions-sicherer Schlüssel) = die ersten vier FEN-Felder
+    (Figuren, Seite am Zug, Rochade, en passant) — ohne die Zähler."""
+    return " ".join(fen.split(" ")[:4])
+
+
 class StatsStore:
     """Speichert Trainingsereignisse und berechnet einfache Variantenstatistik."""
 
@@ -120,6 +126,18 @@ class StatsStore:
             accuracy=accuracy,
             last_trained=last_trained,
         )
+
+    def stats_for_position(self, epd: str) -> LineStats:
+        """Statistik einer einzelnen Stellung (epd-Schlüssel). Ereignisse sind
+        bereits FEN-genau; die EPD = die ersten vier FEN-Felder (ohne Zähler),
+        passend zu ``position_book.position_key`` / ``board.epd()``."""
+        relevant = [e for e in self.events if _epd_of_fen(e.fen_before) == epd]
+        attempts = len(relevant)
+        correct = sum(1 for e in relevant if e.correct)
+        wrong = attempts - correct
+        accuracy = correct / attempts if attempts else 0.0
+        last_trained = relevant[-1].timestamp if relevant else None
+        return LineStats(attempts, correct, wrong, accuracy, last_trained)
 
     def stats_for_lines(self, lines) -> SetStats:
         """Fasst die Statistik mehrerer Linien zu einer Set-Statistik zusammen.
