@@ -55,6 +55,7 @@ class BoardView(QtWidgets.QWidget):
         self._geo = BoardGeometry(square_size=square_size, margin=margin)
         self.board = chess.Board()
         self.train_color = chess.WHITE
+        self.edit_mode = False        # True: beide Farben ziehbar (Repertoire-Editor)
         self.last_move: tuple[int, int] | None = None
         self.wrong_square: int | None = None
         self.solution_squares: tuple[int, int] | None = None
@@ -283,6 +284,11 @@ class BoardView(QtWidgets.QWidget):
     def _own_targets(self, square: int) -> set[int]:
         return {m.to_square for m in self.board.legal_moves if m.from_square == square}
 
+    def _movable_color(self):
+        """Farbe, deren Figuren aufgenommen werden dürfen: beim Training nur die
+        eigene, im Editor die jeweils am Zug befindliche."""
+        return self.board.turn if self.edit_mode else self.train_color
+
     def clear_selection(self) -> None:
         self._selected = None
         if not self._dragging:
@@ -302,7 +308,7 @@ class BoardView(QtWidgets.QWidget):
             if abs(pos.x() - self._press_pos.x()) + abs(pos.y() - self._press_pos.y()) < 6:
                 return
             piece = self.board.piece_at(self._press_square)
-            if piece is None or piece.color != self.train_color:
+            if piece is None or piece.color != self._movable_color():
                 return
             # Drag beginnt: Figur aufnehmen (überschreibt Klick-Auswahl).
             self._dragging = True
@@ -340,7 +346,7 @@ class BoardView(QtWidgets.QWidget):
             return
         # Erster Klick auf eigene Figur -> auswählen.
         piece = self.board.piece_at(release)
-        if piece is not None and piece.color == self.train_color:
+        if piece is not None and piece.color == self._movable_color():
             self._selected = release
             self._legal_targets = self._own_targets(release)
             self.update()

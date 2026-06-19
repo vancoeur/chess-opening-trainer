@@ -403,6 +403,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.training: TrainingState | None = None
         self.current_line = None
+        self.editor_tree = None        # aktuell bearbeiteter RepertoireTree
+        self.editor_node = None        # aktueller Knoten (ID) im Editor
+        self._editor_pos = chess.Board()
         self._had_wrong = False
         self._queue: list = []
         self._drill = False
@@ -473,6 +476,10 @@ class MainWindow(QtWidgets.QMainWindow):
             act = go_menu.addAction(t(label_de, label_en))
             act.setShortcut(QtGui.QKeySequence(shortcut))
             act.triggered.connect(lambda _=False, s=slot: s())
+        go_menu.addSeparator()
+        editor_act = go_menu.addAction(t("Repertoire-Editor", "Repertoire editor"))
+        editor_act.setShortcut(QtGui.QKeySequence("Ctrl+E"))
+        editor_act.triggered.connect(self._open_editor)
 
         view_menu = self.menuBar().addMenu(t("Ansicht", "View"))
         self._eval_bar_action = view_menu.addAction(t("Bewertungs-Leiste anzeigen", "Show evaluation bar"))
@@ -605,6 +612,261 @@ class MainWindow(QtWidgets.QMainWindow):
         lbl = QtWidgets.QLabel(text)
         lbl.setTextFormat(QtCore.Qt.TextFormat.PlainText)
         return lbl
+
+    # ---- Repertoire-Editor (Bäume bauen/korrigieren) --------------------
+    def _build_editor_page(self) -> QtWidgets.QWidget:
+        page = QtWidgets.QWidget()
+        layout = QtWidgets.QHBoxLayout(page)
+        layout.setContentsMargins(20, 20, 20, 20)
+        layout.setSpacing(24)
+
+        self.editor_board = BoardView(square_size=66)
+        self.editor_board.edit_mode = True
+        self.editor_board.moveRequested.connect(self._editor_on_move)
+        layout.addWidget(self.editor_board, 0, QtCore.Qt.AlignTop)
+
+        side = QtWidgets.QVBoxLayout()
+        side.setSpacing(10)
+
+        eyebrow = QtWidgets.QLabel(t("REPERTOIRE-EDITOR", "REPERTOIRE EDITOR"))
+        eyebrow.setObjectName("eyebrow")
+        side.addWidget(eyebrow)
+
+        row = QtWidgets.QHBoxLayout()
+        self.editor_tree_combo = QtWidgets.QComboBox()
+        self.editor_tree_combo.currentIndexChanged.connect(self._editor_combo_changed)
+        new_btn = QtWidgets.QPushButton(t("＋ Neuer Baum", "＋ New tree"))
+        new_btn.setObjectName("more")
+        new_btn.clicked.connect(self._editor_new_tree)
+        row.addWidget(self.editor_tree_combo, 1)
+        row.addWidget(new_btn, 0)
+        side.addLayout(row)
+
+        side_row = QtWidgets.QHBoxLayout()
+        side_row.addWidget(QtWidgets.QLabel(t("Seite:", "Side:")))
+        self.editor_side_combo = QtWidgets.QComboBox()
+        for code, label in [("white", t("Weiß", "White")), ("black", t("Schwarz", "Black")), ("none", "—")]:
+            self.editor_side_combo.addItem(label, code)
+        self.editor_side_combo.currentIndexChanged.connect(self._editor_side_changed)
+        side_row.addWidget(self.editor_side_combo, 1)
+        side.addLayout(side_row)
+
+        self.editor_hint = self._plain_label(t(
+            "Spiel Züge aufs Brett, um Varianten anzuhängen. Klick einen Zug in der Liste, um dorthin zu springen.",
+            "Play moves on the board to add lines. Click a move in the list to jump there.",
+        ))
+        self.editor_hint.setObjectName("hint")
+        self.editor_hint.setWordWrap(True)
+        side.addWidget(self.editor_hint)
+
+        self.editor_list = QtWidgets.QListWidget()
+        self.editor_list.setObjectName("library")
+        self.editor_list.itemClicked.connect(self._editor_list_clicked)
+        side.addWidget(self.editor_list, 1)
+
+        actions = QtWidgets.QHBoxLayout()
+        for label_de, label_en, slot in [
+            ("Zur Hauptlinie", "To main line", self._editor_promote),
+            ("Zug löschen", "Delete move", self._editor_delete),
+            ("✏ Kommentar", "✏ Comment", self._editor_comment),
+        ]:
+            b = QtWidgets.QPushButton(t(label_de, label_en))
+            b.setObjectName("more")
+            b.clicked.connect(lambda _=False, s=slot: s())
+            actions.addWidget(b)
+        side.addLayout(actions)
+
+        nav = QtWidgets.QHBoxLayout()
+        start_btn = QtWidgets.QPushButton(t("⟲ Grundstellung", "⟲ Start position"))
+        start_btn.setObjectName("more")
+        start_btn.clicked.connect(self._editor_goto_root)
+        export_btn = QtWidgets.QPushButton(t("Als PGN exportieren …", "Export as PGN …"))
+        export_btn.setObjectName("more")
+        export_btn.clicked.connect(self._editor_export)
+        nav.addWidget(start_btn)
+        nav.addWidget(export_btn)
+        side.addLayout(nav)
+
+        back = QtWidgets.QPushButton(t("‹  Zurück zum Training", "‹  Back to training"))
+        back.setObjectName("more")
+        back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
+        side.addWidget(back, 0, QtCore.Qt.AlignLeft)
+
+        layout.addLayout(side, 1)
+        return page
+
+    def _open_editor(self) -> None:
+        trees = self.tree_store.all()
+        if self.editor_tree is None or self.editor_tree.id not in self.tree_store.trees:
+            self.editor_tree = trees[0] if trees else None
+        self.stack.setCurrentIndex(9)
+        if self.editor_tree is None:
+            self._editor_refresh_combo()
+            self._editor_new_tree()
+            return
+        self._editor_refresh_combo()
+        self._editor_goto_node(self.editor_tree.root_id)
+
+    def _editor_refresh_combo(self) -> None:
+        self.editor_tree_combo.blockSignals(True)
+        self.editor_tree_combo.clear()
+        for tree in self.tree_store.all():
+            self.editor_tree_combo.addItem(self._tname(tree.name) or t("(ohne Namen)", "(unnamed)"), tree.id)
+        if self.editor_tree is not None:
+            idx = self.editor_tree_combo.findData(self.editor_tree.id)
+            if idx >= 0:
+                self.editor_tree_combo.setCurrentIndex(idx)
+        self.editor_tree_combo.blockSignals(False)
+
+    def _editor_combo_changed(self, _index: int) -> None:
+        tid = self.editor_tree_combo.currentData()
+        tree = self.tree_store.get(tid) if tid else None
+        if tree is not None:
+            self.editor_tree = tree
+            self._editor_goto_node(tree.root_id)
+
+    def _editor_new_tree(self) -> None:
+        from opening_trainer.repertoire_tree import RepertoireTree
+        name, ok = QtWidgets.QInputDialog.getText(
+            self, t("Neuer Baum", "New tree"), t("Name des Repertoires:", "Repertoire name:"))
+        if not ok:
+            return
+        tree = RepertoireTree.new(name=name.strip() or t("Neues Repertoire", "New repertoire"), side="white")
+        self.tree_store.add(tree)
+        self._editor_save()
+        self.editor_tree = tree
+        self._editor_refresh_combo()
+        self._editor_goto_node(tree.root_id)
+
+    def _editor_side_changed(self, _index: int) -> None:
+        if self.editor_tree is None:
+            return
+        code = self.editor_side_combo.currentData()
+        if code and code != self.editor_tree.side:
+            self.editor_tree.set_side(code)
+            self._editor_save()
+            self.editor_board.set_flipped(self.editor_tree.side == "black")
+            self.editor_board.set_board(self._editor_pos)
+
+    def _editor_pos_for_node(self, node_id: str) -> chess.Board:
+        board = chess.Board(self.editor_tree.start_fen) if self.editor_tree.start_fen else chess.Board()
+        for uci in self.editor_tree.path_to(node_id):
+            move = chess.Move.from_uci(uci)
+            if move not in board.legal_moves:
+                break
+            board.push(move)
+        return board
+
+    def _editor_goto_root(self) -> None:
+        if self.editor_tree is not None:
+            self._editor_goto_node(self.editor_tree.root_id)
+
+    def _editor_goto_node(self, node_id: str) -> None:
+        if self.editor_tree is None or node_id not in self.editor_tree.nodes:
+            return
+        self.editor_node = node_id
+        self._editor_pos = self._editor_pos_for_node(node_id)
+        node = self.editor_tree.nodes[node_id]
+        last = None
+        if node.parent_id is not None and node.move_uci:
+            m = chess.Move.from_uci(node.move_uci)
+            last = (m.from_square, m.to_square)
+        self.editor_board.set_flipped(self.editor_tree.side == "black")
+        self.editor_board.set_board(self._editor_pos, last_move=last)
+        self.editor_side_combo.blockSignals(True)
+        si = self.editor_side_combo.findData(self.editor_tree.side)
+        if si >= 0:
+            self.editor_side_combo.setCurrentIndex(si)
+        self.editor_side_combo.blockSignals(False)
+        self._editor_render_list()
+
+    def _editor_on_move(self, from_square: int, to_square: int) -> None:
+        if self.editor_tree is None or self.editor_node is None:
+            return
+        try:
+            move = self._editor_pos.find_move(from_square, to_square)
+        except ValueError:
+            return
+        child = self.editor_tree.add_child(self.editor_node, move.uci())
+        self._editor_save()
+        self._editor_goto_node(child.id)
+
+    def _editor_list_clicked(self, item) -> None:
+        nid = item.data(QtCore.Qt.UserRole)
+        if nid:
+            self._editor_goto_node(nid)
+
+    def _editor_promote(self) -> None:
+        if self.editor_tree and self.editor_node and self.editor_node != self.editor_tree.root_id:
+            self.editor_tree.promote(self.editor_node)
+            self._editor_save()
+            self._editor_render_list()
+
+    def _editor_delete(self) -> None:
+        if not self.editor_tree or not self.editor_node or self.editor_node == self.editor_tree.root_id:
+            return
+        parent = self.editor_tree.nodes[self.editor_node].parent_id
+        self.editor_tree.delete_subtree(self.editor_node)
+        self._editor_save()
+        self._editor_goto_node(parent or self.editor_tree.root_id)
+
+    def _editor_comment(self) -> None:
+        if not self.editor_tree or not self.editor_node or self.editor_node == self.editor_tree.root_id:
+            return
+        node = self.editor_tree.nodes[self.editor_node]
+        text, ok = QtWidgets.QInputDialog.getMultiLineText(
+            self, t("Kommentar", "Comment"), t("Kommentar zu diesem Zug:", "Comment on this move:"), node.comment)
+        if ok:
+            node.comment = text.strip()
+            self._editor_save()
+            self._editor_render_list()
+
+    def _editor_export(self) -> None:
+        if self.editor_tree is None:
+            return
+        from opening_trainer.pgn_tree_export import export_trees
+        path, _ = QtWidgets.QFileDialog.getSaveFileName(
+            self, t("Als PGN exportieren", "Export as PGN"), "repertoire.pgn",
+            t("PGN-Dateien (*.pgn)", "PGN files (*.pgn)"))
+        if not path:
+            return
+        try:
+            Path(path).write_text(export_trees([self.editor_tree]), encoding="utf-8")
+        except Exception as exc:  # noqa: BLE001
+            QtWidgets.QMessageBox.warning(self, t("Export fehlgeschlagen", "Export failed"), str(exc))
+
+    def _editor_save(self) -> None:
+        self.tree_store.save(self.trees_path)
+
+    def _editor_render_list(self) -> None:
+        self.editor_list.clear()
+        tree = self.editor_tree
+        if tree is None:
+            return
+        board = chess.Board(tree.start_fen) if tree.start_fen else chess.Board()
+
+        def walk(node, depth):
+            for i, cid in enumerate(node.children_ids):
+                child = tree.nodes[cid]
+                try:
+                    move = chess.Move.from_uci(child.move_uci)
+                    san = board.san(move)
+                except Exception:  # noqa: BLE001
+                    continue
+                num = board.fullmove_number
+                dots = "." if board.turn == chess.WHITE else "…"
+                indent = "    " * depth + ("" if i == 0 else "└ ")
+                text = f"{indent}{num}{dots} {san}" + ("  💬" if child.comment else "")
+                item = QtWidgets.QListWidgetItem(text)
+                item.setData(QtCore.Qt.UserRole, cid)
+                if cid == self.editor_node:
+                    item.setBackground(QtGui.QColor("#dbe7c8"))
+                self.editor_list.addItem(item)
+                board.push(move)
+                walk(child, depth + (0 if i == 0 else 1))
+                board.pop()
+
+        walk(tree.root, 0)
 
     def _show_getting_started(self) -> None:
         box = QtWidgets.QMessageBox(self)
@@ -760,6 +1022,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stack.addWidget(self._build_explorer_page())  # 6
         self.stack.addWidget(self._build_game_review_page())  # 7
         self.stack.addWidget(self._build_game_viewer_page())  # 8
+        self.stack.addWidget(self._build_editor_page())       # 9
         self.setStyleSheet(STYLE)
         self.resize(1000, 700)
 
