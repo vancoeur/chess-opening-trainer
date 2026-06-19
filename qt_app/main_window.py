@@ -582,6 +582,15 @@ class MainWindow(QtWidgets.QMainWindow):
     def _display_name(self, line) -> str:
         return self._tname(line.name)
 
+    @staticmethod
+    def _plain_label(text: str = "") -> QtWidgets.QLabel:
+        """QLabel, das seinen Inhalt IMMER wörtlich anzeigt (PlainText). Schützt
+        davor, dass Markup aus fremden PGN-Namen/Spielernamen als HTML/Rich-Text
+        gerendert wird (Red-Team-Härtung)."""
+        lbl = QtWidgets.QLabel(text)
+        lbl.setTextFormat(QtCore.Qt.TextFormat.PlainText)
+        return lbl
+
     def _show_getting_started(self) -> None:
         box = QtWidgets.QMessageBox(self)
         box.setWindowTitle(t("Erste Schritte", "Getting started"))
@@ -760,7 +769,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.eyebrow = QtWidgets.QLabel(t("HEUTE DRAN", "DUE TODAY"))
         self.eyebrow.setObjectName("eyebrow")
-        self.name_label = QtWidgets.QLabel("—")
+        self.name_label = self._plain_label("—")
         self.name_label.setObjectName("name")
         self.name_label.setWordWrap(True)
         self.hint = QtWidgets.QLabel(t(
@@ -777,14 +786,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.sample_btn.clicked.connect(self._load_sample_lines)
         self.sample_btn.hide()
 
-        self.status = QtWidgets.QLabel("")
+        self.status = self._plain_label("")
         self.status.setObjectName("status")
         self.status.setWordWrap(True)
         self.status.setMinimumHeight(48)
 
         # Persönliche Notiz zur aktuellen Eröffnung
         note_row = QtWidgets.QHBoxLayout()
-        self.note_label = QtWidgets.QLabel("")
+        self.note_label = self._plain_label("")
         self.note_label.setObjectName("note")
         self.note_label.setWordWrap(True)
         self.note_btn = QtWidgets.QPushButton(t("✏ Notiz", "✏ Note"))
@@ -1031,7 +1040,7 @@ class MainWindow(QtWidgets.QMainWindow):
         row.addStretch(1)
         outer.addLayout(row)
 
-        self.tuv_status = QtWidgets.QLabel(t("Noch nicht geprüft.", "Not checked yet."))
+        self.tuv_status = self._plain_label(t("Noch nicht geprüft.", "Not checked yet."))
         self.tuv_status.setObjectName("status")
         self.tuv_status.setWordWrap(True)
         outer.addWidget(self.tuv_status)
@@ -1146,7 +1155,7 @@ class MainWindow(QtWidgets.QMainWindow):
         box = QtWidgets.QVBoxLayout(widget)
         box.setContentsMargins(14, 9, 14, 9)
         box.setSpacing(2)
-        name = QtWidgets.QLabel(self._display_name(line))
+        name = self._plain_label(self._display_name(line))
         name.setObjectName("rowname")
         box.addWidget(name)
         for it in issues:
@@ -1603,7 +1612,7 @@ class MainWindow(QtWidgets.QMainWindow):
         box = QtWidgets.QVBoxLayout(widget)
         box.setContentsMargins(14, 9, 14, 9)
         box.setSpacing(2)
-        name = QtWidgets.QLabel(self._display_name(line))
+        name = self._plain_label(self._display_name(line))
         name.setObjectName("rowname")
         sub = QtWidgets.QLabel(sub_text)
         sub.setObjectName("rowsub")
@@ -1635,7 +1644,7 @@ class MainWindow(QtWidgets.QMainWindow):
         side.setSpacing(10)
         eyebrow = QtWidgets.QLabel("LICHESS-EXPLORER")
         eyebrow.setObjectName("eyebrow")
-        self.explorer_opening = QtWidgets.QLabel("—")
+        self.explorer_opening = self._plain_label("—")
         self.explorer_opening.setObjectName("name")
         self.explorer_opening.setWordWrap(True)
         hint = QtWidgets.QLabel(t(
@@ -2157,7 +2166,7 @@ class MainWindow(QtWidgets.QMainWindow):
         box = QtWidgets.QVBoxLayout(widget)
         box.setContentsMargins(14, 9, 14, 9)
         box.setSpacing(2)
-        name = QtWidgets.QLabel(title)
+        name = self._plain_label(title)
         name.setObjectName("rowname")
         sub = QtWidgets.QLabel(sub_text)
         sub.setObjectName("rowsub")
@@ -2186,7 +2195,7 @@ class MainWindow(QtWidgets.QMainWindow):
         side.setSpacing(10)
         eyebrow = QtWidgets.QLabel(t("PARTIE ANSEHEN", "VIEW GAME"))
         eyebrow.setObjectName("eyebrow")
-        self.viewer_title = QtWidgets.QLabel("—")
+        self.viewer_title = self._plain_label("—")
         self.viewer_title.setObjectName("name")
         self.viewer_title.setWordWrap(True)
         self.viewer_status = QtWidgets.QLabel("")
@@ -2390,7 +2399,7 @@ class MainWindow(QtWidgets.QMainWindow):
         box = QtWidgets.QVBoxLayout(widget)
         box.setContentsMargins(14, 9, 14, 9)
         box.setSpacing(2)
-        name = QtWidgets.QLabel(self._tname(problem["name"]))
+        name = self._plain_label(self._tname(problem["name"]))
         name.setObjectName("rowname")
         played = problem.get("played") or "?"
         count = problem["count"]
@@ -2888,7 +2897,7 @@ class MainWindow(QtWidgets.QMainWindow):
         box.setContentsMargins(14, 9, 14, 9)
         box.setSpacing(2)
         has_note = self.line_notes.has_note(line.source_name, line.name)
-        name = QtWidgets.QLabel(f"📝  {self._display_name(line)}" if has_note else self._display_name(line))
+        name = self._plain_label(f"📝  {self._display_name(line)}" if has_note else self._display_name(line))
         name.setObjectName("rowname")
         if has_note:
             name.setToolTip(self.line_notes.note_of(line.source_name, line.name))
