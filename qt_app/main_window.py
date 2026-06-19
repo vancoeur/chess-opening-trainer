@@ -472,6 +472,10 @@ class MainWindow(QtWidgets.QMainWindow):
         folder_act = file_menu.addAction(t("Ordner laden …", "Load folder …"))
         folder_act.setShortcut(QtGui.QKeySequence("Shift+Ctrl+O"))         # ⇧⌘O
         folder_act.triggered.connect(lambda: self._load_folder_dialog())
+        file_menu.addSeparator()
+        import_act = file_menu.addAction(t("PGN als Repertoire-Bäume importieren (mit Varianten) …",
+                                           "Import PGN as repertoire trees (with variations) …"))
+        import_act.triggered.connect(self._import_pgn_as_trees)
 
         go_menu = self.menuBar().addMenu(t("Gehe zu", "Go"))
         for label_de, label_en, shortcut, slot in [
@@ -726,6 +730,45 @@ class MainWindow(QtWidgets.QMainWindow):
 
         layout.addLayout(side, 1)
         return page
+
+    def _import_pgn_as_trees(self) -> None:
+        """Importiert eine PGN MIT Varianten als Repertoire-Bäume (Editor/Drill)."""
+        path, _ = QtWidgets.QFileDialog.getOpenFileName(
+            self, t("PGN als Repertoire-Bäume importieren", "Import PGN as repertoire trees"),
+            "", t("PGN-Dateien (*.pgn);;Alle Dateien (*)", "PGN files (*.pgn);;All files (*)"))
+        if not path:
+            return
+        items = [t("Schwarz", "Black"), t("Weiß", "White"), t("(noch offen)", "(unset)")]
+        choice, ok = QtWidgets.QInputDialog.getItem(
+            self, t("Seite des Repertoires", "Repertoire side"),
+            t("Für welche Seite ist dieses Repertoire?", "Which side is this repertoire for?"),
+            items, 0, False)
+        if not ok:
+            return
+        side = {items[0]: "black", items[1]: "white", items[2]: "none"}[choice]
+        from opening_trainer.pgn_tree_import import import_pgn_file
+        try:
+            trees = import_pgn_file(path, side=side)
+        except Exception as exc:  # noqa: BLE001
+            QtWidgets.QMessageBox.warning(self, t("Import fehlgeschlagen", "Import failed"), str(exc))
+            return
+        if not trees:
+            QtWidgets.QMessageBox.information(
+                self, t("Keine Eröffnungen", "No openings"),
+                t("Die Datei enthält keine importierbaren Eröffnungen.", "The file contains no importable openings."))
+            return
+        for tr in trees:
+            self.tree_store.add(tr)
+        self.tree_store.save(self.trees_path)
+        branches = sum(1 for tr in trees for n in tr.iter_nodes() if len(n.children_ids) > 1)
+        self.editor_tree = trees[0]
+        self._drill_tree = trees[0]
+        QtWidgets.QMessageBox.information(
+            self, t("Importiert", "Imported"),
+            t(f"{len(trees)} Repertoire-Bäume mit {branches} Verzweigungen importiert.\n\n"
+              "Du findest sie im »Repertoire-Editor« (⌘E) und unter »Bäume üben« (⌘T) im Auswahlmenü oben.",
+              f"Imported {len(trees)} repertoire trees with {branches} branches.\n\n"
+              "Find them in the »Repertoire editor« (Cmd-E) and under »Train trees« (Cmd-T) in the dropdown."))
 
     def _open_editor(self) -> None:
         trees = self.tree_store.all()
