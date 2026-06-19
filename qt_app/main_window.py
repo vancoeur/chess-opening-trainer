@@ -45,6 +45,7 @@ QLabel#hint    { color: #6b7066; font-size: 14px; }
 QLabel#note    { color: #6b6f66; font-size: 13px; font-style: italic; }
 QLabel#status  { font-size: 15px; color: #3a3d35; }
 QLabel#due     { color: #8a8f80; font-size: 13px; }
+QLabel#empty   { color: #9a9f90; font-size: 16px; }
 QPushButton { background: #ffffff; border: 1px solid #dadbd2; border-radius: 9px; padding: 10px 16px; }
 QPushButton:hover { background: #eef0e8; }
 QPushButton:pressed { background: #e2e6d8; }
@@ -623,6 +624,21 @@ class MainWindow(QtWidgets.QMainWindow):
         lbl = QtWidgets.QLabel(text)
         lbl.setTextFormat(QtCore.Qt.TextFormat.PlainText)
         return lbl
+
+    def _empty_state(self, de: str, en: str) -> QtWidgets.QWidget:
+        """Zentrierter, freundlicher Leer-Zustand (statt kahler Fläche oben links)."""
+        w = QtWidgets.QWidget()
+        v = QtWidgets.QVBoxLayout(w)
+        v.setContentsMargins(0, 0, 0, 0)
+        v.addStretch(1)
+        lbl = self._plain_label(t(de, en))
+        lbl.setObjectName("empty")
+        lbl.setAlignment(QtCore.Qt.AlignCenter)
+        lbl.setWordWrap(True)
+        lbl.setMaximumWidth(440)
+        v.addWidget(lbl, 0, QtCore.Qt.AlignHCenter)
+        v.addStretch(1)
+        return w
 
     # ---- Repertoire-Editor (Bäume bauen/korrigieren) --------------------
     def _build_editor_page(self) -> QtWidgets.QWidget:
@@ -1449,6 +1465,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stats_sub.setObjectName("hint")
         self.stats_sub.setWordWrap(True)
         outer.addWidget(self.stats_sub)
+
+        self.stats_empty = self._empty_state(
+            "Noch keine Trainingsdaten. Übe ein paar Eröffnungen — hier siehst du dann deinen Stand.",
+            "No training data yet. Practice a few openings — your stats will appear here.")
+        outer.addWidget(self.stats_empty, 1)
 
         self.stats_list = QtWidgets.QListWidget()
         self.stats_list.setObjectName("library")
@@ -2888,12 +2909,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stats_list.clear()
 
         if overview.session_count == 0:
-            self.stats_overview.setText(t(
-                "Noch keine Trainingsdaten. Übe ein paar Eröffnungen — hier siehst du dann deinen Stand.",
-                "No training data yet. Practice a few openings — your stats will appear here.",
-            ))
+            self.stats_overview.setText("")
             self.stats_sub.setText("")
+            self.stats_empty.setVisible(True)
+            self.stats_list.setVisible(False)
             return
+        self.stats_empty.setVisible(False)
+        self.stats_list.setVisible(True)
 
         text = t(
             f"Trefferquote gesamt {round(overview.accuracy * 100)} %      {overview.attempts} Züge geübt",
