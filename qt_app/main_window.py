@@ -997,6 +997,8 @@ class MainWindow(QtWidgets.QMainWindow):
         sol = tr.expected_solution()
         if sol is not None:
             self._tree_drill_wrong = True       # Lösung gezeigt => zählt als nicht bestanden
+            move = chess.Move.from_uci(sol.uci)
+            self.tree_drill_board.show_solution(move.from_square, move.to_square)
             self.tree_drill_status.setText(t("Lösung:", "Solution:") + " " + sol.san)
 
     def _show_getting_started(self) -> None:
