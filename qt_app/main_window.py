@@ -416,6 +416,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self._tree_drill_wrong = False
         self._drill_tree = None        # aktuell geübter Baum
         self._drill_manual = False     # True: Gegnerzüge selbst spielen
+        self._due_session = False      # True: „Heute fällig (Bäume)"-Sitzung läuft
+        self._due_queue: list = []     # offene fällige Stellungen (tree, node_id, color)
+        self._due_total = 0
         self._had_wrong = False
         self._queue: list = []
         self._drill = False
@@ -494,6 +497,9 @@ class MainWindow(QtWidgets.QMainWindow):
         editor_act = go_menu.addAction(t("Repertoire-Editor", "Repertoire editor"))
         editor_act.setShortcut(QtGui.QKeySequence("Ctrl+E"))
         editor_act.triggered.connect(self._open_editor)
+        due_act = go_menu.addAction(t("Heute fällig (Bäume)", "Due today (trees)"))
+        due_act.setShortcut(QtGui.QKeySequence("Ctrl+D"))
+        due_act.triggered.connect(self._start_due_session)
         drill_act = go_menu.addAction(t("Bäume üben", "Train trees"))
         drill_act.setShortcut(QtGui.QKeySequence("Ctrl+T"))
         drill_act.triggered.connect(self._open_tree_drill)
@@ -1013,6 +1019,9 @@ class MainWindow(QtWidgets.QMainWindow):
         tree = tree if tree is not None else (self._drill_tree or self.editor_tree)
         if tree is None:
             return
+        self._due_session = False
+        self.tree_drill_combo.setVisible(True)
+        self.drill_manual_check.setVisible(True)
         self._drill_tree = tree
         self._drill_refresh_combo()
         self.tree_drill_name.setText(self._tname(tree.name))
@@ -1056,6 +1065,56 @@ class MainWindow(QtWidgets.QMainWindow):
         tree = self.tree_store.get(tid) if tid else None
         if tree is not None and (self._drill_tree is None or tree.id != self._drill_tree.id):
             self._start_tree_drill(tree)
+
+    # ---- „Heute fällig (Bäume)": Spaced Repetition über das ganze Repertoire ----
+    def _start_due_session(self) -> None:
+        from opening_trainer.tree_session import due_drill_items
+        today = date.today()
+        items: list = []
+        for side_name, color in (("white", chess.WHITE), ("black", chess.BLACK)):
+            trees = self.tree_store.by_side(side_name)
+            for tree, node_id in due_drill_items(trees, color, self.position_schedule, today):
+                items.append((tree, node_id, color))
+        self._due_queue = items
+        self._due_total = len(items)
+        self._due_session = True
+        self._drill_manual = False
+        self.tree_drill_combo.setVisible(False)
+        self.drill_manual_check.setVisible(False)
+        self.stack.setCurrentIndex(10)
+        self._due_present_current()
+
+    def _due_present_current(self) -> None:
+        if not self._due_queue:
+            self._tree_trainer = None
+            self.tree_drill_name.setText(t("Heute fällig", "Due today"))
+            if self._due_total:
+                self.tree_drill_status.setText(t(
+                    f"Geschafft 🎉 — {self._due_total} Stellungen wiederholt. Nichts mehr fällig.",
+                    f"Done 🎉 — reviewed {self._due_total} positions. Nothing left due."))
+            else:
+                self.tree_drill_status.setText(t(
+                    "Nichts fällig — schau morgen wieder vorbei. 🎉",
+                    "Nothing due — come back tomorrow. 🎉"))
+            self.tree_drill_board.set_board(chess.Board())
+            return
+        tree, node_id, color = self._due_queue[0]
+        from opening_trainer.position_training import PositionTrainer
+        self._tree_trainer = PositionTrainer(tree, color, start_node_id=node_id, auto_opponent=True)
+        self._tree_drill_wrong = False
+        self.tree_drill_board.edit_mode = False
+        self.tree_drill_board.train_color = color
+        done = self._due_total - len(self._due_queue)
+        self.tree_drill_name.setText(self._tname(tree.name))
+        last = None
+        if self._tree_trainer.last_move_uci:
+            m = chess.Move.from_uci(self._tree_trainer.last_move_uci)
+            last = (m.from_square, m.to_square)
+        self.tree_drill_board.set_flipped(color == chess.BLACK)
+        self.tree_drill_board.set_board(self._tree_trainer.board, last_move=last)
+        self.tree_drill_status.setText(t(
+            f"Heute fällig — Stellung {done + 1} von {self._due_total}. Du bist am Zug.",
+            f"Due today — position {done + 1} of {self._due_total}. Your move."))
 
     def _tree_drill_present(self) -> None:
         tr = self._tree_trainer
@@ -1122,10 +1181,17 @@ class MainWindow(QtWidgets.QMainWindow):
                 expected_san=result.expected_san, played_san=result.played_san, correct=passed)
             self.stats_store.save(self.stats_path)
             self._tree_drill_wrong = False
-            self._tree_drill_present()
+            if self._due_session:
+                if self._due_queue:
+                    self._due_queue.pop(0)        # erledigte Stellung abhaken
+                self._due_present_current()
+            else:
+                self._tree_drill_present()
 
     def _tree_drill_restart(self) -> None:
-        if self._drill_tree is not None:
+        if self._due_session:
+            self._start_due_session()
+        elif self._drill_tree is not None:
             self._start_tree_drill(self._drill_tree)
 
     def _tree_drill_solution(self) -> None:
