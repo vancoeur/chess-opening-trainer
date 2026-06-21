@@ -12,6 +12,9 @@ class AppSettings:
     last_pgn_kind: str = ""
     train_color: str = "white"
     window_geometry: str = ""
+    # Mehrere geladene PGN-Quellen (Dateien oder Ordner); beim Start werden alle
+    # geladen und zusammengeführt. Leer = alte Einzelquelle (last_pgn_*) verwenden.
+    pgn_sources: tuple = ()
 
 
 class SettingsStore:
@@ -32,6 +35,7 @@ class SettingsStore:
                 last_pgn_kind=str(data.get("last_pgn_kind", "")),
                 train_color=str(data.get("train_color", "white")),
                 window_geometry=str(data.get("window_geometry", "")),
+                pgn_sources=tuple(str(s) for s in data.get("pgn_sources", [])),
             )
         )
 
@@ -43,6 +47,7 @@ class SettingsStore:
         last_pgn_kind: str | None = None,
         train_color: str | None = None,
         window_geometry: str | None = None,
+        pgn_sources: tuple | None = None,
     ) -> None:
         self.settings = AppSettings(
             last_pgn_folder=(
@@ -66,6 +71,7 @@ class SettingsStore:
                 if window_geometry is None
                 else window_geometry
             ),
+            pgn_sources=self.settings.pgn_sources if pgn_sources is None else tuple(pgn_sources),
         )
 
     def save(self, path: str | Path) -> None:

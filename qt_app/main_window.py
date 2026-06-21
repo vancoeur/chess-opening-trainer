@@ -480,6 +480,9 @@ class MainWindow(QtWidgets.QMainWindow):
         import_act = file_menu.addAction(t("PGN als Repertoire-Bäume importieren (mit Varianten) …",
                                            "Import PGN as repertoire trees (with variations) …"))
         import_act.triggered.connect(self._import_pgn_as_trees)
+        file_menu.addSeparator()
+        reset_act = file_menu.addAction(t("Repertoire leeren …", "Clear repertoire …"))
+        reset_act.triggered.connect(self._reset_repertoire)
 
         go_menu = self.menuBar().addMenu(t("Gehe zu", "Go"))
         for label_de, label_en, shortcut, slot in [
@@ -1325,20 +1328,68 @@ class MainWindow(QtWidgets.QMainWindow):
 
     # --- Daten -----------------------------------------------------------
 
+    def _effective_sources(self) -> list:
+        """Liste der geladenen PGN-Quellen; fällt auf die alte Einzelquelle zurück."""
+        srcs = list(self.settings_store.settings.pgn_sources)
+        if not srcs:
+            s = self.settings_store.settings
+            legacy = s.last_pgn_path or s.last_pgn_folder
+            if legacy:
+                srcs = [legacy]
+        return srcs
+
     def _load_lines(self) -> list:
-        s = self.settings_store.settings
-        raw = s.last_pgn_path or s.last_pgn_folder
-        if not raw:
-            return []
-        path = Path(raw)
-        if not path.exists():
-            return []
-        try:
-            if s.last_pgn_kind == "file" or path.is_file():
-                return load_pgn_file(path)
-            return load_pgn_folder(path)
-        except Exception:
-            return []
+        """Lädt ALLE Quellen (Dateien und Ordner) und führt sie zusammen
+        (dedupliziert nach Quelle + Name)."""
+        lines: list = []
+        seen: set = set()
+        for src in self._effective_sources():
+            p = Path(src)
+            if not p.exists():
+                continue
+            try:
+                part = load_pgn_folder(p) if p.is_dir() else load_pgn_file(p)
+            except Exception:  # noqa: BLE001 — eine kaputte Quelle darf die anderen nicht blockieren
+                continue
+            for line in part:
+                key = (line.source_name, line.name)
+                if key not in seen:
+                    seen.add(key)
+                    lines.append(line)
+        return lines
+
+    def _add_pgn_source(self, path: str) -> int:
+        """Fügt eine PGN-Quelle (Datei ODER Ordner) HINZU (ersetzt nicht). Gibt die
+        Zahl der neu hinzugekommenen Eröffnungen zurück."""
+        srcs = self._effective_sources()
+        path = str(Path(path))
+        if path not in srcs:
+            srcs.append(path)
+        self.settings_store.update(pgn_sources=tuple(srcs))
+        self.settings_store.save(self.settings_path)
+        before = len(self.lines)
+        self.lines = self._load_lines()
+        self._migrate_sides_from_groups()
+        self._refill_queue()
+        self._refresh_library()
+        self._start_next()
+        return max(0, len(self.lines) - before)
+
+    def _reset_repertoire(self) -> None:
+        if QtWidgets.QMessageBox.question(
+            self, t("Repertoire leeren", "Clear repertoire"),
+            t("Alle geladenen PGN-Quellen aus der App entfernen? Deine PGN-Dateien "
+              "auf der Platte bleiben unberührt — nur die Auswahl in der App wird geleert.",
+              "Remove all loaded PGN sources from the app? Your PGN files on disk stay "
+              "untouched — only the app's selection is cleared."),
+        ) != QtWidgets.QMessageBox.StandardButton.Yes:
+            return
+        self.settings_store.update(pgn_sources=(), last_pgn_path="", last_pgn_folder="", last_pgn_kind="")
+        self.settings_store.save(self.settings_path)
+        self.lines = []
+        self._refill_queue()
+        self._refresh_library()
+        self._start_next()
 
     def _refill_queue(self) -> None:
         due = self.schedule_store.due_lines(self.lines, date.today())
@@ -3817,17 +3868,10 @@ class MainWindow(QtWidgets.QMainWindow):
                 t("Die Datei enthält keine trainierbaren Eröffnungen.", "The file contains no trainable openings."),
             )
             return
-        self.lines = lines
-        self.settings_store.update(
-            last_pgn_path=str(Path(path)),
-            last_pgn_folder=str(Path(path).parent),
-            last_pgn_kind="file",
-        )
-        self.settings_store.save(self.settings_path)
-        self._refill_queue()
-        self._refresh_library()
-        self._start_next()  # Trainingsseite vorbereiten (Ansicht bleibt Liste)
-        self.lib_sub.setText(t(f"{len(lines)} Eröffnungen geladen. Klick eine an, um sie zu üben.", f"{len(lines)} openings loaded. Click one to train it."))
+        added = self._add_pgn_source(path)   # HINZUFÜGEN statt ersetzen
+        self.lib_sub.setText(t(
+            f"{added} Eröffnungen hinzugefügt — {len(self.lines)} insgesamt. Klick eine an, um sie zu üben.",
+            f"Added {added} openings — {len(self.lines)} in total. Click one to train it."))
 
     def _load_folder_dialog(self) -> None:
         folder = QtWidgets.QFileDialog.getExistingDirectory(self, t("Ordner mit PGN-Dateien laden", "Load folder of PGN files"))
@@ -3844,15 +3888,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 t("Im Ordner wurden keine trainierbaren Eröffnungen (.pgn) gefunden.", "No trainable openings (.pgn) found in the folder."),
             )
             return
-        self.lines = lines
-        self.settings_store.update(
-            last_pgn_path="",
-            last_pgn_folder=str(Path(folder)),
-            last_pgn_kind="folder",
-        )
-        self.settings_store.save(self.settings_path)
-        self._migrate_sides_from_groups()
-        self._refill_queue()
-        self._refresh_library()
-        self._start_next()
-        self.lib_sub.setText(t(f"{len(lines)} Eröffnungen aus dem Ordner geladen. Klick eine an, um sie zu üben.", f"{len(lines)} openings loaded from the folder. Click one to train it."))
+        added = self._add_pgn_source(folder)   # HINZUFÜGEN statt ersetzen
+        self.lib_sub.setText(t(
+            f"{added} Eröffnungen aus dem Ordner hinzugefügt — {len(self.lines)} insgesamt.",
+            f"Added {added} openings from the folder — {len(self.lines)} in total."))
