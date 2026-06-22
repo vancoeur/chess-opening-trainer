@@ -13,7 +13,9 @@ lass dein Material *und* deine gespielten Partien von **Stockfish** prüfen.
 > eigenständig, ohne weitere Installation. Die Oberfläche gibt es auf
 > **Deutsch und Englisch**.
 
-![Screenshot](docs/screenshot.de.png)
+![Screenshot — Opening Trainer auf Deutsch, mit der Stockfish-Bewertungsleiste](docs/screenshot.de.png)
+
+*Oberfläche auf **Deutsch und Englisch** (Ansicht → Sprache). Hier auf Deutsch — das [gleiche Fenster auf Englisch](docs/screenshot.en.png).*
 
 **Der erste Start in 13 Sekunden** — ein Klick auf die Beispiel-Eröffnungen, und das Training läuft:
 

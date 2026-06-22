@@ -12,7 +12,9 @@ wrong, and have **Stockfish** check your lines and your played games.
 > Modern Qt/PySide6 interface. Stockfish is bundled — the app runs on its own,
 > no extra installation. The interface is available in **English and German**.
 
-![Screenshot](docs/screenshot.en.png)
+![Screenshot — Opening Trainer in English, with the Stockfish evaluation bar](docs/screenshot.en.png)
+
+*Interface in **English and German** (View → Language). Here in English — the [same window in German](docs/screenshot.de.png).*
 
 **First start in 13 seconds** — one click on the sample openings and you’re training:
 
