@@ -479,6 +479,9 @@ class MainWindow(QtWidgets.QMainWindow):
             app.aboutToQuit.connect(self._stop_all_threads)
         self._refill_queue()
         self._start_next()
+        # Primäre Tagessitzung ist die stellungs-basierte Wiederholung: beim Start
+        # dorthin springen, wenn etwas fällig/neu ist (sonst auf der Startseite bleiben).
+        self._open_default_session()
 
     # --- Menü / Tastatur / Fenster ---------------------------------------
 
@@ -512,7 +515,7 @@ class MainWindow(QtWidgets.QMainWindow):
         editor_act = go_menu.addAction(t("Repertoire-Editor", "Repertoire editor"))
         editor_act.setShortcut(QtGui.QKeySequence("Ctrl+E"))
         editor_act.triggered.connect(self._open_editor)
-        due_act = go_menu.addAction(t("Heute fällig (Bäume)", "Due today (trees)"))
+        due_act = go_menu.addAction(t("Heute fällig", "Due today"))
         due_act.setShortcut(QtGui.QKeySequence("Ctrl+D"))
         due_act.triggered.connect(self._start_due_session)
         drill_act = go_menu.addAction(t("Bäume üben", "Train trees"))
@@ -1138,8 +1141,9 @@ class MainWindow(QtWidgets.QMainWindow):
         if tree is not None and (self._drill_tree is None or tree.id != self._drill_tree.id):
             self._start_tree_drill(tree)
 
-    # ---- „Heute fällig (Bäume)": Spaced Repetition über das ganze Repertoire ----
-    def _start_due_session(self) -> None:
+    # ---- „Heute fällig": stellungs-basierte Tagessitzung (primärer Trainings-Einstieg) ----
+    def _due_items(self) -> list:
+        """Heute fällige/neue eigene Stellungen über das ganze Repertoire (beide Seiten)."""
         from opening_trainer.tree_session import due_drill_items
         today = date.today()
         items: list = []
@@ -1147,13 +1151,23 @@ class MainWindow(QtWidgets.QMainWindow):
             trees = self.tree_store.by_side(side_name)
             for tree, node_id in due_drill_items(trees, color, self.position_schedule, today):
                 items.append((tree, node_id, color))
+        return items
+
+    def _open_default_session(self) -> None:
+        """Beim Start in die primäre Stellungs-Sitzung springen, wenn etwas fällig/neu
+        ist; sonst auf der Startseite (Linie/Leerzustand) bleiben."""
+        if self._due_items():
+            self._start_due_session()
+
+    def _start_due_session(self) -> None:
+        items = self._due_items()
         self._due_queue = items
         self._due_total = len(items)
         self._due_session = True
         self._drill_manual = False
         self.drill_eyebrow.setText(t("HEUTE FÄLLIG", "DUE TODAY"))
         self._drill_back_index = 0
-        self.drill_back_btn.setText(t("‹  Zurück zum Training", "‹  Back to training"))
+        self.drill_back_btn.setText(t("‹  Linie durchspielen", "‹  Play a line instead"))
         self.tree_drill_combo.setVisible(False)
         self.drill_manual_check.setVisible(False)
         self.stack.setCurrentIndex(10)
@@ -1640,7 +1654,7 @@ class MainWindow(QtWidgets.QMainWindow):
         side = QtWidgets.QVBoxLayout()
         side.setSpacing(12)
 
-        self.eyebrow = QtWidgets.QLabel(t("HEUTE DRAN", "DUE TODAY"))
+        self.eyebrow = QtWidgets.QLabel(t("LINIE DURCHSPIELEN", "PLAY A LINE"))
         self.eyebrow.setObjectName("eyebrow")
         self.name_label = self._plain_label("—")
         self.name_label.setObjectName("name")
@@ -1712,6 +1726,12 @@ class MainWindow(QtWidgets.QMainWindow):
         more_btn.setObjectName("more")
         more_btn.clicked.connect(self._open_library)
 
+        # Primäre Tagessitzung (stellungs-basiert) — diese Seite ist der „Linie
+        # durchspielen"-Modus; der Knopf führt zur fälligen Stellungs-Wiederholung.
+        self.due_session_btn = QtWidgets.QPushButton(t("▶  Heute fällig üben", "▶  Train what's due"))
+        self.due_session_btn.setObjectName("primary")
+        self.due_session_btn.clicked.connect(self._start_due_session)
+
         side.addWidget(self.eyebrow)
         side.addWidget(self.name_label)
         side.addWidget(self.hint)
@@ -1721,6 +1741,7 @@ class MainWindow(QtWidgets.QMainWindow):
         side.addWidget(self.status)
         side.addLayout(note_row)
         side.addStretch(1)
+        side.addWidget(self.due_session_btn, 0, QtCore.Qt.AlignLeft)
         side.addWidget(self.due_label)
         side.addWidget(self.spar_open_btn, 0, QtCore.Qt.AlignLeft)
         side.addWidget(self.explorer_open_btn, 0, QtCore.Qt.AlignLeft)
@@ -3415,10 +3436,12 @@ class MainWindow(QtWidgets.QMainWindow):
             self.status.setText("")
             self.solution_btn.setVisible(False)   # im Leerzustand keine funktionslosen Knöpfe
             self.next_btn.setVisible(False)
+            self.due_session_btn.setVisible(False)
             self.sample_btn.setVisible(True)
             self.board.set_board(chess.Board())
             return
         self.sample_btn.setVisible(False)
+        self.due_session_btn.setVisible(bool(self._due_items()))
         if not self._queue:
             self.eyebrow.setText("")
             self.name_label.setText(t("Alles erledigt 🎉", "All done 🎉"))
@@ -3432,7 +3455,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.board.set_board(chess.Board())
             self._update_due_label()
             return
-        self.eyebrow.setText(t("HEUTE DRAN", "DUE TODAY"))
+        self.eyebrow.setText(t("LINIE DURCHSPIELEN", "PLAY A LINE"))
         self._load_line(self._queue.pop(0))
 
     def _train_color_for(self, line):

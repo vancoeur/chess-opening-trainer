@@ -41,8 +41,7 @@ def test_due_session_has_own_eyebrow_and_back_to_training(tmp_path, monkeypatch)
     win._start_due_session()                    # keine Bäume -> leere Queue, aber UI gesetzt
     assert win.stack.currentIndex() == 10
     assert win.drill_eyebrow.text() == "HEUTE FÄLLIG"
-    assert win._drill_back_index == 0           # zurück ins Training, nicht in den Editor
-    assert "Training" in win.drill_back_btn.text()
+    assert win._drill_back_index == 0           # zurück zur Startseite (Linie), nicht in den Editor
 
 
 from pathlib import Path  # noqa: E402
