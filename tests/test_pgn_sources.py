@@ -69,3 +69,40 @@ def test_clear_repertoire_empties_sources(tmp_path, monkeypatch):
     win._reset_repertoire()
     assert win.lines == []
     assert win.settings_store.settings.pgn_sources == ()
+
+
+def test_remove_one_source_keeps_the_others(tmp_path, monkeypatch):
+    import qt_app.main_window as mw
+    data = tmp_path / "data"
+    data.mkdir()
+    monkeypatch.setattr(mw, "data_dir", lambda: data)
+    win = mw.MainWindow()
+    extra = tmp_path / "extra.pgn"
+    extra.write_text(PGN_EXTRA, encoding="utf-8")
+    win._add_pgn_source(str(SAMPLE))
+    win._add_pgn_source(str(extra))
+    assert len(win.lines) == 4
+
+    win._remove_pgn_source(str(extra))
+    assert len(win.lines) == 3                       # nur die Extra-Quelle weg
+    assert str(extra) not in win.settings_store.settings.pgn_sources
+    assert str(SAMPLE) in win.settings_store.settings.pgn_sources
+
+
+def test_editor_delete_tree_with_confirmation(tmp_path, monkeypatch):
+    import qt_app.main_window as mw
+    from opening_trainer.repertoire_tree import RepertoireTree
+    data = tmp_path / "data"
+    data.mkdir()
+    monkeypatch.setattr(mw, "data_dir", lambda: data)
+    win = mw.MainWindow()
+    a = RepertoireTree.new("A", "white")
+    b = RepertoireTree.new("B", "black")
+    win.tree_store.add(a)
+    win.tree_store.add(b)
+    win.editor_tree = a
+    monkeypatch.setattr(QtWidgets.QMessageBox, "warning",
+                        staticmethod(lambda *args, **k: QtWidgets.QMessageBox.StandardButton.Yes))
+    win._editor_delete_tree()
+    assert a.id not in win.tree_store.trees           # gelöscht
+    assert b.id in win.tree_store.trees               # der andere bleibt

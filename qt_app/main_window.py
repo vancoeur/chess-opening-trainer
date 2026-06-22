@@ -481,6 +481,8 @@ class MainWindow(QtWidgets.QMainWindow):
                                            "Import PGN as repertoire trees (with variations) …"))
         import_act.triggered.connect(self._import_pgn_as_trees)
         file_menu.addSeparator()
+        manage_act = file_menu.addAction(t("Geladene Repertoires verwalten …", "Manage loaded repertoires …"))
+        manage_act.triggered.connect(self._manage_sources)
         reset_act = file_menu.addAction(t("Repertoire leeren …", "Clear repertoire …"))
         reset_act.triggered.connect(self._reset_repertoire)
 
@@ -679,8 +681,12 @@ class MainWindow(QtWidgets.QMainWindow):
         new_btn = QtWidgets.QPushButton(t("＋ Neuer Baum", "＋ New tree"))
         new_btn.setObjectName("more")
         new_btn.clicked.connect(self._editor_new_tree)
+        del_tree_btn = QtWidgets.QPushButton(t("🗑 Baum löschen", "🗑 Delete tree"))
+        del_tree_btn.setObjectName("more")
+        del_tree_btn.clicked.connect(self._editor_delete_tree)
         row.addWidget(self.editor_tree_combo, 1)
         row.addWidget(new_btn, 0)
+        row.addWidget(del_tree_btn, 0)
         side.addLayout(row)
 
         side_row = QtWidgets.QHBoxLayout()
@@ -822,6 +828,33 @@ class MainWindow(QtWidgets.QMainWindow):
         self.editor_tree = tree
         self._editor_refresh_combo()
         self._editor_goto_node(tree.root_id)
+
+    def _editor_delete_tree(self) -> None:
+        from opening_trainer.repertoire_tree import RepertoireTree
+        if self.editor_tree is None:
+            return
+        name = self._tname(self.editor_tree.name) or t("(ohne Namen)", "(unnamed)")
+        if QtWidgets.QMessageBox.warning(
+            self, t("Baum löschen?", "Delete tree?"),
+            t(f"Den ganzen Baum »{name}« löschen?\n\nDas entfernt alle seine Varianten "
+              "und kann nicht rückgängig gemacht werden.",
+              f"Delete the whole tree »{name}«?\n\nThis removes all its lines and "
+              "cannot be undone."),
+            QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.Cancel,
+            QtWidgets.QMessageBox.StandardButton.Cancel,
+        ) != QtWidgets.QMessageBox.StandardButton.Yes:
+            return
+        self.tree_store.remove(self.editor_tree.id)
+        self._editor_save()
+        trees = self.tree_store.all()
+        if trees:
+            self.editor_tree = trees[0]
+        else:                                   # letzter Baum -> leeren Baum anlegen
+            self.editor_tree = RepertoireTree.new(t("Neues Repertoire", "New repertoire"), side="white")
+            self.tree_store.add(self.editor_tree)
+            self._editor_save()
+        self._editor_refresh_combo()
+        self._editor_goto_node(self.editor_tree.root_id)
 
     def _editor_side_changed(self, _index: int) -> None:
         if self.editor_tree is None:
@@ -1390,6 +1423,83 @@ class MainWindow(QtWidgets.QMainWindow):
         self._refill_queue()
         self._refresh_library()
         self._start_next()
+
+    def _source_opening_count(self, src: str) -> int:
+        p = Path(src)
+        if not p.exists():
+            return 0
+        try:
+            return len(load_pgn_folder(p) if p.is_dir() else load_pgn_file(p))
+        except Exception:  # noqa: BLE001
+            return 0
+
+    def _remove_pgn_source(self, src: str) -> None:
+        srcs = [s for s in self._effective_sources() if s != src]
+        self.settings_store.update(pgn_sources=tuple(srcs))
+        self.settings_store.save(self.settings_path)
+        self.lines = self._load_lines()
+        self._refill_queue()
+        self._refresh_library()
+        self._start_next()
+
+    def _manage_sources(self) -> None:
+        dlg = QtWidgets.QDialog(self)
+        dlg.setWindowTitle(t("Geladene Repertoires", "Loaded repertoires"))
+        lay = QtWidgets.QVBoxLayout(dlg)
+        info = self._plain_label(t(
+            "Geladene PGN-Quellen. »Entfernen« lädt die Eröffnungen aus der App aus — "
+            "die PGN-Datei auf der Platte bleibt unberührt.",
+            "Loaded PGN sources. »Remove« un-loads its openings from the app — "
+            "the PGN file on disk stays untouched."))
+        info.setWordWrap(True)
+        lay.addWidget(info)
+        listw = QtWidgets.QListWidget()
+        lay.addWidget(listw)
+
+        def refresh() -> None:
+            listw.clear()
+            for src in self._effective_sources():
+                p = Path(src)
+                kind = t("Ordner", "folder") if p.is_dir() else t("Datei", "file")
+                n = self._source_opening_count(src)
+                item = QtWidgets.QListWidgetItem(
+                    f"{p.name}    ({n} {t('Eröffnungen', 'openings')}, {kind})")
+                item.setData(QtCore.Qt.UserRole, src)
+                item.setToolTip(src)
+                listw.addItem(item)
+            if listw.count():
+                listw.setCurrentRow(0)
+
+        refresh()
+
+        def do_remove() -> None:
+            item = listw.currentItem()
+            if item is None:
+                return
+            src = item.data(QtCore.Qt.UserRole)
+            if QtWidgets.QMessageBox.warning(
+                dlg, t("Repertoire entfernen?", "Remove repertoire?"),
+                t(f"»{Path(src).name}« aus der App entfernen?\n\nDie Eröffnungen werden "
+                  "ausgeladen. Deine PGN-Datei auf der Platte bleibt erhalten.",
+                  f"Remove »{Path(src).name}« from the app?\n\nIts openings get unloaded. "
+                  "Your PGN file on disk is kept."),
+                QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.Cancel,
+                QtWidgets.QMessageBox.StandardButton.Cancel,
+            ) == QtWidgets.QMessageBox.StandardButton.Yes:
+                self._remove_pgn_source(src)
+                refresh()
+
+        btns = QtWidgets.QHBoxLayout()
+        remove = QtWidgets.QPushButton(t("Ausgewählte entfernen", "Remove selected"))
+        remove.clicked.connect(do_remove)
+        close = QtWidgets.QPushButton(t("Schließen", "Close"))
+        close.clicked.connect(dlg.accept)
+        btns.addWidget(remove)
+        btns.addStretch(1)
+        btns.addWidget(close)
+        lay.addLayout(btns)
+        dlg.resize(480, 340)
+        dlg.exec()
 
     def _refill_queue(self) -> None:
         due = self.schedule_store.due_lines(self.lines, date.today())
