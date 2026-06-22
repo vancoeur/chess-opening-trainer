@@ -659,12 +659,18 @@ class MainWindow(QtWidgets.QMainWindow):
         v = QtWidgets.QVBoxLayout(w)
         v.setContentsMargins(0, 0, 0, 0)
         v.addStretch(1)
+        row = QtWidgets.QHBoxLayout()
+        row.addStretch(1)
         lbl = self._plain_label(t(de, en))
         lbl.setObjectName("empty")
         lbl.setAlignment(QtCore.Qt.AlignCenter)
         lbl.setWordWrap(True)
-        lbl.setMaximumWidth(440)
-        v.addWidget(lbl, 0, QtCore.Qt.AlignHCenter)
+        # FESTE Breite (statt nur Maximalbreite): sonst rechnet Qt die Wordwrap-Höhe
+        # falsch und die Zeilen überlappen/werden abgeschnitten.
+        lbl.setFixedWidth(440)
+        row.addWidget(lbl)
+        row.addStretch(1)
+        v.addLayout(row)
         v.addStretch(1)
         return w
 
@@ -1288,6 +1294,11 @@ class MainWindow(QtWidgets.QMainWindow):
             "»🔑 Lichess-Token« richtet ihn in einem Klick ein.</li>"
             "<li><b>Partien auswerten:</b> lade eine PGN deiner gespielten Partien und "
             "sieh, wo du vom Repertoire abgewichen bist und wo du gepatzt hast.</li>"
+            "<li><b>Verzweigte Repertoires (Bäume):</b> wenn dein Gegner mehrere Antworten "
+            "hat, baust du im <b>Repertoire-Editor</b> (»Gehe zu → Repertoire-Editor«, ⌘E) "
+            "eigene Varianten — oder importierst sie über »Datei → PGN als Repertoire-Bäume "
+            "importieren«. Üben: »Bäume üben« (⌘T) oder die Tagessitzung »Heute fällig "
+            "(Bäume)« (⌘D).</li>"
             "<li><b>Sprache:</b> Menü »Ansicht → Sprache« (gilt nach Neustart).</li>"
             "</ul>",
             "<b>How to get started:</b>"
@@ -1303,6 +1314,11 @@ class MainWindow(QtWidgets.QMainWindow):
             "button sets it up in one click.</li>"
             "<li><b>Review your games:</b> load a PGN of your played games and see "
             "where you left your repertoire and where you blundered.</li>"
+            "<li><b>Branched repertoires (trees):</b> when your opponent has several "
+            "replies, build your own variations in the <b>Repertoire editor</b> "
+            "(“Go → Repertoire editor”, ⌘E) — or import them via “File → Import PGN as "
+            "repertoire trees”. Practise with “Train trees” (⌘T) or the daily “Due today "
+            "(trees)” session (⌘D).</li>"
             "<li><b>Language:</b> “View → Language” menu (takes effect after restart).</li>"
             "</ul>",
         ))
@@ -1760,6 +1776,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.search_field.setClearButtonEnabled(True)
         self.search_field.textChanged.connect(self._on_search)
         outer.addWidget(self.search_field)
+
+        self.library_empty = self._empty_state(
+            "Noch keine Eröffnungen geladen.\n\nOben rechts »PGN laden …« (oder »Ordner laden …«) — "
+            "oder hol dir die Beispiel-Eröffnungen über »Start« (⌘1).",
+            "No openings loaded yet.\n\nUse »Load PGN …« (or »Load folder …«) at the top right — "
+            "or grab the sample openings from »Home« (⌘1).",
+        )
+        self.library_empty.setVisible(False)
+        outer.addWidget(self.library_empty, 1)
 
         self.library_list = QtWidgets.QListWidget()
         self.library_list.setObjectName("library")
@@ -3318,6 +3343,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def _start_next(self) -> None:
         self._update_error_count()
         if not self.lines:
+            self.eyebrow.setText("")
             self.name_label.setText(t("Noch keine Eröffnungen", "No openings yet"))
             self.hint.setText(t(
                 "Lade dein eigenes Repertoire über „Alle Eröffnungen ansehen …“ → „PGN laden …“ — "
@@ -3326,17 +3352,23 @@ class MainWindow(QtWidgets.QMainWindow):
                 "or try the app right away with three sample openings.",
             ))
             self.due_label.setText("")
+            self.status.setText("")
+            self.solution_btn.setVisible(False)   # im Leerzustand keine funktionslosen Knöpfe
+            self.next_btn.setVisible(False)
             self.sample_btn.setVisible(True)
             self.board.set_board(chess.Board())
             return
         self.sample_btn.setVisible(False)
         if not self._queue:
+            self.eyebrow.setText("")
             self.name_label.setText(t("Alles erledigt 🎉", "All done 🎉"))
             self.hint.setText(t(
                 "Für heute ist nichts mehr fällig. Schau morgen wieder vorbei.",
                 "Nothing more is due today. Come back tomorrow.",
             ))
             self.status.setText("")
+            self.solution_btn.setVisible(False)
+            self.next_btn.setVisible(False)
             self.board.set_board(chess.Board())
             self._update_due_label()
             return
@@ -3361,6 +3393,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._drill_board = None
         self.current_line = line
         self._had_wrong = False
+        self.solution_btn.setVisible(True)
+        self.next_btn.setVisible(True)
         color = self._train_color_for(line)
         self.board.train_color = color
         self.board.set_flipped(color == chess.BLACK)
@@ -3834,6 +3868,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _refresh_library(self) -> None:
         self.library_list.clear()
+        if not self.lines:
+            self.library_empty.setVisible(True)
+            self.library_list.setVisible(False)
+            return
+        self.library_empty.setVisible(False)
+        self.library_list.setVisible(True)
         lines = sorted(self._filtered_lines(), key=self._category_sort_key)
         if not lines and self.search_query:
             self._add_library_header(t("Keine Eröffnung gefunden — Suche anpassen.", "No opening found — adjust your search."), level=1)
