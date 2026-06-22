@@ -5,8 +5,9 @@
 [![Auf Ko-fi unterstützen](https://img.shields.io/badge/Ko--fi-Projekt%20unterst%C3%BCtzen-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/vancoeur)
 
 Ein persönlicher Schach-**Eröffnungstrainer** für den Mac — übe deine eigenen
-Repertoires (Weiß und Schwarz), wiederhole gezielt Fehlzüge und lass dein
-Material *und* deine gespielten Partien von **Stockfish** prüfen.
+Repertoires (Weiß und Schwarz) mit **Spaced Repetition**, baue und korrigiere sie
+in einem eingebauten **Editor** (samt Varianten), wiederhole gezielt Fehlzüge und
+lass dein Material *und* deine gespielten Partien von **Stockfish** prüfen.
 
 > Moderne Qt/PySide6-Oberfläche. Stockfish ist fest eingebaut — die App läuft
 > eigenständig, ohne weitere Installation. Die Oberfläche gibt es auf
@@ -40,10 +41,22 @@ Die App bringt **drei Beispiel-Eröffnungen** mit (Italienische Partie, Caro-Kan
 
 ## Was die App kann
 
-- **Eröffnungen üben** am Brett (Ziehen oder Klick-Klick), mit automatischen
-  Antwortzügen aus deiner PGN und **Spaced Repetition** („heute fällig").
-- **Repertoire Weiß/Schwarz** zusammenstellen: jede Eröffnung einer Seite
-  zuordnen, ganze Seite am Stück trainieren.
+- **Tägliche Wiederholung (Spaced Repetition):** die App zeigt, was **heute
+  fällig** ist — Stellung für Stellung, sodass transponierende Linien sich eine
+  Karte teilen und nichts doppelt abgefragt wird. Eine **„Heute fällig"-Übersicht**
+  schlüsselt es pro Eröffnung auf (*X fällig · Y neu*), zeigt einen Ausblick
+  heute / morgen / diese Woche und lässt dich gezielt eine einzelne Eröffnung
+  üben; nach jeder Antwort siehst du, wann die Stellung wieder fällig wird.
+- **Repertoires bauen & bearbeiten — mit Varianten:** beim Laden einer PGN
+  bleiben **Verzweigungen und Kommentare** erhalten; oder du baust und korrigierst
+  ein Repertoire Zug für Zug im **eingebauten Editor** (Linien anhängen, eine
+  Variante zur Hauptlinie machen, löschen, kommentieren, als PGN exportieren).
+- **Am Brett üben** (Ziehen oder Klick-Klick) mit automatischen Gegnerzügen; oder
+  in den Modus **„Linie durchspielen"** wechseln, um eine ganze Linie am Stück zu
+  wiederholen.
+- **Repertoire Weiß/Schwarz:** die Seite wird beim Laden aus dem Dateinamen
+  erkannt; jederzeit zuordnen/ändern und eine ganze Seite oder dein gesamtes
+  Repertoire trainieren.
 - **Bibliothek** aller Eröffnungen mit **Suchfeld** und automatischen Gruppen
   (z. B. „Schwarz ▸ gegen 1.e4 ▸ Sizilianisch").
 - **Auswertung** mit Fehlerprotokoll und gezieltem Fehler-Drill.
@@ -66,7 +79,8 @@ Die App bringt **drei Beispiel-Eröffnungen** mit (Italienische Partie, Caro-Kan
   chess.com, jede Plattform) und sehen, **wo du dein Repertoire verlassen** hast
   und, mit Stockfish, **wo du gepatzt** hast — mit Brett-Betrachter zum
   Durchblättern jeder Partie.
-- **PGN laden** (einzelne Datei oder ganzer Ordner). Deine PGN bleibt
+- **PGN laden** (einzelne Datei oder ganzer Ordner) — **Varianten bleiben
+  erhalten** und speisen die Stellungs-Wiederholung. Deine PGN bleibt
   Originalmaterial; Trainingsdaten bleiben lokal und privat.
 - **Deutsch / Englisch** — jederzeit umschaltbar über das Menü
   „Ansicht → Sprache" (greift nach Neustart). Auch die Eröffnungsnamen werden übersetzt.

@@ -5,8 +5,9 @@
 [![Support on Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20this%20project-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/vancoeur)
 
 A personal chess **opening trainer** for the Mac — practice your own
-repertoires (White and Black), drill the moves you keep getting wrong, and have
-**Stockfish** check your lines and your played games.
+repertoires (White and Black) with **spaced repetition**, build and correct them
+in a built-in **editor** (variations and all), drill the moves you keep getting
+wrong, and have **Stockfish** check your lines and your played games.
 
 > Modern Qt/PySide6 interface. Stockfish is bundled — the app runs on its own,
 > no extra installation. The interface is available in **English and German**.
@@ -39,10 +40,21 @@ The app ships with **three sample openings** (Italian Game, Caro-Kann, Queen’s
 
 ## What it does
 
-- **Practice openings** on the board (drag or click-click), with automatic
-  replies from your PGN and **spaced repetition** (“due today”).
-- **Build a White/Black repertoire**: assign each opening to a side and train a
-  whole side in one go.
+- **Daily review (spaced repetition):** the app shows what’s **due today** —
+  position by position, so transposing lines share one card and nothing is
+  reviewed twice. A **“Due today” overview** breaks it down per opening
+  (*X due · Y new*), forecasts today / tomorrow / this week, and lets you drill a
+  single opening; after each answer it shows when the position is next due.
+- **Build & edit repertoires — with variations:** loading a PGN keeps its
+  **branches and comments**; or build and correct a repertoire move by move in
+  the **in-app editor** (add lines, promote a variation to the main line, delete,
+  comment, export back to PGN).
+- **Practice on the board** (drag or click-click) with automatic opponent
+  replies; or switch to **“play a line”** mode to rehearse a whole line end to
+  end.
+- **White/Black repertoire:** the side is auto-detected from the file name on
+  load; assign or change it any time, and train a whole side or your whole
+  repertoire.
 - **Library** of all openings with a **search field** and automatic groups
   (e.g. “Black ▸ vs 1.e4 ▸ Sicilian”).
 - **Analysis** with a mistake log and targeted mistake drills.
@@ -64,8 +76,9 @@ The app ships with **three sample openings** (Italian Game, Caro-Kann, Queen’s
 - **Review your games** — load a PGN of your played games (Lichess, chess.com,
   any platform) and see **where you left your repertoire** and, with Stockfish,
   **where you blundered** — with a board viewer to step through each game.
-- **Load PGN** (single file or whole folder). Your PGN stays original material;
-  training data stays local and private.
+- **Load PGN** (single file or whole folder) — **variations are kept** and feed
+  the position review. Your PGN stays original material; training data stays
+  local and private.
 - **English / German interface** — switch any time via the “View → Language”
   menu (takes effect after a restart). Opening names are translated too.
 
