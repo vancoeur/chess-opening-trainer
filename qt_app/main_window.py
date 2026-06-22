@@ -1053,6 +1053,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.tree_drill_status.setWordWrap(True)
         self.tree_drill_status.setMinimumHeight(48)
         side.addWidget(self.tree_drill_status)
+        # Bleibende Feedback-Zeile (überdauert den Wechsel zur nächsten Stellung):
+        # zeigt nach jeder Antwort, wann die Stellung wieder fällig wird.
+        self.tree_drill_feedback = self._plain_label("")
+        self.tree_drill_feedback.setObjectName("hint")
+        self.tree_drill_feedback.setWordWrap(True)
+        side.addWidget(self.tree_drill_feedback)
 
         btns = QtWidgets.QHBoxLayout()
         sol = QtWidgets.QPushButton(t("Lösung zeigen", "Show solution"))
@@ -1092,6 +1098,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if tree is None:
             return
         self._due_session = False
+        self.tree_drill_feedback.setText("")
         self.drill_eyebrow.setText(t("BAUM ÜBEN", "TRAIN TREE"))
         self._drill_back_index = 9
         self.drill_back_btn.setText(t("‹  Zurück zum Editor", "‹  Back to editor"))
@@ -1165,6 +1172,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._due_total = len(items)
         self._due_session = True
         self._drill_manual = False
+        self.tree_drill_feedback.setText("")
         self.drill_eyebrow.setText(t("HEUTE FÄLLIG", "DUE TODAY"))
         self._drill_back_index = 0
         self.drill_back_btn.setText(t("‹  Linie durchspielen", "‹  Play a line instead"))
@@ -1263,8 +1271,10 @@ class MainWindow(QtWidgets.QMainWindow):
             passed = not self._tree_drill_wrong
             today = date.today()
             card = self.position_schedule.card_for(epd_before)
-            self.position_schedule.set_card(epd_before, schedule_review(card, passed, today))
+            new_card = schedule_review(card, passed, today)
+            self.position_schedule.set_card(epd_before, new_card)
             self.position_schedule.save(self.position_schedule_path)
+            self._show_next_review(new_card, passed)
             self.stats_store.add_event(
                 source_name="", line_name=tr.tree.name, fen_before=fen_before,
                 expected_san=result.expected_san, played_san=result.played_san, correct=passed)
@@ -1276,6 +1286,20 @@ class MainWindow(QtWidgets.QMainWindow):
                 self._due_present_current()
             else:
                 self._tree_drill_present()
+
+    def _show_next_review(self, card, passed: bool) -> None:
+        """Macht die Spaced-Repetition-Mechanik sichtbar: wann die Stellung wieder
+        fällig wird."""
+        if passed:
+            x = card.interval_days
+            unit = t("Tag", "day") if x == 1 else t("Tagen", "days")
+            self.tree_drill_feedback.setText(t(
+                f"✓ Sitzt — nächste Wiederholung in {x} {unit}.",
+                f"✓ Got it — next review in {x} {unit}."))
+        else:
+            self.tree_drill_feedback.setText(t(
+                "✓ Richtig (mit Hilfe) — kommt heute nochmal dran.",
+                "✓ Correct (with help) — comes up again today."))
 
     def _tree_drill_restart(self) -> None:
         if self._due_session:
