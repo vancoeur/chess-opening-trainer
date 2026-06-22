@@ -969,8 +969,10 @@ class MainWindow(QtWidgets.QMainWindow):
         if tree is None:
             return
         board = chess.Board(tree.start_fen) if tree.start_fen else chess.Board()
+        selected_item = None
 
         def walk(node, depth):
+            nonlocal selected_item
             for i, cid in enumerate(node.children_ids):
                 child = tree.nodes[cid]
                 try:
@@ -986,12 +988,20 @@ class MainWindow(QtWidgets.QMainWindow):
                 item.setData(QtCore.Qt.UserRole, cid)
                 if cid == self.editor_node:
                     item.setBackground(QtGui.QColor("#dbe7c8"))
+                    selected_item = item
                 self.editor_list.addItem(item)
                 board.push(move)
                 walk(child, depth + (0 if i == 0 else 1))
                 board.pop()
 
         walk(tree.root, 0)
+        # Nach dem Neuaufbau den gewählten Zug sichtbar halten — sonst springt die
+        # Liste auf den Anfang zurück (Klick auf Züge weit unten »verschwand«).
+        if selected_item is not None:
+            self.editor_list.setCurrentItem(selected_item)
+            self.editor_list.scrollToItem(
+                selected_item, QtWidgets.QAbstractItemView.ScrollHint.PositionAtCenter
+            )
 
     # ---- Baum üben (positions-basiert, additiv neben dem normalen Training) ----
     def _build_tree_drill_page(self) -> QtWidgets.QWidget:
