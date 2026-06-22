@@ -26,6 +26,7 @@ from opening_trainer.training_state import TrainingState
 from opening_trainer.repertoire_tree_store import RepertoireTreeStore
 from opening_trainer.position_schedule_store import PositionScheduleStore
 from opening_trainer.migration_v2 import run_migration
+from opening_trainer.tree_sync import sync_auto_trees
 from qt_app.board_view import (
     BoardView, EvalBar, MasteryBar, WdlBar, BOARD_THEMES, set_board_theme,
 )
@@ -406,6 +407,10 @@ class MainWindow(QtWidgets.QMainWindow):
             pass
         self.tree_store = RepertoireTreeStore.load(self.trees_path)
         self.position_schedule = PositionScheduleStore.load(self.position_schedule_path)
+        # Auto-Bäume + Positions-Karten aus den aktuell geladenen Quellen erzeugen,
+        # damit die positions-basierte Tagessitzung für JEDES geladene Repertoire
+        # funktioniert (nicht nur die einmal-migrierten Daten). ADDITIV.
+        self._sync_auto_trees()
 
         self.training: TrainingState | None = None
         self.current_line = None
@@ -1495,6 +1500,18 @@ class MainWindow(QtWidgets.QMainWindow):
                     lines.append(line)
         return lines
 
+    def _sync_auto_trees(self) -> None:
+        """Hält die automatisch erzeugten Repertoire-Bäume + Positions-Karten mit den
+        geladenen Quellen + Seiten-Zuordnungen in Sync (speist die Tagessitzung).
+        Idempotent, additiv — Editor-Bäume bleiben. Darf den Ablauf nie verhindern."""
+        try:
+            sync_auto_trees(self._effective_sources(), self.opening_sides,
+                            self.schedule_store, self.tree_store, self.position_schedule)
+            self.tree_store.save(self.trees_path)
+            self.position_schedule.save(self.position_schedule_path)
+        except Exception:  # noqa: BLE001
+            pass
+
     def _add_pgn_source(self, path: str) -> int:
         """Fügt eine PGN-Quelle (Datei ODER Ordner) HINZU (ersetzt nicht). Gibt die
         Zahl der neu hinzugekommenen Eröffnungen zurück."""
@@ -1507,6 +1524,7 @@ class MainWindow(QtWidgets.QMainWindow):
         before = len(self.lines)
         self.lines = self._load_lines()
         self._migrate_sides_from_groups()
+        self._sync_auto_trees()
         self._refill_queue()
         self._refresh_library()
         self._start_next()
@@ -1524,6 +1542,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.settings_store.update(pgn_sources=(), last_pgn_path="", last_pgn_folder="", last_pgn_kind="")
         self.settings_store.save(self.settings_path)
         self.lines = []
+        self._sync_auto_trees()
         self._refill_queue()
         self._refresh_library()
         self._start_next()
@@ -1542,6 +1561,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.settings_store.update(pgn_sources=tuple(srcs))
         self.settings_store.save(self.settings_path)
         self.lines = self._load_lines()
+        self._sync_auto_trees()
         self._refill_queue()
         self._refresh_library()
         self._start_next()
@@ -4012,6 +4032,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 count += 1
         if count:
             self.opening_sides.save(self.sides_path)
+            self._sync_auto_trees()
             self._refresh_library()
         return count
 
@@ -4029,6 +4050,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 count += 1
         if count:
             self.opening_sides.save(self.sides_path)
+            self._sync_auto_trees()
             self._refresh_library()
         return count
 
@@ -4141,6 +4163,7 @@ class MainWindow(QtWidgets.QMainWindow):
             return
         self.opening_sides.set_side(line.source_name, line.name, side)
         self.opening_sides.save(self.sides_path)
+        self._sync_auto_trees()                    # Auto-Baum-Seite an die Zuordnung angleichen
         self._set_side_filter(self._side_filter)  # Liste, Titel und Zähler auffrischen
 
     # Seiten der mitgelieferten Beispiele: Italienisch übt man als Weiß,
@@ -4176,6 +4199,7 @@ class MainWindow(QtWidgets.QMainWindow):
             if side and self.opening_sides.side_of(line.source_name, line.name) is None:
                 self.opening_sides.set_side(line.source_name, line.name, side)
         self.opening_sides.save(self.sides_path)
+        self._sync_auto_trees()
         self._refill_queue()
         self._refresh_library()
         self._start_next()
