@@ -459,10 +459,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self._viewer_anal_thread = None
         self._viewer_anal_worker = None
 
+        self._threads_stopped = False
         self._build_ui()
         self._build_menu()
         self._install_shortcuts()
         self._restore_geometry()
+        # Threads sicher beenden, EGAL wie die App geschlossen wird (⌘Q, app.quit(),
+        # letztes Fenster zu) — closeEvent allein deckt nicht alle Beende-Wege ab,
+        # sonst zerstört Qt beim Interpreter-Shutdown noch laufende Worker → SIGABRT.
+        app = QtWidgets.QApplication.instance()
+        if app is not None:
+            app.aboutToQuit.connect(self._stop_all_threads)
         self._refill_queue()
         self._start_next()
 
@@ -1322,37 +1329,60 @@ class MainWindow(QtWidgets.QMainWindow):
         if geo is not None:
             self.restoreGeometry(geo)
 
-    def closeEvent(self, event) -> None:
+    def _stop_all_threads(self) -> None:
+        """Beendet alle Hintergrund-Worker und ihre Stockfish-Engines sauber.
+
+        Idempotent und gegen jeden Beende-Weg abgesichert: erst die Engines
+        beenden (damit blockierende analyse()-Aufrufe zurückkehren), dann jeden
+        QThread quit()+wait(); läuft ein Thread nach dem Timeout noch, wird er
+        per terminate() zwangsbeendet — denn ein noch laufender Thread im
+        Destruktor löst Qts qFatal/abort() aus (SIGABRT beim Programmende)."""
+        if getattr(self, "_threads_stopped", False):
+            return
+        self._threads_stopped = True
+
         worker = getattr(self, "_tuv_worker", None)
         if worker is not None:
-            worker.cancel()
-        thread = getattr(self, "_tuv_thread", None)
-        if thread is not None:
-            thread.quit()
-            thread.wait(3000)
+            try:
+                worker.cancel()
+            except Exception:  # noqa: BLE001
+                pass
         eval_engine = getattr(self, "_eval_engine", None)
         if eval_engine not in (None, "unset"):
             try:
                 eval_engine.quit()
             except Exception:  # noqa: BLE001
                 pass
-        if self._eval_bar_thread is not None:
-            if self._eval_bar_worker is not None:
-                QtCore.QMetaObject.invokeMethod(
-                    self._eval_bar_worker, "shutdown", QtCore.Qt.BlockingQueuedConnection
-                )
-            self._eval_bar_thread.quit()
-            self._eval_bar_thread.wait(3000)
-        if self._spar_thread is not None:
-            if self._spar_worker is not None:
-                QtCore.QMetaObject.invokeMethod(
-                    self._spar_worker, "shutdown", QtCore.Qt.BlockingQueuedConnection
-                )
-            self._spar_thread.quit()
-            self._spar_thread.wait(3000)
-        if self._viewer_anal_thread is not None:
-            self._viewer_anal_thread.quit()
-            self._viewer_anal_thread.wait(3000)
+        # Worker mit eigener Warteschleife erst über 'shutdown' aus dem Loop holen.
+        for thread_attr, worker_attr in (
+            ("_eval_bar_thread", "_eval_bar_worker"),
+            ("_spar_thread", "_spar_worker"),
+        ):
+            th = getattr(self, thread_attr, None)
+            wk = getattr(self, worker_attr, None)
+            if th is not None and wk is not None:
+                try:
+                    QtCore.QMetaObject.invokeMethod(
+                        wk, "shutdown", QtCore.Qt.BlockingQueuedConnection
+                    )
+                except Exception:  # noqa: BLE001
+                    pass
+
+        for attr in ("_tuv_thread", "_eval_bar_thread", "_spar_thread", "_viewer_anal_thread"):
+            th = getattr(self, attr, None)
+            if th is None:
+                continue
+            try:
+                th.quit()
+                if not th.wait(3000):
+                    th.terminate()      # Notbremse: verhindert SIGABRT im Destruktor
+                    th.wait()
+            except RuntimeError:
+                pass                    # zugrunde liegendes C++-Objekt schon gelöscht
+            setattr(self, attr, None)
+
+    def closeEvent(self, event) -> None:
+        self._stop_all_threads()
         try:
             self._qsettings.setValue("geometry", self.saveGeometry())
         except Exception:  # noqa: BLE001
@@ -1362,13 +1392,19 @@ class MainWindow(QtWidgets.QMainWindow):
     # --- Daten -----------------------------------------------------------
 
     def _effective_sources(self) -> list:
-        """Liste der geladenen PGN-Quellen; fällt auf die alte Einzelquelle zurück."""
+        """Liste der geladenen PGN-Quellen; fällt auf die alten Einzelfelder zurück.
+
+        Beim Übergang vom alten Einzelquellen-Modell werden BEIDE Altfelder
+        (Datei und Ordner) übernommen — sonst verdrängte eine einzelne zuletzt
+        geladene Datei den ganzen Ordner und das Repertoire wirkte nach Neustart
+        „verschwunden". Sobald der Nutzer einmal lädt/entfernt, ist pgn_sources
+        gesetzt und dieser Fallback greift nicht mehr."""
         srcs = list(self.settings_store.settings.pgn_sources)
         if not srcs:
             s = self.settings_store.settings
-            legacy = s.last_pgn_path or s.last_pgn_folder
-            if legacy:
-                srcs = [legacy]
+            for legacy in (s.last_pgn_folder, s.last_pgn_path):
+                if legacy and legacy not in srcs:
+                    srcs.append(legacy)
         return srcs
 
     def _load_lines(self) -> list:

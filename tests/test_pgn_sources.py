@@ -89,6 +89,22 @@ def test_remove_one_source_keeps_the_others(tmp_path, monkeypatch):
     assert str(SAMPLE) in win.settings_store.settings.pgn_sources
 
 
+def test_legacy_fallback_keeps_both_file_and_folder(tmp_path, monkeypatch):
+    """Alt-Settings (nur last_pgn_*) dürfen weder Datei noch Ordner verwerfen."""
+    import qt_app.main_window as mw
+    from opening_trainer.settings_store import SettingsStore, AppSettings
+    data = tmp_path / "data"
+    data.mkdir()
+    monkeypatch.setattr(mw, "data_dir", lambda: data)
+    win = mw.MainWindow()
+    # Zustand wie ein altes Bundle: pgn_sources leer, beide Einzelfelder gesetzt
+    win.settings_store = SettingsStore(AppSettings(
+        last_pgn_folder="/Users/x/Repertoire",
+        last_pgn_path="/Users/x/stray.pgn",
+    ))
+    assert win._effective_sources() == ["/Users/x/Repertoire", "/Users/x/stray.pgn"]
+
+
 def test_editor_delete_tree_with_confirmation(tmp_path, monkeypatch):
     import qt_app.main_window as mw
     from opening_trainer.repertoire_tree import RepertoireTree
