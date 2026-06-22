@@ -17,7 +17,7 @@ from opening_trainer.stats_store import StatsStore
 from opening_trainer.scheduler import is_new
 from opening_trainer.repertoire import SIDE_WHITE, SIDE_BLACK
 from opening_trainer.repertoire_store import RepertoireStore
-from opening_trainer.opening_sides import OpeningSides
+from opening_trainer.opening_sides import OpeningSides, side_from_name
 from opening_trainer.line_notes import LineNotes
 from opening_trainer.session_log import overall_progress
 from opening_trainer.engine_review import sparring_strength, is_blunder_move
@@ -3730,7 +3730,19 @@ class MainWindow(QtWidgets.QMainWindow):
         box.addWidget(sub)
         return widget
 
-    _FIRST_ORDER = {"1.e4": 0, "1.d4": 1, "1.c4": 2, "1.Sf3": 3, "1.g3": 4, "1.b3": 5, "1.f4": 6}
+    # Reihenfolge der Spalten nach erstem Zug — sprachunabhängig per Zug-UCI
+    # (nicht per Etikett, das je nach Sprache 1.Sf3/1.Nf3 heißt). Unbekannte erste
+    # Züge sortieren ans Ende, werden aber trotzdem unter „Weiß ▸ 1.x" gruppiert.
+    _FIRST_ORDER_UCI = {
+        "e2e4": 0, "d2d4": 1, "c2c4": 2, "g1f3": 3, "g2g3": 4,
+        "b2b3": 5, "f2f4": 6, "b1c3": 7, "b2b4": 8, "f2f3": 9,
+        "d2d3": 10, "e2e3": 11, "g1h3": 12, "b1a3": 13,
+    }
+
+    def _first_move_uci(self, line) -> str:
+        """Erster Halbzug der Linie als UCI (z. B. »e2e4«) – sprachunabhängiger
+        Schlüssel für Sortierung."""
+        return line.moves_uci[0] if line.moves_uci else ""
 
     def _first_move_label(self, line) -> str:
         """Erster (Weiß-)Zug der Linie als Etikett, z. B. „1.e4", „1.Sf3"."""
@@ -3782,8 +3794,8 @@ class MainWindow(QtWidgets.QMainWindow):
     def _category_sort_key(self, line):
         side = self._side_of_line(line)
         side_rank = {"white": 0, "black": 1}.get(side, 2)
-        move_rank = self._FIRST_ORDER.get(self._first_move_label(line), 7)
-        return (side_rank, move_rank, self._first_move_label(line), self._subgroup_label(line), line.name)
+        move_rank = self._FIRST_ORDER_UCI.get(self._first_move_uci(line), 99)
+        return (side_rank, move_rank, self._first_move_uci(line), self._subgroup_label(line), line.name)
 
     def _add_library_header(self, text: str, level: int = 1) -> None:
         item = QtWidgets.QListWidgetItem()
@@ -3847,6 +3859,41 @@ class MainWindow(QtWidgets.QMainWindow):
                 changed = True
         if changed:
             self.opening_sides.save(self.sides_path)
+
+    def _assign_side_for_file(self, source_name: str, side: str) -> int:
+        """Ordnet allen geladenen Eröffnungen DIESER Datei die Spielerfarbe zu –
+        aber nur, wo noch KEINE Zuordnung besteht (bestehende bleiben unangetastet).
+        Gibt die Zahl der neu zugeordneten Eröffnungen zurück."""
+        if side not in ("white", "black"):
+            return 0
+        count = 0
+        for line in self.lines:
+            if line.source_name != source_name:
+                continue
+            if self.opening_sides.side_of(line.source_name, line.name) is None:
+                self.opening_sides.set_side(line.source_name, line.name, side)
+                count += 1
+        if count:
+            self.opening_sides.save(self.sides_path)
+            self._refresh_library()
+        return count
+
+    def _auto_fill_sides_by_filename(self) -> int:
+        """Füllt fehlende Seiten-Zuordnungen automatisch aus dem Dateinamen jeder
+        Quelle (»Weiss …« → Weiß, »Schwarz …« → Schwarz). Bestehende Zuordnungen
+        und mehrdeutige Namen bleiben unberührt. Gibt die Zahl der Treffer zurück."""
+        count = 0
+        for line in self.lines:
+            if self.opening_sides.side_of(line.source_name, line.name) is not None:
+                continue
+            guess = side_from_name(line.source_name)
+            if guess in ("white", "black"):
+                self.opening_sides.set_side(line.source_name, line.name, guess)
+                count += 1
+        if count:
+            self.opening_sides.save(self.sides_path)
+            self._refresh_library()
+        return count
 
     def _side_of_line(self, line) -> str | None:
         side = self.opening_sides.side_of(line.source_name, line.name)
@@ -4015,9 +4062,34 @@ class MainWindow(QtWidgets.QMainWindow):
             )
             return
         added = self._add_pgn_source(path)   # HINZUFÜGEN statt ersetzen
+        self._ask_and_assign_side(Path(path).name)
         self.lib_sub.setText(t(
             f"{added} Eröffnungen hinzugefügt — {len(self.lines)} insgesamt. Klick eine an, um sie zu üben.",
             f"Added {added} openings — {len(self.lines)} in total. Click one to train it."))
+
+    def _ask_and_assign_side(self, source_name: str) -> None:
+        """Fragt beim Laden einer Datei einmal nach der Spielerfarbe (Vorschlag aus
+        dem Dateinamen) und ordnet alle noch nicht zugeordneten Eröffnungen dieser
+        Datei der gewählten Seite zu. Sind bereits alle zugeordnet, wird nicht gefragt."""
+        file_lines = [l for l in self.lines if l.source_name == source_name]
+        if file_lines and all(
+            self.opening_sides.side_of(l.source_name, l.name) is not None for l in file_lines
+        ):
+            return
+        items = [t("Weiß", "White"), t("Schwarz", "Black"), t("Überspringen", "Skip")]
+        guess = side_from_name(source_name)
+        default = {"white": 0, "black": 1}.get(guess, 0)
+        choice, ok = QtWidgets.QInputDialog.getItem(
+            self, t("Spielerfarbe", "Player color"),
+            t(f"Welche Farbe spielst du in »{source_name}«?\n"
+              "(So werden die Eröffnungen unter »Weiß ▸ 1.e4« bzw. »Schwarz ▸ gegen 1.e4« gruppiert.)",
+              f"Which color do you play in »{source_name}«?\n"
+              "(This groups the openings under »White ▸ 1.e4« or »Black ▸ vs 1.e4«.)"),
+            items, default, False)
+        if not ok:
+            return
+        side = {items[0]: "white", items[1]: "black", items[2]: "none"}[choice]
+        self._assign_side_for_file(source_name, side)
 
     def _load_folder_dialog(self) -> None:
         folder = QtWidgets.QFileDialog.getExistingDirectory(self, t("Ordner mit PGN-Dateien laden", "Load folder of PGN files"))
@@ -4035,6 +4107,8 @@ class MainWindow(QtWidgets.QMainWindow):
             )
             return
         added = self._add_pgn_source(folder)   # HINZUFÜGEN statt ersetzen
+        assigned = self._auto_fill_sides_by_filename()   # je Datei aus dem Namen (Weiss…/Schwarz…)
+        extra = t(f"  {assigned} automatisch zugeordnet.", f"  {assigned} auto-assigned.") if assigned else ""
         self.lib_sub.setText(t(
-            f"{added} Eröffnungen aus dem Ordner hinzugefügt — {len(self.lines)} insgesamt.",
-            f"Added {added} openings from the folder — {len(self.lines)} in total."))
+            f"{added} Eröffnungen aus dem Ordner hinzugefügt — {len(self.lines)} insgesamt.{extra}",
+            f"Added {added} openings from the folder — {len(self.lines)} in total.{extra}"))

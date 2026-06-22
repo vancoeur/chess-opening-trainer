@@ -12,6 +12,27 @@ _VALID = {WHITE, BLACK, NONE}
 
 _SEP = "\t"
 
+# Schlüsselwörter im Dateinamen, aus denen sich die Spielerfarbe ableiten lässt.
+_WHITE_HINTS = ("weiss", "weiß", "white")
+_BLACK_HINTS = ("schwarz", "black")
+
+
+def side_from_name(name: str) -> str | None:
+    """Rät die Spielerfarbe (Repertoire-Seite) aus einem Datei-/Quellnamen.
+
+    Gibt WHITE oder BLACK zurück, wenn der Name EINDEUTIG auf eine Farbe deutet
+    (z. B. »Weiss London.pgn« → WHITE, »Schwarz Pirc.pgn« → BLACK). Bei keinem
+    oder mehrdeutigem Treffer (beide Farben im Namen) → None, damit nie heimlich
+    falsch geraten wird."""
+    low = str(name).lower()
+    has_white = any(h in low for h in _WHITE_HINTS)
+    has_black = any(h in low for h in _BLACK_HINTS)
+    if has_white and not has_black:
+        return WHITE
+    if has_black and not has_white:
+        return BLACK
+    return None
+
 
 class OpeningSides:
     """Speichert je Eröffnung (Quelle + Name) die Repertoire-Seite direkt:
