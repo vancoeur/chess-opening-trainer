@@ -515,6 +515,11 @@ class MainWindow(QtWidgets.QMainWindow):
         drill_act = go_menu.addAction(t("Bäume üben", "Train trees"))
         drill_act.setShortcut(QtGui.QKeySequence("Ctrl+T"))
         drill_act.triggered.connect(self._open_tree_drill)
+        go_menu.addSeparator()
+        spar_act = go_menu.addAction(t("Gegen Stockfish spielen", "Play vs Stockfish"))
+        spar_act.triggered.connect(self._open_sparring)
+        expl_act = go_menu.addAction(t("Eröffnungs-Explorer (Lichess)", "Opening explorer (Lichess)"))
+        expl_act.triggered.connect(self._open_explorer)
 
         view_menu = self.menuBar().addMenu(t("Ansicht", "View"))
         self._eval_bar_action = view_menu.addAction(t("Bewertungs-Leiste anzeigen", "Show evaluation bar"))
@@ -1016,9 +1021,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         side = QtWidgets.QVBoxLayout()
         side.setSpacing(12)
-        eyebrow = QtWidgets.QLabel(t("BAUM ÜBEN", "TRAIN TREE"))
-        eyebrow.setObjectName("eyebrow")
-        side.addWidget(eyebrow)
+        self.drill_eyebrow = QtWidgets.QLabel(t("BAUM ÜBEN", "TRAIN TREE"))
+        self.drill_eyebrow.setObjectName("eyebrow")
+        side.addWidget(self.drill_eyebrow)
         self.tree_drill_combo = QtWidgets.QComboBox()
         self.tree_drill_combo.currentIndexChanged.connect(self._drill_combo_changed)
         side.addWidget(self.tree_drill_combo)
@@ -1046,10 +1051,11 @@ class MainWindow(QtWidgets.QMainWindow):
         side.addLayout(btns)
         side.addStretch(1)
 
-        back = QtWidgets.QPushButton(t("‹  Zurück zum Editor", "‹  Back to editor"))
-        back.setObjectName("more")
-        back.clicked.connect(lambda: self.stack.setCurrentIndex(9))
-        side.addWidget(back, 0, QtCore.Qt.AlignLeft)
+        self._drill_back_index = 9
+        self.drill_back_btn = QtWidgets.QPushButton(t("‹  Zurück zum Editor", "‹  Back to editor"))
+        self.drill_back_btn.setObjectName("more")
+        self.drill_back_btn.clicked.connect(lambda: self.stack.setCurrentIndex(self._drill_back_index))
+        side.addWidget(self.drill_back_btn, 0, QtCore.Qt.AlignLeft)
 
         layout.addLayout(side, 1)
         return page
@@ -1073,6 +1079,9 @@ class MainWindow(QtWidgets.QMainWindow):
         if tree is None:
             return
         self._due_session = False
+        self.drill_eyebrow.setText(t("BAUM ÜBEN", "TRAIN TREE"))
+        self._drill_back_index = 9
+        self.drill_back_btn.setText(t("‹  Zurück zum Editor", "‹  Back to editor"))
         self.tree_drill_combo.setVisible(True)
         self.drill_manual_check.setVisible(True)
         self._drill_tree = tree
@@ -1132,6 +1141,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self._due_total = len(items)
         self._due_session = True
         self._drill_manual = False
+        self.drill_eyebrow.setText(t("HEUTE FÄLLIG", "DUE TODAY"))
+        self._drill_back_index = 0
+        self.drill_back_btn.setText(t("‹  Zurück zum Training", "‹  Back to training"))
         self.tree_drill_combo.setVisible(False)
         self.drill_manual_check.setVisible(False)
         self.stack.setCurrentIndex(10)
@@ -2087,12 +2099,15 @@ class MainWindow(QtWidgets.QMainWindow):
         return page
 
     def _open_sparring(self) -> None:
-        if self.training is None:
-            return
-        self._spar_board = self.training.board.copy()
-        self._spar_color = (
-            self._train_color_for(self.current_line) if self.current_line else chess.WHITE
-        )
+        # Auch ohne laufendes Training nutzbar (Menü-Einstieg): dann ab Grundstellung.
+        if self.training is not None:
+            self._spar_board = self.training.board.copy()
+            self._spar_color = (
+                self._train_color_for(self.current_line) if self.current_line else chess.WHITE
+            )
+        else:
+            self._spar_board = chess.Board()
+            self._spar_color = chess.WHITE
         self.spar_board.train_color = self._spar_color
         self.spar_board.set_flipped(self._spar_color == chess.BLACK)
         self.spar_eval.set_flipped(self._spar_color == chess.BLACK)
@@ -2511,9 +2526,8 @@ class MainWindow(QtWidgets.QMainWindow):
         return page
 
     def _open_explorer(self) -> None:
-        if self.training is None:
-            return
-        self._explorer_board = self.training.board.copy()
+        # Auch ohne laufendes Training nutzbar (Menü-Einstieg): dann ab Grundstellung.
+        self._explorer_board = self.training.board.copy() if self.training is not None else chess.Board()
         self._explorer_seed_plies = len(self._explorer_board.move_stack)
         color = self._train_color_for(self.current_line) if self.current_line else chess.WHITE
         self.explorer_board.set_flipped(color == chess.BLACK)
