@@ -811,7 +811,7 @@ class MainWindow(QtWidgets.QMainWindow):
             t(f"{len(trees)} Repertoire-Bäume mit {branches} Verzweigungen importiert.\n\n"
               "Du findest sie im »Repertoire-Editor« (⌘E) und unter »Bäume üben« (⌘T) im Auswahlmenü oben.",
               f"Imported {len(trees)} repertoire trees with {branches} branches.\n\n"
-              "Find them in the »Repertoire editor« (Cmd-E) and under »Train trees« (Cmd-T) in the dropdown."))
+              "Find them in the »Repertoire editor« (⌘E) and under »Train trees« (⌘T) in the dropdown."))
 
     def _open_editor(self) -> None:
         trees = self.tree_store.all()
@@ -1106,7 +1106,7 @@ class MainWindow(QtWidgets.QMainWindow):
             QtWidgets.QMessageBox.information(
                 self, t("Keine Bäume", "No trees"),
                 t("Lege zuerst im Repertoire-Editor (⌘E) einen Baum an.",
-                  "Create a tree in the repertoire editor (Cmd-E) first."))
+                  "Create a tree in the repertoire editor (⌘E) first."))
             return
         self._start_tree_drill(tree)
 
@@ -1689,8 +1689,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
         btn_row = QtWidgets.QHBoxLayout()
         self.solution_btn = QtWidgets.QPushButton(t("Lösung zeigen", "Show solution"))
+        self.solution_btn.setToolTip(t("Tastenkürzel: L", "Shortcut: L"))
         self.solution_btn.clicked.connect(self._show_solution)
-        self.next_btn = QtWidgets.QPushButton(t("Überspringen", "Skip"))
+        self.next_btn = QtWidgets.QPushButton(t("Diese Eröffnung überspringen", "Skip this opening"))
+        self.next_btn.setToolTip(t("Tastenkürzel: Eingabetaste", "Shortcut: Enter"))
         self.next_btn.clicked.connect(self._skip)
         btn_row.addWidget(self.solution_btn)
         btn_row.addWidget(self.next_btn)
@@ -1937,6 +1939,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.tuv_status = self._plain_label(t("Noch nicht geprüft.", "Not checked yet."))
         self.tuv_status.setObjectName("status")
         self.tuv_status.setWordWrap(True)
+        self.tuv_status.setToolTip(t(
+            "Bewertungen aus Sicht von Weiß: + bedeutet Vorteil Weiß, − Vorteil Schwarz "
+            "(in Bauerneinheiten, z. B. −1.3 = ein Bauer und etwas Schwarz-Vorteil).",
+            "Evaluations from White's view: + means White is better, − Black is better "
+            "(in pawns, e.g. −1.3 ≈ a pawn-and-a-bit for Black)."))
         outer.addWidget(self.tuv_status)
 
         self.tuv_list = QtWidgets.QListWidget()
@@ -2436,6 +2443,16 @@ class MainWindow(QtWidgets.QMainWindow):
             self._progress_rows.append(
                 (line, s.attempts, s.accuracy, mastery_bucket(s.attempts, s.accuracy))
             )
+        # Ohne zugeordnete Eröffnungen bleibt der Balken ein leerer grauer Streifen.
+        self.progress_bar.setVisible(bool(assigned))
+        if not assigned:
+            self.progress_counts.setText(t(
+                "Noch keine Eröffnung einem Repertoire zugeordnet — ordne sie unter "
+                "»Alle Eröffnungen« Weiß oder Schwarz zu.",
+                "No opening assigned to a repertoire yet — assign them to White or Black "
+                "under »All openings«."))
+            self._render_progress_list()
+            return
         counts = summarize_mastery([(a, acc) for _, a, acc, _ in self._progress_rows])
         self.progress_bar.set_counts(counts["sitzt"], counts["wackelt"], counts["neu"])
         self.progress_counts.setText(t(
@@ -3108,6 +3125,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.viewer_status.setObjectName("status")
         self.viewer_status.setWordWrap(True)
         self.viewer_status.setMinimumHeight(72)
+        self.viewer_status.setToolTip(t(
+            "Bewertungen aus Sicht von Weiß: + bedeutet Vorteil Weiß, − Vorteil Schwarz "
+            "(in Bauerneinheiten).",
+            "Evaluations from White's view: + means White is better, − Black is better "
+            "(in pawns)."))
 
         step = QtWidgets.QHBoxLayout()
         self.viewer_prev_btn = QtWidgets.QPushButton(t("‹ Zurück", "‹ Back"))
