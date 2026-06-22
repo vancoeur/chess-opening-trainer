@@ -436,6 +436,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self._board_theme = "green"
         set_board_theme(self._board_theme)
         self._show_eval_bar = self._eval_settings.value("show_eval_bar", True, type=bool)
+        from qt_app.engine import find_stockfish
+        self._stockfish_available = find_stockfish() is not None
         self._eval_bar_thread = None
         self._eval_bar_worker = None
 
@@ -524,7 +526,10 @@ class MainWindow(QtWidgets.QMainWindow):
         view_menu = self.menuBar().addMenu(t("Ansicht", "View"))
         self._eval_bar_action = view_menu.addAction(t("Bewertungs-Leiste anzeigen", "Show evaluation bar"))
         self._eval_bar_action.setCheckable(True)
-        self._eval_bar_action.setChecked(self._show_eval_bar)
+        self._eval_bar_action.setChecked(self._show_eval_bar and self._stockfish_available)
+        self._eval_bar_action.setEnabled(self._stockfish_available)
+        if not self._stockfish_available:
+            self._eval_bar_action.setToolTip(t("Stockfish nicht gefunden.", "Stockfish not found."))
         self._eval_bar_action.toggled.connect(self._toggle_eval_bar)
 
         theme_menu = view_menu.addMenu(t("Brettfarbe", "Board color"))
@@ -604,7 +609,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def _toggle_eval_bar(self, on: bool) -> None:
         self._show_eval_bar = on
         self._eval_settings.setValue("show_eval_bar", on)
-        self.eval_bar.setVisible(on)
+        self.eval_bar.setVisible(on and self._stockfish_available)
         if on:
             self._request_eval()
         else:
@@ -1636,8 +1641,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.board.moveRequested.connect(self._on_move)
 
         self.eval_bar = EvalBar(height=self.board.board_pixels())
+        self.eval_bar.setToolTip(t("Stellungsbewertung durch Stockfish.",
+                                   "Position evaluation by Stockfish."))
         self.eval_bar.set_flipped(self.train_color == chess.BLACK)
-        self.eval_bar.setVisible(self._show_eval_bar)
+        # Ohne Stockfish bliebe nur ein leerer grauer Streifen -> dann ausblenden.
+        self.eval_bar.setVisible(self._show_eval_bar and self._stockfish_available)
         self._add_board_with_eval(layout, self.board, self.eval_bar)
 
         side = QtWidgets.QVBoxLayout()
@@ -2874,6 +2882,16 @@ class MainWindow(QtWidgets.QMainWindow):
             path = self._eval_settings.value("games_pgn_path", "", type=str)
             if path and Path(path).exists():
                 self._load_games_from_path(path)
+        # Ohne zugeordnetes Repertoire ist der Abgleich sinnlos (alles „ungedeckt") ->
+        # actionable Hinweis statt irreführender Zähler. Zuletzt setzen, damit das
+        # Auto-Laden ihn nicht überschreibt.
+        if not any(self._side_of_line(l) for l in self.lines):
+            self.games_status.setText(t(
+                "Tipp: Ordne zuerst Eröffnungen einem Repertoire zu (Weiß/Schwarz, unter "
+                "»Alle Eröffnungen«) — sonst kann ich deine Partien nicht mit deinem "
+                "Repertoire abgleichen.",
+                "Tip: assign some openings to a repertoire (White/Black, under »All openings«) "
+                "first — otherwise I can't compare your games against your repertoire."))
         self.stack.setCurrentIndex(7)
 
     def _update_games_name_btn(self) -> None:
@@ -3263,7 +3281,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.viewer_analyze_btn.setEnabled(True)
         if msg == "nostockfish":
             self.viewer_status.setText(t(
-                "Stockfish nicht gefunden.", "Stockfish not found.",
+                "Stockfish nicht gefunden. Installiere es einmalig im Terminal mit "
+                "»brew install stockfish« — danach läuft die Analyse.",
+                "Stockfish not found. Install it once in the Terminal with "
+                "»brew install stockfish« — then the analysis will run.",
             ))
         else:
             self.viewer_status.setText(t(f"Prüfung fehlgeschlagen: {msg}", f"Analysis failed: {msg}"))
@@ -3521,7 +3542,8 @@ class MainWindow(QtWidgets.QMainWindow):
                 if self.training.is_finished():
                     self._finish_line()
                 else:
-                    self.status.setText(t("Richtig.", "Correct."))
+                    self.status.setText(t("✓ Richtig — weiter, du bist dran.",
+                                          "✓ Correct — keep going, your move."))
                 self._request_eval()
 
             if last is not None:
@@ -3630,7 +3652,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._had_wrong = True
         move = chess.Move.from_uci(sol.uci)
         self.board.show_solution(move.from_square, move.to_square)
-        self.status.setText(t(f"Lösung: {sol.san}", f"Solution: {sol.san}"))
+        self.status.setText(t(f"Lösung: {sol.san} — spiel sie jetzt selbst nach (grün markiert).",
+                              f"Solution: {sol.san} — now play it yourself (shown in green)."))
 
     def _skip(self) -> None:
         if self._drill:
