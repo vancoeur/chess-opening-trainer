@@ -716,14 +716,18 @@ class MainWindow(QtWidgets.QMainWindow):
         side_row.addWidget(self.editor_side_combo, 1)
         side.addLayout(side_row)
 
-        train_btn = QtWidgets.QPushButton(t("▶  Diesen Baum üben", "▶  Train this tree"))
-        train_btn.setObjectName("primary")
-        train_btn.clicked.connect(lambda: self._start_tree_drill(self.editor_tree))
-        side.addWidget(train_btn, 0, QtCore.Qt.AlignLeft)
+        self.editor_train_btn = QtWidgets.QPushButton(t("▶  Diesen Baum üben", "▶  Train this tree"))
+        self.editor_train_btn.setObjectName("primary")
+        self.editor_train_btn.clicked.connect(lambda: self._start_tree_drill(self.editor_tree))
+        side.addWidget(self.editor_train_btn, 0, QtCore.Qt.AlignLeft)
 
         self.editor_hint = self._plain_label(t(
-            "Spiel Züge aufs Brett, um Varianten anzuhängen. Klick einen Zug in der Liste, um dorthin zu springen.",
-            "Play moves on the board to add lines. Click a move in the list to jump there.",
+            "Spiel Züge aufs Brett, um Varianten anzuhängen. Klick einen Zug in der Liste, "
+            "um dorthin zu springen. Für eine zweite Gegner-Antwort: zum Elternzug "
+            "zurückspringen und einen anderen Zug spielen — er erscheint eingerückt als Nebenvariante.",
+            "Play moves on the board to add lines. Click a move in the list to jump there. "
+            "For a second opponent reply: jump back to the parent move and play a different "
+            "move — it appears indented as a side line.",
         ))
         self.editor_hint.setObjectName("hint")
         self.editor_hint.setWordWrap(True)
@@ -840,7 +844,16 @@ class MainWindow(QtWidgets.QMainWindow):
             self, t("Neuer Baum", "New tree"), t("Name des Repertoires:", "Repertoire name:"))
         if not ok:
             return
-        tree = RepertoireTree.new(name=name.strip() or t("Neues Repertoire", "New repertoire"), side="white")
+        items = [t("Weiß", "White"), t("Schwarz", "Black")]
+        choice, ok2 = QtWidgets.QInputDialog.getItem(
+            self, t("Seite", "Side"),
+            t("Welche Farbe spielst du in diesem Repertoire?",
+              "Which color do you play in this repertoire?"),
+            items, 0, False)
+        if not ok2:
+            return
+        side = "white" if choice == items[0] else "black"
+        tree = RepertoireTree.new(name=name.strip() or t("Neues Repertoire", "New repertoire"), side=side)
         self.tree_store.add(tree)
         self._editor_save()
         self.editor_tree = tree
@@ -914,6 +927,13 @@ class MainWindow(QtWidgets.QMainWindow):
         if si >= 0:
             self.editor_side_combo.setCurrentIndex(si)
         self.editor_side_combo.blockSignals(False)
+        # Üben braucht eine Seite — sonst Knopf deaktivieren statt erst auf der
+        # Drill-Seite zu scheitern.
+        playable = self.editor_tree.side in ("white", "black")
+        self.editor_train_btn.setEnabled(playable)
+        self.editor_train_btn.setToolTip("" if playable else t(
+            "Setz oben die Seite (Weiß/Schwarz), um diesen Baum zu üben.",
+            "Set the side (White/Black) above to train this tree."))
         self._editor_render_list()
 
     def _editor_on_move(self, from_square: int, to_square: int) -> None:
@@ -970,6 +990,11 @@ class MainWindow(QtWidgets.QMainWindow):
             Path(path).write_text(export_trees([self.editor_tree]), encoding="utf-8")
         except Exception as exc:  # noqa: BLE001
             QtWidgets.QMessageBox.warning(self, t("Export fehlgeschlagen", "Export failed"), str(exc))
+            return
+        QtWidgets.QMessageBox.information(
+            self, t("Exportiert", "Exported"),
+            t(f"Repertoire (mit allen Varianten) gespeichert:\n{path}",
+              f"Repertoire (with all variations) saved:\n{path}"))
 
     def _editor_save(self) -> None:
         self.tree_store.save(self.trees_path)
