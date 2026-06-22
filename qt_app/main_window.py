@@ -1191,14 +1191,15 @@ class MainWindow(QtWidgets.QMainWindow):
         lay = QtWidgets.QHBoxLayout(w)
         lay.setContentsMargins(10, 8, 10, 8)
         name = self._plain_label(self._tname(r["name"]) or t("(ohne Namen)", "(unnamed)"))
-        name.setObjectName("name")
+        name.setObjectName("rowname")
         counts = QtWidgets.QLabel(t(f"{r['due']} fällig · {r['new']} neu",
                                     f"{r['due']} due · {r['new']} new"))
         counts.setObjectName("hint")
         btn = QtWidgets.QPushButton(t("▶ üben", "▶ train"))
         btn.setEnabled((r["due"] + r["new"]) > 0)
         btn.clicked.connect(lambda _=False, tr=r["tree"]: self._start_due_session(only_tree=tr))
-        lay.addWidget(name, 1)
+        lay.addWidget(name, 0)
+        lay.addStretch(1)
         lay.addWidget(counts, 0)
         lay.addWidget(btn, 0)
         return w
@@ -1233,10 +1234,11 @@ class MainWindow(QtWidgets.QMainWindow):
             item.setFlags(QtCore.Qt.NoItemFlags)
             self.due_overview_list.addItem(item)
         else:
+            width = max(self.due_overview_list.viewport().width(), 900)
             for r in rows:
                 row = self._due_overview_row(r)
                 item = QtWidgets.QListWidgetItem()
-                item.setSizeHint(row.sizeHint())
+                item.setSizeHint(QtCore.QSize(width, row.sizeHint().height()))
                 self.due_overview_list.addItem(item)
                 self.due_overview_list.setItemWidget(item, row)
         self.stack.setCurrentIndex(11)
