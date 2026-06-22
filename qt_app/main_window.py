@@ -61,6 +61,7 @@ QPushButton#more:disabled { background: #f2f2ee; color: #bcbcb3; border-color: #
 QLabel { background: transparent; }
 QLabel#rowname { font-size: 15px; font-weight: 600; color: #23241f; }
 QLabel#rowsub  { font-size: 12px; color: #8a8f80; }
+QLabel#duename { font-size: 13px; font-weight: 600; color: #23241f; }
 QWidget#libraryrow { background: transparent; }
 QListWidget#library { background: transparent; border: none; }
 QListWidget#library::item { background: transparent; border: none; margin: 2px 0; }
@@ -1189,12 +1190,12 @@ class MainWindow(QtWidgets.QMainWindow):
     def _due_overview_row(self, r: dict) -> QtWidgets.QWidget:
         w = QtWidgets.QWidget()
         lay = QtWidgets.QHBoxLayout(w)
-        lay.setContentsMargins(10, 8, 10, 8)
+        lay.setContentsMargins(10, 5, 10, 5)
         name = self._plain_label(self._tname(r["name"]) or t("(ohne Namen)", "(unnamed)"))
-        name.setObjectName("rowname")
+        name.setObjectName("duename")
         counts = QtWidgets.QLabel(t(f"{r['due']} fällig · {r['new']} neu",
                                     f"{r['due']} due · {r['new']} new"))
-        counts.setObjectName("hint")
+        counts.setObjectName("rowsub")
         btn = QtWidgets.QPushButton(t("▶ üben", "▶ train"))
         btn.setEnabled((r["due"] + r["new"]) > 0)
         btn.clicked.connect(lambda _=False, tr=r["tree"]: self._start_due_session(only_tree=tr))
