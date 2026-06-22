@@ -34,8 +34,7 @@ def test_open_default_session_lands_on_due_when_populated(tmp_path, monkeypatch)
     _load_black(win, tmp_path)
     win.stack.setCurrentIndex(0)
     win._open_default_session()
-    assert win.stack.currentIndex() == 10        # primär: Stellungs-Sitzung
-    assert win._due_total > 0
+    assert win.stack.currentIndex() == 11        # primär: »Heute fällig«-Übersicht
 
 
 def test_open_default_session_stays_when_nothing_due(tmp_path, monkeypatch):
@@ -51,4 +50,4 @@ def test_due_session_button_visible_and_starts(tmp_path, monkeypatch):
     win._start_next()                             # Sichtbarkeit aktualisieren
     assert not win.due_session_btn.isHidden()     # primärer Knopf sichtbar
     win.due_session_btn.click()
-    assert win.stack.currentIndex() == 10
+    assert win.stack.currentIndex() == 11         # öffnet die Übersicht

@@ -517,7 +517,7 @@ class MainWindow(QtWidgets.QMainWindow):
         editor_act.triggered.connect(self._open_editor)
         due_act = go_menu.addAction(t("Heute fällig", "Due today"))
         due_act.setShortcut(QtGui.QKeySequence("Ctrl+D"))
-        due_act.triggered.connect(self._start_due_session)
+        due_act.triggered.connect(self._open_due_overview)
         drill_act = go_menu.addAction(t("Bäume üben", "Train trees"))
         drill_act.setShortcut(QtGui.QKeySequence("Ctrl+T"))
         drill_act.triggered.connect(self._open_tree_drill)
@@ -1073,11 +1073,18 @@ class MainWindow(QtWidgets.QMainWindow):
         self._drill_back_index = 9
         self.drill_back_btn = QtWidgets.QPushButton(t("‹  Zurück zum Editor", "‹  Back to editor"))
         self.drill_back_btn.setObjectName("more")
-        self.drill_back_btn.clicked.connect(lambda: self.stack.setCurrentIndex(self._drill_back_index))
+        self.drill_back_btn.clicked.connect(self._drill_go_back)
         side.addWidget(self.drill_back_btn, 0, QtCore.Qt.AlignLeft)
 
         layout.addLayout(side, 1)
         return page
+
+    def _drill_go_back(self) -> None:
+        """Zurück aus der Sitzung — bei Ziel »Übersicht« mit frischen Zählern."""
+        if self._drill_back_index == 11:
+            self._open_due_overview()
+        else:
+            self.stack.setCurrentIndex(self._drill_back_index)
 
     def _open_tree_drill(self) -> None:
         """Menü-Einstieg „Bäume üben": einen Baum wählen und drillen."""
@@ -1148,12 +1155,103 @@ class MainWindow(QtWidgets.QMainWindow):
         if tree is not None and (self._drill_tree is None or tree.id != self._drill_tree.id):
             self._start_tree_drill(tree)
 
-    # ---- „Heute fällig": stellungs-basierte Tagessitzung (primärer Trainings-Einstieg) ----
-    def _due_items(self) -> list:
-        """Heute fällige/neue eigene Stellungen über das ganze Repertoire (beide Seiten)."""
-        from opening_trainer.tree_session import due_drill_items
+    # ---- „Heute fällig": Übersicht + stellungs-basierte Tagessitzung ----
+    def _build_due_overview_page(self) -> QtWidgets.QWidget:
+        page = QtWidgets.QWidget()
+        outer = QtWidgets.QVBoxLayout(page)
+        outer.setContentsMargins(40, 30, 40, 30)
+        outer.setSpacing(14)
+
+        eyebrow = QtWidgets.QLabel(t("HEUTE FÄLLIG", "DUE TODAY"))
+        eyebrow.setObjectName("eyebrow")
+        outer.addWidget(eyebrow)
+        self.due_overview_forecast = self._plain_label("")
+        self.due_overview_forecast.setObjectName("hint")
+        self.due_overview_forecast.setWordWrap(True)
+        outer.addWidget(self.due_overview_forecast)
+
+        self.due_overview_all_btn = QtWidgets.QPushButton(t("▶  Alles üben", "▶  Train all"))
+        self.due_overview_all_btn.setObjectName("primary")
+        self.due_overview_all_btn.clicked.connect(lambda: self._start_due_session())
+        outer.addWidget(self.due_overview_all_btn, 0, QtCore.Qt.AlignLeft)
+
+        self.due_overview_list = QtWidgets.QListWidget()
+        self.due_overview_list.setObjectName("library")
+        self.due_overview_list.setSpacing(2)
+        outer.addWidget(self.due_overview_list, 1)
+
+        back = QtWidgets.QPushButton(t("‹  Zurück zur Startseite", "‹  Back to start"))
+        back.setObjectName("more")
+        back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
+        outer.addWidget(back, 0, QtCore.Qt.AlignLeft)
+        return page
+
+    def _due_overview_row(self, r: dict) -> QtWidgets.QWidget:
+        w = QtWidgets.QWidget()
+        lay = QtWidgets.QHBoxLayout(w)
+        lay.setContentsMargins(10, 8, 10, 8)
+        name = self._plain_label(self._tname(r["name"]) or t("(ohne Namen)", "(unnamed)"))
+        name.setObjectName("name")
+        counts = QtWidgets.QLabel(t(f"{r['due']} fällig · {r['new']} neu",
+                                    f"{r['due']} due · {r['new']} new"))
+        counts.setObjectName("hint")
+        btn = QtWidgets.QPushButton(t("▶ üben", "▶ train"))
+        btn.setEnabled((r["due"] + r["new"]) > 0)
+        btn.clicked.connect(lambda _=False, tr=r["tree"]: self._start_due_session(only_tree=tr))
+        lay.addWidget(name, 1)
+        lay.addWidget(counts, 0)
+        lay.addWidget(btn, 0)
+        return w
+
+    def _open_due_overview(self) -> None:
+        """Übersicht vor dem Üben: Vorschau + Aufschlüsselung pro Eröffnung."""
+        from opening_trainer.tree_session import due_breakdown, due_forecast
+        today = date.today()
+        rows: list = []
+        fc = {"today": 0, "tomorrow": 0, "week": 0, "new": 0}
+        for side_name, color in (("white", chess.WHITE), ("black", chess.BLACK)):
+            trees = self.tree_store.by_side(side_name)
+            rows += due_breakdown(trees, color, self.position_schedule, today)
+            f = due_forecast(trees, color, self.position_schedule, today)
+            for k in fc:
+                fc[k] += f[k]
+        rows.sort(key=lambda r: (-r["due"], -r["new"], r["name"]))
+
+        self.due_overview_forecast.setText(t(
+            f"Heute: {fc['today']}   ·   Morgen: {fc['tomorrow']}   ·   "
+            f"Diese Woche: {fc['week']}   ·   Neu: {fc['new']}",
+            f"Today: {fc['today']}   ·   Tomorrow: {fc['tomorrow']}   ·   "
+            f"This week: {fc['week']}   ·   New: {fc['new']}"))
+        total = len(self._due_items())          # echte (deduplizierte) Sitzungsgröße
+        self.due_overview_all_btn.setText(t(f"▶  Alles üben  ({total})", f"▶  Train all  ({total})"))
+        self.due_overview_all_btn.setEnabled(total > 0)
+
+        self.due_overview_list.clear()
+        if not rows:
+            item = QtWidgets.QListWidgetItem(t("Nichts fällig — schau morgen wieder vorbei. 🎉",
+                                               "Nothing due — come back tomorrow. 🎉"))
+            item.setFlags(QtCore.Qt.NoItemFlags)
+            self.due_overview_list.addItem(item)
+        else:
+            for r in rows:
+                row = self._due_overview_row(r)
+                item = QtWidgets.QListWidgetItem()
+                item.setSizeHint(row.sizeHint())
+                self.due_overview_list.addItem(item)
+                self.due_overview_list.setItemWidget(item, row)
+        self.stack.setCurrentIndex(11)
+
+    def _due_items(self, only_tree=None) -> list:
+        """Heute fällige/neue eigene Stellungen — über das ganze Repertoire (beide
+        Seiten) oder, wenn ``only_tree`` gesetzt ist, nur für diese eine Eröffnung."""
+        from opening_trainer.tree_session import due_drill_items, due_items_for_tree
         today = date.today()
         items: list = []
+        if only_tree is not None:
+            side = chess.WHITE if only_tree.side == "white" else chess.BLACK
+            for tree, node_id in due_items_for_tree(only_tree, side, self.position_schedule, today):
+                items.append((tree, node_id, side))
+            return items
         for side_name, color in (("white", chess.WHITE), ("black", chess.BLACK)):
             trees = self.tree_store.by_side(side_name)
             for tree, node_id in due_drill_items(trees, color, self.position_schedule, today):
@@ -1161,21 +1259,21 @@ class MainWindow(QtWidgets.QMainWindow):
         return items
 
     def _open_default_session(self) -> None:
-        """Beim Start in die primäre Stellungs-Sitzung springen, wenn etwas fällig/neu
+        """Beim Start in die »Heute fällig«-Übersicht springen, wenn etwas fällig/neu
         ist; sonst auf der Startseite (Linie/Leerzustand) bleiben."""
         if self._due_items():
-            self._start_due_session()
+            self._open_due_overview()
 
-    def _start_due_session(self) -> None:
-        items = self._due_items()
+    def _start_due_session(self, only_tree=None) -> None:
+        items = self._due_items(only_tree)
         self._due_queue = items
         self._due_total = len(items)
         self._due_session = True
         self._drill_manual = False
         self.tree_drill_feedback.setText("")
         self.drill_eyebrow.setText(t("HEUTE FÄLLIG", "DUE TODAY"))
-        self._drill_back_index = 0
-        self.drill_back_btn.setText(t("‹  Linie durchspielen", "‹  Play a line instead"))
+        self._drill_back_index = 11                # zurück zur Übersicht
+        self.drill_back_btn.setText(t("‹  Zurück zur Übersicht", "‹  Back to overview"))
         self.tree_drill_combo.setVisible(False)
         self.drill_manual_check.setVisible(False)
         self.stack.setCurrentIndex(10)
@@ -1653,6 +1751,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stack.addWidget(self._build_game_viewer_page())  # 8
         self.stack.addWidget(self._build_editor_page())       # 9
         self.stack.addWidget(self._build_tree_drill_page())   # 10
+        self.stack.addWidget(self._build_due_overview_page())  # 11
         self.setStyleSheet(STYLE)
         self.resize(1000, 700)
 
@@ -1754,7 +1853,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # durchspielen"-Modus; der Knopf führt zur fälligen Stellungs-Wiederholung.
         self.due_session_btn = QtWidgets.QPushButton(t("▶  Heute fällig üben", "▶  Train what's due"))
         self.due_session_btn.setObjectName("primary")
-        self.due_session_btn.clicked.connect(self._start_due_session)
+        self.due_session_btn.clicked.connect(self._open_due_overview)
 
         side.addWidget(self.eyebrow)
         side.addWidget(self.name_label)
