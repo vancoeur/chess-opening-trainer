@@ -86,6 +86,32 @@ def test_folder_autofill_from_filename(tmp_path, monkeypatch):
         assert win._side_of_line(line) == want
 
 
+def test_unassign_button_relabelled_with_tooltip(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    assert win.assign_none_btn.text() in ("Zuordnung lösen", "Unassign")   # nicht mehr „herausnehmen"
+    assert win.assign_none_btn.toolTip() != ""                              # erklärt, dass nichts gelöscht wird
+
+
+def test_folder_load_reports_unassigned_files(tmp_path, monkeypatch):
+    import qt_app.main_window as mw
+    from qt_app import i18n
+    data = tmp_path / "data"
+    data.mkdir()
+    monkeypatch.setattr(mw, "data_dir", lambda: data)
+    win = mw.MainWindow()
+    i18n.set_language("en")
+    folder = tmp_path / "rep"
+    folder.mkdir()
+    (folder / "Weiss London.pgn").write_text(WHITE_PGN, encoding="utf-8")   # -> Weiß
+    (folder / "Repertoire.pgn").write_text(WHITE_PGN, encoding="utf-8")     # neutral -> offen
+    monkeypatch.setattr(QtWidgets.QFileDialog, "getExistingDirectory",
+                        staticmethod(lambda *a, **k: str(folder)))
+    win._load_folder_dialog()
+    assert win.stack.currentIndex() == 1                 # zeigt Ergebnis in der Bibliothek
+    assert "auto-assigned" in win.lib_sub.text()
+    assert "without a color" in win.lib_sub.text()       # Hinweis auf die offenen Dateien
+
+
 def test_ambiguous_filename_is_left_unassigned(tmp_path, monkeypatch):
     folder = tmp_path / "rep"
     folder.mkdir()

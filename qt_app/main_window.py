@@ -1798,7 +1798,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.assign_white_btn.clicked.connect(lambda: self._assign_selected("white"))
         self.assign_black_btn = QtWidgets.QPushButton(t("→ Schwarz-Repertoire", "→ Black repertoire"))
         self.assign_black_btn.clicked.connect(lambda: self._assign_selected("black"))
-        self.assign_none_btn = QtWidgets.QPushButton(t("herausnehmen", "remove"))
+        self.assign_none_btn = QtWidgets.QPushButton(t("Zuordnung lösen", "Unassign"))
+        self.assign_none_btn.setToolTip(t(
+            "Entfernt nur die Weiß/Schwarz-Zuordnung. Die Eröffnung bleibt geladen.",
+            "Removes only the White/Black assignment. The opening stays loaded."))
         self.assign_none_btn.clicked.connect(lambda: self._assign_selected("none"))
         self.train_one_btn = QtWidgets.QPushButton(t("Üben", "Train"))
         self.train_one_btn.setObjectName("primary")
@@ -4127,6 +4130,7 @@ class MainWindow(QtWidgets.QMainWindow):
             return
         added = self._add_pgn_source(path)   # HINZUFÜGEN statt ersetzen
         self._ask_and_assign_side(Path(path).name)
+        self._open_library()                 # Ergebnis sichtbar machen (Feedback am richtigen Ort)
         self.lib_sub.setText(t(
             f"{added} Eröffnungen hinzugefügt — {len(self.lines)} insgesamt. Klick eine an, um sie zu üben.",
             f"Added {added} openings — {len(self.lines)} in total. Click one to train it."))
@@ -4172,7 +4176,16 @@ class MainWindow(QtWidgets.QMainWindow):
             return
         added = self._add_pgn_source(folder)   # HINZUFÜGEN statt ersetzen
         assigned = self._auto_fill_sides_by_filename()   # je Datei aus dem Namen (Weiss…/Schwarz…)
-        extra = t(f"  {assigned} automatisch zugeordnet.", f"  {assigned} auto-assigned.") if assigned else ""
-        self.lib_sub.setText(t(
-            f"{added} Eröffnungen aus dem Ordner hinzugefügt — {len(self.lines)} insgesamt.{extra}",
-            f"Added {added} openings from the folder — {len(self.lines)} in total.{extra}"))
+        unassigned = sum(1 for l in self.lines if self._side_of_line(l) is None)
+        msg_de = f"{added} Eröffnungen aus dem Ordner hinzugefügt — {len(self.lines)} insgesamt."
+        msg_en = f"Added {added} openings from the folder — {len(self.lines)} in total."
+        if assigned:
+            msg_de += f" {assigned} automatisch zugeordnet."
+            msg_en += f" {assigned} auto-assigned."
+        if unassigned:
+            msg_de += (f" {unassigned} ohne Farbe — wähle sie über den Filter »Ohne Zuordnung« "
+                       "und ordne sie Weiß/Schwarz zu.")
+            msg_en += (f" {unassigned} without a color — pick them via the »Unassigned« filter "
+                       "and assign them to White/Black.")
+        self._open_library()                  # Ergebnis sichtbar machen (Feedback am richtigen Ort)
+        self.lib_sub.setText(t(msg_de, msg_en))
