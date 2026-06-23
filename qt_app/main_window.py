@@ -697,7 +697,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def _build_editor_page(self) -> QtWidgets.QWidget:
         page = QtWidgets.QWidget()
         layout = QtWidgets.QHBoxLayout(page)
-        layout.setContentsMargins(20, 20, 20, 20)
+        layout.setContentsMargins(26, 26, 26, 26)
         layout.setSpacing(24)
 
         self.editor_board = BoardView(square_size=66)
@@ -780,7 +780,7 @@ class MainWindow(QtWidgets.QMainWindow):
         nav.addWidget(export_btn)
         side.addLayout(nav)
 
-        back = QtWidgets.QPushButton(t("‹  Zurück zum Training", "‹  Back to training"))
+        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
         back.setObjectName("more")
         back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
         side.addWidget(back, 0, QtCore.Qt.AlignLeft)
@@ -1035,7 +1035,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def _build_tree_drill_page(self) -> QtWidgets.QWidget:
         page = QtWidgets.QWidget()
         layout = QtWidgets.QHBoxLayout(page)
-        layout.setContentsMargins(20, 20, 20, 20)
+        layout.setContentsMargins(26, 26, 26, 26)
         layout.setSpacing(24)
 
         self.tree_drill_board = BoardView(square_size=70)
@@ -1169,12 +1169,21 @@ class MainWindow(QtWidgets.QMainWindow):
     def _build_due_overview_page(self) -> QtWidgets.QWidget:
         page = QtWidgets.QWidget()
         outer = QtWidgets.QVBoxLayout(page)
-        outer.setContentsMargins(40, 30, 40, 30)
-        outer.setSpacing(14)
+        outer.setContentsMargins(26, 22, 26, 22)
+        outer.setSpacing(12)
 
-        eyebrow = QtWidgets.QLabel(t("HEUTE FÄLLIG", "DUE TODAY"))
-        eyebrow.setObjectName("eyebrow")
-        outer.addWidget(eyebrow)
+        # Kopf wie die anderen Listen-Seiten: Zurück oben-links + Titel.
+        header = QtWidgets.QHBoxLayout()
+        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
+        back.setObjectName("more")
+        back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
+        header.addWidget(back, 0, QtCore.Qt.AlignLeft)
+        header.addStretch(1)
+        outer.addLayout(header)
+        title = QtWidgets.QLabel(t("Heute fällig", "Due today"))
+        title.setObjectName("name")
+        outer.addWidget(title)
+
         self.due_overview_forecast = self._plain_label("")
         self.due_overview_forecast.setObjectName("hint")
         self.due_overview_forecast.setWordWrap(True)
@@ -1191,11 +1200,6 @@ class MainWindow(QtWidgets.QMainWindow):
         # Zeilen passen in die Breite -> kein horizontaler Scrollbalken nötig.
         self.due_overview_list.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         outer.addWidget(self.due_overview_list, 1)
-
-        back = QtWidgets.QPushButton(t("‹  Zurück zur Startseite", "‹  Back to start"))
-        back.setObjectName("more")
-        back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
-        outer.addWidget(back, 0, QtCore.Qt.AlignLeft)
         return page
 
     def _due_overview_row(self, r: dict) -> QtWidgets.QWidget:
@@ -1901,7 +1905,7 @@ class MainWindow(QtWidgets.QMainWindow):
         outer.setSpacing(12)
 
         header = QtWidgets.QHBoxLayout()
-        back = QtWidgets.QPushButton(t("‹  Zurück zum Training", "‹  Back to training"))
+        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
         back.setObjectName("more")
         back.clicked.connect(self._close_library)
         title = QtWidgets.QLabel(t("Deine Eröffnungen", "Your openings"))
@@ -2008,7 +2012,7 @@ class MainWindow(QtWidgets.QMainWindow):
         outer.setSpacing(12)
 
         header = QtWidgets.QHBoxLayout()
-        back = QtWidgets.QPushButton(t("‹  Zurück zum Training", "‹  Back to training"))
+        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
         back.setObjectName("more")
         back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
         header.addWidget(back, 0, QtCore.Qt.AlignLeft)
@@ -2051,9 +2055,9 @@ class MainWindow(QtWidgets.QMainWindow):
         outer.setSpacing(12)
 
         header = QtWidgets.QHBoxLayout()
-        back = QtWidgets.QPushButton(t("‹  Zurück zur Auswertung", "‹  Back to analysis"))
+        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
         back.setObjectName("more")
-        back.clicked.connect(lambda: self.stack.setCurrentIndex(2))
+        back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
         header.addWidget(back, 0, QtCore.Qt.AlignLeft)
         header.addStretch(1)
         outer.addLayout(header)
@@ -2290,7 +2294,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.spar_undo_btn.setEnabled(False)
         self.spar_reset_btn = QtWidgets.QPushButton(t("Neu ab Eröffnung", "Restart from opening"))
         self.spar_reset_btn.clicked.connect(self._spar_reset)
-        back = QtWidgets.QPushButton(t("‹  Zurück zum Training", "‹  Back to training"))
+        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
         back.setObjectName("more")
         back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
 
@@ -2526,9 +2530,9 @@ class MainWindow(QtWidgets.QMainWindow):
         outer.setSpacing(12)
 
         header = QtWidgets.QHBoxLayout()
-        back = QtWidgets.QPushButton(t("‹  Zurück zur Auswertung", "‹  Back to analysis"))
+        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
         back.setObjectName("more")
-        back.clicked.connect(lambda: self.stack.setCurrentIndex(2))
+        back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
         header.addWidget(back, 0, QtCore.Qt.AlignLeft)
         header.addStretch(1)
         outer.addLayout(header)
@@ -2739,7 +2743,7 @@ class MainWindow(QtWidgets.QMainWindow):
         nav.addStretch(1)
         nav.addWidget(token_btn)
 
-        back = QtWidgets.QPushButton(t("‹  Zurück zum Training", "‹  Back to training"))
+        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
         back.setObjectName("more")
         back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
 
@@ -2994,9 +2998,9 @@ class MainWindow(QtWidgets.QMainWindow):
         outer.setSpacing(12)
 
         header = QtWidgets.QHBoxLayout()
-        back = QtWidgets.QPushButton(t("‹  Zurück zur Auswertung", "‹  Back to analysis"))
+        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
         back.setObjectName("more")
-        back.clicked.connect(lambda: self.stack.setCurrentIndex(2))
+        back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
         header.addWidget(back, 0, QtCore.Qt.AlignLeft)
         header.addStretch(1)
         outer.addLayout(header)
