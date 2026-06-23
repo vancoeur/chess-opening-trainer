@@ -3052,7 +3052,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.games_list.count() == 0 and self._player_name.strip():
             path = self._eval_settings.value("games_pgn_path", "", type=str)
             if path and Path(path).exists():
-                self._load_games_from_path(path)
+                self._load_games_from_path(path, interactive=False)
         # Ohne zugeordnetes Repertoire ist der Abgleich sinnlos (alles „ungedeckt") ->
         # actionable Hinweis statt irreführender Zähler. Zuletzt setzen, damit das
         # Auto-Laden ihn nicht überschreibt.
@@ -3095,8 +3095,11 @@ class MainWindow(QtWidgets.QMainWindow):
         if not self._player_name.strip():
             self.games_status.setText(t("Bitte zuerst deinen Spielernamen eintragen.", "Please enter your player name first."))
             return
+        # Dialog im Ordner der zuletzt benutzten Datei öffnen (dort liegen die PGNs).
+        saved = self._eval_settings.value("games_pgn_path", "", type=str)
+        start_dir = str(Path(saved).parent) if saved else ""
         path, _ = QtWidgets.QFileDialog.getOpenFileName(
-            self, t("PGN deiner Partien laden", "Load your games PGN"), "",
+            self, t("PGN deiner Partien laden", "Load your games PGN"), start_dir,
             t("PGN-Dateien (*.pgn);;Alle Dateien (*)", "PGN files (*.pgn);;All files (*)")
         )
         if not path:
@@ -3104,7 +3107,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._eval_settings.setValue("games_pgn_path", path)
         self._load_games_from_path(path)
 
-    def _load_games_from_path(self, path: str) -> None:
+    def _load_games_from_path(self, path: str, interactive: bool = True) -> None:
         if not self._player_name.strip() or not Path(path).exists():
             return
         white_book = build_repertoire_book(
@@ -3124,6 +3127,19 @@ class MainWindow(QtWidgets.QMainWindow):
                     if game is None:
                         break
                     results.append(self._review_one_game(game, uname, white_book, black_book))
+        except PermissionError:
+            # macOS blockt geschützte Ordner (Downloads/Schreibtisch/Dokumente). Beim
+            # automatischen Nachladen still bleiben; bei manueller Auswahl erklären.
+            if interactive:
+                self.games_status.setText(t(
+                    "macOS hat den Zugriff auf diese Datei verweigert (geschützter Ordner "
+                    "wie Downloads/Schreibtisch/Dokumente). Erlaube »Opening Trainer« den "
+                    "Zugriff unter Systemeinstellungen → Datenschutz & Sicherheit → "
+                    "»Festplattenvollzugriff« — oder verschiebe die PGN in einen anderen Ordner.",
+                    "macOS denied access to this file (a protected folder such as Downloads/"
+                    "Desktop/Documents). Allow »Opening Trainer« access under System Settings "
+                    "→ Privacy & Security → »Full Disk Access« — or move the PGN to another folder."))
+            return
         except Exception as exc:  # noqa: BLE001
             self.games_status.setText(t(f"Konnte die PGN nicht lesen: {exc}", f"Could not read the PGN: {exc}"))
             return
