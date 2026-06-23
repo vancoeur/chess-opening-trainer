@@ -78,6 +78,15 @@ QLineEdit#search {
     border: 1px solid #d9d9cf; border-radius: 9px; background: #ffffff;
 }
 QLineEdit#search:focus { border-color: #6f8a4f; }
+
+/* Scrollbalken deutlich sichtbar (vorher kaum erkennbar) */
+QScrollBar:vertical   { background: #e9eae1; width: 14px; margin: 0; border-radius: 7px; }
+QScrollBar:horizontal { background: #e9eae1; height: 14px; margin: 0; border-radius: 7px; }
+QScrollBar::handle:vertical   { background: #9aa789; min-height: 36px; border-radius: 7px; }
+QScrollBar::handle:horizontal { background: #9aa789; min-width: 36px;  border-radius: 7px; }
+QScrollBar::handle:hover { background: #7f8e6a; }
+QScrollBar::add-line, QScrollBar::sub-line { width: 0; height: 0; background: none; border: none; }
+QScrollBar::add-page, QScrollBar::sub-page { background: none; }
 """
 
 
@@ -1179,6 +1188,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.due_overview_list = QtWidgets.QListWidget()
         self.due_overview_list.setObjectName("library")
         self.due_overview_list.setSpacing(2)
+        # Zeilen passen in die Breite -> kein horizontaler Scrollbalken nötig.
+        self.due_overview_list.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         outer.addWidget(self.due_overview_list, 1)
 
         back = QtWidgets.QPushButton(t("‹  Zurück zur Startseite", "‹  Back to start"))
@@ -1235,7 +1246,8 @@ class MainWindow(QtWidgets.QMainWindow):
             item.setFlags(QtCore.Qt.NoItemFlags)
             self.due_overview_list.addItem(item)
         else:
-            width = max(self.due_overview_list.viewport().width(), 900)
+            # Platz für den vertikalen Scrollbalken lassen -> kein horizontaler Überlauf.
+            width = max(self.due_overview_list.viewport().width() - 18, 600)
             for r in rows:
                 row = self._due_overview_row(r)
                 item = QtWidgets.QListWidgetItem()
