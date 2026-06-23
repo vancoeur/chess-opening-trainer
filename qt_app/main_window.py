@@ -477,6 +477,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self._viewer_anal_worker = None
 
         self._threads_stopped = False
+        # Navigations-Historie: »Zurück« führt zur zuletzt besuchten Seite.
+        self._nav_history: list[int] = []
+        self._nav_current = 0
+        self._nav_suppress = False
         self._build_ui()
         self._build_menu()
         self._install_shortcuts()
@@ -596,6 +600,7 @@ class MainWindow(QtWidgets.QMainWindow):
         Lernplan, Statistik) liegen auf self und überleben den Neuaufbau."""
         geo = self.saveGeometry()
         idx = self.stack.currentIndex() if getattr(self, "stack", None) is not None else 0
+        self._nav_history.clear()           # Historie verweist auf alte Oberfläche
         # Hintergrund-Worker stoppen (sie verweisen auf die alten Widgets); sie
         # werden bei Bedarf neu erzeugt.
         self._stop_all_threads()
@@ -795,9 +800,9 @@ class MainWindow(QtWidgets.QMainWindow):
         nav.addWidget(export_btn)
         side.addLayout(nav)
 
-        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
+        back = QtWidgets.QPushButton(t("‹  Zurück", "‹  Back"))
         back.setObjectName("more")
-        back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
+        back.clicked.connect(self._go_back)
         side.addWidget(back, 0, QtCore.Qt.AlignLeft)
 
         layout.addLayout(side, 1)
@@ -1095,21 +1100,13 @@ class MainWindow(QtWidgets.QMainWindow):
         side.addLayout(btns)
         side.addStretch(1)
 
-        self._drill_back_index = 9
-        self.drill_back_btn = QtWidgets.QPushButton(t("‹  Zurück zum Editor", "‹  Back to editor"))
+        self.drill_back_btn = QtWidgets.QPushButton(t("‹  Zurück", "‹  Back"))
         self.drill_back_btn.setObjectName("more")
-        self.drill_back_btn.clicked.connect(self._drill_go_back)
+        self.drill_back_btn.clicked.connect(self._go_back)   # zur vorigen Seite
         side.addWidget(self.drill_back_btn, 0, QtCore.Qt.AlignLeft)
 
         layout.addLayout(side, 1)
         return page
-
-    def _drill_go_back(self) -> None:
-        """Zurück aus der Sitzung — bei Ziel »Übersicht« mit frischen Zählern."""
-        if self._drill_back_index == 11:
-            self._open_due_overview()
-        else:
-            self.stack.setCurrentIndex(self._drill_back_index)
 
     def _open_tree_drill(self) -> None:
         """Menü-Einstieg „Bäume üben": einen Baum wählen und drillen."""
@@ -1132,8 +1129,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self._due_session = False
         self.tree_drill_feedback.setText("")
         self.drill_eyebrow.setText(t("BAUM ÜBEN", "TRAIN TREE"))
-        self._drill_back_index = 9
-        self.drill_back_btn.setText(t("‹  Zurück zum Editor", "‹  Back to editor"))
         self.tree_drill_combo.setVisible(True)
         self.drill_manual_check.setVisible(True)
         self._drill_tree = tree
@@ -1189,9 +1184,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Kopf wie die anderen Listen-Seiten: Zurück oben-links + Titel.
         header = QtWidgets.QHBoxLayout()
-        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
+        back = QtWidgets.QPushButton(t("‹  Zurück", "‹  Back"))
         back.setObjectName("more")
-        back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
+        back.clicked.connect(self._go_back)
         header.addWidget(back, 0, QtCore.Qt.AlignLeft)
         header.addStretch(1)
         outer.addLayout(header)
@@ -1236,6 +1231,10 @@ class MainWindow(QtWidgets.QMainWindow):
         return w
 
     def _open_due_overview(self) -> None:
+        self._refresh_due_overview()
+        self.stack.setCurrentIndex(11)
+
+    def _refresh_due_overview(self) -> None:
         """Übersicht vor dem Üben: Vorschau + Aufschlüsselung pro Eröffnung."""
         from opening_trainer.tree_session import due_breakdown, due_forecast
         today = date.today()
@@ -1275,7 +1274,6 @@ class MainWindow(QtWidgets.QMainWindow):
                 item.setSizeHint(QtCore.QSize(width, max(row.sizeHint().height(), 50)))
                 self.due_overview_list.addItem(item)
                 self.due_overview_list.setItemWidget(item, row)
-        self.stack.setCurrentIndex(11)
 
     def _due_items(self, only_tree=None) -> list:
         """Heute fällige/neue eigene Stellungen — über das ganze Repertoire (beide
@@ -1308,8 +1306,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self._drill_manual = False
         self.tree_drill_feedback.setText("")
         self.drill_eyebrow.setText(t("HEUTE FÄLLIG", "DUE TODAY"))
-        self._drill_back_index = 11                # zurück zur Übersicht
-        self.drill_back_btn.setText(t("‹  Zurück zur Übersicht", "‹  Back to overview"))
         self.tree_drill_combo.setVisible(False)
         self.drill_manual_check.setVisible(False)
         self.stack.setCurrentIndex(10)
@@ -1790,6 +1786,25 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stack.addWidget(self._build_due_overview_page())  # 11
         self.setStyleSheet(STYLE)
         self.resize(1000, 700)
+        # Seitenwechsel mitschreiben (für »Zurück« zur vorigen Seite).
+        self._nav_current = self.stack.currentIndex()
+        self.stack.currentChanged.connect(self._on_page_changed)
+
+    def _on_page_changed(self, new: int) -> None:
+        if self._nav_suppress:
+            self._nav_suppress = False
+        elif self._nav_current is not None and self._nav_current != new:
+            self._nav_history.append(self._nav_current)
+            del self._nav_history[:-50]          # nicht unbegrenzt wachsen lassen
+        self._nav_current = new
+        if new == 11:                            # »Heute fällig«-Übersicht stets frisch zeigen
+            self._refresh_due_overview()
+
+    def _go_back(self) -> None:
+        """Zur zuletzt besuchten Seite zurück (sonst zur Startseite)."""
+        target = self._nav_history.pop() if self._nav_history else 0
+        self._nav_suppress = True
+        self.stack.setCurrentIndex(target)
 
     def _build_train_page(self) -> QtWidgets.QWidget:
         page = QtWidgets.QWidget()
@@ -1920,9 +1935,9 @@ class MainWindow(QtWidgets.QMainWindow):
         outer.setSpacing(12)
 
         header = QtWidgets.QHBoxLayout()
-        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
+        back = QtWidgets.QPushButton(t("‹  Zurück", "‹  Back"))
         back.setObjectName("more")
-        back.clicked.connect(self._close_library)
+        back.clicked.connect(self._go_back)
         title = QtWidgets.QLabel(t("Deine Eröffnungen", "Your openings"))
         title.setObjectName("name")
         self.stats_btn = QtWidgets.QPushButton(t("Auswertung", "Analysis"))
@@ -2027,9 +2042,9 @@ class MainWindow(QtWidgets.QMainWindow):
         outer.setSpacing(12)
 
         header = QtWidgets.QHBoxLayout()
-        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
+        back = QtWidgets.QPushButton(t("‹  Zurück", "‹  Back"))
         back.setObjectName("more")
-        back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
+        back.clicked.connect(self._go_back)
         header.addWidget(back, 0, QtCore.Qt.AlignLeft)
         header.addStretch(1)
         # Navigation zu Fortschritt / Partien / Repertoire-Prüfung steckt jetzt im
@@ -2070,9 +2085,9 @@ class MainWindow(QtWidgets.QMainWindow):
         outer.setSpacing(12)
 
         header = QtWidgets.QHBoxLayout()
-        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
+        back = QtWidgets.QPushButton(t("‹  Zurück", "‹  Back"))
         back.setObjectName("more")
-        back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
+        back.clicked.connect(self._go_back)
         header.addWidget(back, 0, QtCore.Qt.AlignLeft)
         header.addStretch(1)
         outer.addLayout(header)
@@ -2309,9 +2324,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.spar_undo_btn.setEnabled(False)
         self.spar_reset_btn = QtWidgets.QPushButton(t("Neu ab Eröffnung", "Restart from opening"))
         self.spar_reset_btn.clicked.connect(self._spar_reset)
-        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
+        back = QtWidgets.QPushButton(t("‹  Zurück", "‹  Back"))
         back.setObjectName("more")
-        back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
+        back.clicked.connect(self._go_back)
 
         action_row = QtWidgets.QHBoxLayout()
         action_row.addWidget(self.spar_undo_btn)
@@ -2545,9 +2560,9 @@ class MainWindow(QtWidgets.QMainWindow):
         outer.setSpacing(12)
 
         header = QtWidgets.QHBoxLayout()
-        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
+        back = QtWidgets.QPushButton(t("‹  Zurück", "‹  Back"))
         back.setObjectName("more")
-        back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
+        back.clicked.connect(self._go_back)
         header.addWidget(back, 0, QtCore.Qt.AlignLeft)
         header.addStretch(1)
         outer.addLayout(header)
@@ -2758,9 +2773,9 @@ class MainWindow(QtWidgets.QMainWindow):
         nav.addStretch(1)
         nav.addWidget(token_btn)
 
-        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
+        back = QtWidgets.QPushButton(t("‹  Zurück", "‹  Back"))
         back.setObjectName("more")
-        back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
+        back.clicked.connect(self._go_back)
 
         side.addWidget(eyebrow)
         side.addWidget(self.explorer_opening)
@@ -3020,9 +3035,9 @@ class MainWindow(QtWidgets.QMainWindow):
         outer.setSpacing(12)
 
         header = QtWidgets.QHBoxLayout()
-        back = QtWidgets.QPushButton(t("‹  Zur Startseite", "‹  Back to start"))
+        back = QtWidgets.QPushButton(t("‹  Zurück", "‹  Back"))
         back.setObjectName("more")
-        back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
+        back.clicked.connect(self._go_back)
         header.addWidget(back, 0, QtCore.Qt.AlignLeft)
         header.addStretch(1)
         outer.addLayout(header)
