@@ -515,7 +515,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         go_menu = self.menuBar().addMenu(t("Gehe zu", "Go"))
         for label_de, label_en, shortcut, slot in [
-            ("Start", "Home", "Ctrl+1", lambda: self.stack.setCurrentIndex(0)),
+            ("Start", "Home", "Ctrl+1", self._open_home),
             ("Alle Eröffnungen", "All openings", "Ctrl+2", self._open_library),
             ("Auswertung", "Analysis", "Ctrl+3", self._open_stats),
             ("Fortschritt", "Progress", "Ctrl+4", self._open_progress),
@@ -1292,11 +1292,113 @@ class MainWindow(QtWidgets.QMainWindow):
                 items.append((tree, node_id, color))
         return items
 
+    # ---- Start-Hub: Verteiler-Seite, von der aus alles verzweigt ----
+    def _build_home_page(self) -> QtWidgets.QWidget:
+        page = QtWidgets.QWidget()
+        outer = QtWidgets.QVBoxLayout(page)
+        outer.setContentsMargins(40, 34, 40, 34)
+        outer.setSpacing(14)
+
+        title = QtWidgets.QLabel("Opening Trainer")
+        title.setObjectName("name")
+        outer.addWidget(title)
+
+        # Tagesaktion + Vorschau
+        self.home_forecast = self._plain_label("")
+        self.home_forecast.setObjectName("hint")
+        self.home_forecast.setWordWrap(True)
+        outer.addWidget(self.home_forecast)
+        self.home_due_btn = QtWidgets.QPushButton(t("▶  Heute fällig üben", "▶  Train what's due"))
+        self.home_due_btn.setObjectName("primary")
+        self.home_due_btn.clicked.connect(self._open_due_overview)
+        outer.addWidget(self.home_due_btn, 0, QtCore.Qt.AlignLeft)
+
+        # Erst-Nutzer: Beispiele / Hinweis (statt der Tagesaktion)
+        self.home_sample_btn = QtWidgets.QPushButton(
+            t("🎁  Beispiel-Eröffnungen ausprobieren", "🎁  Try the sample openings"))
+        self.home_sample_btn.clicked.connect(self._load_sample_lines)
+        outer.addWidget(self.home_sample_btn, 0, QtCore.Qt.AlignLeft)
+        self.home_new_hint = self._plain_label(t(
+            "Noch kein Repertoire geladen — hol dir die Beispiele oder lade ein PGN "
+            "über »Alle Eröffnungen«.",
+            "No repertoire loaded yet — grab the samples or load a PGN via »All openings«."))
+        self.home_new_hint.setObjectName("hint")
+        self.home_new_hint.setWordWrap(True)
+        outer.addWidget(self.home_new_hint)
+
+        outer.addSpacing(12)
+
+        # Verteiler-Kacheln, gruppiert
+        groups = [
+            (t("Üben", "Practice"), [
+                (t("Linie durchspielen", "Play a line"), lambda: self.stack.setCurrentIndex(0)),
+                (t("Bäume üben", "Train trees"), self._open_tree_drill),
+                (t("Repertoire-Prüfung", "Repertoire check"), self._open_tuv),
+            ]),
+            (t("Repertoire", "Repertoire"), [
+                (t("Alle Eröffnungen", "All openings"), self._open_library),
+                (t("Repertoire-Editor", "Repertoire editor"), self._open_editor),
+            ]),
+            (t("Auswerten", "Review"), [
+                (t("Fortschritt", "Progress"), self._open_progress),
+                (t("Auswertung", "Analysis"), self._open_stats),
+                (t("Partien auswerten", "Review games"), self._open_game_review),
+            ]),
+            (t("Erkunden", "Explore"), [
+                (t("Eröffnungs-Explorer", "Opening explorer"), self._open_explorer),
+                (t("Gegen Stockfish", "Play Stockfish"), self._open_sparring),
+            ]),
+        ]
+        grid = QtWidgets.QGridLayout()
+        grid.setHorizontalSpacing(16)
+        grid.setVerticalSpacing(8)
+        grid.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
+        for col, (header, items) in enumerate(groups):
+            h = QtWidgets.QLabel(header)
+            h.setObjectName("eyebrow")
+            grid.addWidget(h, 0, col)
+            for row, (label, cb) in enumerate(items, start=1):
+                b = QtWidgets.QPushButton(label)
+                b.setObjectName("more")
+                b.setMinimumWidth(210)
+                b.clicked.connect(lambda _=False, c=cb: c())
+                grid.addWidget(b, row, col, QtCore.Qt.AlignTop)
+        holder = QtWidgets.QWidget()
+        holder.setLayout(grid)
+        outer.addWidget(holder, 0, QtCore.Qt.AlignLeft)
+        outer.addStretch(1)
+        return page
+
+    def _open_home(self) -> None:
+        self._refresh_home()
+        self.stack.setCurrentIndex(12)
+
+    def _refresh_home(self) -> None:
+        from opening_trainer.tree_session import due_forecast
+        today = date.today()
+        fc = {"today": 0, "tomorrow": 0, "week": 0, "new": 0}
+        for side_name, color in (("white", chess.WHITE), ("black", chess.BLACK)):
+            f = due_forecast(self.tree_store.by_side(side_name), color, self.position_schedule, today)
+            for k in fc:
+                fc[k] += f[k]
+        has_rep = bool(self.lines) or bool(self.tree_store.all())
+        total = len(self._due_items())
+        self.home_forecast.setText(t(
+            f"Heute: {fc['today']}   ·   Morgen: {fc['tomorrow']}   ·   "
+            f"Diese Woche: {fc['week']}   ·   Neu: {fc['new']}",
+            f"Today: {fc['today']}   ·   Tomorrow: {fc['tomorrow']}   ·   "
+            f"This week: {fc['week']}   ·   New: {fc['new']}"))
+        self.home_due_btn.setText(t(f"▶  Heute fällig üben  ({total})", f"▶  Train what's due  ({total})"))
+        self.home_due_btn.setEnabled(total > 0)
+        self.home_forecast.setVisible(has_rep)
+        self.home_due_btn.setVisible(has_rep)
+        self.home_sample_btn.setVisible(not has_rep)
+        self.home_new_hint.setVisible(not has_rep)
+
     def _open_default_session(self) -> None:
-        """Beim Start in die »Heute fällig«-Übersicht springen, wenn etwas fällig/neu
-        ist; sonst auf der Startseite (Linie/Leerzustand) bleiben."""
-        if self._due_items():
-            self._open_due_overview()
+        """Beim Start auf den Start-Hub (von dort verzweigt alles); ohne die
+        Navigations-Historie zu füllen (man startet frisch zuhause)."""
+        self._go_home()
 
     def _start_due_session(self, only_tree=None) -> None:
         items = self._due_items(only_tree)
@@ -1784,6 +1886,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stack.addWidget(self._build_editor_page())       # 9
         self.stack.addWidget(self._build_tree_drill_page())   # 10
         self.stack.addWidget(self._build_due_overview_page())  # 11
+        self.stack.addWidget(self._build_home_page())          # 12  (Start-Hub)
         self.setStyleSheet(STYLE)
         self.resize(1000, 700)
         # Seitenwechsel mitschreiben (für »Zurück« zur vorigen Seite).
@@ -1799,17 +1902,21 @@ class MainWindow(QtWidgets.QMainWindow):
         self._nav_current = new
         if new == 11:                            # »Heute fällig«-Übersicht stets frisch zeigen
             self._refresh_due_overview()
+        elif new == 12:                          # Start-Hub aktualisieren
+            self._refresh_home()
 
     def _home_index(self) -> int:
-        """»Zuhause« = die »Heute fällig«-Übersicht, wenn etwas fällig/neu ist,
-        sonst die »Linie durchspielen«-Seite. Gilt für App-Start UND »Zurück«."""
-        return 11 if self._due_items() else 0
+        """»Zuhause« ist der Start-Hub (Verteiler-Seite). Gilt für App-Start UND
+        den »Zurück«-Fallback ohne Historie."""
+        return 12
 
     def _go_to(self, target: int) -> None:
         """Zu einer Seite springen, ohne die Historie zu erweitern (für Zurück/Heim)."""
         if target == self.stack.currentIndex():
             if target == 11:
                 self._refresh_due_overview()
+            elif target == 12:
+                self._refresh_home()
             return
         self._nav_suppress = True
         self.stack.setCurrentIndex(target)

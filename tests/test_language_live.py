@@ -24,7 +24,7 @@ def test_language_switch_is_live(tmp_path, monkeypatch):
 
     win._set_language("en")                                 # live umschalten
     assert win.lib_title.text() == "Your openings"          # sofort englisch
-    assert win.stack.count() == 12                          # Oberfläche intakt
+    assert win.stack.count() == 13                          # Oberfläche intakt (inkl. Start-Hub)
     from qt_app import i18n
     assert i18n.language() == "en"
 

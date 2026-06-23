@@ -34,14 +34,14 @@ def test_open_default_session_lands_on_due_when_populated(tmp_path, monkeypatch)
     _load_black(win, tmp_path)
     win.stack.setCurrentIndex(0)
     win._open_default_session()
-    assert win.stack.currentIndex() == 11        # primär: »Heute fällig«-Übersicht
+    assert win.stack.currentIndex() == 12        # Start-Hub
 
 
-def test_open_default_session_stays_when_nothing_due(tmp_path, monkeypatch):
+def test_open_default_session_opens_home_hub(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)             # keine Quellen -> keine Bäume
     win.stack.setCurrentIndex(0)
     win._open_default_session()
-    assert win.stack.currentIndex() == 0          # bleibt auf der Startseite (Linie/Leer)
+    assert win.stack.currentIndex() == 12         # Start-Hub (auch für neue Nutzer)
 
 
 def test_due_session_button_visible_and_starts(tmp_path, monkeypatch):
