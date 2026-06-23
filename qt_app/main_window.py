@@ -587,14 +587,29 @@ class MainWindow(QtWidgets.QMainWindow):
         if code == i18n.language():
             return
         self._eval_settings.setValue("language", code)
-        QtWidgets.QMessageBox.information(
-            self,
-            t("Sprache geändert", "Language changed"),
-            t(
-                "Die Sprache wird beim nächsten Start von Opening Trainer übernommen.",
-                "The language will take effect the next time you start Opening Trainer.",
-            ),
-        )
+        i18n.set_language(code)
+        self._apply_language_live()
+
+    def _apply_language_live(self) -> None:
+        """Oberfläche sofort in der neuen Sprache neu aufbauen — ohne Neustart.
+        Fenstergröße und aktuelle Seite bleiben erhalten; die Daten (Repertoire,
+        Lernplan, Statistik) liegen auf self und überleben den Neuaufbau."""
+        geo = self.saveGeometry()
+        idx = self.stack.currentIndex() if getattr(self, "stack", None) is not None else 0
+        # Hintergrund-Worker stoppen (sie verweisen auf die alten Widgets); sie
+        # werden bei Bedarf neu erzeugt.
+        self._stop_all_threads()
+        self._threads_stopped = False
+        # Menü + zentrale Oberfläche in der neuen Sprache neu bauen.
+        self.menuBar().clear()
+        self._build_menu()
+        self._build_ui()
+        self.restoreGeometry(geo)
+        # Daten-Sichten auffrischen und auf die zuvor gezeigte Seite zurück.
+        self._refill_queue()
+        self._refresh_library()
+        self._start_next()
+        self.stack.setCurrentIndex(min(idx, self.stack.count() - 1))
 
     def _set_board_theme(self, code: str) -> None:
         """Brettfarbe live umschalten — alle vorhandenen Bretter neu zeichnen."""
