@@ -54,3 +54,25 @@ def test_back_through_due_session_is_clean(tmp_path, monkeypatch):
     assert win.stack.currentIndex() == 11
     win._go_back()                          # Übersicht zurück -> Start (NICHT zur Sitzung)
     assert win.stack.currentIndex() == 0
+
+
+def test_home_fallback_is_overview_when_due(tmp_path, monkeypatch):
+    from opening_trainer.repertoire_tree import RepertoireTree
+    win = _win(tmp_path, monkeypatch)
+    tr = RepertoireTree.new("X", "black")
+    nid = tr.add_child(tr.root_id, "e2e4").id
+    tr.add_child(nid, "c7c6")               # Schwarz-Antwort -> fällige Schwarz-Stellung
+    win.tree_store.add(tr)
+    assert win._due_items()                  # es gibt etwas Fälliges/Neues
+    win.stack.setCurrentIndex(2)            # irgendeine Seite
+    win._nav_history.clear()                # keine Historie
+    win._go_back()                          # leer + fällig -> Zuhause = Übersicht (11)
+    assert win.stack.currentIndex() == 11
+
+
+def test_home_fallback_is_line_page_when_nothing_due(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)       # keine Bäume -> nichts fällig
+    win.stack.setCurrentIndex(2)
+    win._nav_history.clear()
+    win._go_back()                          # leer + nichts fällig -> Linien-Seite (0)
+    assert win.stack.currentIndex() == 0

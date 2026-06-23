@@ -1800,11 +1800,27 @@ class MainWindow(QtWidgets.QMainWindow):
         if new == 11:                            # »Heute fällig«-Übersicht stets frisch zeigen
             self._refresh_due_overview()
 
-    def _go_back(self) -> None:
-        """Zur zuletzt besuchten Seite zurück (sonst zur Startseite)."""
-        target = self._nav_history.pop() if self._nav_history else 0
+    def _home_index(self) -> int:
+        """»Zuhause« = die »Heute fällig«-Übersicht, wenn etwas fällig/neu ist,
+        sonst die »Linie durchspielen«-Seite. Gilt für App-Start UND »Zurück«."""
+        return 11 if self._due_items() else 0
+
+    def _go_to(self, target: int) -> None:
+        """Zu einer Seite springen, ohne die Historie zu erweitern (für Zurück/Heim)."""
+        if target == self.stack.currentIndex():
+            if target == 11:
+                self._refresh_due_overview()
+            return
         self._nav_suppress = True
         self.stack.setCurrentIndex(target)
+
+    def _go_home(self) -> None:
+        self._go_to(self._home_index())
+
+    def _go_back(self) -> None:
+        """Zur zuletzt besuchten Seite zurück; ohne Historie nach »Zuhause«."""
+        target = self._nav_history.pop() if self._nav_history else self._home_index()
+        self._go_to(target)
 
     def _build_train_page(self) -> QtWidgets.QWidget:
         page = QtWidgets.QWidget()
