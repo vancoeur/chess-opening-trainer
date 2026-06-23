@@ -1239,7 +1239,9 @@ class MainWindow(QtWidgets.QMainWindow):
             for r in rows:
                 row = self._due_overview_row(r)
                 item = QtWidgets.QListWidgetItem()
-                item.setSizeHint(QtCore.QSize(width, row.sizeHint().height()))
+                # Mindesthöhe, damit der „üben"-Knopf nicht gestaucht wird und sein
+                # Text verschwindet (row.sizeHint() ist beim Befüllen noch zu klein).
+                item.setSizeHint(QtCore.QSize(width, max(row.sizeHint().height(), 50)))
                 self.due_overview_list.addItem(item)
                 self.due_overview_list.setItemWidget(item, row)
         self.stack.setCurrentIndex(11)
