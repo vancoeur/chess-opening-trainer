@@ -2733,8 +2733,8 @@ class MainWindow(QtWidgets.QMainWindow):
         nav = QtWidgets.QHBoxLayout()
         self.explorer_undo_btn = QtWidgets.QPushButton(t("‹  Zug zurück", "‹  Take back"))
         self.explorer_undo_btn.clicked.connect(self._explorer_undo)
-        reset = QtWidgets.QPushButton(t("Neu ab Eröffnung", "Restart from opening"))
-        reset.clicked.connect(self._open_explorer)
+        reset = QtWidgets.QPushButton(t("Neu ab Grundstellung", "Restart from move 1"))
+        reset.clicked.connect(self._explorer_reset)
         token_btn = QtWidgets.QPushButton(t("🔑 Lichess-Token", "🔑 Lichess token"))
         token_btn.setObjectName("more")
         token_btn.clicked.connect(self._edit_lichess_token)
@@ -2969,10 +2969,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self._explorer_update_nav()
         self._explorer_fetch(self._explorer_board.fen())
 
+    def _explorer_reset(self) -> None:
+        """Zurück auf die Grundstellung (Zug 1) — frei vom Trainings-Kontext, damit
+        »Neu ab Eröffnung« aus jeder Stellung verlässlich zum Anfang führt."""
+        self._explorer_board = chess.Board()
+        self._explorer_seed_plies = 0
+        self.explorer_board.set_board(self._explorer_board, last_move=None)
+        self._explorer_update_nav()
+        self._explorer_fetch(self._explorer_board.fen())
+
     def _explorer_undo(self) -> None:
-        if self._explorer_board is None:
-            return
-        if len(self._explorer_board.move_stack) <= self._explorer_seed_plies:
+        if self._explorer_board is None or not self._explorer_board.move_stack:
             return
         self._explorer_board.pop()
         last = None
@@ -2986,7 +2993,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def _explorer_update_nav(self) -> None:
         can_undo = (
             self._explorer_board is not None
-            and len(self._explorer_board.move_stack) > self._explorer_seed_plies
+            and len(self._explorer_board.move_stack) > 0
         )
         self.explorer_undo_btn.setEnabled(can_undo)
 
