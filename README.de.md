@@ -25,6 +25,8 @@ lass dein Material *und* deine gespielten Partien von **Stockfish** prüfen.
 
 **[⬇ Neueste Version herunterladen](https://github.com/vancoeur/chess-opening-trainer/releases/latest)** — entpacken und `Opening Trainer.app` in den Ordner `Programme` ziehen. Benötigt einen Mac mit **Apple Silicon** (M1 oder neuer); Intel-Macs werden von diesem Build nicht unterstützt.
 
+> Der **[Änderungsverlauf](CHANGELOG.md)** (englisch) listet, was in jeder Version dazugekommen oder erweitert wurde.
+
 > **⚠️ Wichtig — erster Start (Gatekeeper):**
 > Die App ist **nicht signiert/notarisiert** (freies Open-Source-Projekt ohne
 > Apple-Developer-Abo). macOS **blockiert deshalb den ersten Start** mit einer
