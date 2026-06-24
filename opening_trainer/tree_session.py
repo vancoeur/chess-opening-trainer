@@ -40,6 +40,72 @@ def _walk(tree, node, board, side, index) -> None:
         board.pop()
 
 
+def merge_side_trees(trees, side):
+    """Verschmilzt alle Bäume EINER Seite zu EINEM verzweigten Übersichtsbaum
+    (Zug-Trie): gemeinsame Zugfolgen werden zusammengeführt, an der ersten
+    Abweichung entsteht ein Ast. So wird aus vielen getrennten geraden Linien
+    ein einziger Repertoire-Baum. Reine Funktion (nutzt ``add_child``-Dedupe).
+
+    Nur Bäume mit Standard-Grundstellung (kein eigenes ``start_fen``) werden
+    zusammengeführt, damit das Verschmelzen über die Zugfolge eindeutig bleibt."""
+    from opening_trainer.repertoire_tree import RepertoireTree
+    want = _SIDE_NAME.get(side)
+    combined = RepertoireTree.new("", want)
+    for tree in trees:
+        if tree.side != want or tree.start_fen:
+            continue
+
+        def walk(src_id, dst_id):
+            for child in tree.children_of(src_id):
+                dst_child = combined.add_child(dst_id, child.move_uci, child.comment)
+                walk(child.id, dst_child.id)
+
+        walk(tree.root_id, combined.root_id)
+    return combined
+
+
+def overview_rows(tree, side) -> list[dict]:
+    """Flache, eingerückte Zeilen eines (Übersichts-)Baums für die Anzeige.
+
+    Eine Zeile je Halbzug, in Vorreihenfolge (Tiefe = Einrückung, mehrere Kinder
+    eines Knotens = Verzweigung). Felder: ``depth``, ``label`` (z. B. »3.e5« /
+    »3…Lf5«), ``fen_before`` (Stellung vor dem Zug — Drill-Ziel bei eigenen
+    Zügen), ``is_user_move``, ``children`` (Kinderzahl = Verzweigungsgrad),
+    ``comment``."""
+    rows: list[dict] = []
+    board = _start_board(tree)
+
+    def walk(node, depth):
+        # Einrückung nur an echten Verzweigungen: das erste Kind setzt die
+        # Hauptlinie auf gleicher Ebene fort, weitere Kinder (Varianten) rücken
+        # eine Ebene ein (PGN-Stil) — sonst liefe eine 30-Zug-Linie aus dem Bild.
+        kids = tree.children_of(node.id)
+        for i, child in enumerate(kids):
+            move = _legal_move(board, child.move_uci)
+            if move is None:
+                continue
+            san = board.san(move)
+            fullmove = board.fullmove_number
+            white = board.turn == chess.WHITE
+            label = f"{fullmove}.{san}" if white else f"{fullmove}…{san}"
+            child_depth = depth if i == 0 else depth + 1
+            rows.append({
+                "depth": child_depth,
+                "label": label,
+                "move_uci": child.move_uci,
+                "fen_before": board.fen(),
+                "is_user_move": board.turn == side,
+                "children": len(tree.children_of(child.id)),
+                "comment": child.comment,
+            })
+            board.push(move)
+            walk(child, child_depth)
+            board.pop()
+
+    walk(tree.root, 0)
+    return rows
+
+
 def locate_position(index: dict, epd: str):
     """(tree, node_id) für eine EPD aus einem ``build_user_position_index``,
     sonst ``None``. Zum gezielten Drillen einer einzelnen Stellung (Fehler-

@@ -540,6 +540,9 @@ class MainWindow(QtWidgets.QMainWindow):
             act.setShortcut(QtGui.QKeySequence(shortcut))
             act.triggered.connect(lambda _=False, s=slot: s())
         go_menu.addSeparator()
+        reptree_act = go_menu.addAction(t("Repertoire-Baum", "Repertoire tree"))
+        reptree_act.setShortcut(QtGui.QKeySequence("Ctrl+R"))
+        reptree_act.triggered.connect(self._open_repertoire_tree)
         editor_act = go_menu.addAction(t("Repertoire-Editor", "Repertoire editor"))
         editor_act.setShortcut(QtGui.QKeySequence("Ctrl+E"))
         editor_act.triggered.connect(self._open_editor)
@@ -1310,6 +1313,111 @@ class MainWindow(QtWidgets.QMainWindow):
                 items.append((tree, node_id, color))
         return items
 
+    # ---- Repertoire-Baum: alle Linien einer Seite als EIN verzweigter Baum ----
+    def _build_repertoire_tree_page(self) -> QtWidgets.QWidget:
+        page = QtWidgets.QWidget()
+        layout = QtWidgets.QHBoxLayout(page)
+        layout.setContentsMargins(26, 26, 26, 26)
+        layout.setSpacing(24)
+
+        self.reptree_board = BoardView(square_size=58)
+        layout.addWidget(self.reptree_board, 0, QtCore.Qt.AlignTop)
+
+        col = QtWidgets.QVBoxLayout()
+        col.setSpacing(10)
+        back = QtWidgets.QPushButton(t("‹  Zurück", "‹  Back"))
+        back.setObjectName("more")
+        back.clicked.connect(self._go_back)
+        col.addWidget(back, 0, QtCore.Qt.AlignLeft)
+        eyebrow = QtWidgets.QLabel(t("REPERTOIRE-BAUM", "REPERTOIRE TREE"))
+        eyebrow.setObjectName("eyebrow")
+        col.addWidget(eyebrow)
+        self.reptree_side_combo = QtWidgets.QComboBox()
+        self.reptree_side_combo.addItem(t("Weiß", "White"), "white")
+        self.reptree_side_combo.addItem(t("Schwarz", "Black"), "black")
+        self.reptree_side_combo.currentIndexChanged.connect(lambda _i: self._refresh_repertoire_tree())
+        col.addWidget(self.reptree_side_combo)
+        self.reptree_hint = QtWidgets.QLabel("")
+        self.reptree_hint.setObjectName("hint")
+        self.reptree_hint.setWordWrap(True)
+        col.addWidget(self.reptree_hint)
+        self.reptree_list = QtWidgets.QListWidget()
+        self.reptree_list.setObjectName("library")
+        self.reptree_list.itemClicked.connect(self._reptree_clicked)
+        col.addWidget(self.reptree_list, 1)
+        self.reptree_drill_btn = QtWidgets.QPushButton(t("Diese Stellung üben", "Drill this position"))
+        self.reptree_drill_btn.setObjectName("primary")
+        self.reptree_drill_btn.setEnabled(False)
+        self.reptree_drill_btn.clicked.connect(self._reptree_drill)
+        col.addWidget(self.reptree_drill_btn, 0, QtCore.Qt.AlignLeft)
+
+        holder = QtWidgets.QWidget()
+        holder.setLayout(col)
+        layout.addWidget(holder, 1)
+        return page
+
+    def _open_repertoire_tree(self) -> None:
+        # Voreinstellung: die Seite zeigen, für die ein Repertoire existiert.
+        if self.tree_store.by_side("black") and not self.tree_store.by_side("white"):
+            self.reptree_side_combo.setCurrentIndex(1)
+        elif self.tree_store.by_side("white"):
+            self.reptree_side_combo.setCurrentIndex(0)
+        self._refresh_repertoire_tree()
+        self.stack.setCurrentIndex(13)
+
+    def _refresh_repertoire_tree(self) -> None:
+        from opening_trainer.tree_session import merge_side_trees, overview_rows
+        self.reptree_list.clear()
+        self.reptree_drill_btn.setEnabled(False)
+        self._reptree_fen = None
+        side_name = self.reptree_side_combo.currentData()
+        color = chess.WHITE if side_name == "white" else chess.BLACK
+        trees = self.tree_store.by_side(side_name)
+        rows = overview_rows(merge_side_trees(trees, color), color)
+        self.reptree_board.set_flipped(color == chess.BLACK)
+        self.reptree_board.set_board(chess.Board())
+        if not rows:
+            self.reptree_hint.setText(t(
+                "Für diese Seite ist noch kein Repertoire geladen.",
+                "No repertoire loaded for this side yet."))
+            return
+        branches = sum(1 for r in rows if r["children"] > 1)
+        self.reptree_hint.setText(t(
+            f"{len(trees)} Linien zu einem Baum verschmolzen · {branches} Verzweigungen (⎇). "
+            "Klick eine Zeile, um die Stellung zu sehen — eigene Züge kannst du üben.",
+            f"{len(trees)} lines merged into one tree · {branches} branches (⎇). "
+            "Click a row to see the position — your own moves can be drilled."))
+        de = (i18n.language() == "de")
+        for r in rows:
+            label = r["label"]
+            if de:
+                label = label.translate(str.maketrans({"N": "S", "B": "L", "R": "T", "Q": "D"}))
+            prefix = "    " * r["depth"] + ("" if r["depth"] == 0 else "└ ")
+            mark = "  ⎇" if r["children"] > 1 else ""
+            item = QtWidgets.QListWidgetItem(prefix + label + mark)
+            item.setData(QtCore.Qt.UserRole, r)
+            self.reptree_list.addItem(item)
+
+    def _reptree_clicked(self, item: QtWidgets.QListWidgetItem) -> None:
+        r = item.data(QtCore.Qt.UserRole)
+        if not r:
+            return
+        try:
+            board = chess.Board(r["fen_before"])
+            move = chess.Move.from_uci(r["move_uci"])
+        except (ValueError, KeyError):
+            return
+        last = (move.from_square, move.to_square)
+        board.push(move)                       # Brett zeigt den Zug gespielt …
+        self.reptree_board.set_board(board, last_move=last)
+        # … geübt wird die Entscheidung davor (nur bei eigenen Zügen).
+        self._reptree_fen = r["fen_before"] if r["is_user_move"] else None
+        self.reptree_drill_btn.setEnabled(bool(self._reptree_fen))
+
+    def _reptree_drill(self) -> None:
+        if self._reptree_fen:
+            self._drill_positions_for_fens([self._reptree_fen], t("STELLUNG ÜBEN", "DRILL POSITION"))
+
     # ---- Start-Hub: Verteiler-Seite, von der aus alles verzweigt ----
     def _build_home_page(self) -> QtWidgets.QWidget:
         page = QtWidgets.QWidget()
@@ -1354,6 +1462,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 (t("Repertoire-Prüfung", "Repertoire check"), self._open_tuv),
             ]),
             (t("Repertoire", "Repertoire"), [
+                (t("Repertoire-Baum", "Repertoire tree"), self._open_repertoire_tree),
                 (t("Alle Eröffnungen", "All openings"), self._open_library),
                 (t("Repertoire-Editor", "Repertoire editor"), self._open_editor),
             ]),
@@ -1935,6 +2044,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stack.addWidget(self._build_tree_drill_page())   # 10
         self.stack.addWidget(self._build_due_overview_page())  # 11
         self.stack.addWidget(self._build_home_page())          # 12  (Start-Hub)
+        self.stack.addWidget(self._build_repertoire_tree_page())  # 13  (Repertoire-Baum)
         self.setStyleSheet(STYLE)
         self.resize(1000, 700)
         # Seitenwechsel mitschreiben (für »Zurück« zur vorigen Seite).
