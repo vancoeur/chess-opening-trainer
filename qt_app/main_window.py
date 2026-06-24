@@ -42,6 +42,7 @@ from qt_app.paths import data_dir, sample_pgn_path
 STYLE = """
 QWidget { background: #f6f6f3; color: #23241f; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; font-size: 14px; }
 QLabel#eyebrow { color: #8a8f80; font-size: 12px; font-weight: 600; }
+QLabel#pagehead { background: #eceae3; color: #3a3d35; font-size: 15px; font-weight: 700; padding: 9px 18px; border-bottom: 1px solid #d8d6cd; }
 QLabel#name    { font-size: 23px; font-weight: 600; color: #23241f; }
 QLabel#hint    { color: #6b7066; font-size: 14px; }
 QLabel#note    { color: #6b6f66; font-size: 13px; font-style: italic; }
@@ -2104,7 +2105,17 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _build_ui(self) -> None:
         self.stack = QtWidgets.QStackedWidget()
-        self.setCentralWidget(self.stack)
+        # Durchgehende Kopfzeile ÜBER dem Inhalt: zeigt auf JEDER Seite, wo man
+        # ist (Orientierung). Wird bei jedem Seitenwechsel aktualisiert.
+        central = QtWidgets.QWidget()
+        outer = QtWidgets.QVBoxLayout(central)
+        outer.setContentsMargins(0, 0, 0, 0)
+        outer.setSpacing(0)
+        self.page_head = QtWidgets.QLabel("")
+        self.page_head.setObjectName("pagehead")
+        outer.addWidget(self.page_head)
+        outer.addWidget(self.stack, 1)
+        self.setCentralWidget(central)
         self.stack.addWidget(self._build_train_page())     # 0
         self.stack.addWidget(self._build_library_page())   # 1
         self.stack.addWidget(self._build_stats_page())     # 2
@@ -2123,6 +2134,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.resize(1000, 700)
         # Seitenwechsel mitschreiben (für »Zurück« zur vorigen Seite).
         self._nav_current = self.stack.currentIndex()
+        self.page_head.setText(self._page_name(self._nav_current))   # Kopfzeile von Anfang an
         self.stack.currentChanged.connect(self._on_page_changed)
 
     def _on_page_changed(self, new: int) -> None:
@@ -2132,14 +2144,16 @@ class MainWindow(QtWidgets.QMainWindow):
             self._nav_history.append(self._nav_current)
             del self._nav_history[:-50]          # nicht unbegrenzt wachsen lassen
         self._nav_current = new
-        self.setWindowTitle(self._page_title(new))   # Orientierung: welche Seite?
+        self.setWindowTitle(self._page_title(new))   # Orientierung: Fenstertitel …
+        if hasattr(self, "page_head"):               # … und sichtbare Kopfzeile
+            self.page_head.setText(self._page_name(new))
         if new == 11:                            # »Heute fällig«-Übersicht stets frisch zeigen
             self._refresh_due_overview()
         elif new == 12:                          # Start-Hub aktualisieren
             self._refresh_home()
 
-    def _page_title(self, index: int) -> str:
-        """Fenstertitel je Seite, damit oben immer steht, wo man ist."""
+    def _page_name(self, index: int) -> str:
+        """Klartext-Name der Seite (für Kopfzeile + Fenstertitel)."""
         names = {
             0: t("Üben", "Train"),
             1: t("Alle Eröffnungen", "All openings"),
@@ -2156,7 +2170,11 @@ class MainWindow(QtWidgets.QMainWindow):
             12: t("Start", "Home"),
             13: t("Repertoire-Baum", "Repertoire tree"),
         }
-        name = names.get(index)
+        return names.get(index, "")
+
+    def _page_title(self, index: int) -> str:
+        """Fenstertitel je Seite, damit oben immer steht, wo man ist."""
+        name = self._page_name(index)
         return f"Opening Trainer — {name}" if name else "Opening Trainer"
 
     def _home_index(self) -> int:
