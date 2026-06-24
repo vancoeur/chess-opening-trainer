@@ -1,0 +1,38 @@
+name: Tests
+
+# Läuft bei jedem Push und Pull-Request: führt die pytest-Suite (Qt offscreen)
+# in der Cloud aus, damit Regressionen sofort sichtbar werden (grünes ✓ / rotes ✗).
+# Kein App-Build/Release hier — Stockfish wird nur als System-Paket installiert,
+# damit auch die Engine-Tests laufen (das gebündelte Binary liegt nicht im Repo).
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: System packages (offscreen Qt + Stockfish)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            stockfish libegl1 libgl1 libxkbcommon0 libdbus-1-3 libglib2.0-0
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Run tests
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -m pytest -q
