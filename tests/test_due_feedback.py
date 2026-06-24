@@ -32,6 +32,7 @@ def test_next_review_shown_after_correct(tmp_path, monkeypatch):
     f.write_text(PGN_BLACK, encoding="utf-8")
     win._add_pgn_source(str(f))
     win._auto_fill_sides_by_filename()
+    win._drill_learn_new = False                 # Abfrage-Pfad testen (nicht Learn-Modus)
     win._start_due_session()
 
     tr = win._tree_trainer

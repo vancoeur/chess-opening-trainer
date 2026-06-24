@@ -446,6 +446,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._tree_drill_wrong = False
         self._drill_tree = None        # aktuell geübter Baum
         self._drill_manual = False     # True: Gegnerzüge selbst spielen
+        self._drill_learn_new = True   # neue Stellungen erst zeigen (Learn-Modus)
+        self._drill_learn_active = False  # aktuell wird eine neue Stellung „gelernt"
         self._due_session = False      # True: „Heute fällig (Bäume)"-Sitzung läuft
         self._due_queue: list = []     # offene fällige Stellungen (tree, node_id, color)
         self._due_total = 0
@@ -1094,10 +1096,27 @@ class MainWindow(QtWidgets.QMainWindow):
             t("Gegnerzüge selbst spielen", "Play the opponent's moves myself"))
         self.drill_manual_check.toggled.connect(self._drill_toggle_manual)
         side.addWidget(self.drill_manual_check)
+        # Learn-Modus: neue Stellungen erst MIT Lösung zeigen, dann abfragen.
+        self.drill_learn_check = QtWidgets.QCheckBox(
+            t("Neue Stellungen erst zeigen (lernen)", "Show new positions first (learn)"))
+        self.drill_learn_check.setChecked(True)
+        self.drill_learn_check.toggled.connect(self._drill_toggle_learn)
+        side.addWidget(self.drill_learn_check)
         self.tree_drill_name = self._plain_label("—")
         self.tree_drill_name.setObjectName("name")
         self.tree_drill_name.setWordWrap(True)
         side.addWidget(self.tree_drill_name)
+        # Linien-Kontext: die Züge bis zur aktuellen Stellung (»wo bin ich?«).
+        self.tree_drill_line = self._plain_label("")
+        self.tree_drill_line.setObjectName("hint")
+        self.tree_drill_line.setWordWrap(True)
+        side.addWidget(self.tree_drill_line)
+        # »Idee zu dieser Stellung«: Kommentar des vorgesehenen Zuges (falls vorhanden).
+        self.tree_drill_note = self._plain_label("")
+        self.tree_drill_note.setObjectName("note")
+        self.tree_drill_note.setWordWrap(True)
+        self.tree_drill_note.setVisible(False)
+        side.addWidget(self.tree_drill_note)
         self.tree_drill_status = self._plain_label("")
         self.tree_drill_status.setObjectName("status")
         self.tree_drill_status.setWordWrap(True)
@@ -1109,6 +1128,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.tree_drill_feedback.setObjectName("hint")
         self.tree_drill_feedback.setWordWrap(True)
         side.addWidget(self.tree_drill_feedback)
+
+        # Learn-Modus: »Verstanden, weiter« (nur sichtbar, wenn eine neue Stellung gezeigt wird).
+        self.drill_learned_btn = QtWidgets.QPushButton(t("✓  Verstanden, weiter", "✓  Got it, next"))
+        self.drill_learned_btn.setObjectName("primary")
+        self.drill_learned_btn.clicked.connect(self._drill_mark_learned)
+        self.drill_learned_btn.setVisible(False)
+        side.addWidget(self.drill_learned_btn, 0, QtCore.Qt.AlignLeft)
 
         btns = QtWidgets.QHBoxLayout()
         sol = QtWidgets.QPushButton(t("Lösung zeigen", "Show solution"))
@@ -1151,6 +1177,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.drill_eyebrow.setText(t("BAUM ÜBEN", "TRAIN TREE"))
         self.tree_drill_combo.setVisible(True)
         self.drill_manual_check.setVisible(True)
+        self.drill_learn_check.setVisible(False)   # Learn-Modus nur in der Tagessitzung
+        self.drill_learned_btn.setVisible(False)
         self._drill_tree = tree
         self._drill_refresh_combo()
         self.tree_drill_name.setText(self._tname(tree.name))
@@ -1637,6 +1665,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.drill_eyebrow.setText(eyebrow)
         self.tree_drill_combo.setVisible(False)
         self.drill_manual_check.setVisible(False)
+        self.drill_learn_check.setVisible(True)    # Learn-Modus hier wählbar
         self.stack.setCurrentIndex(10)
         self._due_present_current()
 
@@ -1681,6 +1710,7 @@ class MainWindow(QtWidgets.QMainWindow):
                     "Nichts fällig — schau morgen wieder vorbei. 🎉",
                     "Nothing due — come back tomorrow. 🎉"))
             self.tree_drill_board.set_board(chess.Board())
+            self._drill_update_context()
             return
         tree, node_id, color = self._due_queue[0]
         from opening_trainer.position_training import PositionTrainer
@@ -1696,9 +1726,60 @@ class MainWindow(QtWidgets.QMainWindow):
             last = (m.from_square, m.to_square)
         self.tree_drill_board.set_flipped(color == chess.BLACK)
         self.tree_drill_board.set_board(self._tree_trainer.board, last_move=last)
-        self.tree_drill_status.setText(t(
-            f"Heute fällig — Stellung {done + 1} von {self._due_total}. Du bist am Zug.",
-            f"Due today — position {done + 1} of {self._due_total}. Your move."))
+        from opening_trainer.scheduler import is_new
+        epd = self._tree_trainer.board.epd()
+        learn = bool(self._drill_learn_new and is_new(self.position_schedule.card_for(epd)))
+        self._drill_learn_active = learn
+        self.drill_learned_btn.setVisible(learn)
+        if learn:
+            # Learn-Modus: den vorgesehenen Zug gleich zeigen (nicht abfragen).
+            sol = self._tree_trainer.expected_solution()
+            san = sol.san if sol else "—"
+            if sol is not None:
+                m = chess.Move.from_uci(sol.uci)
+                self.tree_drill_board.show_solution(m.from_square, m.to_square)
+            self.tree_drill_status.setText(t(
+                f"Neu — Stellung {done + 1} von {self._due_total}. Der Zug hier ist {san}. "
+                "Präg ihn dir ein, dann »Verstanden«.",
+                f"New — position {done + 1} of {self._due_total}. The move here is {san}. "
+                "Memorise it, then »Got it«."))
+        else:
+            self.tree_drill_status.setText(t(
+                f"Heute fällig — Stellung {done + 1} von {self._due_total}. Du bist am Zug.",
+                f"Due today — position {done + 1} of {self._due_total}. Your move."))
+        self._drill_update_context()
+
+    def _drill_update_context(self) -> None:
+        """Vereinte Ansicht: zeigt die Linie bis hierher (»wo bin ich?«) und die
+        »Idee« (Kommentar des vorgesehenen Zuges, falls vorhanden)."""
+        tr = self._tree_trainer
+        if tr is None:
+            self.tree_drill_line.setText("")
+            self.tree_drill_note.setVisible(False)
+            return
+        de = (i18n.language() == "de")
+        start = chess.Board(tr.tree.start_fen) if tr.tree.start_fen else chess.Board()
+        parts = []
+        b = start
+        for mv in tr.board.move_stack:
+            num = b.fullmove_number
+            dots = "." if b.turn == chess.WHITE else "…"
+            san = b.san(mv)
+            if de:
+                san = san.translate(str.maketrans({"N": "S", "B": "L", "R": "T", "Q": "D"}))
+            parts.append(f"{num}{dots}{san}")
+            b.push(mv)
+        line = "  ".join(parts)
+        if tr.is_user_turn() and not tr.is_finished():
+            line = (line + "   …?") if line else t("Du bist am Zug …?", "Your move …?")
+        self.tree_drill_line.setText(line)
+        # Idee = Kommentar des ersten vorgesehenen Zuges an dieser Stellung.
+        note = ""
+        kids = tr.tree.children_of(tr.node.id)
+        if kids and kids[0].comment:
+            note = kids[0].comment
+        self.tree_drill_note.setText(t("💡 Idee: ", "💡 Idea: ") + note if note else "")
+        self.tree_drill_note.setVisible(bool(note))
 
     def _tree_drill_present(self) -> None:
         tr = self._tree_trainer
@@ -1721,10 +1802,39 @@ class MainWindow(QtWidgets.QMainWindow):
                 f"{opp} to move — play one of your prepared options: {opts}"))
         else:
             self.tree_drill_status.setText(t("Du bist am Zug.", "Your move."))
+        self._drill_update_context()
+
+    def _drill_toggle_learn(self, checked: bool) -> None:
+        self._drill_learn_new = checked
+        if self._due_session and self._due_queue:
+            self._due_present_current()        # aktuelle Stellung passend neu zeigen
+
+    def _drill_mark_learned(self) -> None:
+        """Learn-Modus: »Verstanden« — die neue Stellung als gelernt einplanen
+        (kommt zur echten Abfrage wieder) und zur nächsten gehen."""
+        tr = self._tree_trainer
+        if tr is None or not self._drill_learn_active:
+            return
+        epd = tr.board.epd()
+        new_card = schedule_review(self.position_schedule.card_for(epd), True, date.today())
+        self.position_schedule.set_card(epd, new_card)
+        self.position_schedule.save(self.position_schedule_path)
+        sol = tr.expected_solution()
+        self.stats_store.add_event(
+            source_name="", line_name=tr.tree.name, fen_before=tr.board.fen(),
+            expected_san=(sol.san if sol else None),
+            played_san=(sol.san if sol else None), correct=True)
+        self.stats_store.save(self.stats_path)
+        self._show_next_review(new_card, True)
+        self._drill_learn_active = False
+        self.drill_learned_btn.setVisible(False)
+        if self._due_queue:
+            self._due_queue.pop(0)
+        self._due_present_current()
 
     def _tree_drill_on_move(self, from_square: int, to_square: int) -> None:
         tr = self._tree_trainer
-        if tr is None or tr.is_finished():
+        if tr is None or tr.is_finished() or self._drill_learn_active:
             return
         try:
             move = tr.board.find_move(from_square, to_square)
