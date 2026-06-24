@@ -57,7 +57,12 @@ def merge_side_trees(trees, side):
 
         def walk(src_id, dst_id):
             for child in tree.children_of(src_id):
-                dst_child = combined.add_child(dst_id, child.move_uci, child.comment)
+                # Der Name der Quell-Linie wird am ENDE der Linie (Blatt) als
+                # Kommentar mitgeführt -> der verschmolzene Baum behält die
+                # Eröffnungsnamen (z. B. »B18 · Caro-Kann: Klassisch«).
+                is_leaf = not tree.children_of(child.id)
+                comment = child.comment or (tree.name if is_leaf else "")
+                dst_child = combined.add_child(dst_id, child.move_uci, comment)
                 walk(child.id, dst_child.id)
 
         walk(tree.root_id, combined.root_id)

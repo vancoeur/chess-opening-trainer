@@ -57,6 +57,18 @@ def test_overview_rows_depth_and_labels():
     assert rows[0]["is_user_move"] is False      # 1.e4 = Weiß
 
 
+def test_merge_carries_line_names_to_leaves():
+    a = _black("B18 Caro Klassisch", ["e2e4", "c7c6", "d2d4", "d7d5", "b1c3", "d5e4"])
+    b = _black("B12 Caro Vorstoß", ["e2e4", "c7c6", "d2d4", "d7d5", "e4e5", "c8f5"])
+    rows = overview_rows(merge_side_trees([a, b], chess.BLACK), chess.BLACK)
+    leaves = [r for r in rows if r["children"] == 0]
+    names = {r["comment"] for r in leaves}
+    assert "B18 Caro Klassisch" in names
+    assert "B12 Caro Vorstoß" in names
+    # Stamm-Knoten (mit Kindern) tragen keinen Namen
+    assert all(not r["comment"] for r in rows if r["children"] > 0)
+
+
 def test_merge_stats_counts_lines_and_branches():
     a = _black("Advance", ["e2e4", "c7c6", "d2d4", "d7d5", "e4e5", "c8f5"])
     b = _black("Klassisch", ["e2e4", "c7c6", "d2d4", "d7d5", "b1c3", "d5e4"])

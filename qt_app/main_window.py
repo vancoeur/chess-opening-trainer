@@ -1394,7 +1394,9 @@ class MainWindow(QtWidgets.QMainWindow):
                 label = label.translate(str.maketrans({"N": "S", "B": "L", "R": "T", "Q": "D"}))
             prefix = "    " * r["depth"] + ("" if r["depth"] == 0 else "└ ")
             mark = "  ⎇" if r["children"] > 1 else ""
-            item = QtWidgets.QListWidgetItem(prefix + label + mark)
+            # Am Ende einer Linie (Blatt) den Eröffnungsnamen anzeigen.
+            name = f"   · {r['comment']}" if (r["comment"] and r["children"] == 0) else ""
+            item = QtWidgets.QListWidgetItem(prefix + label + mark + name)
             item.setData(QtCore.Qt.UserRole, r)
             self.reptree_list.addItem(item)
 
