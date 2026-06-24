@@ -9,6 +9,8 @@ from __future__ import annotations
 
 from datetime import date, timedelta
 
+import chess
+
 from opening_trainer.position_book import _start_board, _legal_move, _SIDE_NAME
 from opening_trainer.scheduler import is_new, is_due
 
@@ -99,6 +101,86 @@ def due_breakdown(trees, side, schedule, today) -> list[dict]:
         out.append({"tree": tree, "name": tree.name, "due": due, "new": new, "total": len(epds)})
     out.sort(key=lambda r: (-r["due"], -r["new"], r["name"]))
     return out
+
+
+def tree_progress_rows(trees, side, stats_store) -> list[dict]:
+    """Pro Eröffnung (Baum) der Seite die aggregierte Positions-Statistik — die
+    positions-basierte Ablösung der linien-basierten Fortschrittszeilen.
+
+    Versuche/Treffer werden über alle eigenen Stellungen des Baums summiert
+    (FEN-genau, transpositions-bewusst via ``stats_for_position``); die
+    Trefferquote ergibt sich daraus. ``positions_total``/``positions_trained``
+    machen die Positions-Granularität sichtbar. Bäume ohne eigene Stellung
+    werden übersprungen. Einstufung (Eimer) bleibt Sache der UI-Schicht."""
+    want = _SIDE_NAME.get(side)
+    rows: list[dict] = []
+    for tree in trees:
+        if tree.side != want:
+            continue
+        epds = _tree_user_epds(tree, side)
+        if not epds:
+            continue
+        attempts = correct = trained = 0
+        for epd in epds:
+            s = stats_store.stats_for_position(epd)
+            attempts += s.attempts
+            correct += s.correct
+            if s.attempts > 0:
+                trained += 1
+        accuracy = correct / attempts if attempts else 0.0
+        rows.append({
+            "tree": tree,
+            "name": tree.name,
+            "attempts": attempts,
+            "accuracy": accuracy,
+            "positions_total": len(epds),
+            "positions_trained": trained,
+        })
+    return rows
+
+
+def open_error_positions(trees, side, stats_store) -> list[dict]:
+    """Offene Fehlerstellungen über das Repertoire der Seite — die
+    positions-basierte Ablösung von ``_collect_error_problems``
+    (varianten-bewusst, transpositions-dedupliziert).
+
+    Liefert dieselben Dict-Felder wie bisher (``fen``, ``expected_uci``,
+    ``expected_san``, ``played``, ``name``, ``count``), damit Anzeige und
+    Einzel-Drill unverändert weiterlaufen. Häufigste Fehler zuerst."""
+    index = build_user_position_index(trees, side)
+    problems: list[dict] = []
+    seen: set = set()
+    for epd, (tree, _node_id) in index.items():
+        for pos in stats_store.error_positions_for_epd(epd):
+            if not pos.expected_san:
+                continue
+            key = (pos.fen_before, pos.expected_san)
+            if key in seen:
+                continue
+            try:
+                board = chess.Board(pos.fen_before)
+            except ValueError:
+                continue
+            expected_uci = None
+            for move in board.legal_moves:
+                if board.san(move) == pos.expected_san:
+                    expected_uci = move.uci()
+                    break
+            if expected_uci is None:
+                continue
+            seen.add(key)
+            problems.append({
+                "fen": pos.fen_before,
+                "expected_uci": expected_uci,
+                "expected_san": pos.expected_san,
+                "played": pos.last_played_san,
+                "name": tree.name,
+                "source": tree.name,
+                "line": tree.name,
+                "count": pos.wrong_count,
+            })
+    problems.sort(key=lambda p: -p["count"])
+    return problems
 
 
 def due_forecast(trees, side, schedule, today) -> dict:

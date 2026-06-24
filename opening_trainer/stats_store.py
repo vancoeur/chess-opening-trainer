@@ -235,26 +235,26 @@ class StatsStore:
         summaries.sort(key=lambda item: (-item.count, item.last_timestamp))
         return summaries
 
-    def error_positions_for_line(self, *, source_name: str, line_name: str) -> list[ErrorPosition]:
+    @staticmethod
+    def _open_error_positions(events: list[TrainingEvent]) -> list[ErrorPosition]:
+        """Aus einer (bereits gefilterten) Ereignisliste die noch offenen
+        Fehlerstellungen ableiten: pro (Stellung, erwarteter Zug) zählt ein
+        Fehlversuch hoch, ein späterer Treffer baut ihn wieder ab; bleibt am
+        Ende ein offener Fehler übrig, gilt die Stellung als noch nicht gefestigt.
+        Gemeinsame Grundlage für die linien- und die positions-basierte Sicht."""
         grouped: dict[tuple[str, str | None], list[TrainingEvent]] = {}
-
-        for event in self.events:
-            if event.source_name != source_name or event.line_name != line_name:
-                continue
-
+        for event in events:
             key = (event.fen_before, event.expected_san)
             grouped.setdefault(key, []).append(event)
 
         positions: list[ErrorPosition] = []
-
-        for (fen_before, expected_san), events in grouped.items():
+        for (fen_before, expected_san), evs in grouped.items():
             open_wrong_count = 0
             last_wrong_event: TrainingEvent | None = None
             last_relevant_timestamp: str | None = None
 
-            for event in events:
+            for event in evs:
                 last_relevant_timestamp = event.timestamp
-
                 if event.correct:
                     if open_wrong_count > 0:
                         open_wrong_count -= 1
@@ -275,8 +275,22 @@ class StatsStore:
                 )
             )
 
-        positions.sort(key=lambda item: (-item.wrong_count, item.last_timestamp), reverse=False)
+        positions.sort(key=lambda item: (-item.wrong_count, item.last_timestamp))
         return positions
+
+    def error_positions_for_line(self, *, source_name: str, line_name: str) -> list[ErrorPosition]:
+        relevant = [
+            e for e in self.events
+            if e.source_name == source_name and e.line_name == line_name
+        ]
+        return self._open_error_positions(relevant)
+
+    def error_positions_for_epd(self, epd: str) -> list[ErrorPosition]:
+        """Offene Fehlerstellungen für eine einzelne Stellung (EPD = erste vier
+        FEN-Felder), FEN-genau über ALLE Eröffnungen. Grundlage des
+        positions-basierten Fehler-Überblicks (Cutover Statistik/Fortschritt)."""
+        relevant = [e for e in self.events if _epd_of_fen(e.fen_before) == epd]
+        return self._open_error_positions(relevant)
 
     def most_common_error_position(self, *, source_name: str, line_name: str) -> ErrorPosition | None:
         positions = self.error_positions_for_line(source_name=source_name, line_name=line_name)

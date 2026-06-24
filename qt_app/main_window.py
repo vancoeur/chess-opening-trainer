@@ -2740,16 +2740,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stack.setCurrentIndex(5)
 
     def _refresh_progress(self) -> None:
-        assigned = [
-            l for l in self.lines
-            if l.moves_uci and self._side_of_line(l) in ("white", "black")
-        ]
+        # Positions-basiert: pro Eröffnung (Baum) der zugeordneten Seite die
+        # aggregierte Statistik über ihre eigenen Stellungen.
+        from opening_trainer.tree_session import tree_progress_rows
         self._progress_rows = []
-        for line in assigned:
-            s = self.stats_store.stats_for_line(source_name=line.source_name, line_name=line.name)
-            self._progress_rows.append(
-                (line, s.attempts, s.accuracy, mastery_bucket(s.attempts, s.accuracy))
-            )
+        for color, side_name in ((chess.WHITE, "white"), (chess.BLACK, "black")):
+            for r in tree_progress_rows(self.tree_store.by_side(side_name), color, self.stats_store):
+                r = dict(r)
+                r["bucket"] = mastery_bucket(r["attempts"], r["accuracy"])
+                self._progress_rows.append(r)
+        assigned = self._progress_rows
         # Ohne zugeordnete Eröffnungen bleibt der Balken ein leerer grauer Streifen.
         self.progress_bar.setVisible(bool(assigned))
         if not assigned:
@@ -2760,7 +2760,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 "under »All openings«."))
             self._render_progress_list()
             return
-        counts = summarize_mastery([(a, acc) for _, a, acc, _ in self._progress_rows])
+        counts = summarize_mastery([(r["attempts"], r["accuracy"]) for r in assigned])
         self.progress_bar.set_counts(counts["sitzt"], counts["wackelt"], counts["neu"])
         self.progress_counts.setText(t(
             f"🟢 {counts['sitzt']} sitzen · 🟡 {counts['wackelt']} wackeln · "
@@ -2791,25 +2791,27 @@ class MainWindow(QtWidgets.QMainWindow):
         show_sitzt = f in ("alle", "sitzt")
         shown = 0
         if show_wackelt:
-            for line, attempts, accuracy, _ in sorted(
-                (r for r in rows if r[3] == "wackelt"), key=lambda r: r[2]
-            ):
-                self._add_progress_row(line, t(
-                    f"🟡 wackelt · Trefferquote {round(accuracy * 100)} % · {attempts} Versuche",
-                    f"🟡 shaky · accuracy {round(accuracy * 100)}% · {attempts} attempts",
+            for r in sorted((r for r in rows if r["bucket"] == "wackelt"), key=lambda r: r["accuracy"]):
+                self._add_progress_row(r["tree"], t(
+                    f"🟡 wackelt · Trefferquote {round(r['accuracy'] * 100)} % · "
+                    f"{r['positions_trained']}/{r['positions_total']} Stellungen geübt",
+                    f"🟡 shaky · accuracy {round(r['accuracy'] * 100)}% · "
+                    f"{r['positions_trained']}/{r['positions_total']} positions trained",
                 ))
                 shown += 1
         if show_neu:
-            for line, _, _, _ in (r for r in rows if r[3] == "neu"):
-                self._add_progress_row(line, t("⚪ neu · noch nie geübt", "⚪ new · never trained"))
+            for r in (r for r in rows if r["bucket"] == "neu"):
+                self._add_progress_row(r["tree"], t(
+                    f"⚪ neu · noch nie geübt · {r['positions_total']} Stellungen",
+                    f"⚪ new · never trained · {r['positions_total']} positions"))
                 shown += 1
         if show_sitzt:
-            for line, attempts, accuracy, _ in sorted(
-                (r for r in rows if r[3] == "sitzt"), key=lambda r: -r[2]
-            ):
-                self._add_progress_row(line, t(
-                    f"🟢 sitzt · Trefferquote {round(accuracy * 100)} % · {attempts} Versuche",
-                    f"🟢 solid · accuracy {round(accuracy * 100)}% · {attempts} attempts",
+            for r in sorted((r for r in rows if r["bucket"] == "sitzt"), key=lambda r: -r["accuracy"]):
+                self._add_progress_row(r["tree"], t(
+                    f"🟢 sitzt · Trefferquote {round(r['accuracy'] * 100)} % · "
+                    f"{r['positions_trained']}/{r['positions_total']} Stellungen geübt",
+                    f"🟢 solid · accuracy {round(r['accuracy'] * 100)}% · "
+                    f"{r['positions_trained']}/{r['positions_total']} positions trained",
                 ))
                 shown += 1
         if shown == 0:
@@ -2825,15 +2827,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.progress_list.addItem(item)
         self.progress_list.setItemWidget(item, label)
 
-    def _add_progress_row(self, line, sub_text: str) -> None:
+    def _add_progress_row(self, tree, sub_text: str) -> None:
         item = QtWidgets.QListWidgetItem()
-        item.setData(QtCore.Qt.UserRole, line)
+        item.setData(QtCore.Qt.UserRole, tree)
         widget = QtWidgets.QWidget()
         widget.setObjectName("libraryrow")
         box = QtWidgets.QVBoxLayout(widget)
         box.setContentsMargins(14, 9, 14, 9)
         box.setSpacing(2)
-        name = self._plain_label(self._display_name(line))
+        name = self._plain_label(self._tname(tree.name))
         name.setObjectName("rowname")
         sub = QtWidgets.QLabel(sub_text)
         sub.setObjectName("rowsub")
@@ -2844,12 +2846,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.progress_list.setItemWidget(item, widget)
 
     def _train_from_progress(self, item: QtWidgets.QListWidgetItem) -> None:
-        line = item.data(QtCore.Qt.UserRole)
-        if line is None or not getattr(line, "moves_uci", None):
+        tree = item.data(QtCore.Qt.UserRole)
+        if tree is None or tree.id not in self.tree_store.trees:
             return
-        self.stack.setCurrentIndex(0)
-        self._load_line(line)
-        self.eyebrow.setText(t("ÜBEN", "TRAIN"))
+        self._start_tree_drill(tree)
 
     # ---- Lichess-Eröffnungsexplorer ------------------------------------
     def _build_explorer_page(self) -> QtWidgets.QWidget:
@@ -4018,42 +4018,14 @@ class MainWindow(QtWidgets.QMainWindow):
     # --- Fehler-Drill ----------------------------------------------------
 
     def _collect_error_problems(self) -> list:
-        """Alle offenen Fehlerstellungen (letzter Versuch falsch) über alle
-        Eröffnungen, häufigste zuerst. Nutzt das getestete „offene Fehler"-
-        Modell und prüft, dass der erwartete Zug in der Stellung spielbar ist."""
+        """Alle offenen Fehlerstellungen (letzter Versuch falsch) über das
+        Repertoire beider Seiten, häufigste zuerst — positions-basiert und
+        varianten-bewusst (transpositions-dedupliziert)."""
+        from opening_trainer.tree_session import open_error_positions
         problems = []
-        seen = set()
-        for line in self.lines:
-            for pos in self.stats_store.error_positions_for_line(
-                source_name=line.source_name, line_name=line.name
-            ):
-                key = (pos.fen_before, pos.expected_san)
-                if key in seen or not pos.expected_san:
-                    continue
-                try:
-                    board = chess.Board(pos.fen_before)
-                except ValueError:
-                    continue
-                expected_uci = None
-                for move in board.legal_moves:
-                    if board.san(move) == pos.expected_san:
-                        expected_uci = move.uci()
-                        break
-                if expected_uci is None:
-                    continue
-                seen.add(key)
-                problems.append(
-                    {
-                        "fen": pos.fen_before,
-                        "expected_uci": expected_uci,
-                        "expected_san": pos.expected_san,
-                        "played": pos.last_played_san,
-                        "name": line.name,
-                        "source": line.source_name,
-                        "line": line.name,
-                        "count": pos.wrong_count,
-                    }
-                )
+        for color, side_name in ((chess.WHITE, "white"), (chess.BLACK, "black")):
+            problems += open_error_positions(
+                self.tree_store.by_side(side_name), color, self.stats_store)
         problems.sort(key=lambda p: -p["count"])
         return problems
 
