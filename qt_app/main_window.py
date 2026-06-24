@@ -525,6 +525,8 @@ class MainWindow(QtWidgets.QMainWindow):
         file_menu.addSeparator()
         manage_act = file_menu.addAction(t("Geladene Repertoires verwalten …", "Manage loaded repertoires …"))
         manage_act.triggered.connect(self._manage_sources)
+        trees_act = file_menu.addAction(t("Eigene Bäume verwalten/aufräumen …", "Manage/clean custom trees …"))
+        trees_act.triggered.connect(self._manage_trees)
         reset_act = file_menu.addAction(t("Repertoire leeren …", "Clear repertoire …"))
         reset_act.triggered.connect(self._reset_repertoire)
 
@@ -532,7 +534,7 @@ class MainWindow(QtWidgets.QMainWindow):
         for label_de, label_en, shortcut, slot in [
             ("Start", "Home", "Ctrl+1", self._open_home),
             ("Alle Eröffnungen", "All openings", "Ctrl+2", self._open_library),
-            ("Auswertung", "Analysis", "Ctrl+3", self._open_stats),
+            ("Trefferquote & Fehler", "Accuracy & mistakes", "Ctrl+3", self._open_stats),
             ("Fortschritt", "Progress", "Ctrl+4", self._open_progress),
             ("Partien auswerten", "Review games", "Ctrl+5", self._open_game_review),
             ("Repertoire-Prüfung", "Repertoire check", "Ctrl+6", self._open_tuv),
@@ -550,7 +552,7 @@ class MainWindow(QtWidgets.QMainWindow):
         due_act = go_menu.addAction(t("Heute fällig", "Due today"))
         due_act.setShortcut(QtGui.QKeySequence("Ctrl+D"))
         due_act.triggered.connect(self._open_due_overview)
-        drill_act = go_menu.addAction(t("Bäume üben", "Train trees"))
+        drill_act = go_menu.addAction(t("Baum frei durchspielen", "Free-play a tree"))
         drill_act.setShortcut(QtGui.QKeySequence("Ctrl+T"))
         drill_act.triggered.connect(self._open_tree_drill)
         go_menu.addSeparator()
@@ -1553,7 +1555,7 @@ class MainWindow(QtWidgets.QMainWindow):
         groups = [
             (t("Üben", "Practice"), [
                 (t("Heute fällig", "Due today"), self._open_due_overview),
-                (t("Bäume üben", "Train trees"), self._open_tree_drill),
+                (t("Baum frei durchspielen", "Free-play a tree"), self._open_tree_drill),
                 (t("Repertoire-Prüfung", "Repertoire check"), self._open_tuv),
             ]),
             (t("Repertoire", "Repertoire"), [
@@ -1563,7 +1565,7 @@ class MainWindow(QtWidgets.QMainWindow):
             ]),
             (t("Auswerten", "Review"), [
                 (t("Fortschritt", "Progress"), self._open_progress),
-                (t("Auswertung", "Analysis"), self._open_stats),
+                (t("Trefferquote & Fehler", "Accuracy & mistakes"), self._open_stats),
                 (t("Partien auswerten", "Review games"), self._open_game_review),
             ]),
             (t("Erkunden", "Explore"), [
@@ -1606,11 +1608,12 @@ class MainWindow(QtWidgets.QMainWindow):
         has_rep = bool(self.lines) or bool(self.tree_store.all())
         total = len(self._due_items())
         self.home_forecast.setText(t(
-            f"Heute: {fc['today']}   ·   Morgen: {fc['tomorrow']}   ·   "
-            f"Diese Woche: {fc['week']}   ·   Neu: {fc['new']}",
-            f"Today: {fc['today']}   ·   Tomorrow: {fc['tomorrow']}   ·   "
-            f"This week: {fc['week']}   ·   New: {fc['new']}"))
-        self.home_due_btn.setText(t(f"▶  Heute fällig üben  ({total})", f"▶  Train what's due  ({total})"))
+            f"Fällig: heute {fc['today']} · morgen {fc['tomorrow']} · Woche {fc['week']}"
+            f"      ·      Noch nie geübt: {fc['new']}",
+            f"Due: today {fc['today']} · tomorrow {fc['tomorrow']} · week {fc['week']}"
+            f"      ·      Not started yet: {fc['new']}"))
+        # Tagesportion = fällige Wiederholungen + ein paar neue Stellungen.
+        self.home_due_btn.setText(t(f"▶  Heute üben  ({total})", f"▶  Train today  ({total})"))
         self.home_due_btn.setEnabled(total > 0)
         self.home_forecast.setVisible(has_rep)
         self.home_due_btn.setVisible(has_rep)
@@ -1822,10 +1825,10 @@ class MainWindow(QtWidgets.QMainWindow):
             "sieh, wo du vom Repertoire abgewichen bist und wo du gepatzt hast.</li>"
             "<li><b>Verzweigte Repertoires (Bäume):</b> wenn dein Gegner mehrere Antworten "
             "hat, baust du im <b>Repertoire-Editor</b> (»Gehe zu → Repertoire-Editor«, ⌘E) "
-            "eigene Varianten — oder importierst sie über »Datei → PGN als Repertoire-Bäume "
-            "importieren«. Üben: »Bäume üben« (⌘T) oder die Tagessitzung »Heute fällig "
-            "(Bäume)« (⌘D).</li>"
-            "<li><b>Sprache:</b> Menü »Ansicht → Sprache« (gilt nach Neustart).</li>"
+            "eigene Varianten — oder lädst eine varianten-reiche PGN (z. B. Lichess-Studie); "
+            "der Import übernimmt die Verzweigungen. Üben: »Heute üben« (Tagessitzung, ⌘D) "
+            "oder »Repertoire-Baum« (⌘R) → »Dieses Repertoire üben«.</li>"
+            "<li><b>Sprache:</b> Menü »Ansicht → Sprache« (gilt sofort).</li>"
             "</ul>",
             "<b>How to get started:</b>"
             "<ul>"
@@ -1842,10 +1845,10 @@ class MainWindow(QtWidgets.QMainWindow):
             "where you left your repertoire and where you blundered.</li>"
             "<li><b>Branched repertoires (trees):</b> when your opponent has several "
             "replies, build your own variations in the <b>Repertoire editor</b> "
-            "(“Go → Repertoire editor”, ⌘E) — or import them via “File → Import PGN as "
-            "repertoire trees”. Practise with “Train trees” (⌘T) or the daily “Due today "
-            "(trees)” session (⌘D).</li>"
-            "<li><b>Language:</b> “View → Language” menu (takes effect after restart).</li>"
+            "(“Go → Repertoire editor”, ⌘E) — or load a variation-rich PGN (e.g. a Lichess "
+            "study); the import keeps the branches. Practise via “Train today” (daily "
+            "session, ⌘D) or “Repertoire tree” (⌘R) → “Train this repertoire”.</li>"
+            "<li><b>Language:</b> “View → Language” menu (takes effect immediately).</li>"
             "</ul>",
         ))
         box.exec()
@@ -2021,19 +2024,96 @@ class MainWindow(QtWidgets.QMainWindow):
         self._start_next()
         return max(0, len(self.lines) - before)
 
+    def _custom_trees(self) -> list:
+        """Bäume, die NICHT aus einer geladenen PGN-Quelle stammen (selbst gebaut,
+        importiert oder Reste alter Importe). Genau hier sammeln sich verwaiste
+        Bäume, die Zähler/Repertoire-Baum aufblähen."""
+        return [tr for tr in self.tree_store.all() if tr.headers.get("_auto") != "1"]
+
+    def _manage_trees(self) -> None:
+        dlg = QtWidgets.QDialog(self)
+        dlg.setWindowTitle(t("Eigene Repertoire-Bäume", "Custom repertoire trees"))
+        lay = QtWidgets.QVBoxLayout(dlg)
+        info = self._plain_label(t(
+            "Bäume, die NICHT aus einer geladenen PGN-Datei stammen (selbst gebaut, "
+            "importiert oder Reste alter Importe). Hier kannst du aufräumen — z. B. "
+            "verwaiste Bäume entfernen, die die Zähler aufblähen. Bäume aus geladenen "
+            "Dateien verwaltest du über »Geladene Repertoires«.",
+            "Trees NOT from a loaded PGN file (built yourself, imported, or leftovers of "
+            "old imports). Clean up here — e.g. remove orphaned trees that inflate the "
+            "counters. Trees from loaded files are managed under »Loaded repertoires«."))
+        info.setWordWrap(True)
+        lay.addWidget(info)
+        listw = QtWidgets.QListWidget()
+        listw.setSelectionMode(QtWidgets.QAbstractItemView.SelectionMode.ExtendedSelection)
+        lay.addWidget(listw)
+        count_lbl = QtWidgets.QLabel("")
+
+        def refresh() -> None:
+            listw.clear()
+            for tr in sorted(self._custom_trees(), key=lambda x: self._tree_family(x).casefold()):
+                side = {"white": t("Weiß", "White"), "black": t("Schwarz", "Black")}.get(tr.side, "—")
+                plies = max(0, len(tr.nodes) - 1)
+                item = QtWidgets.QListWidgetItem(
+                    f"{self._tree_family(tr)}    ({side}, {plies} {t('Halbzüge', 'plies')})")
+                item.setData(QtCore.Qt.UserRole, tr.id)
+                item.setToolTip(tr.name or "")
+                listw.addItem(item)
+            count_lbl.setText(t(f"{listw.count()} eigene Bäume", f"{listw.count()} custom trees"))
+
+        def delete_selected() -> None:
+            ids = [it.data(QtCore.Qt.UserRole) for it in listw.selectedItems()]
+            if not ids:
+                return
+            if QtWidgets.QMessageBox.warning(
+                dlg, t("Bäume löschen?", "Delete trees?"),
+                t(f"{len(ids)} Baum/Bäume dauerhaft löschen? Geladene PGN-Dateien bleiben unberührt.",
+                  f"Delete {len(ids)} tree(s) permanently? Loaded PGN files stay untouched."),
+                QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.Cancel,
+                QtWidgets.QMessageBox.StandardButton.Cancel,
+            ) == QtWidgets.QMessageBox.StandardButton.Yes:
+                for tid in ids:
+                    self.tree_store.remove(tid)
+                self.tree_store.save(self.trees_path)
+                self._refresh_library()
+                refresh()
+
+        refresh()
+        lay.addWidget(count_lbl)
+        btns = QtWidgets.QHBoxLayout()
+        sel = QtWidgets.QPushButton(t("Alle auswählen", "Select all"))
+        sel.clicked.connect(listw.selectAll)
+        rm = QtWidgets.QPushButton(t("Ausgewählte löschen", "Delete selected"))
+        rm.clicked.connect(delete_selected)
+        close = QtWidgets.QPushButton(t("Schließen", "Close"))
+        close.clicked.connect(dlg.accept)
+        btns.addWidget(sel)
+        btns.addWidget(rm)
+        btns.addStretch(1)
+        btns.addWidget(close)
+        lay.addLayout(btns)
+        dlg.resize(540, 440)
+        dlg.exec()
+
     def _reset_repertoire(self) -> None:
         if QtWidgets.QMessageBox.question(
             self, t("Repertoire leeren", "Clear repertoire"),
-            t("Alle geladenen PGN-Quellen aus der App entfernen? Deine PGN-Dateien "
-              "auf der Platte bleiben unberührt — nur die Auswahl in der App wird geleert.",
-              "Remove all loaded PGN sources from the app? Your PGN files on disk stay "
-              "untouched — only the app's selection is cleared."),
+            t("Alles aus der App entfernen — geladene PGN-Quellen UND alle "
+              "Repertoire-Bäume (auch selbst gebaute/importierte)? Deine PGN-Dateien "
+              "auf der Platte bleiben unberührt; nur der Inhalt der App wird geleert.",
+              "Remove everything from the app — loaded PGN sources AND all repertoire "
+              "trees (including ones you built/imported)? Your PGN files on disk stay "
+              "untouched; only the app's content is cleared."),
         ) != QtWidgets.QMessageBox.StandardButton.Yes:
             return
         self.settings_store.update(pgn_sources=(), last_pgn_path="", last_pgn_folder="", last_pgn_kind="")
         self.settings_store.save(self.settings_path)
         self.lines = []
-        self._sync_auto_trees()
+        # ALLE Bäume leeren (auch Nicht-Auto): sonst überleben alte/verwaiste Bäume
+        # das Leeren und verfälschen weiter Zähler/Repertoire-Baum.
+        self.tree_store = RepertoireTreeStore()
+        self.tree_store.save(self.trees_path)
+        self._sync_auto_trees()              # baut aus den (nun leeren) Quellen = nichts
         self._refill_queue()
         self._refresh_library()
         self._start_next()
@@ -2177,7 +2257,7 @@ class MainWindow(QtWidgets.QMainWindow):
         names = {
             0: t("Üben", "Train"),
             1: t("Alle Eröffnungen", "All openings"),
-            2: t("Auswertung", "Analysis"),
+            2: t("Trefferquote & Fehler", "Accuracy & mistakes"),
             3: t("Repertoire-Prüfung", "Repertoire check"),
             4: t("Gegen Stockfish", "Play Stockfish"),
             5: t("Fortschritt", "Progress"),
@@ -2355,7 +2435,7 @@ class MainWindow(QtWidgets.QMainWindow):
         back.clicked.connect(self._go_back)
         title = QtWidgets.QLabel(t("Deine Eröffnungen", "Your openings"))
         title.setObjectName("name")
-        self.stats_btn = QtWidgets.QPushButton(t("Auswertung", "Analysis"))
+        self.stats_btn = QtWidgets.QPushButton(t("Trefferquote & Fehler", "Accuracy & mistakes"))
         self.stats_btn.setObjectName("more")
         self.stats_btn.clicked.connect(self._open_stats)
         self.load_btn = QtWidgets.QPushButton(t("PGN laden …", "Load PGN …"))
@@ -2466,7 +2546,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # Menü „Gehe zu" (⌘4/⌘5/⌘6) — keine doppelten Knöpfe mehr hier.
         outer.addLayout(header)
 
-        title = QtWidgets.QLabel(t("Auswertung", "Analysis"))
+        title = QtWidgets.QLabel(t("Trefferquote & Fehler", "Accuracy & mistakes"))
         title.setObjectName("name")
         outer.addWidget(title)
 

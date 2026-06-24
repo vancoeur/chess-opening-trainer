@@ -35,4 +35,5 @@ def test_with_repertoire_shows_train_button(tmp_path, monkeypatch):
     assert not win.home_due_btn.isHidden()        # Tagesaktion sichtbar
     assert win.home_due_btn.isEnabled()           # und aktiv (etwas fällig/neu)
     assert win.home_sample_btn.isHidden()         # kein Beispiel-Hinweis
-    assert "Today" in win.home_forecast.text() or "Heute" in win.home_forecast.text()
+    low = win.home_forecast.text().lower()
+    assert "heute" in low or "today" in low
