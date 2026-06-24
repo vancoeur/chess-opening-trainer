@@ -484,7 +484,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._viewer_moves: list = []
         self._viewer_pos = 0
         self._viewer_dev = None
-        self._viewer_line = None
+        self._viewer_drill_fen = None
         self._viewer_color = chess.WHITE
         self._viewer_issues: dict = {}   # ply -> MoveIssue (Stockfish-Patzer der Partie)
         self._viewer_anal_thread = None
@@ -1289,9 +1289,10 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.due_overview_list.addItem(item)
                 self.due_overview_list.setItemWidget(item, row)
 
-    def _due_items(self, only_tree=None) -> list:
+    def _due_items(self, only_tree=None, only_side=None) -> list:
         """Heute fällige/neue eigene Stellungen — über das ganze Repertoire (beide
-        Seiten) oder, wenn ``only_tree`` gesetzt ist, nur für diese eine Eröffnung."""
+        Seiten), oder nur für eine Eröffnung (``only_tree``) bzw. eine Seite
+        (``only_side`` = "white"/"black")."""
         from opening_trainer.tree_session import due_drill_items, due_items_for_tree
         today = date.today()
         items: list = []
@@ -1300,7 +1301,10 @@ class MainWindow(QtWidgets.QMainWindow):
             for tree, node_id in due_items_for_tree(only_tree, side, self.position_schedule, today):
                 items.append((tree, node_id, side))
             return items
-        for side_name, color in (("white", chess.WHITE), ("black", chess.BLACK)):
+        sides = (("white", chess.WHITE), ("black", chess.BLACK))
+        if only_side in ("white", "black"):
+            sides = ((only_side, chess.WHITE if only_side == "white" else chess.BLACK),)
+        for side_name, color in sides:
             trees = self.tree_store.by_side(side_name)
             for tree, node_id in due_drill_items(trees, color, self.position_schedule, today):
                 items.append((tree, node_id, color))
@@ -1345,7 +1349,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # Verteiler-Kacheln, gruppiert
         groups = [
             (t("Üben", "Practice"), [
-                (t("Linie durchspielen", "Play a line"), lambda: self.stack.setCurrentIndex(0)),
+                (t("Heute fällig", "Due today"), self._open_due_overview),
                 (t("Bäume üben", "Train trees"), self._open_tree_drill),
                 (t("Repertoire-Prüfung", "Repertoire check"), self._open_tuv),
             ]),
@@ -1414,18 +1418,48 @@ class MainWindow(QtWidgets.QMainWindow):
         Navigations-Historie zu füllen (man startet frisch zuhause)."""
         self._go_home()
 
-    def _start_due_session(self, only_tree=None) -> None:
-        items = self._due_items(only_tree)
-        self._due_queue = items
-        self._due_total = len(items)
+    def _run_position_session(self, items, eyebrow: str) -> None:
+        """Fährt eine stellungs-basierte Sitzung über die übergebenen
+        ``(tree, node_id, color)``-Items auf der Drill-Seite — gemeinsamer Kern
+        für »Heute fällig«, »Stellung üben« (Einzel-Drill) und »Fehler üben«."""
+        self._due_queue = list(items)
+        self._due_total = len(self._due_queue)
         self._due_session = True
         self._drill_manual = False
         self.tree_drill_feedback.setText("")
-        self.drill_eyebrow.setText(t("HEUTE FÄLLIG", "DUE TODAY"))
+        self.drill_eyebrow.setText(eyebrow)
         self.tree_drill_combo.setVisible(False)
         self.drill_manual_check.setVisible(False)
         self.stack.setCurrentIndex(10)
         self._due_present_current()
+
+    def _start_due_session(self, only_tree=None, only_side=None) -> None:
+        self._run_position_session(
+            self._due_items(only_tree, only_side), t("HEUTE FÄLLIG", "DUE TODAY"))
+
+    def _drill_positions_for_fens(self, fens, eyebrow: str) -> None:
+        """Lenkt die alten Einzelstellungs-Drills (Statistik-Fehler, »Fehler
+        üben«, Partie-Abweichung) auf eine stellungs-basierte Sitzung um, indem
+        jede Stellung über die Bäume auf (tree, node, color) aufgelöst wird."""
+        items = []
+        for fen in fens:
+            loc = self._locate_in_trees(fen)
+            if loc is not None:
+                items.append(loc)
+        if items:
+            self._run_position_session(items, eyebrow)
+
+    def _locate_in_trees(self, fen: str):
+        """(tree, node_id, color) für eine Stellung (FEN) über beide Seiten,
+        sonst ``None``. EPD = die ersten vier FEN-Felder."""
+        from opening_trainer.tree_session import build_user_position_index, locate_position
+        epd = " ".join(fen.split(" ")[:4])
+        for side_name, color in (("white", chess.WHITE), ("black", chess.BLACK)):
+            index = build_user_position_index(self.tree_store.by_side(side_name), color)
+            hit = locate_position(index, epd)
+            if hit is not None:
+                return (hit[0], hit[1], color)
+        return None
 
     def _due_present_current(self) -> None:
         if not self._due_queue:
@@ -3324,35 +3358,10 @@ class MainWindow(QtWidgets.QMainWindow):
             return {"status": "unknown"}
         moves = [m.uci() for m in game.mainline_moves()]
         review = review_game(moves, book, color)
-        line = None
-        if review.status == "deviated":
-            line = self._find_line_through_deviation(moves, review.deviation.ply, color)
         return {
             "status": review.status, "review": review, "opp": opp, "result": result,
-            "line": line, "moves": moves, "color": color,
+            "moves": moves, "color": color,
         }
-
-    def _find_line_through_deviation(self, moves: list[str], ply: int, color: chess.Color):
-        board = chess.Board()
-        for i in range(ply):
-            try:
-                board.push(chess.Move.from_uci(moves[i]))
-            except ValueError:
-                return None
-        target = board.epd()
-        side_str = "white" if color == chess.WHITE else "black"
-        for line in self.lines:
-            if not line.moves_uci or self._side_of_line(line) != side_str:
-                continue
-            bb = chess.Board()
-            for uci in line.moves_uci:
-                if bb.turn == color and bb.epd() == target:
-                    return line
-                try:
-                    bb.push(chess.Move.from_uci(uci))
-                except ValueError:
-                    break
-        return None
 
     def _render_game_reviews(self, results: list) -> None:
         self.games_list.clear()
@@ -3484,7 +3493,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.viewer_blunder_btn.clicked.connect(self._viewer_next_blunder)
         self.viewer_blunder_btn.setVisible(False)
 
-        self.viewer_train_btn = QtWidgets.QPushButton(t("Diese Linie üben", "Train this line"))
+        self.viewer_train_btn = QtWidgets.QPushButton(t("Diese Stellung üben", "Drill this position"))
         self.viewer_train_btn.setObjectName("primary")
         self.viewer_train_btn.clicked.connect(self._viewer_train)
 
@@ -3512,7 +3521,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self._viewer_color = payload.get("color", chess.WHITE)
         review = payload.get("review")
         self._viewer_dev = review.deviation if (review and review.status == "deviated") else None
-        self._viewer_line = payload.get("line")
+        # „Diese Stellung üben" nur, wenn die Abweichungs-Stellung im Repertoire
+        # liegt -> dann lenkt der Knopf auf den Baum-Drill dieser Stellung.
+        self._viewer_drill_fen = self._deviation_fen() if self._viewer_dev else None
         self.viewer_board.set_flipped(self._viewer_color == chess.BLACK)
         color_word = self._tcolor(self._viewer_color)
         me = self._player_name.strip() or t("Du", "You")
@@ -3520,7 +3531,8 @@ class MainWindow(QtWidgets.QMainWindow):
             f"{me} ({color_word})  gegen  {payload.get('opp', '?')}     ·     {payload.get('result', '')}",
             f"{me} ({color_word})  against  {payload.get('opp', '?')}     ·     {payload.get('result', '')}",
         ))
-        self.viewer_train_btn.setVisible(self._viewer_line is not None)
+        self.viewer_train_btn.setVisible(
+            self._viewer_drill_fen is not None and self._locate_in_trees(self._viewer_drill_fen) is not None)
         self._viewer_issues = {}
         self.viewer_blunder_btn.setVisible(False)
         self.viewer_analyze_btn.setEnabled(True)
@@ -3585,12 +3597,24 @@ class MainWindow(QtWidgets.QMainWindow):
             self._viewer_pos += 1
             self._viewer_render()
 
+    def _deviation_fen(self) -> str | None:
+        """FEN der Stellung, in der der Nutzer in dieser Partie abgewichen ist
+        (die Stellung VOR seinem abweichenden Zug)."""
+        dev = self._viewer_dev
+        if dev is None:
+            return None
+        board = chess.Board()
+        for i in range(dev.ply):
+            try:
+                board.push(chess.Move.from_uci(self._viewer_moves[i]))
+            except (ValueError, IndexError):
+                return None
+        return board.fen()
+
     def _viewer_train(self) -> None:
-        if self._viewer_line is None or not getattr(self._viewer_line, "moves_uci", None):
-            return
-        self.stack.setCurrentIndex(0)
-        self._load_line(self._viewer_line)
-        self.eyebrow.setText(t("ÜBEN", "TRAIN"))
+        if self._viewer_drill_fen is not None:
+            self._drill_positions_for_fens(
+                [self._viewer_drill_fen], t("STELLUNG ÜBEN", "DRILL POSITION"))
 
     def _viewer_analyze(self) -> None:
         if self._viewer_anal_thread is not None or not self._viewer_moves:
@@ -3684,11 +3708,7 @@ class MainWindow(QtWidgets.QMainWindow):
         problem = item.data(QtCore.Qt.UserRole)
         if not problem:
             return
-        self._drill = True
-        self._drill_queue = []  # genau diese eine Stellung
-        self.stack.setCurrentIndex(0)
-        self._drill_current = problem
-        self._load_problem(problem)
+        self._drill_positions_for_fens([problem["fen"]], t("STELLUNG ÜBEN", "DRILL POSITION"))
 
     def _refresh_stats(self) -> None:
         overview = overall_progress(self.stats_store.events)
@@ -4048,10 +4068,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if not problems:
             self.status.setText(t("Keine offenen Fehler — stark! 💪", "No open mistakes — great! 💪"))
             return
-        self._drill = True
-        self._drill_queue = problems
-        self.stack.setCurrentIndex(0)
-        self._next_problem()
+        self._drill_positions_for_fens([p["fen"] for p in problems], t("FEHLER ÜBEN", "DRILL MISTAKES"))
 
     def _next_problem(self) -> None:
         if not self._drill_queue:
@@ -4410,29 +4427,29 @@ class MainWindow(QtWidgets.QMainWindow):
         self._refresh_library()
 
     def _train_side(self) -> None:
-        lines = [l for l in self._filtered_lines() if l.moves_uci]
-        if not lines:
-            return
-        self._queue = list(lines)
-        self.stack.setCurrentIndex(0)
-        self._start_next()
-        side = t("WEISS-REPERTOIRE", "WHITE REPERTOIRE") if self._side_filter == "white" else t("SCHWARZ-REPERTOIRE", "BLACK REPERTOIRE")
-        self.eyebrow.setText(side)
+        # Stellungs-basiert: fällige/neue Stellungen dieser Repertoire-Seite.
+        if self._side_filter in ("white", "black"):
+            self._start_due_session(only_side=self._side_filter)
 
     def _open_library(self) -> None:
         self._refresh_library()
         self.stack.setCurrentIndex(1)
 
     def _close_library(self) -> None:
-        self.stack.setCurrentIndex(0)
+        self._go_home()
 
     def _train_from_library(self, item: QtWidgets.QListWidgetItem) -> None:
         line = item.data(QtCore.Qt.UserRole)
         if line is None or not getattr(line, "moves_uci", None):
             return
-        self.stack.setCurrentIndex(0)
-        self._load_line(line)
-        self.eyebrow.setText(t("ÜBEN", "TRAIN"))
+        side = self._side_of_line(line)
+        if side not in ("white", "black"):
+            return                    # ohne Seiten-Zuordnung kein Baum-Drill (erst zuordnen)
+        from opening_trainer.tree_session import tree_for_moves
+        color = chess.WHITE if side == "white" else chess.BLACK
+        tree = tree_for_moves(self.tree_store.by_side(side), line.moves_uci, color)
+        if tree is not None:
+            self._start_tree_drill(tree)
 
     def _selected_library_line(self):
         items = self.library_list.selectedItems()

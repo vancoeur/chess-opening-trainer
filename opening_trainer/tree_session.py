@@ -40,6 +40,37 @@ def _walk(tree, node, board, side, index) -> None:
         board.pop()
 
 
+def locate_position(index: dict, epd: str):
+    """(tree, node_id) für eine EPD aus einem ``build_user_position_index``,
+    sonst ``None``. Zum gezielten Drillen einer einzelnen Stellung (Fehler-
+    Stellung, Partie-Abweichung)."""
+    return index.get(epd)
+
+
+def tree_for_moves(trees, moves_uci, side):
+    """Der Baum der passenden Seite, der diese Zugfolge (Linie) als Pfad von der
+    Wurzel enthält. Damit lässt sich ein Bibliotheks-Klick auf eine Linie auf
+    ihren Baum-Drill umlenken. Eindeutig (nicht über die geteilte Startstellung).
+    ``None``, wenn keine/keine eindeutige Folge passt."""
+    if not moves_uci:
+        return None
+    want = _SIDE_NAME.get(side)
+    for tree in trees:
+        if tree.side != want:
+            continue
+        node = tree.root
+        ok = True
+        for uci in moves_uci:
+            child = tree.child_with_move(node.id, uci)
+            if child is None:
+                ok = False
+                break
+            node = child
+        if ok:
+            return tree
+    return None
+
+
 def due_drill_items(trees, side, schedule, today, new_limit: int = 10) -> list[tuple]:
     """Heute fällige eigene Stellungen als (tree, node_id), in Lernplan-Reihenfolge
     (überfälligste zuerst, dann begrenzt neue)."""
