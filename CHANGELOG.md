@@ -7,6 +7,19 @@ version are on the [Releases page](https://github.com/vancoeur/chess-opening-tra
 The interface is bilingual (English/German); version numbers follow
 `MAJOR.MINOR.PATCH`.
 
+## [1.1.2] — 2026-06-24
+
+**A home start page and smarter back navigation.**
+
+- **New start page (home hub).** The app now opens on a clear home screen: the
+  daily **“Train what's due (N)”** action with a today / tomorrow / this-week
+  forecast (or a “try the samples” prompt for new users), plus tiles grouped
+  *Practice / Repertoire / Review / Explore* that link to every part of the app.
+  “Home” is now one place instead of two competing start screens.
+- **“Back” returns to the previous page.** Every page’s back button now goes to the
+  page you came from — stepping back through your path — and falls back to the home
+  hub, instead of always jumping straight to the start.
+
 ## [1.1.1] — 2026-06-23
 
 **Live language switching, plus fixes and a consistency pass.**
@@ -105,6 +118,7 @@ repertoires.** The biggest update so far — daily review is now Chessable-style
 - **Review your games** — load a PGN of your played games and see where you left
   your repertoire and where you blundered.
 
+[1.1.2]: https://github.com/vancoeur/chess-opening-trainer/releases/tag/v1.1.2
 [1.1.1]: https://github.com/vancoeur/chess-opening-trainer/releases/tag/v1.1.1
 [1.1.0]: https://github.com/vancoeur/chess-opening-trainer/releases/tag/v1.1.0
 [1.0.4]: https://github.com/vancoeur/chess-opening-trainer/releases/tag/v1.0.4
