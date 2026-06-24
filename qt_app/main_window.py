@@ -34,7 +34,8 @@ from qt_app import i18n
 from qt_app.i18n import t
 from opening_trainer.mastery import mastery_bucket, summarize_mastery
 from opening_trainer.explorer import parse_explorer_response, percent
-from opening_trainer.game_review import build_repertoire_book, review_game
+from opening_trainer.game_review import review_game
+from opening_trainer.position_book import build_san_book
 from opening_trainer.opening_names_en import to_english
 from qt_app.paths import data_dir, sample_pgn_path
 
@@ -3216,7 +3217,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # Ohne zugeordnetes Repertoire ist der Abgleich sinnlos (alles „ungedeckt") ->
         # actionable Hinweis statt irreführender Zähler. Zuletzt setzen, damit das
         # Auto-Laden ihn nicht überschreibt.
-        if not any(self._side_of_line(l) for l in self.lines):
+        if not (self.tree_store.by_side("white") or self.tree_store.by_side("black")):
             self.games_status.setText(t(
                 "Tipp: Ordne zuerst Eröffnungen einem Repertoire zu (Weiß/Schwarz, unter "
                 "»Alle Eröffnungen«) — sonst kann ich deine Partien nicht mit deinem "
@@ -3270,14 +3271,10 @@ class MainWindow(QtWidgets.QMainWindow):
     def _load_games_from_path(self, path: str, interactive: bool = True) -> None:
         if not self._player_name.strip() or not Path(path).exists():
             return
-        white_book = build_repertoire_book(
-            [l.moves_uci for l in self.lines if l.moves_uci and self._side_of_line(l) == "white"],
-            chess.WHITE,
-        )
-        black_book = build_repertoire_book(
-            [l.moves_uci for l in self.lines if l.moves_uci and self._side_of_line(l) == "black"],
-            chess.BLACK,
-        )
+        # Varianten-bewusstes Buch aus den Repertoire-Bäumen: eine korrekt
+        # gespielte Nebenvariante gilt nicht mehr als Abweichung.
+        white_book = build_san_book(self.tree_store.by_side("white"), chess.WHITE)
+        black_book = build_san_book(self.tree_store.by_side("black"), chess.BLACK)
         uname = self._player_name.strip().lower()
         results = []
         try:

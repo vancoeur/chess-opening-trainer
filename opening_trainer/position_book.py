@@ -52,6 +52,19 @@ def build_position_book(trees: list[RepertoireTree], side: chess.Color) -> dict[
     return book
 
 
+def build_san_book(trees: list[RepertoireTree], side: chess.Color) -> dict[str, set[str]]:
+    """Wie ``game_review.build_repertoire_book``, aber aus den Repertoire-Bäumen
+    statt aus linearen Hauptlinien: varianten-bewusst und transpositions-
+    verschmelzend. Stellungs-EPD -> Menge der vorgesehenen eigenen Züge (SAN).
+
+    Direkt als ``book`` für ``game_review.review_game`` verwendbar. Dadurch wird
+    eine korrekt gespielte Nebenvariante nicht mehr als Abweichung gemeldet."""
+    return {
+        epd: set(entry.moves.values())
+        for epd, entry in build_position_book(trees, side).items()
+    }
+
+
 def _legal_move(board: chess.Board, move_uci: str | None) -> chess.Move | None:
     if not move_uci:
         return None
