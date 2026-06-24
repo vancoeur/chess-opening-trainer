@@ -103,6 +103,36 @@ def due_breakdown(trees, side, schedule, today) -> list[dict]:
     return out
 
 
+def tree_check_paths(trees, side) -> list[tuple]:
+    """Wurzel-zu-Blatt-Pfade der Bäume EINER Seite als ``(name, moves_uci, tree)``.
+
+    Jedes Blatt ergibt eine vollständige Variante (Zugfolge beider Farben von der
+    Grundstellung bis zum Blatt) — so prüft die Repertoire-Prüfung auch
+    Nebenvarianten, nicht nur die lineare Hauptlinie. Hat ein Baum mehrere
+    Varianten, wird der Anzeigename nummeriert. Identische Zugfolgen werden
+    dedupliziert. Reihenfolge: pro Baum in Knoten-Reihenfolge."""
+    want = _SIDE_NAME.get(side)
+    out: list[tuple] = []
+    seen: set = set()
+    for tree in trees:
+        if tree.side != want:
+            continue
+        leaves = [
+            n for n in tree.iter_nodes()
+            if n.id != tree.root_id and not tree.children_of(n.id)
+        ]
+        variants = [tree.path_to(leaf.id) for leaf in leaves]
+        variants = [v for v in variants if v]
+        for k, moves in enumerate(variants, 1):
+            key = (tree.id, tuple(moves))
+            if key in seen:
+                continue
+            seen.add(key)
+            name = tree.name if len(variants) == 1 else f"{tree.name} — {k}"
+            out.append((name, moves, tree))
+    return out
+
+
 def tree_progress_rows(trees, side, stats_store) -> list[dict]:
     """Pro Eröffnung (Baum) der Seite die aggregierte Positions-Statistik — die
     positions-basierte Ablösung der linien-basierten Fortschrittszeilen.

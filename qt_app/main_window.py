@@ -155,8 +155,21 @@ _FAMILY_EN = {
 }
 
 
+class _TuvPath:
+    """Ein Wurzel-zu-Blatt-Pfad (Repertoire-Variante) als Prüf-Job. Quakt wie
+    eine Line (``.name``/``.moves_uci``) für den unveränderten Worker und die
+    Ergebnis-Anzeige, trägt zusätzlich den ``tree`` fürs gezielte Üben."""
+
+    __slots__ = ("name", "moves_uci", "tree")
+
+    def __init__(self, name, moves_uci, tree) -> None:
+        self.name = name
+        self.moves_uci = moves_uci
+        self.tree = tree
+
+
 class _TuvWorker(QtCore.QObject):
-    """Läuft im Hintergrund-Thread: prüft jede zugeordnete Linie mit Stockfish."""
+    """Läuft im Hintergrund-Thread: prüft jede Repertoire-Variante mit Stockfish."""
 
     progress = QtCore.Signal(int, int, str)   # erledigt, gesamt, Linienname
     finished = QtCore.Signal(list)            # [{"line": …, "issues": [MoveIssue, …]}]
@@ -2268,15 +2281,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stack.setCurrentIndex(3)
 
     def _tuv_jobs(self) -> list:
+        # Eine Variante (Wurzel-zu-Blatt-Pfad) pro Job -> die Prüfung deckt auch
+        # Nebenvarianten ab, nicht nur lineare Hauptlinien.
+        from opening_trainer.tree_session import tree_check_paths
         jobs = []
-        for line in self.lines:
-            if not getattr(line, "moves_uci", None):
-                continue
-            side = self._side_of_line(line)
-            if side == "white":
-                jobs.append((line, chess.WHITE))
-            elif side == "black":
-                jobs.append((line, chess.BLACK))
+        for color, side_name in ((chess.WHITE, "white"), (chess.BLACK, "black")):
+            for name, moves, tree in tree_check_paths(self.tree_store.by_side(side_name), color):
+                jobs.append((_TuvPath(name, moves, tree), color))
         return jobs
 
     def _start_tuv(self) -> None:
@@ -2285,14 +2296,14 @@ class MainWindow(QtWidgets.QMainWindow):
         jobs = self._tuv_jobs()
         if not jobs:
             self.tuv_status.setText(t(
-                "Keine zugeordneten Linien. Ordne erst Eröffnungen einem Repertoire zu.",
-                "No assigned lines. First assign some openings to a repertoire.",
+                "Keine zugeordneten Eröffnungen. Ordne erst Eröffnungen einem Repertoire zu.",
+                "No assigned openings. First assign some openings to a repertoire.",
             ))
             return
         self.tuv_list.clear()
         self.tuv_start_btn.setEnabled(False)
         self.tuv_cancel_btn.setVisible(True)
-        self.tuv_status.setText(t(f"Starte Prüfung von {len(jobs)} Linien …", f"Checking {len(jobs)} lines …"))
+        self.tuv_status.setText(t(f"Starte Prüfung von {len(jobs)} Varianten …", f"Checking {len(jobs)} variations …"))
 
         self._tuv_thread = QtCore.QThread(self)
         self._tuv_worker = _TuvWorker(jobs)
@@ -2344,10 +2355,10 @@ class MainWindow(QtWidgets.QMainWindow):
             return
         patzer = sum(1 for r in results for i in r["issues"] if i.severity == "patzer")
         self.tuv_status.setText(t(
-            f"{len(results)} Linien mit Auffälligkeiten ({total_issues} insgesamt, "
-            f"davon {patzer} Patzer). Klick eine Linie zum Üben.",
-            f"{len(results)} lines with findings ({total_issues} total, "
-            f"{patzer} blunders). Click a line to train it.",
+            f"{len(results)} Varianten mit Auffälligkeiten ({total_issues} insgesamt, "
+            f"davon {patzer} Patzer). Klick eine Variante zum Üben.",
+            f"{len(results)} variations with findings ({total_issues} total, "
+            f"{patzer} blunders). Click a variation to train it.",
         ))
         for r in results:
             line = r["line"]
@@ -2383,12 +2394,11 @@ class MainWindow(QtWidgets.QMainWindow):
         return widget
 
     def _train_from_tuv(self, item: QtWidgets.QListWidgetItem) -> None:
-        line = item.data(QtCore.Qt.UserRole)
-        if line is None or not getattr(line, "moves_uci", None):
+        path = item.data(QtCore.Qt.UserRole)
+        tree = getattr(path, "tree", None)
+        if tree is None or tree.id not in self.tree_store.trees:
             return
-        self.stack.setCurrentIndex(0)
-        self._load_line(line)
-        self.eyebrow.setText(t("ÜBEN", "TRAIN"))
+        self._start_tree_drill(tree)
 
     # ---- Sparring (gegen Stockfish weiterspielen) -----------------------
     _SPAR_LEVELS = ["anfaenger", "mittel", "stark"]
