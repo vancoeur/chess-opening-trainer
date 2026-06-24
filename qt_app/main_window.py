@@ -4144,23 +4144,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
     # --- Eröffnungs-Liste („Mehr…") --------------------------------------
 
-    def _due_text(self, line) -> str:
-        if not line.moves_uci:
-            return t("keine Züge", "no moves")
-        card = self.schedule_store.card_for(line.source_name, line.name)
-        if is_new(card):
-            return t("neu", "new")
-        try:
-            due = date.fromisoformat(card.due)
-        except ValueError:
-            return t("neu", "new")
-        delta = (due - date.today()).days
-        if delta <= 0:
-            return t("heute fällig", "due today")
-        if delta == 1:
-            return t("morgen fällig", "due tomorrow")
-        return t(f"fällig in {delta} Tagen", f"due in {delta} days")
-
     def _library_row(self, line) -> QtWidgets.QWidget:
         widget = QtWidgets.QWidget()
         widget.setObjectName("libraryrow")
@@ -4172,6 +4155,8 @@ class MainWindow(QtWidgets.QMainWindow):
         name.setObjectName("rowname")
         if has_note:
             name.setToolTip(self.line_notes.note_of(line.source_name, line.name))
+        # Fälligkeit/Trefferquote stehen jetzt positions-genau auf »Heute fällig«
+        # und »Fortschritt« — die Bibliothek ist reine Browse-/Zuordnungs-Fläche.
         parts = []
         group = self._group_text_for_line(line)
         if group:
@@ -4179,15 +4164,41 @@ class MainWindow(QtWidgets.QMainWindow):
         side = self._side_of_line(line)
         if side:
             parts.append(t("Weiß", "White") if side == "white" else t("Schwarz", "Black"))
-        parts.append(self._due_text(line))
-        stats = self.stats_store.stats_for_line(source_name=line.source_name, line_name=line.name)
-        if stats.attempts > 0:
-            parts.append(t(f"Trefferquote {round(stats.accuracy * 100)} %", f"accuracy {round(stats.accuracy * 100)}%"))
         sub = QtWidgets.QLabel("  ·  ".join(parts))
         sub.setObjectName("rowsub")
         box.addWidget(name)
-        box.addWidget(sub)
+        if parts:
+            box.addWidget(sub)
         return widget
+
+    def _editor_tree_row(self, tree) -> QtWidgets.QWidget:
+        """Zeile für einen Editor-eigenen Baum (kein PGN-Linien-Pendant)."""
+        widget = QtWidgets.QWidget()
+        widget.setObjectName("libraryrow")
+        box = QtWidgets.QVBoxLayout(widget)
+        box.setContentsMargins(14, 9, 14, 9)
+        box.setSpacing(2)
+        name = self._plain_label(self._tname(tree.name) or t("(ohne Namen)", "(unnamed)"))
+        name.setObjectName("rowname")
+        box.addWidget(name)
+        if tree.side in ("white", "black"):
+            sub = QtWidgets.QLabel(t("Weiß", "White") if tree.side == "white" else t("Schwarz", "Black"))
+            sub.setObjectName("rowsub")
+            box.addWidget(sub)
+        return widget
+
+    def _editor_own_trees(self) -> list:
+        """Editor-eigene Bäume (ohne ``_auto``-Marke), gefiltert nach Seiten-Tab
+        und Suche — sie haben kein PGN-Linien-Pendant und fehlten der Bibliothek."""
+        trees = [tr for tr in self.tree_store.all() if tr.headers.get("_auto") != "1"]
+        if self._side_filter in ("white", "black"):
+            trees = [tr for tr in trees if tr.side == self._side_filter]
+        elif self._side_filter == "none":
+            trees = [tr for tr in trees if tr.side not in ("white", "black")]
+        if self.search_query:
+            trees = [tr for tr in trees
+                     if all(tok in self._tname(tr.name).casefold() for tok in self.search_query.split())]
+        return sorted(trees, key=lambda tr: self._tname(tr.name).casefold())
 
     # Reihenfolge der Spalten nach erstem Zug — sprachunabhängig per Zug-UCI
     # (nicht per Etikett, das je nach Sprache 1.Sf3/1.Nf3 heißt). Unbekannte erste
@@ -4269,14 +4280,15 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _refresh_library(self) -> None:
         self.library_list.clear()
-        if not self.lines:
+        editor_trees = self._editor_own_trees()
+        if not self.lines and not self.tree_store.all():
             self.library_empty.setVisible(True)
             self.library_list.setVisible(False)
             return
         self.library_empty.setVisible(False)
         self.library_list.setVisible(True)
         lines = sorted(self._filtered_lines(), key=self._category_sort_key)
-        if not lines and self.search_query:
+        if not lines and not editor_trees and self.search_query:
             self._add_library_header(t("Keine Eröffnung gefunden — Suche anpassen.", "No opening found — adjust your search."), level=1)
             return
         group_counts: dict[str, int] = {}
@@ -4304,6 +4316,19 @@ class MainWindow(QtWidgets.QMainWindow):
             item.setSizeHint(row.sizeHint())
             self.library_list.addItem(item)
             self.library_list.setItemWidget(item, row)
+
+        # Editor-eigene Bäume (kein PGN-Linien-Pendant) als eigene Sektion.
+        if editor_trees:
+            self._add_library_header(
+                t(f"Repertoire-Bäume (Editor)    ({len(editor_trees)})",
+                  f"Repertoire trees (editor)    ({len(editor_trees)})"), level=1)
+            for tree in editor_trees:
+                item = QtWidgets.QListWidgetItem()
+                item.setData(QtCore.Qt.UserRole, tree)
+                row = self._editor_tree_row(tree)
+                item.setSizeHint(row.sizeHint())
+                self.library_list.addItem(item)
+                self.library_list.setItemWidget(item, row)
 
     def _migrate_sides_from_groups(self) -> None:
         """Übernimmt einmalig die vorhandene Gruppen-Zuordnung (Tkinter-Daten) in
@@ -4438,27 +4463,42 @@ class MainWindow(QtWidgets.QMainWindow):
     def _close_library(self) -> None:
         self._go_home()
 
+    def _is_tree_item(self, data) -> bool:
+        return data is not None and hasattr(data, "id") and data.id in self.tree_store.trees
+
     def _train_from_library(self, item: QtWidgets.QListWidgetItem) -> None:
-        line = item.data(QtCore.Qt.UserRole)
-        if line is None or not getattr(line, "moves_uci", None):
+        data = item.data(QtCore.Qt.UserRole)
+        if self._is_tree_item(data):           # Editor-eigener Baum -> direkt drillen
+            self._start_tree_drill(data)
             return
-        side = self._side_of_line(line)
+        if data is None or not getattr(data, "moves_uci", None):
+            return
+        side = self._side_of_line(data)
         if side not in ("white", "black"):
             return                    # ohne Seiten-Zuordnung kein Baum-Drill (erst zuordnen)
         from opening_trainer.tree_session import tree_for_moves
         color = chess.WHITE if side == "white" else chess.BLACK
-        tree = tree_for_moves(self.tree_store.by_side(side), line.moves_uci, color)
+        tree = tree_for_moves(self.tree_store.by_side(side), data.moves_uci, color)
         if tree is not None:
             self._start_tree_drill(tree)
 
     def _selected_library_line(self):
+        """Die ausgewählte LINIE (für Seiten-Zuordnung). Editor-Baum-Zeilen
+        zählen nicht — die werden im Editor zugeordnet."""
         items = self.library_list.selectedItems()
-        return items[0].data(QtCore.Qt.UserRole) if items else None
+        if not items:
+            return None
+        data = items[0].data(QtCore.Qt.UserRole)
+        return None if self._is_tree_item(data) else data
 
     def _on_library_selection(self) -> None:
-        has = self._selected_library_line() is not None
-        for btn in (self.assign_white_btn, self.assign_black_btn, self.assign_none_btn, self.train_one_btn):
-            btn.setEnabled(has)
+        items = self.library_list.selectedItems()
+        data = items[0].data(QtCore.Qt.UserRole) if items else None
+        is_tree = self._is_tree_item(data)
+        is_line = data is not None and not is_tree
+        for btn in (self.assign_white_btn, self.assign_black_btn, self.assign_none_btn):
+            btn.setEnabled(is_line)                 # Zuordnung nur für Linien
+        self.train_one_btn.setEnabled(is_line or is_tree)   # üben für beides
 
     def _train_selected_library(self) -> None:
         items = self.library_list.selectedItems()
