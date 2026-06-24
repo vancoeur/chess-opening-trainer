@@ -123,6 +123,20 @@ def merge_stats(trees, side) -> dict:
     return {"lines": n_lines, "branches": branches}
 
 
+def tree_mainline_uci(tree) -> list:
+    """Die Hauptlinie eines Baums als UCI-Zugliste (jeweils erstes Kind).
+    Grundlage der Eröffnungs-Erkennung."""
+    out: list = []
+    node = tree.root
+    while True:
+        kids = tree.children_of(node.id)
+        if not kids:
+            break
+        node = kids[0]
+        out.append(node.move_uci)
+    return out
+
+
 def locate_position(index: dict, epd: str):
     """(tree, node_id) für eine EPD aus einem ``build_user_position_index``,
     sonst ``None``. Zum gezielten Drillen einer einzelnen Stellung (Fehler-

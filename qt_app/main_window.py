@@ -1382,9 +1382,24 @@ class MainWindow(QtWidgets.QMainWindow):
             f = f.split(":", 1)[0]
         return f.strip() or t("Sonstige", "Other")
 
+    def _tree_family(self, tree) -> str:
+        """Repertoire-Familie eines Baums. Hat die PGN einen guten Namen, wird er
+        genutzt; bei generischen Namen (»Chapter #24«, leer) wird die Eröffnung
+        aus den ZÜGEN erkannt — damit auch unbenannte Studien-Kapitel einen
+        echten Namen bekommen."""
+        raw = (tree.name or "").strip()
+        low = raw.lower()
+        generic = (not raw) or raw == "?" or low.startswith("chapter") or low.startswith("lichess")
+        if not generic:
+            return self._family_of_name(raw)
+        from opening_trainer.opening_id import identify_opening
+        from opening_trainer.tree_session import tree_mainline_uci
+        detected = identify_opening(tree_mainline_uci(tree))
+        return detected or (raw or t("Sonstige", "Other"))
+
     def _reptree_families(self, side_name: str) -> list:
         """Sortierte, eindeutige Repertoire-Familien der Seite (für die Auswahl)."""
-        fams = {self._family_of_name(tr.name) for tr in self.tree_store.by_side(side_name)}
+        fams = {self._tree_family(tr) for tr in self.tree_store.by_side(side_name)}
         return sorted(fams, key=str.casefold)
 
     def _open_repertoire_tree(self) -> None:
@@ -1419,7 +1434,7 @@ class MainWindow(QtWidgets.QMainWindow):
         trees = self.tree_store.by_side(side_name)
         fam = self.reptree_family_combo.currentData()
         if fam is not None:
-            trees = [tr for tr in trees if self._family_of_name(tr.name) == fam]
+            trees = [tr for tr in trees if self._tree_family(tr) == fam]
         return trees, color
 
     def _refresh_repertoire_tree(self) -> None:
@@ -1438,12 +1453,17 @@ class MainWindow(QtWidgets.QMainWindow):
                 "No repertoire loaded for this selection."))
             return
         branches = sum(1 for r in rows if r["children"] > 1)
+        variations = sum(1 for r in rows if r["children"] == 0)   # vollständige Linien = Blätter
         fam = self.reptree_family_combo.currentData()
         scope = fam if fam is not None else t("ganzes Repertoire", "whole repertoire")
+        var_de = "Variante" if variations == 1 else "Varianten"
+        var_en = "variation" if variations == 1 else "variations"
+        br_de = "Verzweigung" if branches == 1 else "Verzweigungen"
+        br_en = "branch" if branches == 1 else "branches"
         self.reptree_hint.setText(t(
-            f"{scope}: {len(trees)} Linien · {branches} Verzweigungen (⎇). "
+            f"{scope}: {variations} {var_de} · {branches} {br_de} (⎇). "
             "Klick eine Zeile für die Stellung — eigene Züge kannst du üben.",
-            f"{scope}: {len(trees)} lines · {branches} branches (⎇). "
+            f"{scope}: {variations} {var_en} · {branches} {br_en} (⎇). "
             "Click a row for the position — your own moves can be drilled."))
         de = (i18n.language() == "de")
         for r in rows:

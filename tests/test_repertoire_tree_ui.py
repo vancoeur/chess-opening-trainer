@@ -109,6 +109,16 @@ def test_family_selection_filters_tree_and_trains(tmp_path, monkeypatch):
     assert win.stack.currentIndex() == 10
 
 
+def test_generic_chapter_name_gets_detected_opening(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    # unbenanntes Studien-Kapitel mit Caro-Zügen
+    win.tree_store.add(_black("Chapter #24", ["e2e4", "c7c6", "d2d4", "d7d5"]))
+    win._open_repertoire_tree()
+    fams = _families(win)
+    assert "Caro-Kann" in fams              # aus den Zügen erkannt
+    assert "Chapter #24" not in fams        # generischer Name ersetzt
+
+
 def test_window_title_reflects_page(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     win.stack.setCurrentIndex(13)
