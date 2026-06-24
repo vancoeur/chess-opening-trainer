@@ -1390,8 +1390,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.reptree_drill_btn.setObjectName("more")
         self.reptree_drill_btn.setEnabled(False)
         self.reptree_drill_btn.clicked.connect(self._reptree_drill)
+        self.reptree_gap_btn = QtWidgets.QPushButton(t("⚠  Im Editor ergänzen", "⚠  Add in editor"))
+        self.reptree_gap_btn.setObjectName("more")
+        self.reptree_gap_btn.setEnabled(False)
+        self.reptree_gap_btn.clicked.connect(self._reptree_fill_gap)
         btn_row.addWidget(self.reptree_train_btn)
         btn_row.addWidget(self.reptree_drill_btn)
+        btn_row.addWidget(self.reptree_gap_btn)
         btn_row.addStretch(1)
         col.addLayout(btn_row)
 
@@ -1468,11 +1473,14 @@ class MainWindow(QtWidgets.QMainWindow):
         return trees, color
 
     def _refresh_repertoire_tree(self) -> None:
-        from opening_trainer.tree_session import merge_side_trees, overview_rows
+        from opening_trainer.tree_session import merge_side_trees, overview_rows, repertoire_gaps
         self.reptree_list.clear()
         self.reptree_drill_btn.setEnabled(False)
+        self.reptree_gap_btn.setEnabled(False)
         self._reptree_fen = None
+        self._reptree_gap = None
         trees, color = self._reptree_selected_trees()
+        self._reptree_gap_map = {g["epd"]: g for g in repertoire_gaps(trees, color)}
         rows = overview_rows(merge_side_trees(trees, color), color)
         self.reptree_board.set_flipped(color == chess.BLACK)
         self.reptree_board.set_board(chess.Board())
@@ -1490,11 +1498,16 @@ class MainWindow(QtWidgets.QMainWindow):
         var_en = "variation" if variations == 1 else "variations"
         br_de = "Verzweigung" if branches == 1 else "Verzweigungen"
         br_en = "branch" if branches == 1 else "branches"
+        gaps_n = len(self._reptree_gap_map)
+        luecke = "Lücke" if gaps_n == 1 else "Lücken"
+        gap_en = "gap" if gaps_n == 1 else "gaps"
+        gaps_de = f" · ⚠ {gaps_n} {luecke} (ohne deine Antwort)" if gaps_n else ""
+        gaps_en = f" · ⚠ {gaps_n} {gap_en} (no reply yet)" if gaps_n else ""
         self.reptree_hint.setText(t(
-            f"{scope}: {variations} {var_de} · {branches} {br_de} (⎇). "
-            "Klick eine Zeile für die Stellung — eigene Züge kannst du üben.",
-            f"{scope}: {variations} {var_en} · {branches} {br_en} (⎇). "
-            "Click a row for the position — your own moves can be drilled."))
+            f"{scope}: {variations} {var_de} · {branches} {br_de} (⎇){gaps_de}. "
+            "Klick eine Zeile für die Stellung — ⚠ = Lücke, »Im Editor ergänzen«.",
+            f"{scope}: {variations} {var_en} · {branches} {br_en} (⎇){gaps_en}. "
+            "Click a row for the position — ⚠ = gap, »Add in editor«."))
         de = (i18n.language() == "de")
         for r in rows:
             label = r["label"]
@@ -1502,9 +1515,19 @@ class MainWindow(QtWidgets.QMainWindow):
                 label = label.translate(str.maketrans({"N": "S", "B": "L", "R": "T", "Q": "D"}))
             prefix = "    " * r["depth"] + ("" if r["depth"] == 0 else "└ ")
             mark = "  ⎇" if r["children"] > 1 else ""
+            # Lücke? = Blatt, dessen Folgestellung in der Lücken-Liste steht.
+            r["_gap"] = None
+            if r["children"] == 0:
+                try:
+                    b = chess.Board(r["fen_before"])
+                    b.push(chess.Move.from_uci(r["move_uci"]))
+                    r["_gap"] = self._reptree_gap_map.get(b.epd())
+                except (ValueError, KeyError):
+                    pass
+            warn = "  ⚠" if r["_gap"] else ""
             # Am Ende einer Linie (Blatt) den Eröffnungsnamen anzeigen.
             name = f"   · {r['comment']}" if (r["comment"] and r["children"] == 0) else ""
-            item = QtWidgets.QListWidgetItem(prefix + label + mark + name)
+            item = QtWidgets.QListWidgetItem(prefix + label + mark + warn + name)
             item.setData(QtCore.Qt.UserRole, r)
             self.reptree_list.addItem(item)
 
@@ -1523,10 +1546,27 @@ class MainWindow(QtWidgets.QMainWindow):
         # … geübt wird die Entscheidung davor (nur bei eigenen Zügen).
         self._reptree_fen = r["fen_before"] if r["is_user_move"] else None
         self.reptree_drill_btn.setEnabled(bool(self._reptree_fen))
+        # Lücke? -> »Im Editor ergänzen« freischalten.
+        self._reptree_gap = r.get("_gap")
+        self.reptree_gap_btn.setEnabled(self._reptree_gap is not None)
 
     def _reptree_drill(self) -> None:
         if self._reptree_fen:
             self._drill_positions_for_fens([self._reptree_fen], t("STELLUNG ÜBEN", "DRILL POSITION"))
+
+    def _reptree_fill_gap(self) -> None:
+        """Springt zur Lücke im Editor, damit man die fehlende Antwort eintragen kann."""
+        g = self._reptree_gap
+        if g:
+            self._editor_open_at(g["tree"], g["node_id"])
+
+    def _editor_open_at(self, tree, node_id) -> None:
+        if tree is None or tree.id not in self.tree_store.trees:
+            return
+        self.editor_tree = tree
+        self.stack.setCurrentIndex(9)
+        self._editor_refresh_combo()
+        self._editor_goto_node(node_id if node_id in tree.nodes else tree.root_id)
 
     def _reptree_train(self) -> None:
         """Übt genau das oben gewählte Repertoire: heute fällige/neue Stellungen

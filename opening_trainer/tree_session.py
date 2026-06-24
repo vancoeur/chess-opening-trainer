@@ -123,6 +123,38 @@ def merge_stats(trees, side) -> dict:
     return {"lines": n_lines, "branches": branches}
 
 
+def repertoire_gaps(trees, side) -> list[dict]:
+    """Lücken der trainierten Seite: Linien-Enden (Blätter), an denen DIE SEITE
+    am Zug ist (der Gegner zog zuletzt) — dort fehlt eine eigene Antwort, man
+    fällt »aus dem Buch«. Reine Funktion; liefert pro Lücke
+    (tree, node_id, epd, line=SAN-Folge)."""
+    want = _SIDE_NAME.get(side)
+    out: list[dict] = []
+    for tree in trees:
+        if tree.side != want:
+            continue
+        board = _start_board(tree)
+
+        def walk(node, sans):
+            kids = tree.children_of(node.id)
+            if not kids:
+                if node.id != tree.root_id and board.turn == side:
+                    out.append({"tree": tree, "node_id": node.id,
+                                "epd": board.epd(), "line": " ".join(sans)})
+                return
+            for child in kids:
+                mv = _legal_move(board, child.move_uci)
+                if mv is None:
+                    continue
+                san = board.san(mv)
+                board.push(mv)
+                walk(child, sans + [san])
+                board.pop()
+
+        walk(tree.root, [])
+    return out
+
+
 def tree_mainline_uci(tree) -> list:
     """Die Hauptlinie eines Baums als UCI-Zugliste (jeweils erstes Kind).
     Grundlage der Eröffnungs-Erkennung."""

@@ -119,6 +119,21 @@ def test_generic_chapter_name_gets_detected_opening(tmp_path, monkeypatch):
     assert "Chapter #24" not in fams        # generischer Name ersetzt
 
 
+def test_gap_shown_and_jumps_to_editor(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    # Linie endet nach Weiß' 2.d4 -> Schwarz am Zug, keine Antwort = Lücke
+    win.tree_store.add(_black("Caro", ["e2e4", "c7c6", "d2d4"]))
+    win._open_repertoire_tree()
+    assert "⚠" in win.reptree_hint.text()
+    gap_items = [win.reptree_list.item(i) for i in range(win.reptree_list.count())
+                 if win.reptree_list.item(i).data(QtCore.Qt.UserRole).get("_gap")]
+    assert gap_items, "es sollte eine Lücken-Zeile geben"
+    win._reptree_clicked(gap_items[0])
+    assert win.reptree_gap_btn.isEnabled()
+    win._reptree_fill_gap()
+    assert win.stack.currentIndex() == 9        # Editor an der Lücke
+
+
 def test_window_title_reflects_page(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     win.stack.setCurrentIndex(13)
