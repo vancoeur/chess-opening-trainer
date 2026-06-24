@@ -79,6 +79,44 @@ def test_tree_report_lines_after_load(tmp_path, monkeypatch):
     assert ("Verzweigung" in text or "branch" in text)      # die zwei Linien verzweigen
 
 
+def _families(win):
+    return [win.reptree_family_combo.itemText(i) for i in range(win.reptree_family_combo.count())]
+
+
+def test_family_selector_lists_repertoires(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    win.tree_store.add(_black("B18 · Caro-Kann: Klassisch", ["e2e4", "c7c6", "d2d4", "d7d5"]))
+    win.tree_store.add(_black("C65 · Ruy López: Berliner", ["e2e4", "e7e5", "g1f3", "b8c6"]))
+    win._open_repertoire_tree()
+    fams = _families(win)
+    assert fams[0] in ("Alles", "All")            # erste Option = alles
+    assert "Caro-Kann" in fams and "Ruy López" in fams
+
+
+def test_family_selection_filters_tree_and_trains(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    win.tree_store.add(_black("B18 · Caro-Kann: Klassisch", ["e2e4", "c7c6", "d2d4", "d7d5"]))
+    win.tree_store.add(_black("C65 · Ruy López: Berliner", ["e2e4", "e7e5", "g1f3", "b8c6"]))
+    win._open_repertoire_tree()
+    # Caro-Kann wählen -> nur diese Linie im Baum (keine Ruy-Züge)
+    idx = next(i for i in range(win.reptree_family_combo.count())
+               if win.reptree_family_combo.itemData(i) == "Caro-Kann")
+    win.reptree_family_combo.setCurrentIndex(idx)
+    texts = " ".join(win.reptree_list.item(i).text() for i in range(win.reptree_list.count()))
+    assert "c6" in texts and "e5" not in texts
+    # dieses Repertoire üben -> Stellungs-Sitzung
+    win._reptree_train()
+    assert win.stack.currentIndex() == 10
+
+
+def test_window_title_reflects_page(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    win.stack.setCurrentIndex(13)
+    assert "Repertoire-Baum" in win.windowTitle() or "Repertoire tree" in win.windowTitle()
+    win.stack.setCurrentIndex(11)
+    assert "Heute fällig" in win.windowTitle() or "Due today" in win.windowTitle()
+
+
 def test_empty_side_shows_hint(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     _load_two_caro(win)

@@ -1332,11 +1332,17 @@ class MainWindow(QtWidgets.QMainWindow):
         eyebrow = QtWidgets.QLabel(t("REPERTOIRE-BAUM", "REPERTOIRE TREE"))
         eyebrow.setObjectName("eyebrow")
         col.addWidget(eyebrow)
+        side_row = QtWidgets.QHBoxLayout()
         self.reptree_side_combo = QtWidgets.QComboBox()
         self.reptree_side_combo.addItem(t("Weiß", "White"), "white")
         self.reptree_side_combo.addItem(t("Schwarz", "Black"), "black")
-        self.reptree_side_combo.currentIndexChanged.connect(lambda _i: self._refresh_repertoire_tree())
-        col.addWidget(self.reptree_side_combo)
+        self.reptree_side_combo.currentIndexChanged.connect(self._reptree_side_changed)
+        # Zweite Auswahl: konkretes Repertoire (»Alles« oder eine Eröffnung).
+        self.reptree_family_combo = QtWidgets.QComboBox()
+        self.reptree_family_combo.currentIndexChanged.connect(lambda _i: self._refresh_repertoire_tree())
+        side_row.addWidget(self.reptree_side_combo, 0)
+        side_row.addWidget(self.reptree_family_combo, 1)
+        col.addLayout(side_row)
         self.reptree_hint = QtWidgets.QLabel("")
         self.reptree_hint.setObjectName("hint")
         self.reptree_hint.setWordWrap(True)
@@ -1345,16 +1351,40 @@ class MainWindow(QtWidgets.QMainWindow):
         self.reptree_list.setObjectName("library")
         self.reptree_list.itemClicked.connect(self._reptree_clicked)
         col.addWidget(self.reptree_list, 1)
+        btn_row = QtWidgets.QHBoxLayout()
+        self.reptree_train_btn = QtWidgets.QPushButton(t("▶  Dieses Repertoire üben", "▶  Train this repertoire"))
+        self.reptree_train_btn.setObjectName("primary")
+        self.reptree_train_btn.clicked.connect(self._reptree_train)
         self.reptree_drill_btn = QtWidgets.QPushButton(t("Diese Stellung üben", "Drill this position"))
-        self.reptree_drill_btn.setObjectName("primary")
+        self.reptree_drill_btn.setObjectName("more")
         self.reptree_drill_btn.setEnabled(False)
         self.reptree_drill_btn.clicked.connect(self._reptree_drill)
-        col.addWidget(self.reptree_drill_btn, 0, QtCore.Qt.AlignLeft)
+        btn_row.addWidget(self.reptree_train_btn)
+        btn_row.addWidget(self.reptree_drill_btn)
+        btn_row.addStretch(1)
+        col.addLayout(btn_row)
 
         holder = QtWidgets.QWidget()
         holder.setLayout(col)
         layout.addWidget(holder, 1)
         return page
+
+    @staticmethod
+    def _family_of_name(name: str) -> str:
+        """Eröffnungs-Familie aus dem Linien-Namen: »B18 · Caro-Kann: Klassisch«
+        → »Caro-Kann«. So lassen sich die Bäume zu benannten Repertoires
+        gruppieren (= die Auswahl, die der Nutzer erwartet)."""
+        f = name or ""
+        if "·" in f:
+            f = f.split("·", 1)[1]
+        if ":" in f:
+            f = f.split(":", 1)[0]
+        return f.strip() or t("Sonstige", "Other")
+
+    def _reptree_families(self, side_name: str) -> list:
+        """Sortierte, eindeutige Repertoire-Familien der Seite (für die Auswahl)."""
+        fams = {self._family_of_name(tr.name) for tr in self.tree_store.by_side(side_name)}
+        return sorted(fams, key=str.casefold)
 
     def _open_repertoire_tree(self) -> None:
         # Voreinstellung: die Seite zeigen, für die ein Repertoire existiert.
@@ -1362,31 +1392,58 @@ class MainWindow(QtWidgets.QMainWindow):
             self.reptree_side_combo.setCurrentIndex(1)
         elif self.tree_store.by_side("white"):
             self.reptree_side_combo.setCurrentIndex(0)
+        self._reptree_refresh_families()
         self._refresh_repertoire_tree()
         self.stack.setCurrentIndex(13)
+
+    def _reptree_side_changed(self, _i: int) -> None:
+        self._reptree_refresh_families()
+        self._refresh_repertoire_tree()
+
+    def _reptree_refresh_families(self) -> None:
+        """Füllt die Repertoire-Auswahl passend zur gewählten Seite: »Alles«
+        plus jede benannte Familie."""
+        self.reptree_family_combo.blockSignals(True)
+        self.reptree_family_combo.clear()
+        side_name = self.reptree_side_combo.currentData()
+        self.reptree_family_combo.addItem(t("Alles", "All"), None)
+        for fam in self._reptree_families(side_name):
+            self.reptree_family_combo.addItem(fam, fam)
+        self.reptree_family_combo.blockSignals(False)
+
+    def _reptree_selected_trees(self):
+        """(Bäume, Farbe) für die aktuelle Seiten-/Repertoire-Auswahl."""
+        side_name = self.reptree_side_combo.currentData()
+        color = chess.WHITE if side_name == "white" else chess.BLACK
+        trees = self.tree_store.by_side(side_name)
+        fam = self.reptree_family_combo.currentData()
+        if fam is not None:
+            trees = [tr for tr in trees if self._family_of_name(tr.name) == fam]
+        return trees, color
 
     def _refresh_repertoire_tree(self) -> None:
         from opening_trainer.tree_session import merge_side_trees, overview_rows
         self.reptree_list.clear()
         self.reptree_drill_btn.setEnabled(False)
         self._reptree_fen = None
-        side_name = self.reptree_side_combo.currentData()
-        color = chess.WHITE if side_name == "white" else chess.BLACK
-        trees = self.tree_store.by_side(side_name)
+        trees, color = self._reptree_selected_trees()
         rows = overview_rows(merge_side_trees(trees, color), color)
         self.reptree_board.set_flipped(color == chess.BLACK)
         self.reptree_board.set_board(chess.Board())
+        self.reptree_train_btn.setEnabled(bool(rows))
         if not rows:
             self.reptree_hint.setText(t(
-                "Für diese Seite ist noch kein Repertoire geladen.",
-                "No repertoire loaded for this side yet."))
+                "Für diese Auswahl ist kein Repertoire geladen.",
+                "No repertoire loaded for this selection."))
             return
         branches = sum(1 for r in rows if r["children"] > 1)
+        fam = self.reptree_family_combo.currentData()
+        scope = fam if fam is not None else t("ganzes Repertoire", "whole repertoire")
         self.reptree_hint.setText(t(
-            f"{len(trees)} Linien zu einem Baum verschmolzen · {branches} Verzweigungen (⎇). "
-            "Klick eine Zeile, um die Stellung zu sehen — eigene Züge kannst du üben.",
-            f"{len(trees)} lines merged into one tree · {branches} branches (⎇). "
-            "Click a row to see the position — your own moves can be drilled."))
+            f"{scope}: {len(trees)} Linien · {branches} Verzweigungen (⎇). "
+            "Klick eine Zeile für die Stellung — eigene Züge kannst du üben.",
+            f"{scope}: {len(trees)} lines · {branches} branches (⎇). "
+            "Click a row for the position — your own moves can be drilled."))
         de = (i18n.language() == "de")
         for r in rows:
             label = r["label"]
@@ -1419,6 +1476,21 @@ class MainWindow(QtWidgets.QMainWindow):
     def _reptree_drill(self) -> None:
         if self._reptree_fen:
             self._drill_positions_for_fens([self._reptree_fen], t("STELLUNG ÜBEN", "DRILL POSITION"))
+
+    def _reptree_train(self) -> None:
+        """Übt genau das oben gewählte Repertoire: heute fällige/neue Stellungen
+        zuerst; ist nichts fällig, alle Stellungen dieses Repertoires."""
+        from opening_trainer.tree_session import due_drill_items, build_user_position_index
+        trees, color = self._reptree_selected_trees()
+        if not trees:
+            return
+        items = [(tr, nid, color) for tr, nid in
+                 due_drill_items(trees, color, self.position_schedule, date.today())]
+        if not items:                                   # nichts fällig -> ganzes Repertoire
+            items = [(tr, nid, color) for (tr, nid) in
+                     build_user_position_index(trees, color).values()]
+        if items:
+            self._run_position_session(items, t("REPERTOIRE ÜBEN", "TRAIN REPERTOIRE"))
 
     # ---- Start-Hub: Verteiler-Seite, von der aus alles verzweigt ----
     def _build_home_page(self) -> QtWidgets.QWidget:
@@ -2060,10 +2132,32 @@ class MainWindow(QtWidgets.QMainWindow):
             self._nav_history.append(self._nav_current)
             del self._nav_history[:-50]          # nicht unbegrenzt wachsen lassen
         self._nav_current = new
+        self.setWindowTitle(self._page_title(new))   # Orientierung: welche Seite?
         if new == 11:                            # »Heute fällig«-Übersicht stets frisch zeigen
             self._refresh_due_overview()
         elif new == 12:                          # Start-Hub aktualisieren
             self._refresh_home()
+
+    def _page_title(self, index: int) -> str:
+        """Fenstertitel je Seite, damit oben immer steht, wo man ist."""
+        names = {
+            0: t("Üben", "Train"),
+            1: t("Alle Eröffnungen", "All openings"),
+            2: t("Auswertung", "Analysis"),
+            3: t("Repertoire-Prüfung", "Repertoire check"),
+            4: t("Gegen Stockfish", "Play Stockfish"),
+            5: t("Fortschritt", "Progress"),
+            6: t("Eröffnungs-Explorer", "Opening explorer"),
+            7: t("Partien auswerten", "Review games"),
+            8: t("Partie-Betrachter", "Game viewer"),
+            9: t("Repertoire-Editor", "Repertoire editor"),
+            10: t("Üben", "Train"),
+            11: t("Heute fällig", "Due today"),
+            12: t("Start", "Home"),
+            13: t("Repertoire-Baum", "Repertoire tree"),
+        }
+        name = names.get(index)
+        return f"Opening Trainer — {name}" if name else "Opening Trainer"
 
     def _home_index(self) -> int:
         """»Zuhause« ist der Start-Hub (Verteiler-Seite). Gilt für App-Start UND
