@@ -4,7 +4,7 @@ plus flache, eingerückte Zeilen für die Anzeige. Reine Logik, kein Qt.
 import chess
 
 from opening_trainer.repertoire_tree import RepertoireTree, WHITE, BLACK
-from opening_trainer.tree_session import merge_side_trees, overview_rows
+from opening_trainer.tree_session import merge_side_trees, overview_rows, merge_stats
 
 
 def _black(name, ucis):
@@ -55,6 +55,19 @@ def test_overview_rows_depth_and_labels():
     # eigener Zug erkannt
     assert rows[1]["is_user_move"] is True       # 1...c6 = Schwarz am Zug
     assert rows[0]["is_user_move"] is False      # 1.e4 = Weiß
+
+
+def test_merge_stats_counts_lines_and_branches():
+    a = _black("Advance", ["e2e4", "c7c6", "d2d4", "d7d5", "e4e5", "c8f5"])
+    b = _black("Klassisch", ["e2e4", "c7c6", "d2d4", "d7d5", "b1c3", "d5e4"])
+    st = merge_stats([a, b], chess.BLACK)
+    assert st["lines"] == 2
+    assert st["branches"] == 1                 # eine Verzweigung an 2...d5
+    # rein lineare Einzel-Linie -> 0 Verzweigungen
+    one = _black("nur", ["e2e4", "c7c6", "d2d4", "d7d5"])
+    assert merge_stats([one], chess.BLACK) == {"lines": 1, "branches": 0}
+    # falsche Seite zählt nicht
+    assert merge_stats([a, b], chess.WHITE) == {"lines": 0, "branches": 0}
 
 
 def test_overview_branch_node_reports_children():

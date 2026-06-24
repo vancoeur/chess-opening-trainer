@@ -106,6 +106,18 @@ def overview_rows(tree, side) -> list[dict]:
     return rows
 
 
+def merge_stats(trees, side) -> dict:
+    """Kennzahlen für den Lade-Report: wie viele Linien dieser Seite vorliegen
+    und wie viele Verzweigungen entstehen, wenn man sie zu EINEM Baum
+    verschmilzt. ``lines`` = Bäume der Seite (Standard-Grundstellung),
+    ``branches`` = Knoten mit mehr als einem Kind im verschmolzenen Baum."""
+    want = _SIDE_NAME.get(side)
+    n_lines = sum(1 for tr in trees if tr.side == want and not tr.start_fen)
+    branches = sum(1 for r in overview_rows(merge_side_trees(trees, side), side)
+                   if r["children"] > 1)
+    return {"lines": n_lines, "branches": branches}
+
+
 def locate_position(index: dict, epd: str):
     """(tree, node_id) für eine EPD aus einem ``build_user_position_index``,
     sonst ``None``. Zum gezielten Drillen einer einzelnen Stellung (Fehler-

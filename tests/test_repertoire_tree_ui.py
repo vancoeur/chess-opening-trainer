@@ -69,6 +69,16 @@ def test_opponent_move_not_drillable(tmp_path, monkeypatch):
     assert win.reptree_drill_btn.isEnabled() is False           # Weiß-Zug: nichts zu üben
 
 
+def test_tree_report_lines_after_load(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    _load_two_caro(win)
+    lines = win._tree_report_lines()
+    assert len(lines) == 1                                  # nur Schwarz hat Linien
+    text = lines[0]
+    assert ("Schwarz" in text or "Black" in text)
+    assert ("Verzweigung" in text or "branch" in text)      # die zwei Linien verzweigen
+
+
 def test_empty_side_shows_hint(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     _load_two_caro(win)

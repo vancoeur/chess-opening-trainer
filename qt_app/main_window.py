@@ -4686,6 +4686,51 @@ class MainWindow(QtWidgets.QMainWindow):
         self.lib_sub.setText(t(
             f"{added} Eröffnungen hinzugefügt — {len(self.lines)} insgesamt. Klick eine an, um sie zu üben.",
             f"Added {added} openings — {len(self.lines)} in total. Click one to train it."))
+        self._show_tree_report()             # Baum-Struktur-Bericht (Linien → Baum)
+
+    def _tree_report_lines(self) -> list:
+        """Eine Zeile je Seite mit Repertoire: »N Linien → 1 Baum mit B
+        Verzweigungen« bzw. »rein linear«. Rein (kein Dialog) -> testbar."""
+        from opening_trainer.tree_session import merge_stats
+        parts = []
+        for side_name, color, label in (
+            ("white", chess.WHITE, t("Weiß", "White")),
+            ("black", chess.BLACK, t("Schwarz", "Black")),
+        ):
+            st = merge_stats(self.tree_store.by_side(side_name), color)
+            if st["lines"] == 0:
+                continue
+            if st["branches"] > 0:
+                parts.append(t(
+                    f"{label}: {st['lines']} Linien → 1 Baum mit {st['branches']} Verzweigungen.",
+                    f"{label}: {st['lines']} lines → 1 tree with {st['branches']} branches."))
+            else:
+                parts.append(t(
+                    f"{label}: {st['lines']} Linien — rein linear, keine Verzweigungen.",
+                    f"{label}: {st['lines']} lines — purely linear, no branches."))
+        return parts
+
+    def _show_tree_report(self) -> None:
+        """Kurzer Bericht nach dem Laden (mit Direkt-Knopf in den Repertoire-Baum)."""
+        parts = self._tree_report_lines()
+        if not parts:
+            return
+        box = QtWidgets.QMessageBox(self)
+        box.setWindowTitle(t("Baum-Struktur", "Tree structure"))
+        box.setText("\n".join(parts))
+        box.setInformativeText(t(
+            "Gleiche Stellungen verschiedener Linien werden zu einem Baum zusammengeführt.",
+            "Identical positions across lines are merged into one tree."))
+        view_btn = box.addButton(t("Im Repertoire-Baum ansehen", "View repertoire tree"),
+                                 QtWidgets.QMessageBox.ButtonRole.AcceptRole)
+        box.addButton(t("Schließen", "Close"), QtWidgets.QMessageBox.ButtonRole.RejectRole)
+        # Nicht-modal (show statt exec): blockiert weder die App noch Tests.
+        box.setModal(False)
+        box.setAttribute(QtCore.Qt.WidgetAttribute.WA_DeleteOnClose, True)
+        self._tree_report_box = box                      # Referenz halten (sonst GC)
+        box.buttonClicked.connect(
+            lambda b, vb=view_btn: self._open_repertoire_tree() if b is vb else None)
+        box.show()
 
     def _ask_and_assign_side(self, source_name: str) -> None:
         """Fragt beim Laden einer Datei einmal nach der Spielerfarbe (Vorschlag aus
@@ -4741,3 +4786,4 @@ class MainWindow(QtWidgets.QMainWindow):
                        "and assign them to White/Black.")
         self._open_library()                  # Ergebnis sichtbar machen (Feedback am richtigen Ort)
         self.lib_sub.setText(t(msg_de, msg_en))
+        self._show_tree_report()              # Baum-Struktur-Bericht (Linien → Baum)
