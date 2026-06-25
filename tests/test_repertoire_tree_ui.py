@@ -86,7 +86,7 @@ def _families(win):
 def test_family_selector_lists_repertoires(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     win.tree_store.add(_black("B18 · Caro-Kann: Klassisch", ["e2e4", "c7c6", "d2d4", "d7d5"]))
-    win.tree_store.add(_black("C65 · Ruy López: Berliner", ["e2e4", "e7e5", "g1f3", "b8c6"]))
+    win.tree_store.add(_black("C65 · Ruy López: Berliner", ["e2e4", "e7e5", "g1f3", "b8c6", "f1b5", "a7a6"]))
     win._open_repertoire_tree()
     fams = _families(win)
     assert fams[0] in ("Alles", "All")            # erste Option = alles
@@ -96,7 +96,7 @@ def test_family_selector_lists_repertoires(tmp_path, monkeypatch):
 def test_family_selection_filters_tree_and_trains(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     win.tree_store.add(_black("B18 · Caro-Kann: Klassisch", ["e2e4", "c7c6", "d2d4", "d7d5"]))
-    win.tree_store.add(_black("C65 · Ruy López: Berliner", ["e2e4", "e7e5", "g1f3", "b8c6"]))
+    win.tree_store.add(_black("C65 · Ruy López: Berliner", ["e2e4", "e7e5", "g1f3", "b8c6", "f1b5", "a7a6"]))
     win._open_repertoire_tree()
     # Caro-Kann wählen -> nur diese Linie im Baum (keine Ruy-Züge)
     idx = next(i for i in range(win.reptree_family_combo.count())

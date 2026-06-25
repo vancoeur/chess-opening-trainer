@@ -1418,19 +1418,18 @@ class MainWindow(QtWidgets.QMainWindow):
         return f.strip() or t("Sonstige", "Other")
 
     def _tree_family(self, tree) -> str:
-        """Repertoire-Familie eines Baums. Hat die PGN einen guten Namen, wird er
-        genutzt; bei generischen Namen (»Chapter #24«, leer) wird die Eröffnung
-        aus den ZÜGEN erkannt — damit auch unbenannte Studien-Kapitel einen
-        echten Namen bekommen."""
-        raw = (tree.name or "").strip()
-        low = raw.lower()
-        generic = (not raw) or raw == "?" or low.startswith("chapter") or low.startswith("lichess")
-        if not generic:
-            return self._family_of_name(raw)
+        """Repertoire-Familie eines Baums — ZUERST aus den ZÜGEN erkannt
+        (kanonisch, reload-stabil, fasst »Sizilianisch Najdorf/Alapin/…« zu
+        einem »Sizilianisch« zusammen und behebt Schreibweisen-Dubletten wie
+        »Französisch«/»Franzoesisch«). Nur wenn die Züge unbekannt sind, dient
+        der (normalisierte) PGN-Name als Rückfall."""
         from opening_trainer.opening_id import identify_opening
         from opening_trainer.tree_session import tree_mainline_uci
         detected = identify_opening(tree_mainline_uci(tree))
-        return detected or (raw or t("Sonstige", "Other"))
+        if detected:
+            return detected
+        raw = (tree.name or "").strip()
+        return self._family_of_name(raw) if raw else t("Sonstige", "Other")
 
     def _reptree_families(self, side_name: str) -> list:
         """Sortierte, eindeutige Repertoire-Familien der Seite (für die Auswahl)."""

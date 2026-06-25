@@ -53,11 +53,21 @@ _OPENINGS: list[tuple[list[str], str]] = [
 
 
 def identify_opening(moves_uci) -> str | None:
-    """Name der Eröffnung für eine Zugfolge (längster passender Präfix), sonst
-    ``None``."""
+    """Name der Eröffnung für eine Zugfolge, sonst ``None``.
+
+    Zuerst Weiß-AUFBAU-Systeme nach 1.d4 (London/Torre — definiert durch den
+    Läuferzug, nicht durch eine feste Zugfolge), dann längster passender Präfix.
+    """
     if not moves_uci:
         return None
     moves = list(moves_uci)
+    # 1.d4-Aufbausysteme ohne frühes c4 (zugordnungs-unabhängig am Läufer erkannt).
+    if moves[:1] == ["d2d4"] and "c2c4" not in moves[:6]:
+        head = moves[:6]
+        if "c1f4" in head:
+            return "London-System"
+        if "c1g5" in head and "g1f3" in head:
+            return "Torre-Angriff"
     best_name = None
     best_len = 0
     for seq, name in _OPENINGS:
