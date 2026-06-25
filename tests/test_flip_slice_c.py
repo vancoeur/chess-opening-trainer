@@ -44,10 +44,5 @@ def test_open_default_session_opens_home_hub(tmp_path, monkeypatch):
     assert win.stack.currentIndex() == 12         # Start-Hub (auch für neue Nutzer)
 
 
-def test_due_session_button_visible_and_starts(tmp_path, monkeypatch):
-    win = _win(tmp_path, monkeypatch)
-    _load_black(win, tmp_path)
-    win._start_next()                             # Sichtbarkeit aktualisieren
-    assert not win.due_session_btn.isHidden()     # primärer Knopf sichtbar
-    win.due_session_btn.click()
-    assert win.stack.currentIndex() == 11         # öffnet die Übersicht
+# (Der Seite-0-Knopf »Heute fällig üben« ist mit dem Cutover entfallen; die
+# Fällig-Übersicht wird jetzt über den Start-Hub erreicht, siehe test_due_overview.)

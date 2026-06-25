@@ -27,13 +27,6 @@ def test_progress_hides_empty_bar(tmp_path, monkeypatch):
     assert "assign" in win.progress_counts.text().lower()    # stattdessen ein Hinweis
 
 
-def test_shortcut_tooltips_and_clear_skip_label(tmp_path, monkeypatch):
-    win = _win(tmp_path, monkeypatch)
-    assert win.solution_btn.toolTip() != ""                  # „L"
-    assert win.next_btn.toolTip() != ""                      # „Enter"
-    assert win.next_btn.text() in ("Diese Eröffnung überspringen", "Skip this opening")
-
-
 def test_eval_legend_tooltips_present(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     assert win.tuv_status.toolTip() != ""                    # Centipawn-Erklärung

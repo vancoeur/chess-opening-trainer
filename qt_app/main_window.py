@@ -217,52 +217,6 @@ class _TuvWorker(QtCore.QObject):
         self.finished.emit(results)
 
 
-class _EvalBarWorker(QtCore.QObject):
-    """Bewertet im Hintergrund-Thread fortlaufend die aktuelle Stellung für die
-    Bewertungs-Leiste. Eigene Stockfish-Instanz, damit es die Prüfung/Übe-Eval nicht
-    stört. Veraltete Anfragen filtert der Hauptthread per FEN-Abgleich heraus."""
-
-    evaluated = QtCore.Signal(str, int, int)   # fen, cp (Weiß-Sicht), mate (signiert)
-
-    def __init__(self) -> None:
-        super().__init__()
-        self._engine = None
-        self._broken = False
-
-    @QtCore.Slot(str)
-    def evaluate(self, fen: str) -> None:
-        if self._broken:
-            return
-        import chess
-        import chess.engine
-        if self._engine is None:
-            from qt_app.engine import find_stockfish
-            sf = find_stockfish()
-            if sf is None:
-                self._broken = True
-                return
-            try:
-                self._engine = chess.engine.SimpleEngine.popen_uci(str(sf))
-            except Exception:  # noqa: BLE001
-                self._broken = True
-                return
-        try:
-            info = self._engine.analyse(chess.Board(fen), chess.engine.Limit(depth=12))
-            score = info["score"].white()
-            mate = score.mate() or 0
-            cp = 0 if mate else (score.score() or 0)
-            self.evaluated.emit(fen, int(cp), int(mate))
-        except Exception:  # noqa: BLE001
-            pass
-
-    @QtCore.Slot()
-    def shutdown(self) -> None:
-        if self._engine is not None:
-            try:
-                self._engine.quit()
-            except Exception:  # noqa: BLE001
-                pass
-            self._engine = None
 
 
 class _SparringWorker(QtCore.QObject):
@@ -391,7 +345,6 @@ class _GameAnalysisWorker(QtCore.QObject):
 
 
 class MainWindow(QtWidgets.QMainWindow):
-    _evalRequested = QtCore.Signal(str)
     _sparRequested = QtCore.Signal(str, int, int)
     _sparEvalRequested = QtCore.Signal(str)
     def __init__(self) -> None:
@@ -470,8 +423,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self._show_eval_bar = self._eval_settings.value("show_eval_bar", True, type=bool)
         from qt_app.engine import find_stockfish
         self._stockfish_available = find_stockfish() is not None
-        self._eval_bar_thread = None
-        self._eval_bar_worker = None
 
         self._spar_thread = None
         self._spar_worker = None
@@ -508,8 +459,8 @@ class MainWindow(QtWidgets.QMainWindow):
         app = QtWidgets.QApplication.instance()
         if app is not None:
             app.aboutToQuit.connect(self._stop_all_threads)
-        self._refill_queue()
-        self._start_next()
+        pass
+        pass
         # Primäre Tagessitzung ist die stellungs-basierte Wiederholung: beim Start
         # dorthin springen, wenn etwas fällig/neu ist (sonst auf der Startseite bleiben).
         self._open_default_session()
@@ -564,13 +515,6 @@ class MainWindow(QtWidgets.QMainWindow):
         expl_act.triggered.connect(self._open_explorer)
 
         view_menu = self.menuBar().addMenu(t("Ansicht", "View"))
-        self._eval_bar_action = view_menu.addAction(t("Bewertungs-Leiste anzeigen", "Show evaluation bar"))
-        self._eval_bar_action.setCheckable(True)
-        self._eval_bar_action.setChecked(self._show_eval_bar and self._stockfish_available)
-        self._eval_bar_action.setEnabled(self._stockfish_available)
-        if not self._stockfish_available:
-            self._eval_bar_action.setToolTip(t("Stockfish nicht gefunden.", "Stockfish not found."))
-        self._eval_bar_action.toggled.connect(self._toggle_eval_bar)
 
         theme_menu = view_menu.addMenu(t("Brettfarbe", "Board color"))
         theme_group = QtGui.QActionGroup(self)
@@ -633,9 +577,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self._build_ui()
         self.restoreGeometry(geo)
         # Daten-Sichten auffrischen und auf die zuvor gezeigte Seite zurück.
-        self._refill_queue()
+        pass
         self._refresh_library()
-        self._start_next()
+        pass
         self.stack.setCurrentIndex(min(idx, self.stack.count() - 1))
 
     def _set_board_theme(self, code: str) -> None:
@@ -661,39 +605,6 @@ class MainWindow(QtWidgets.QMainWindow):
         col.addStretch(1)
         layout.addLayout(col)
         layout.addWidget(board, 0, QtCore.Qt.AlignTop)
-
-    def _toggle_eval_bar(self, on: bool) -> None:
-        self._show_eval_bar = on
-        self._eval_settings.setValue("show_eval_bar", on)
-        self.eval_bar.setVisible(on and self._stockfish_available)
-        if on:
-            self._request_eval()
-        else:
-            self.eval_bar.clear()
-
-    def _ensure_eval_worker(self) -> None:
-        if self._eval_bar_thread is not None:
-            return
-        self._eval_bar_thread = QtCore.QThread(self)
-        self._eval_bar_worker = _EvalBarWorker()
-        self._eval_bar_worker.moveToThread(self._eval_bar_thread)
-        self._evalRequested.connect(self._eval_bar_worker.evaluate)
-        self._eval_bar_worker.evaluated.connect(self._on_eval_result)
-        self._eval_bar_thread.start()
-
-    def _request_eval(self) -> None:
-        """Aktuelle Stellung im Hintergrund bewerten lassen (für die Leiste)."""
-        if not self._show_eval_bar or self.training is None:
-            return
-        self._ensure_eval_worker()
-        self._evalRequested.emit(self.training.board.fen())
-
-    def _on_eval_result(self, fen: str, cp: int, mate: int) -> None:
-        if not self._show_eval_bar or self.training is None:
-            return
-        # Nur anzeigen, wenn das Ergebnis zur aktuell gezeigten Stellung passt.
-        if self.training.board.fen() == fen:
-            self.eval_bar.set_eval(cp, mate)
 
     def _tcolor(self, color) -> str:
         return t("Weiß", "White") if color == chess.WHITE else t("Schwarz", "Black")
@@ -2074,19 +1985,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _install_shortcuts(self) -> None:
         for keys, slot in [
-            (QtGui.QKeySequence(QtCore.Qt.Key_Return), self._kbd_next),
-            (QtGui.QKeySequence(QtCore.Qt.Key_Enter), self._kbd_next),
-            (QtGui.QKeySequence("L"), self._kbd_solution),
         ]:
             QtGui.QShortcut(keys, self).activated.connect(slot)
-
-    def _kbd_next(self) -> None:
-        if self.stack.currentIndex() == 0:
-            self._skip()
-
-    def _kbd_solution(self) -> None:
-        if self.stack.currentIndex() == 0:
-            self._show_solution()
 
     def _restore_geometry(self) -> None:
         self._qsettings = QtCore.QSettings("OpeningTrainer", "OpeningTrainer")
@@ -2120,7 +2020,6 @@ class MainWindow(QtWidgets.QMainWindow):
                 pass
         # Worker mit eigener Warteschleife erst über 'shutdown' aus dem Loop holen.
         for thread_attr, worker_attr in (
-            ("_eval_bar_thread", "_eval_bar_worker"),
             ("_spar_thread", "_spar_worker"),
         ):
             th = getattr(self, thread_attr, None)
@@ -2133,7 +2032,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 except Exception:  # noqa: BLE001
                     pass
 
-        for attr in ("_tuv_thread", "_eval_bar_thread", "_spar_thread", "_viewer_anal_thread"):
+        for attr in ("_tuv_thread", "_spar_thread", "_viewer_anal_thread"):
             th = getattr(self, attr, None)
             if th is None:
                 continue
@@ -2217,9 +2116,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.lines = self._load_lines()
         self._migrate_sides_from_groups()
         self._sync_auto_trees()
-        self._refill_queue()
+        pass
         self._refresh_library()
-        self._start_next()
+        pass
         return max(0, len(self.lines) - before)
 
     def _custom_trees(self) -> list:
@@ -2312,9 +2211,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.tree_store = RepertoireTreeStore()
         self.tree_store.save(self.trees_path)
         self._sync_auto_trees()              # baut aus den (nun leeren) Quellen = nichts
-        self._refill_queue()
+        pass
         self._refresh_library()
-        self._start_next()
+        pass
 
     def _source_opening_count(self, src: str) -> int:
         p = Path(src)
@@ -2331,9 +2230,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.settings_store.save(self.settings_path)
         self.lines = self._load_lines()
         self._sync_auto_trees()
-        self._refill_queue()
+        pass
         self._refresh_library()
-        self._start_next()
+        pass
 
     def _manage_sources(self) -> None:
         dlg = QtWidgets.QDialog(self)
@@ -2404,13 +2303,6 @@ class MainWindow(QtWidgets.QMainWindow):
         lay.addLayout(btns)
         dlg.resize(520, 360)
         dlg.exec()
-
-    def _refill_queue(self) -> None:
-        due = self.schedule_store.due_lines(self.lines, date.today())
-        # Wenn nichts fällig ist, darf man trotzdem üben (alle trainierbaren).
-        self._queue = due or [line for line in self.lines if line.moves_uci]
-
-    # --- UI --------------------------------------------------------------
 
     def _build_ui(self) -> None:
         self.stack = QtWidgets.QStackedWidget()
@@ -2511,126 +2403,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self._go_to(target)
 
     def _build_train_page(self) -> QtWidgets.QWidget:
-        page = QtWidgets.QWidget()
-        layout = QtWidgets.QHBoxLayout(page)
-        layout.setContentsMargins(26, 26, 26, 26)
-        layout.setSpacing(30)
-
-        self.board = BoardView(square_size=74)
-        self.board.train_color = self.train_color
-        self.board.set_flipped(self.train_color == chess.BLACK)
-        self.board.moveRequested.connect(self._on_move)
-
-        self.eval_bar = EvalBar(height=self.board.board_pixels())
-        self.eval_bar.setToolTip(t("Stellungsbewertung durch Stockfish.",
-                                   "Position evaluation by Stockfish."))
-        self.eval_bar.set_flipped(self.train_color == chess.BLACK)
-        # Ohne Stockfish bliebe nur ein leerer grauer Streifen -> dann ausblenden.
-        self.eval_bar.setVisible(self._show_eval_bar and self._stockfish_available)
-        self._add_board_with_eval(layout, self.board, self.eval_bar)
-
-        side = QtWidgets.QVBoxLayout()
-        side.setSpacing(12)
-
-        self.eyebrow = QtWidgets.QLabel(t("LINIE DURCHSPIELEN", "PLAY A LINE"))
-        self.eyebrow.setObjectName("eyebrow")
-        self.name_label = self._plain_label("—")
-        self.name_label.setObjectName("name")
-        self.name_label.setWordWrap(True)
-        self.hint = QtWidgets.QLabel(t(
-            "Spiel die Züge deiner Eröffnung auf dem Brett.",
-            "Play the moves of your opening on the board.",
-        ))
-        self.hint.setObjectName("hint")
-        self.hint.setWordWrap(True)
-
-        # Nur sichtbar, solange keine Eröffnungen geladen sind (Erst-Start).
-        self.sample_btn = QtWidgets.QPushButton(
-            t("🎁  Beispiel-Eröffnungen ausprobieren", "🎁  Try the sample openings")
-        )
-        self.sample_btn.clicked.connect(self._load_sample_lines)
-        self.sample_btn.hide()
-
-        self.status = self._plain_label("")
-        self.status.setObjectName("status")
-        self.status.setWordWrap(True)
-        self.status.setMinimumHeight(48)
-
-        # Persönliche Notiz zur aktuellen Eröffnung
-        note_row = QtWidgets.QHBoxLayout()
-        self.note_label = self._plain_label("")
-        self.note_label.setObjectName("note")
-        self.note_label.setWordWrap(True)
-        self.note_btn = QtWidgets.QPushButton(t("✏ Notiz", "✏ Note"))
-        self.note_btn.setObjectName("more")
-        self.note_btn.clicked.connect(self._edit_line_note)
-        self.note_btn.setEnabled(False)
-        note_row.addWidget(self.note_label, 1)
-        note_row.addWidget(self.note_btn, 0, QtCore.Qt.AlignTop)
-
-        btn_row = QtWidgets.QHBoxLayout()
-        self.solution_btn = QtWidgets.QPushButton(t("Lösung zeigen", "Show solution"))
-        self.solution_btn.setToolTip(t("Tastenkürzel: L", "Shortcut: L"))
-        self.solution_btn.clicked.connect(self._show_solution)
-        self.next_btn = QtWidgets.QPushButton(t("Diese Eröffnung überspringen", "Skip this opening"))
-        self.next_btn.setToolTip(t("Tastenkürzel: Eingabetaste", "Shortcut: Enter"))
-        self.next_btn.clicked.connect(self._skip)
-        btn_row.addWidget(self.solution_btn)
-        btn_row.addWidget(self.next_btn)
-
-        self.due_label = QtWidgets.QLabel("")
-        self.due_label.setObjectName("due")
-
-        self.fehler_btn = QtWidgets.QPushButton(t("Fehler üben", "Drill mistakes"))
-        self.fehler_btn.setObjectName("more")
-        self.fehler_btn.clicked.connect(self._start_drill)
-        self.fehler_btn.hide()
-
-        self.spar_open_btn = QtWidgets.QPushButton(
-            t("♟  Gegen Stockfish weiterspielen", "♟  Play on against Stockfish")
-        )
-        self.spar_open_btn.setObjectName("more")
-        self.spar_open_btn.clicked.connect(self._open_sparring)
-        self.spar_open_btn.setEnabled(False)
-
-        self.explorer_open_btn = QtWidgets.QPushButton(
-            t("🔎  Im Lichess-Explorer ansehen", "🔎  Open in Lichess explorer")
-        )
-        self.explorer_open_btn.setObjectName("more")
-        self.explorer_open_btn.clicked.connect(self._open_explorer)
-        self.explorer_open_btn.setEnabled(False)
-
-        more_btn = QtWidgets.QPushButton(t("Alle Eröffnungen ansehen …", "Browse all openings …"))
-        more_btn.setObjectName("more")
-        more_btn.clicked.connect(self._open_library)
-
-        # Primäre Tagessitzung (stellungs-basiert) — diese Seite ist der „Linie
-        # durchspielen"-Modus; der Knopf führt zur fälligen Stellungs-Wiederholung.
-        self.due_session_btn = QtWidgets.QPushButton(t("▶  Heute fällig üben", "▶  Train what's due"))
-        self.due_session_btn.setObjectName("primary")
-        self.due_session_btn.clicked.connect(self._open_due_overview)
-
-        side.addWidget(self.eyebrow)
-        side.addWidget(self.name_label)
-        side.addWidget(self.hint)
-        side.addWidget(self.sample_btn, 0, QtCore.Qt.AlignLeft)
-        side.addSpacing(8)
-        side.addLayout(btn_row)
-        side.addWidget(self.status)
-        side.addLayout(note_row)
-        side.addStretch(1)
-        side.addWidget(self.due_session_btn, 0, QtCore.Qt.AlignLeft)
-        side.addWidget(self.due_label)
-        side.addWidget(self.spar_open_btn, 0, QtCore.Qt.AlignLeft)
-        side.addWidget(self.explorer_open_btn, 0, QtCore.Qt.AlignLeft)
-        side.addWidget(self.fehler_btn, 0, QtCore.Qt.AlignLeft)
-        side.addWidget(more_btn, 0, QtCore.Qt.AlignLeft)
-
-        side_widget = QtWidgets.QWidget()
-        side_widget.setLayout(side)
-        side_widget.setFixedWidth(340)
-        layout.addWidget(side_widget, 1)
-        return page
+        # Lineares Training entfernt; Seite 0 ist leerer Platzhalter (Indizes
+        # unverändert). Training läuft komplett über das Positionsmodell.
+        return QtWidgets.QWidget()
 
     def _build_library_page(self) -> QtWidgets.QWidget:
         page = QtWidgets.QWidget()
@@ -4294,50 +4069,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
     # --- Trainings-Loop --------------------------------------------------
 
-    def _update_due_label(self) -> None:
-        due = len(self.schedule_store.due_lines(self.lines, date.today()))
-        self.due_label.setText(t(
-            f"Heute zu wiederholen: {due} " + ("Eröffnung" if due == 1 else "Eröffnungen"),
-            f"Due today: {due} " + ("opening" if due == 1 else "openings"),
-        ))
-
-    def _start_next(self) -> None:
-        self._update_error_count()
-        if not self.lines:
-            self.eyebrow.setText("")
-            self.name_label.setText(t("Noch keine Eröffnungen", "No openings yet"))
-            self.hint.setText(t(
-                "Lade dein eigenes Repertoire über „Alle Eröffnungen ansehen …“ → „PGN laden …“ — "
-                "oder probier die App sofort mit drei Beispiel-Eröffnungen aus.",
-                "Load your own repertoire via “Browse all openings …” → “Load PGN …” — "
-                "or try the app right away with three sample openings.",
-            ))
-            self.due_label.setText("")
-            self.status.setText("")
-            self.solution_btn.setVisible(False)   # im Leerzustand keine funktionslosen Knöpfe
-            self.next_btn.setVisible(False)
-            self.due_session_btn.setVisible(False)
-            self.sample_btn.setVisible(True)
-            self.board.set_board(chess.Board())
-            return
-        self.sample_btn.setVisible(False)
-        self.due_session_btn.setVisible(bool(self._due_items()))
-        if not self._queue:
-            self.eyebrow.setText("")
-            self.name_label.setText(t("Alles erledigt 🎉", "All done 🎉"))
-            self.hint.setText(t(
-                "Für heute ist nichts mehr fällig. Schau morgen wieder vorbei.",
-                "Nothing more is due today. Come back tomorrow.",
-            ))
-            self.status.setText("")
-            self.solution_btn.setVisible(False)
-            self.next_btn.setVisible(False)
-            self.board.set_board(chess.Board())
-            self._update_due_label()
-            return
-        self.eyebrow.setText(t("LINIE DURCHSPIELEN", "PLAY A LINE"))
-        self._load_line(self._queue.pop(0))
-
     def _train_color_for(self, line):
         """Farbe, in der eine Eröffnung geübt wird: aus ihrer Repertoire-Seite.
         Ohne Zuordnung gilt die globale Voreinstellung."""
@@ -4347,235 +4078,6 @@ class MainWindow(QtWidgets.QMainWindow):
         if side == "black":
             return chess.BLACK
         return self.train_color
-
-    def _load_line(self, line) -> None:
-        # Normales Training beginnt -> evtl. laufenden Fehler-Drill beenden,
-        # sonst greifen Lösung/Züge noch auf die alte Drill-Stellung zu.
-        self._drill = False
-        self._drill_current = None
-        self._drill_board = None
-        self.current_line = line
-        self._had_wrong = False
-        self.solution_btn.setVisible(True)
-        self.next_btn.setVisible(True)
-        color = self._train_color_for(line)
-        self.board.train_color = color
-        self.board.set_flipped(color == chess.BLACK)
-        self.eval_bar.set_flipped(color == chess.BLACK)
-        self.eval_bar.clear()
-        self.training = TrainingState(line, train_color=color)
-        last = self._parse_last(self.training.last_move_uci)
-        self.board.set_board(self.training.board, last_move=last)
-        self.name_label.setText(self._display_name(line))
-        side = self._tcolor(color)
-        self.hint.setText(t(
-            f"Du spielst {side}. Zieh die richtigen Züge auf dem Brett.",
-            f"You play {side}. Make the correct moves on the board.",
-        ))
-        self.status.setText("")
-        self.next_btn.setText(t("Überspringen", "Skip"))
-        self.solution_btn.setEnabled(True)
-        self.spar_open_btn.setEnabled(True)
-        self.explorer_open_btn.setEnabled(True)
-        self._refresh_note_display()
-        self._update_due_label()
-        self._update_error_count()
-        self._request_eval()
-
-    def _refresh_note_display(self) -> None:
-        """Zeigt die Notiz der aktuellen Eröffnung (oder einen Hinweis)."""
-        line = self.current_line
-        self.note_btn.setEnabled(line is not None)
-        if line is None:
-            self.note_label.setText("")
-            return
-        note = self.line_notes.note_of(line.source_name, line.name)
-        self.note_label.setText(f"📝 {note}" if note else t("Keine Notiz zu dieser Eröffnung.", "No note for this opening."))
-
-    def _edit_line_note(self) -> None:
-        line = self.current_line
-        if line is None:
-            return
-        current = self.line_notes.note_of(line.source_name, line.name)
-        text, ok = QtWidgets.QInputDialog.getMultiLineText(
-            self,
-            t("Notiz zur Eröffnung", "Note for the opening"),
-            t(f"Merktext zu »{self._display_name(line)}«:", f"Note for »{self._display_name(line)}«:"),
-            current,
-        )
-        if not ok:
-            return
-        self.line_notes.set_note(line.source_name, line.name, text)
-        self.line_notes.save(self.notes_path)
-        self._refresh_note_display()
-        if self.stack.currentIndex() == 1:
-            self._refresh_library()
-
-    @staticmethod
-    def _parse_last(uci: str | None) -> tuple[int, int] | None:
-        if not uci:
-            return None
-        try:
-            move = chess.Move.from_uci(uci)
-        except ValueError:
-            return None
-        return (move.from_square, move.to_square)
-
-    def _on_move(self, from_square: int, to_square: int) -> None:
-        if self._drill:
-            self._drill_move(from_square, to_square)
-            return
-        if self.training is None:
-            return
-        fen_before = self.training.board.fen()
-        result = self.training.play_user_move_uci(chess.Move(from_square, to_square).uci())
-        if result.kind in ("correct", "wrong") and self.current_line is not None:
-            self.stats_store.add_event(
-                source_name=self.current_line.source_name,
-                line_name=self.current_line.name,
-                fen_before=fen_before,
-                expected_san=result.expected_san,
-                played_san=result.played_san,
-                correct=result.kind == "correct",
-            )
-            self.stats_store.save(self.stats_path)
-        if result.kind == "wrong":
-            self._had_wrong = True
-            self.board.flash_wrong(to_square)
-            self._show_deviation_feedback(
-                fen_before,
-                result.expected_san,
-                chess.Move(from_square, to_square).uci(),
-            )
-            return
-        if result.kind == "correct":
-            last = self._parse_last(result.last_move_uci)
-            self.board.set_board(self.training.board, last_move=last)
-
-            def done() -> None:
-                if self.training.is_finished():
-                    self._finish_line()
-                else:
-                    self.status.setText(t("✓ Richtig — weiter, du bist dran.",
-                                          "✓ Correct — keep going, your move."))
-                self._request_eval()
-
-            if last is not None:
-                self.board.animate(last[0], last[1], done)
-            else:
-                done()
-
-    def _wrong_fallback(self) -> str:
-        return t(
-            "Nicht ganz — das war nicht der Zug aus deiner Eröffnung. "
-            "Versuch's noch einmal oder „Lösung zeigen“.",
-            "Not quite — that wasn't the move from your opening. "
-            "Try again or use ‘Show solution’.",
-        )
-
-    def _get_eval_engine(self):
-        """Persistente Stockfish-Instanz fürs Üben (einmal starten, wiederverwenden).
-
-        Liefert ``None``, wenn Stockfish nicht gefunden wird — dann bleibt es
-        bei der einfachen Rückmeldung.
-        """
-        state = getattr(self, "_eval_engine", "unset")
-        if state != "unset":
-            return state
-        try:
-            import chess.engine
-            from qt_app.engine import find_stockfish
-            sf = find_stockfish()
-            self._eval_engine = (
-                chess.engine.SimpleEngine.popen_uci(str(sf)) if sf is not None else None
-            )
-        except Exception:  # noqa: BLE001
-            self._eval_engine = None
-        return self._eval_engine
-
-    def _show_deviation_feedback(self, fen_before: str, expected_san: str, played_uci: str) -> None:
-        """„War mein Zug gut?" — beurteilt einen abweichenden Zug mit Stockfish."""
-        engine = self._get_eval_engine()
-        if engine is None or not expected_san:
-            self.status.setText(self._wrong_fallback())
-            return
-        self.status.setText(t("Prüfe deinen Zug mit Stockfish …", "Checking your move with Stockfish …"))
-        self.status.repaint()
-        try:
-            import chess.engine
-            from qt_app.engine import judge_user_move
-            verdict = judge_user_move(
-                engine, fen_before, expected_san, played_uci,
-                chess.engine.Limit(depth=12),
-            )
-        except Exception:  # noqa: BLE001
-            verdict = None
-        if verdict is None:
-            self.status.setText(self._wrong_fallback())
-            return
-        x = verdict["expected_san"]
-        cat = verdict["category"]
-        if cat == "gleichwertig":
-            self.status.setText(t(
-                f"✓ Auch gut — dein Zug ist gleichwertig zu {x}. "
-                f"Zum Einprägen spiel trotzdem deinen Repertoire-Zug {x}.",
-                f"✓ Fine too — your move is as good as {x}. "
-                f"But play your repertoire move {x} to memorize it.",
-            ))
-        elif cat == "ungenau":
-            worse = abs(verdict["loss_cp"]) / 100
-            self.status.setText(t(
-                f"⚠ Etwas ungenauer als dein Repertoire-Zug {x} "
-                f"(≈ {worse:.1f} schlechter). Spiel {x}.",
-                f"⚠ A bit worse than your repertoire move {x} "
-                f"(≈ {worse:.1f} worse). Play {x}.",
-            ))
-        else:
-            self.status.setText(t(
-                f"⛔ Das schwächt deine Stellung — {x} ist klar besser. Spiel {x}.",
-                f"⛔ That weakens your position — {x} is clearly better. Play {x}.",
-            ))
-
-    def _finish_line(self) -> None:
-        self.status.setText(t("Geschafft! ✓  Die ganze Eröffnung saß.", "Done! ✓  You nailed the whole opening."))
-        self.solution_btn.setEnabled(False)
-        self.next_btn.setText(t("Nächste Eröffnung", "Next opening"))
-        if self.current_line is not None:
-            card = self.schedule_store.card_for(self.current_line.source_name, self.current_line.name)
-            self.schedule_store.set_card(
-                self.current_line.source_name,
-                self.current_line.name,
-                schedule_review(card, not self._had_wrong, date.today()),
-            )
-            self.schedule_store.save(self.schedule_path)
-        self._update_due_label()
-        self._update_error_count()
-
-    def _show_solution(self) -> None:
-        if self._drill and self._drill_current is not None:
-            move = chess.Move.from_uci(self._drill_current["expected_uci"])
-            self.board.show_solution(move.from_square, move.to_square)
-            self.status.setText(t(f"Lösung: {self._drill_current['expected_san']}", f"Solution: {self._drill_current['expected_san']}"))
-            return
-        if self.training is None:
-            return
-        sol = self.training.expected_solution()
-        if sol is None:
-            self.status.setText(t("Diese Eröffnung ist zu Ende.", "This opening is finished."))
-            return
-        self._had_wrong = True
-        move = chess.Move.from_uci(sol.uci)
-        self.board.show_solution(move.from_square, move.to_square)
-        self.status.setText(t(f"Lösung: {sol.san} — spiel sie jetzt selbst nach (grün markiert).",
-                              f"Solution: {sol.san} — now play it yourself (shown in green)."))
-
-    def _skip(self) -> None:
-        if self._drill:
-            self._next_problem()
-            return
-        self._start_next()
-
-    # --- Fehler-Drill ----------------------------------------------------
 
     def _collect_error_problems(self) -> list:
         """Alle offenen Fehlerstellungen (letzter Versuch falsch) über das
@@ -4588,94 +4090,6 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.tree_store.by_side(side_name), color, self.stats_store)
         problems.sort(key=lambda p: -p["count"])
         return problems
-
-    def _update_error_count(self) -> None:
-        if not hasattr(self, "fehler_btn"):
-            return
-        count = len(self._collect_error_problems())
-        self.fehler_btn.setText(t(f"Fehler üben  ({count})", f"Drill mistakes  ({count})"))
-        self.fehler_btn.setVisible(count > 0)
-
-    def _start_drill(self) -> None:
-        problems = self._collect_error_problems()
-        if not problems:
-            self.status.setText(t("Keine offenen Fehler — stark! 💪", "No open mistakes — great! 💪"))
-            return
-        self._drill_positions_for_fens([p["fen"] for p in problems], t("FEHLER ÜBEN", "DRILL MISTAKES"))
-
-    def _next_problem(self) -> None:
-        if not self._drill_queue:
-            self._finish_drill()
-            return
-        self._drill_current = self._drill_queue.pop(0)
-        self._load_problem(self._drill_current)
-
-    def _load_problem(self, problem: dict) -> None:
-        board = chess.Board(problem["fen"])
-        self._drill_board = board
-        turn = board.turn
-        self.board.train_color = turn
-        self.board.set_flipped(turn == chess.BLACK)
-        self.board.set_board(board)
-        self.eyebrow.setText(t("FEHLER ÜBEN", "DRILL MISTAKES"))
-        self.name_label.setText(self._tname(problem["name"]))
-        self.hint.setText(t(
-            "Welcher Zug ist hier richtig? Den hattest du hier schon einmal verpasst.",
-            "Which move is correct here? You missed it here once before.",
-        ))
-        remaining = len(self._drill_queue) + 1
-        self.status.setText(t(f"Noch {remaining} Fehler", f"{remaining} mistakes left"))
-        self.next_btn.setText(t("Überspringen", "Skip"))
-        self.solution_btn.setEnabled(True)
-
-    def _drill_move(self, from_square: int, to_square: int) -> None:
-        problem = self._drill_current
-        board = self._drill_board
-        if problem is None or board is None:
-            return
-        move = chess.Move(from_square, to_square)
-        if move not in board.legal_moves:
-            promo = chess.Move(from_square, to_square, promotion=chess.QUEEN)
-            if promo in board.legal_moves:
-                move = promo
-        if move not in board.legal_moves:
-            self.board.flash_wrong(to_square)
-            self.status.setText(t("Das ist hier kein gültiger Zug.", "That's not a legal move here."))
-            return
-
-        correct = move.uci() == problem["expected_uci"]
-        self.stats_store.add_event(
-            source_name=problem["source"],
-            line_name=problem["line"],
-            fen_before=problem["fen"],
-            expected_san=problem["expected_san"],
-            played_san=board.san(move),
-            correct=correct,
-        )
-        self.stats_store.save(self.stats_path)
-
-        if correct:
-            board.push(move)
-            self.board.set_board(board, last_move=(from_square, to_square))
-            self.status.setText(t("Richtig! ✓", "Correct! ✓"))
-            self.board.animate(from_square, to_square, self._next_problem)
-        else:
-            self.board.flash_wrong(to_square)
-            self.status.setText(t("Nicht ganz — versuch's noch einmal oder „Lösung zeigen“.", "Not quite — try again or use ‘Show solution’."))
-
-    def _finish_drill(self) -> None:
-        self._drill = False
-        self._drill_current = None
-        self._drill_board = None
-        self.board.train_color = self.train_color
-        self.board.set_flipped(self.train_color == chess.BLACK)
-        # zurück in den normalen Übungsfluss
-        self._refill_queue()
-        self._start_next()
-        self.status.setText(t("Fehler-Training fertig! ✓  Gut gemacht.", "Mistake drill done! ✓  Well done."))
-        self._update_error_count()
-
-    # --- Eröffnungs-Liste („Mehr…") --------------------------------------
 
     def _library_row(self, line) -> QtWidgets.QWidget:
         widget = QtWidgets.QWidget()
@@ -5081,9 +4495,9 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.opening_sides.set_side(line.source_name, line.name, side)
         self.opening_sides.save(self.sides_path)
         self._sync_auto_trees()
-        self._refill_queue()
+        pass
         self._refresh_library()
-        self._start_next()
+        pass
 
     def _load_pgn_dialog(self) -> None:
         path, _ = QtWidgets.QFileDialog.getOpenFileName(

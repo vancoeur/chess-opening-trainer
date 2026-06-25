@@ -63,20 +63,6 @@ def test_library_empty_state_toggles_with_data(tmp_path, monkeypatch):
     assert not win.library_list.isHidden()        # Liste sichtbar
 
 
-def test_train_hides_dead_buttons_when_empty(tmp_path, monkeypatch):
-    win = _win(tmp_path, monkeypatch)            # __init__ ruft _start_next ohne Daten
-    assert win.solution_btn.isHidden()           # keine funktionslosen Knöpfe …
-    assert win.next_btn.isHidden()
-    assert not win.sample_btn.isHidden()          # … nur der Beispiel-Knopf
-
-    from opening_trainer.pgn_loader import load_pgn_file
-    win.lines = load_pgn_file(SAMPLE)
-    win._auto_fill_sides_by_filename()
-    win._refill_queue(); win._start_next()
-    assert not win.solution_btn.isHidden()        # nach dem Laden wieder da
-    assert not win.next_btn.isHidden()
-
-
 def test_normal_drill_restores_eyebrow_and_back_to_editor(tmp_path, monkeypatch):
     from opening_trainer.repertoire_tree import RepertoireTree
     win = _win(tmp_path, monkeypatch)
