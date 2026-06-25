@@ -134,6 +134,25 @@ def test_gap_shown_and_jumps_to_editor(tmp_path, monkeypatch):
     assert win.stack.currentIndex() == 9        # Editor an der Lücke
 
 
+def test_white_defense_gets_gegen_label(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    lbl = win._reptree_family_label("Sizilianisch", "white")
+    assert lbl != "Sizilianisch" and "Sizilianisch" in lbl       # »gegen Sizilianisch«
+    assert win._reptree_family_label("Englische Eröffnung", "white") == "Englische Eröffnung"
+    assert win._reptree_family_label("Sizilianisch", "black") == "Sizilianisch"  # als Schwarz: kein »gegen«
+
+
+def test_train_loaded_file_starts_session(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    f = tmp_path / "Weiss Sizilianisch.pgn"
+    f.write_text('[Event "x"]\n[ChapterName "Sizilianisch Alapin"]\n\n1. e4 c5 2. c3 d5 3. exd5 *\n', encoding="utf-8")
+    win._add_pgn_source(str(f))
+    win._auto_fill_sides_by_filename()
+    assert win._trees_for_source(str(f)), "Bäume der Datei sollten auffindbar sein"
+    win._train_source(str(f))
+    assert win.stack.currentIndex() == 10        # Stellungs-Sitzung dieser Datei
+
+
 def test_window_title_reflects_page(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     win.stack.setCurrentIndex(13)

@@ -1450,15 +1450,31 @@ class MainWindow(QtWidgets.QMainWindow):
         self._reptree_refresh_families()
         self._refresh_repertoire_tree()
 
+    # Schwarz-Verteidigungen: als Weiß spielt man GEGEN sie (Label »gegen X«).
+    _DEFENSES = frozenset({
+        "Sizilianisch", "Französisch", "Caro-Kann", "Skandinavisch",
+        "Aljechin-Verteidigung", "Pirc-Verteidigung", "Moderne Verteidigung",
+        "Russische Verteidigung (Petrow)", "Philidor-Verteidigung", "Nimzo-Indisch",
+        "Königsindisch", "Damenindisch", "Grünfeld-Verteidigung", "Slawische Verteidigung",
+        "Semi-Slawisch", "Holländisch", "Benoni", "Benko-Gambit", "Indische Verteidigung",
+    })
+
+    def _reptree_family_label(self, fam: str, side_name: str) -> str:
+        """Anzeigetext einer Familie: im WEISS-Repertoire bekommt eine Schwarz-
+        Verteidigung ein »gegen« vorangestellt (du spielst dagegen)."""
+        if side_name == "white" and fam in self._DEFENSES:
+            return t(f"gegen {fam}", f"vs {fam}")
+        return fam
+
     def _reptree_refresh_families(self) -> None:
         """Füllt die Repertoire-Auswahl passend zur gewählten Seite: »Alles«
-        plus jede benannte Familie."""
+        plus jede benannte Familie (Verteidigungen als »gegen …« bei Weiß)."""
         self.reptree_family_combo.blockSignals(True)
         self.reptree_family_combo.clear()
         side_name = self.reptree_side_combo.currentData()
         self.reptree_family_combo.addItem(t("Alles", "All"), None)
         for fam in self._reptree_families(side_name):
-            self.reptree_family_combo.addItem(fam, fam)
+            self.reptree_family_combo.addItem(self._reptree_family_label(fam, side_name), fam)
         self.reptree_family_combo.blockSignals(False)
 
     def _reptree_selected_trees(self):
@@ -1492,7 +1508,8 @@ class MainWindow(QtWidgets.QMainWindow):
         branches = sum(1 for r in rows if r["children"] > 1)
         variations = sum(1 for r in rows if r["children"] == 0)   # vollständige Linien = Blätter
         fam = self.reptree_family_combo.currentData()
-        scope = fam if fam is not None else t("ganzes Repertoire", "whole repertoire")
+        scope = (self._reptree_family_label(fam, self.reptree_side_combo.currentData())
+                 if fam is not None else t("ganzes Repertoire", "whole repertoire"))
         var_de = "Variante" if variations == 1 else "Varianten"
         var_en = "variation" if variations == 1 else "variations"
         br_de = "Verzweigung" if branches == 1 else "Verzweigungen"
@@ -1707,6 +1724,38 @@ class MainWindow(QtWidgets.QMainWindow):
         self.drill_learn_check.setVisible(True)    # Learn-Modus hier wählbar
         self.stack.setCurrentIndex(10)
         self._due_present_current()
+
+    def _trees_for_source(self, src: str) -> list:
+        """Alle (Auto-)Bäume, die aus dieser geladenen Quelle (Datei/Ordner) stammen."""
+        from opening_trainer.tree_sync import pgn_files_of_source
+        names = {f.name for f in pgn_files_of_source(src)} or {Path(src).name}
+        return [t for t in self.tree_store.all() if t.headers.get("_source") in names]
+
+    def _train_trees(self, trees, eyebrow: str) -> bool:
+        """Übt genau diese Bäume: fällige/neue Stellungen zuerst, sonst alle.
+        Gibt zurück, ob etwas zu üben war."""
+        from opening_trainer.tree_session import due_drill_items, build_user_position_index
+        today = date.today()
+        items = []
+        for sn, color in (("white", chess.WHITE), ("black", chess.BLACK)):
+            st = [t for t in trees if t.side == sn]
+            if st:
+                items += [(t, n, color) for t, n in due_drill_items(st, color, self.position_schedule, today)]
+        if not items:
+            for sn, color in (("white", chess.WHITE), ("black", chess.BLACK)):
+                st = [t for t in trees if t.side == sn]
+                items += [(t, n, color) for (t, n) in build_user_position_index(st, color).values()]
+        if items:
+            self._run_position_session(items, eyebrow)
+        return bool(items)
+
+    def _train_source(self, src: str) -> None:
+        trees = self._trees_for_source(src)
+        if not self._train_trees(trees, t("DATEI ÜBEN", "TRAIN FILE")):
+            QtWidgets.QMessageBox.information(
+                self, t("Nichts zu üben", "Nothing to train"),
+                t("Diese Datei enthält (noch) keine trainierbaren Stellungen — ist ihr eine Seite zugeordnet?",
+                  "This file has no trainable positions (yet) — is a side assigned to it?"))
 
     def _start_due_session(self, only_tree=None, only_side=None) -> None:
         self._run_position_session(
@@ -2333,16 +2382,27 @@ class MainWindow(QtWidgets.QMainWindow):
                 self._remove_pgn_source(src)
                 refresh()
 
+        def do_train() -> None:
+            item = listw.currentItem()
+            if item is None:
+                return
+            dlg.accept()
+            self._train_source(item.data(QtCore.Qt.UserRole))
+
         btns = QtWidgets.QHBoxLayout()
+        train = QtWidgets.QPushButton(t("▶  Ausgewählte üben", "▶  Train selected"))
+        train.setObjectName("primary")
+        train.clicked.connect(do_train)
         remove = QtWidgets.QPushButton(t("Ausgewählte entfernen", "Remove selected"))
         remove.clicked.connect(do_remove)
         close = QtWidgets.QPushButton(t("Schließen", "Close"))
         close.clicked.connect(dlg.accept)
+        btns.addWidget(train)
         btns.addWidget(remove)
         btns.addStretch(1)
         btns.addWidget(close)
         lay.addLayout(btns)
-        dlg.resize(480, 340)
+        dlg.resize(520, 360)
         dlg.exec()
 
     def _refill_queue(self) -> None:
@@ -5049,7 +5109,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.lib_sub.setText(t(
             f"{added} Eröffnungen hinzugefügt — {len(self.lines)} insgesamt. Klick eine an, um sie zu üben.",
             f"Added {added} openings — {len(self.lines)} in total. Click one to train it."))
-        self._show_tree_report()             # Baum-Struktur-Bericht (Linien → Baum)
+        self._show_tree_report(source=path)  # Bericht + »Jetzt diese Datei üben«
 
     def _tree_report_lines(self) -> list:
         """Eine Zeile je Seite mit Repertoire: »N Linien → 1 Baum mit B
@@ -5073,8 +5133,9 @@ class MainWindow(QtWidgets.QMainWindow):
                     f"{label}: {st['lines']} lines — purely linear, no branches."))
         return parts
 
-    def _show_tree_report(self) -> None:
-        """Kurzer Bericht nach dem Laden (mit Direkt-Knopf in den Repertoire-Baum)."""
+    def _show_tree_report(self, source: str | None = None) -> None:
+        """Kurzer Bericht nach dem Laden — mit Direkt-Knöpfen: die gerade geladene
+        Datei sofort üben, oder im Repertoire-Baum ansehen."""
         parts = self._tree_report_lines()
         if not parts:
             return
@@ -5084,6 +5145,10 @@ class MainWindow(QtWidgets.QMainWindow):
         box.setInformativeText(t(
             "Gleiche Stellungen verschiedener Linien werden zu einem Baum zusammengeführt.",
             "Identical positions across lines are merged into one tree."))
+        train_btn = None
+        if source:
+            train_btn = box.addButton(t("▶  Jetzt diese Datei üben", "▶  Train this file now"),
+                                      QtWidgets.QMessageBox.ButtonRole.AcceptRole)
         view_btn = box.addButton(t("Im Repertoire-Baum ansehen", "View repertoire tree"),
                                  QtWidgets.QMessageBox.ButtonRole.AcceptRole)
         box.addButton(t("Schließen", "Close"), QtWidgets.QMessageBox.ButtonRole.RejectRole)
@@ -5091,8 +5156,13 @@ class MainWindow(QtWidgets.QMainWindow):
         box.setModal(False)
         box.setAttribute(QtCore.Qt.WidgetAttribute.WA_DeleteOnClose, True)
         self._tree_report_box = box                      # Referenz halten (sonst GC)
-        box.buttonClicked.connect(
-            lambda b, vb=view_btn: self._open_repertoire_tree() if b is vb else None)
+
+        def on_click(b):
+            if b is view_btn:
+                self._open_repertoire_tree()
+            elif train_btn is not None and b is train_btn:
+                self._train_source(source)
+        box.buttonClicked.connect(on_click)
         box.show()
 
     def _ask_and_assign_side(self, source_name: str) -> None:
@@ -5149,4 +5219,4 @@ class MainWindow(QtWidgets.QMainWindow):
                        "and assign them to White/Black.")
         self._open_library()                  # Ergebnis sichtbar machen (Feedback am richtigen Ort)
         self.lib_sub.setText(t(msg_de, msg_en))
-        self._show_tree_report()              # Baum-Struktur-Bericht (Linien → Baum)
+        self._show_tree_report(source=folder)  # Bericht + »Jetzt diesen Ordner üben«
