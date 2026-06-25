@@ -37,6 +37,7 @@ python3 -m PyInstaller \
   --osx-bundle-identifier "com.local.openingtrainer" \
   --icon "assets/app_icon.icns" \
   --add-data "assets:assets" \
+  --add-data "opening_trainer/data:opening_trainer/data" \
   qt_main.py
 
 # Echte Programmversion (aus APP_VERSION) ins App-Paket schreiben, damit der

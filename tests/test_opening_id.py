@@ -44,6 +44,13 @@ def test_setup_rule_does_not_hijack_c4_openings():
     assert identify_opening(["d2d4", "g8f6", "c2c4", "g7g6", "b1c3", "d7d5"]) == "Grünfeld-Verteidigung"
 
 
+def test_eco_database_covers_openings_the_mini_table_lacks():
+    # Diese erkennt NUR die ECO-Datenbank (nicht die kuratierte Mini-Tabelle):
+    assert identify_opening(["e2e4", "e7e5", "b1c3"]) == "Wiener Partie"
+    assert identify_opening(["e2e4", "e7e5", "g1f3", "b8c6", "d2d4", "e5d4", "f3d4"]) == "Schottische Partie"
+    assert identify_opening(["d2d4", "d7d5", "c2c4", "c7c6"]) == "Slawische Verteidigung"
+
+
 def test_unknown_returns_none():
     assert identify_opening([]) is None
     assert identify_opening(["a2a3", "a7a6"]) is None

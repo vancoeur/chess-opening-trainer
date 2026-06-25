@@ -1,0 +1,3733 @@
+A00	g1h3
+A00	g1h3 d7d5 g2g3 e7e5 f2f4
+A00	g1h3 d7d5 g2g3 e7e5 f2f4 c8h3 f1h3 e5f4 e1g1 f4g3 h2g3
+A00	e2e3 e7e5 c2c4 d7d6 b1c3 b8c6 b2b3 g8f6
+A00	a2a3
+A00	a2a3 a7a5 b2b4
+A00	f2f3
+A00	f2f3 e7e5 g2g4 d8h4
+A00	f2f3 d7d5 e2e4 g7g6 d2d4 d5e4 c2c3
+A00	f2f3 f7f5 e2e4 f5e4 b1c3
+A00	f2f3 e7e5 e1f2
+A00	h2h3
+A00	h2h3 h7h5 g2g4
+A00	h2h3 d7d5 a2a3 e7e5
+A00	a2a3 e7e5 b2b3 d7d5 c2c3 g8f6 d2d3 b8c6 e2e3 f8d6 f2f3 e8g8 g2g3
+A00	a2a3 e7e5 g2g3 d7d5 f1g2 g8f6 d2d3 b8c6 b1d2 f8d6 e2e3 e8g8 h2h3
+A00	h2h3 e7e5 a2a3
+A00	g2g4
+A00	g2g4 f7f5
+A00	g2g4 g7g5
+A00	g2g4 g7g5 f2f4
+A00	g2g4 d7d5 f1g2
+A00	g2g4 d7d5 f1g2 c7c6
+A00	g2g4 d7d5 f1g2 h7h5 g4h5
+A00	g2g4 d7d5 f1g2 c8g4 c2c4
+A00	g2g4 d7d5 f1g2 c8g4 c2c4 d5d4 g2b7 b8d7 b7a8 d8a8
+A00	g2g4 d7d5 f1g2 e7e5 d2d4 e5d4 c2c3
+A00	g2g4 d7d5 f1g2 c7c6 c2c4 d5c4 b2b3
+A00	g2g4 d7d5 h2h3 e7e5 f1g2 c7c6
+A00	g2g4 d7d5 h2h3 e7e5 f1g2 c7c6 d2d4 e5e4 c2c4 f8d6 b1c3 g8e7
+A00	g2g4 e7e5 h2h3 b8c6
+A00	g2g4 d7d5 f1g2 c8g4 c2c4 d5d4
+A00	g2g4 d7d5 f1g2 c7c6 g4g5
+A00	g2g4 e7e5 f1g2 d7d5 c2c4
+A00	g2g4 d7d5 e2e4 d5e4 b1c3
+A00	g2g4 d7d5 e2e4 d5e4 b1c3 h7h5
+A00	g2g4 d7d5 e2e4 d5e4 b1c3 e7e5 d2d3
+A00	g2g3
+A00	g2g3 b8c6 b1c3 d7d5 d2d4 e7e5 d4e5 d5d4 c3e4 f7f5
+A00	g2g3 e7e5 a2a3 d7d5 g1f3 e5e4 f3h4 f8e7 d2d3
+A00	g2g3 d7d5 f1g2 e7e5 b2b4
+A00	g2g3 d7d5 f1g2 e7e6
+A00	g2g3 f7f5
+A00	g2g3 g8f6
+A00	g2g3 g7g5
+A00	g2g3 f7f5 e2e4 f5e4 d1h5 g7g6
+A00	g2g3 e7e5 g1h3 d7d5 f2f4 c8h3 f1h3 e5f4 e1g1
+A00	g2g3 e7e5 g1f3
+A00	g2g3 e7e5 g1f3 e5e4 f3g1 g8f6 b2b4
+A00	g2g3 d7d5 f1g2 c7c5
+A00	g2g3 e7e5 g1f3 e5e4 f3h4
+A00	g2g3 c7c5
+A00	g2g3 d7d5 f1g2 c7c6
+A00	g2g3 g7g6
+A00	g2g3 h7h5 g1f3 h5h4
+A00	g2g3 d7d5 f1g2 e7e5 c2c4 d5c4 b2b3
+A00	h2h4
+A00	h2h4 d7d5 h1h3
+A00	h2h4 a7a5
+A00	h2h4 c7c5 b2b4
+A00	h2h4 d7d5 d2d4 c7c5 g1f3 c5d4 c2c3
+A00	h2h4 e7e5 d2d4 e5d4 c2c3
+A00	h2h4 d7d5 d2d4 c7c5 e2e4
+A00	h2h4 g7g5
+A00	h2h4 f7f5 e2e4 f5e4 d2d3
+A00	g2g3 h7h5
+A00	d2d3
+A00	d2d3 g7g6 g2g4
+A00	d2d3 e7e5
+A00	d2d3 c7c5 b1c3 b8c6 g2g3
+A00	b2b4
+A00	b2b4 d7d5
+A00	b2b4 d7d5 c1b2 g8f6 g1f3
+A00	b2b4 d7d5 c1b2 c8f5
+A00	b2b4 c7c5
+A00	b2b4 e7e5 c1b2 f7f6 b4b5
+A00	b2b4 e7e5 a2a3
+A00	b2b4 e7e5 c1b2 d7d6
+A00	b2b4 f7f5
+A00	b2b4 d7d5 c1b2 d8d6
+A00	b2b4 b8c6
+A00	b2b4 g8h6
+A00	b2b4 g8f6 c1b2 g7g6
+A00	b2b4 g8f6 c1b2 g7g6 e2e4
+A00	b2b4 g8f6 c1b2 g7g6 c2c4 f8g7 e2e3 d7d6 g1f3 e8g8 d2d4
+A00	b2b4 d7d5 c1b2 c7c6 a2a4
+A00	b2b4 c7c6
+A00	b2b4 c7c6 c1b2 a7a5 b4b5
+A00	b2b4 e7e6 c1b2 g8f6 b4b5 b7b6
+A00	b2b4 e7e6 c1b2 g8f6 b4b5 a7a6
+A00	b2b4 e7e6 c1b2 g8f6 b4b5 a7a6 a2a4 a6b5 a4b5 a8a1 b2a1
+A00	b2b4 e7e6 c1b2 g8f6 b4b5 d7d5 e2e3
+A00	b2b4 c7c6 c1b2 a7a5 b4b5 c6b5 e2e4
+A00	b2b4 b7b5
+A00	b2b4 e7e5 c1b2 f7f6 e2e4
+A00	b2b4 e7e5 c1b2 c7c5
+A00	c2c3
+A00	b1a3
+A00	b1a3 e7e5 d2d3 f8a3 b2a3 d7d5 e2e3 c7c5 a1b1
+A00	b1a3 g7g6 g2g4
+A00	b1a3 e7e5 a3c4 b8c6 e2e4 f7f5
+A00	d2d3 e7e5 b1d2
+A00	b1c3
+A00	a2a3 e7e5 b1c3
+A00	b1c3 e7e5 g1f3 f8c5
+A00	b1c3 d7d5 f2f4 e7e5
+A00	b1c3 d7d5 e2e4 d5e4 f2f3
+A00	b1c3 d7d5 e2e4 d5e4 d2d3
+A00	b1c3 c7c5 b2b4
+A00	b1c3 e7e5 b2b3 d7d5 e2e4 d5e4 d2d3
+A00	b1c3 d7d5 e2e4 d5e4 f1c4
+A00	b1c3 d7d6 f2f4 e7e5 f4e5 b8c6
+A00	b1c3 e7e5 e2e3 d7d5 d1h5 c8e6
+A00	b1c3 d7d5 f2f4 d5d4 c3e4 f7f5 e4f2 g8f6 g1f3 c7c5 b2b4
+A00	b1c3 f7f5 e2e4 f5e4 d2d3
+A00	b1c3 b7b5
+A00	b1c3 e7e5 e2e3 d7d5 d1h5 g8f6
+A00	b1c3 d7d5 f2f4 d5d4 c3e4 c7c5
+A00	b1c3 g7g6 h2h4
+A00	b1c3 e7e5 g1f3 b8c6 d2d4
+A00	b1c3 c7c5 d2d4 c5d4 d1d4 b8c6 d4h4
+A00	b1c3 e7e5 f2f4 e5f4 e2e4
+A00	b1c3 d7d5 f2f4 d5d4 c3e4 e7e5
+A00	b1c3 d7d5 f2f4 d5d4 c3e4 e7e5 g1f3
+A00	b1c3 e7e5
+A00	b1c3 e7e5 d2d4 e5d4 d1d4 b8c6 d4a4
+A00	b1c3 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4
+A00	b1c3 d7d5 e2e3 e7e5 d2d4 f8b4
+A00	b1c3 c7c5 a1b1
+A00	b1c3 g8f6 g2g4
+A00	b1c3 d7d5 d2d3 g8f6 g2g3
+A00	b1c3 d7d5 f2f4 g7g5
+A00	e2e3
+A00	e2e3 e7e5 f1c4 b7b5 c4b3
+A00	e2e3 e7e5 b1c3 g8f6 f2f4 e5f4 g1f3
+A00	e2e3 e7e5 b1c3 b8c6 f2f4 e5f4 g1f3
+A00	e2e3 e7e5 b1c3 d7d5 f2f4 e5f4 g1f3
+A00	a2a4
+A00	a2a4 b7b6 d2d4 d7d5 b1c3 b8d7
+A00	a2a4 e7e5 h2h4
+A00	a2a4 e7e5 a1a3
+A00	a2a4 a7a5
+A00	a2a4 e7e5 a4a5 d7d5 e2e3 f7f5 a5a6
+A00	a2a4 b7b5 a4b5 c8b7
+A01	b2b3
+A01	b2b3 d7d5
+A01	b2b3 f7f5
+A01	b2b3 c7c5
+A01	b2b3 d7d5 c1a3
+A01	b2b3 g8f6
+A01	b2b3 e7e5
+A01	b2b3 e7e5 c1b2 b8c6
+A01	b2b3 e7e5 c1b2 b8c6 e2e3
+A01	b2b3 e7e5 c1b2 b8c6 c2c4 g8f6
+A01	b2b3 e7e5 c1b2 b8c6 f2f4
+A01	b2b3 b7b5
+A01	b2b3 f7f5 c1b2 e7e6 e2e4
+A01	b2b3 g8f6 c1b2 g7g6 g2g4
+A01	b2b3 b7b6
+A02	f2f4
+A02	f2f4 g8f6 g1f3 g7g6 b2b4
+A02	f2f4 f7f5 d2d4 d7d5
+A02	f2f4 e7e5
+A02	f2f4 e7e5 b1c3
+A02	f2f4 e7e5 f4e5 d7d6 e5d6 g8f6
+A02	f2f4 e7e5 f4e5 d7d6 e5d6 f8d6 g1f3 g7g5
+A02	f2f4 e7e5 f4e5 d7d6 e5d6 f8d6 g1f3 g8h6 d2d4
+A02	f2f4 g7g5
+A02	f2f4 h7h6 g1f3 g7g5
+A02	f2f4 g8h6
+A02	f2f4 e7e5 f4e5 f7f6
+A02	f2f4 g8f6 c2c4
+A02	f2f4 b7b5
+A02	f2f4 e7e5 f4e5 g8e7
+A02	f2f4 e7e5 f4e5 b8c6
+A02	f2f4 e7e5 d2d4 e5d4 g1f3 c7c5 c2c3
+A02	f2f4 f7f5 e2e4 f5e4 b1c3 g8f6 g2g4
+A02	f2f4 f7f5 e2e4
+A03	f2f4 d7d5
+A03	f2f4 d7d5 g2g4
+A03	f2f4 d7d5 g1f3 g8f6 e2e3 c7c5
+A03	f2f4 d7d5 c2c4
+A03	f2f4 d7d5 b2b3 g8f6 c1b2 d5d4 g1f3 c7c5 e2e3
+A03	f2f4 d7d5 e2e4
+A03	f2f4 d7d5 e2e4 d5e4 b1c3 g8f6 d1e2
+A03	f2f4 d7d5 e2e4 d5e4 b1c3 g8f6 g1e2
+A04	g1f3 c7c5 e2e3 g7g6 d2d4 f8g7 d4c5 d8a5
+A04	g1f3 c7c5 c2c4 g7g6 d2d4 f8g7 e2e4 d8b6
+A04	g1f3 c7c5 c2c4 g7g6 d2d4 f8g7 e2e4 d8a5
+A04	g1f3 g7g6 d2d4 f8g7 e2e4 d7d6 c2c4 c7c5 d4c5 d8a5
+A04	g1f3 g8h6 d2d4 g7g6
+A04	g1f3 b8a6 e2e4 c7c5
+A04	g1f3
+A04	g1f3 f7f6
+A04	g1f3 f7f6 e2e4 g8h6 d2d4 h6f7
+A04	g1f3 h7h6
+A04	g1f3 b8c6
+A04	g1f3 b8a6 e2e4 g8h6
+A04	g1f3 f7f5
+A04	g1f3 g7g5
+A04	g1f3 g7g6
+A04	g1f3 f7f5 e2e4
+A04	g1f3 f7f5 d2d3 g8f6 e2e4
+A04	g1f3 d7d6
+A04	g1f3 b7b5
+A04	g1f3 e7e6
+A04	g1f3 b7b6
+A04	g1f3 e7e5
+A04	g1f3 e7e6 c2c4 a7a6 b1c3 c7c5 g2g3 b7b5
+A04	g1f3 c7c5
+A04	g1f3 c7c6
+A04	g1f3 c7c5 d2d4 c5d4 e2e3
+A04	g1f3 a7a6
+A04	g1f3 e7e5 f3e5 b8c6 e5c6 d7c6
+A04	g1f3 d7d6 d2d4 e7e5
+A04	g1f3 d7d6 e2e4 c8g4
+A04	g1f3 a7a5
+A05	g1f3 g8f6 g2g3 d7d5
+A05	g1f3 g8f6 g2g3 g7g6 b2b4
+A05	g1f3 g8f6 g2g3 b7b5
+A05	g1f3 g8f6 g2g3 g7g6
+A05	g1f3 g8f6 g2g3 g7g6 f1g2 f8g7 e1g1 e8g8 d2d3 d7d5
+A05	g1f3 g8f6 b2b4 g7g6 c1b2
+A05	g1f3 g8f6
+A05	g1f3 g8f6 b1c3 b8c6
+A05	g1f3 g8f6 g2g3 g7g6 b2b3 f8g7 c1b2 e8g8 f1g2 d7d6 e1g1
+A05	g1f3 g8f6 e2e4
+A05	g1f3 g8f6 a2a4 g7g6 b2b4
+A05	g1f3 g8f6 b2b3
+A05	g1f3 g8f6 e2e3
+A06	g1f3 d7d5 b2b3
+A06	g1f3 d7d5 b2b3 c7c5 e2e4
+A06	g1f3 d7d5 b2b3 g8f6 c1b2 c7c5 e2e4
+A06	g1f3 d7d5
+A06	g1f3 d7d5 h1g1
+A06	g1f3 d7d5 d2d3
+A06	g1f3 d7d5 e2e3 c7c5 c2c4 d5c4 b2b3
+A06	g1f3 d7d5 b2b3 c7c5 c2c4 d5c4 b1c3
+A06	g1f3 d7d5 b1c3
+A06	b2b4 d7d5 g1f3
+A06	e2e4 d7d5 g1f3
+A06	e2e4 d7d5 g1f3 d5e4 f3g5 g8f6 b1c3 c8f5 d1e2 d8d4
+A06	g1f3 d7d5 a2a4
+A07	g2g3 d7d5 g1f3 g7g5
+A07	g1f3 d7d5 g2g3
+A07	g1f3 g8f6 g2g3 d7d5 f1g2 c7c6 e1g1 c8f5
+A07	g1f3 g8f6 g2g3 d7d5 f1g2 c7c6 e1g1 c8f5 d2d3 h7h6
+A07	g1f3 g8f6 g2g3 d7d5 f1g2 c7c6 e1g1 c8f5 d2d3 h7h6 c2c4 d5c4
+A07	g1f3 g8f6 g2g3 d7d5 f1g2 c7c6 e1g1 c8f5 d2d3 e7e6 b1d2
+A07	g1f3 g8f6 g2g3 d7d5 f1g2 c7c6 e1g1 c8f5 d2d3 e7e6 f3h4
+A07	g1f3 g8f6 g2g3 d7d5 f1g2 e7e6
+A07	g1f3 g8f6 g2g3 d7d5 f1g2 e7e6 e1g1 f8e7
+A07	g1f3 d7d5 g2g3 g7g6
+A07	g1f3 d7d5 g2g3 c8g4
+A07	g1f3 d7d5 g2g3 c8g4 f1g2 b8d7
+A07	g1f3 d7d5 g2g3 c7c6 f1g2 c8g4 e1g1 b8d7
+A07	g1f3 d7d5 g2g3 c7c6 f1g2 c8g4 e1g1 b8d7 d2d4 g8f6 c2c4 e7e6 c4d5 e6d5 b1c3 f8d6
+A07	g1f3 d7d5 g2g3 e7e5
+A07	g1f3 d7d5 g2g3 g7g6 f1g2 f8g7 e1g1 e7e5 d2d3 g8e7
+A07	g1f3 d7d5 g2g3 c7c5
+A07	g1f3 g8f6 g2g3 d7d5 f1g2 c7c6 e1g1 c8g4
+A07	c2c4 e7e6 g1f3 d7d5 g2g3 g8f6 f1g2 b7b6 e1g1
+A08	g1f3 d7d5 g2g3 c7c5 f1g2 b8c6
+A08	e2e4 e7e6 d2d3 d7d5 b1d2 g8f6 g1f3 c7c5 g2g3 b8c6 f1g2 f8e7 e1g1 e8g8 f1e1
+A08	g1f3 d7d5 g2g3 c7c5 f1g2
+A08	g1f3 d7d5 g2g3 c7c5 f1g2 g8f6 e1g1 e7e6 d2d3
+A08	g1f3 d7d5 g2g3 c7c5 f1g2 b8c6 d2d4
+A08	g1f3 d7d5 g2g3 c7c5 f1g2 b8c6 d2d4 g8f6
+A08	g1f3 d7d5 g2g3 c7c5 f1g2 b8c6 d2d4 g8f6 e1g1
+A08	g1f3 d7d5 g2g3 c7c5 f1g2 b8c6 d2d4 e7e6 e1g1
+A09	g1f3 d7d5 c2c4
+A09	g1f3 d7d5 c2c4 d5d4
+A09	g1f3 d7d5 c2c4 d5d4 b2b4 c7c5
+A09	g1f3 d7d5 c2c4 d5d4 b2b4 g7g5
+A09	g1f3 d7d5 c2c4 d5d4 h1g1
+A09	g1f3 d7d5 c2c4 d5d4 e2e3 c7c5 b2b4
+A09	g1f3 d7d5 c2c4 d5c4
+A09	g1f3 d7d5 c2c4 d5c4 e2e3 c8e6
+A09	g1f3 d7d5 c2c4 b7b5
+A10	c2c4
+A10	c2c4 g8f6 e2e4
+A10	c2c4 g7g6 e2e4 e7e5
+A10	c2c4 f7f5
+A10	c2c4 f7f5 e2e4
+A10	c2c4 f7f5 g1f3 d7d6 e2e4
+A10	c2c4 f7f5 b1c3 g8f6 e2e4
+A10	c2c4 b8c6
+A10	c2c4 d7d5
+A10	c2c4 d7d5 c4d5 e7e6
+A10	c2c4 d7d5 c4d5 d8d5 b1c3 d5a5
+A10	c2c4 d7d5 c4d5 g8f6
+A10	c2c4 g7g6
+A10	c2c4 b7b5
+A10	c2c4 g7g6 b1c3 f8g7 g2g3 g8f6 f1g2 e8g8 e2e4 d7d6 g1e2 e7e5 e1g1 c7c6 d2d3 a7a6
+A10	c2c4 g7g5
+A10	c2c4 g7g5 d2d4 f8g7
+A10	c2c4 f7f5 b1c3 g8f6 e2e4 f5e4 g2g4
+A10	c2c4 f7f5 g2g4
+A10	c2c4 g7g5 d2d4 e7e5
+A11	c2c4 c7c6
+A11	c2c4 c7c6 g1f3 d7d5 e2e3
+A11	c2c4 c7c6 g1f3 d7d5 e2e3 g8f6 d1c2
+A11	c2c4 c7c6 g1f3 d7d5 e2e3 g8f6 b1c3 b8d7 d1c2
+A11	c2c4 c7c6 g1f3 d7d5 e2e3 g8f6 b1c3 b8d7 b2b3 e7e5
+A11	c2c4 c7c6 g1f3 d7d5 e2e3 g8f6 b1c3 e7e6 b2b3 f8d6
+A11	c2c4 c7c6 g1f3 d7d5 g2g3 g8f6 b2b3 g7g6
+A11	c2c4 c7c6 g1f3 d7d5 g2g3 g8f6 f1g2
+A11	c2c4 c7c6 g1f3 d7d5 g2g3 g8f6 f1g2 d5c4
+A11	c2c4 c7c6 g1f3 d7d5 g2g3 g8f6 f1g2 c8f5
+A11	c2c4 c7c6 g1f3 d7d5 g2g3 g8f6 f1g2 c8f5 e1g1 e7e6 d2d3
+A11	g1f3 g8f6 g2g3 d7d5 f1g2 c7c6 e1g1 c8f5 d2d3 h7h6 c2c4 e7e6
+A12	c2c4 g8f6 g2g3 c7c6 g1f3 d7d5 b2b3
+A12	g1f3 d7d5 b2b3 g8f6 c1b2 g7g6 c2c4 c7c6
+A12	g1f3 d7d5 c2c4 c7c6 b2b3
+A12	g1f3 d7d5 c2c4 c7c6 b2b3 c8g4
+A12	g1f3 d7d5 c2c4 c7c6 b2b3 c8f5
+A12	g1f3 d7d5 c2c4 c7c6 b2b3 c8f5 c1b2
+A12	c2c4 g8f6 g1f3 c7c6 b2b3 d7d5 c1b2 c8g4
+A12	c2c4 g8f6 g1f3 c7c6 b2b3 d7d5 c1b2 c8g4 e2e3
+A12	c2c4 g8f6 g1f3 c7c6 b2b3 d7d5 c1b2 c8g4 d2d3
+A12	c2c4 g8f6 g2g3 c7c6 g1f3 d7d5 b2b3 c8f5
+A12	c2c4 g8f6 g2g3 c7c6 g1f3 d7d5 b2b3 c8f5 f1g2
+A12	c2c4 g8f6 g2g3 c7c6 g1f3 d7d5 b2b3 c8f5 f1g2 e7e6 c1b2
+A12	c2c4 g8f6 g2g3 c7c6 g1f3 d7d5 b2b3 c8f5 c1b2
+A12	g1f3 g8f6 c2c4 c7c6 b2b3 d7d5 c1b2 c8f5
+A12	g1f3 g8f6 c2c4 c7c6 b2b3 d7d5 c1b2 c8f5 e2e3
+A12	g1f3 g8f6 c2c4 c7c6 b2b3 d7d5 c1b2 c8f5 d2d3
+A12	c2c4 g8f6 g2g3 c7c6 g1f3 d7d5 b2b3 c8g4
+A12	c2c4 g8f6 g2g3 c7c6 g1f3 d7d5 b2b3 c8g4 f1g2
+A12	c2c4 g8f6 g2g3 c7c6 g1f3 d7d5 b2b3 c8g4 f1g2 e7e6 c1b2
+A12	c2c4 g8f6 g2g3 c7c6 g1f3 d7d5 b2b3 c8g4 c1b2
+A12	c2c4 g8f6 g2g3 c7c6 g1f3 d7d5 b2b3 d5c4
+A13	c2c4 e7e6
+A13	c2c4 e7e6 g1f3
+A13	c2c4 e7e6 g1f3 d7d5
+A13	c2c4 e7e6 g1f3 d7d5 b2b3 g8f6 c1b2 f8e7 e2e3 e8g8
+A13	c2c4 e7e6 g1f3 d7d5 b2b3 g8f6 c1b2 f8e7 e2e3 e8g8 d2d4
+A13	c2c4 e7e6 g1f3 d7d5 g2g3 g8f6 f1g2 f8d6
+A13	c2c4 e7e6 g1f3 d7d5 g2g3 b7b6 f1g2 c8b7 e1g1
+A13	c2c4 e7e6 g1f3 d7d5 g2g3 c7c5
+A13	c2c4 e7e6 g1f3 g8f6 g2g3 d7d5 f1g2 d5c4
+A13	c2c4 e7e6 g1f3 g8f6 g2g3 d7d5 f1g2 c7c6
+A13	c2c4 e7e6 g1f3 d7d5 g2g3 c7c6
+A13	c2c4 e7e6 g1f3 d7d5 g2g3 g8f6 f1g2 c7c5 b2b3 b8c6 e1g1 f8e7
+A13	c2c4 e7e6 g1f3 g8f6 b2b3 d7d5 c1b2 c7c5 e2e3
+A13	c2c4 e7e6 g1f3 d7d5 g2g3 g8f6
+A13	c2c4 e7e6 g1f3 d7d5 g2g3 g8f6 f1g2 f8e7
+A13	c2c4 g8f6 g1f3 e7e6 g2g3 a7a6 f1g2 b7b5
+A14	c2c4 e7e6 g1f3 d7d5 g2g3 g8f6 f1g2 f8e7 e1g1 c7c5 c4d5 f6d5 b1c3 b8c6
+A14	c2c4 e7e6 g1f3 d7d5 g2g3 g8f6 f1g2 f8e7 e1g1
+A14	c2c4 e7e6 g1f3 d7d5 g2g3 g8f6 f1g2 f8e7 e1g1 e8g8 b2b3
+A14	g1f3 d7d5 g2g3 g8f6 f1g2 e7e6 e1g1 f8e7 c2c4 e8g8 b2b3 c7c5
+A14	g1f3 d7d5 g2g3 g8f6 f1g2 e7e6 e1g1 f8e7 c2c4 e8g8 b2b3 c7c5 e2e3
+A14	g1f3 d7d5 g2g3 g8f6 f1g2 e7e6 e1g1 f8e7 c2c4 e8g8 b2b3 c7c5 e2e3 d5d4
+A14	g1f3 d7d5 g2g3 g8f6 f1g2 e7e6 e1g1 f8e7 c2c4 e8g8 b2b3 c7c5 e2e3 b8c6
+A14	c2c4 e7e6 g1f3 d7d5 g2g3 g8f6 f1g2 f8e7 b2b3
+A14	c2c4 e7e6 g1f3 d7d5 g2g3 g8f6 f1g2 f8e7 b2b3 b7b6
+A14	c2c4 e7e6 g1f3 d7d5 g2g3 g8f6 f1g2 f8e7 b2b3 c7c5
+A14	g1f3 d7d5 c2c4 c7c6 g2g3 g8f6 f1g2 e7e6 b2b3 f8e7 c1b2
+A14	g1f3 d7d5 c2c4 e7e6 g2g3 g8f6 f1g2 f8e7 e1g1 e8g8 b2b3 c7c6 c1b2
+A15	c2c4 g8f6
+A15	c2c4 g8f6 b1c3 g7g6 g1f3 f8g7 e2e4
+A15	c2c4 g8f6 g1f3 g7g6 g2g3 d7d5
+A15	c2c4 g8f6 g1f3 g7g6
+A15	c2c4 g8f6 g1f3 g7g6 g2g3 b7b6 f1g2 c8b7
+A15	c2c4 g8f6 g1f3
+A15	c2c4 g8f6 g1f3 d7d6
+A15	c2c4 g8f6 g1f3 b7b6
+A15	c2c4 e7e6 g1f3 g8f6 g2g3 b7b6 f1g2 c8b7
+A15	c2c4 e7e6 g1f3 g8f6 g2g3 a7a6
+A15	c2c4 g8f6 g1f3 d7d5
+A15	c2c4 g8f6 g1f3 d7d5 c4d5 f6d5
+A15	c2c4 g8f6 g1f3 g7g6 g2g3 c7c6
+A15	c2c4 g8f6 b2b4
+A15	c2c4 g8f6 g1f3 g7g6 b2b4
+A16	c2c4 g8f6 b1c3 d7d5
+A16	c2c4 g8f6 b1c3 d7d5 c4d5 f6d5 g1f3 g7g6 g2g3 f8g7 f1g2 e7e5
+A16	c2c4 g8f6 b1c3 d7d5 c4d5 f6d5 g1f3
+A16	c2c4 g8f6 b1c3 d7d5 c4d5 f6d5 g1f3 g7g6
+A16	c2c4 g8f6 b1c3 d7d5 c4d5 f6d5 g2g3 g7g6 f1g2 d5b6
+A16	c2c4 g8f6 b1c3 d7d5 c4d5 f6d5 g2g3 g7g6 f1g2 d5c3
+A16	c2c4 g8f6 b1c3
+A17	c2c4 g8f6 b1c3 d7d5 c4d5 f6d5 g1f3 c7c5 e2e3 e7e6
+A17	c2c4 g8f6 b1c3 e7e6
+A17	c2c4 g8f6 b1c3 e7e6 g1f3 f8b4
+A17	c2c4 e7e6 b1c3 g8f6 g1f3 b7b6
+A17	c2c4 e7e6 b1c3 g8f6 g1f3 b7b6 e2e4 c8b7 f1d3
+A17	c2c4 e7e6 b1c3 g8f6 g1f3 f8b4 g2g4
+A18	c2c4 e7e6 b1c3 g8f6 e2e4
+A18	c2c4 e7e6 b1c3 g8f6 e2e4 b8c6
+A18	c2c4 e7e6 b1c3 g8f6 e2e4 d7d5 e4e5
+A19	c2c4 e7e6 b1c3 g8f6 e2e4 c7c5 e4e5 f6g8
+A19	c2c4 e7e6 b1c3 g8f6 e2e4 c7c5
+A20	c2c4 e7e5 g2g3 h7h5
+A20	c2c4 e7e5
+A20	c2c4 e7e5 e2e3 g8f6 f2f4 e5f4 g1f3
+A20	c2c4 e7e5 g1f3
+A20	c2c4 e7e5 g1f3 e5e4
+A21	c2c4 e7e5 b1c3 d7d6 g1f3
+A21	c2c4 e7e5 b1c3 d7d6 g2g3 c7c6
+A21	c2c4 e7e5 b1c3 f8b4
+A21	c2c4 e7e5 b1c3
+A21	c2c4 e7e5 b1c3 d7d6 g1f3 c8g4
+A21	c2c4 e7e5 b1c3 b8c6 g2g3 d7d6 f1g2 c8e6
+A22	c2c4 e7e5 b1c3 g8f6 g2g3
+A22	c2c4 e7e5 b1c3 g8f6 g1f3 e5e4 f3g5 c7c6
+A22	c2c4 e7e5 b1c3 g8f6 g1f3 e5e4 f3g5 b7b5
+A22	c2c4 e7e5 b1c3 g8f6
+A22	c2c4 e7e5 b1c3 g8f6 g2g3 d7d5
+A22	c2c4 e7e5 b1c3 g8f6 g2g3 f8b4
+A22	c2c4 e7e5 b1c3 g8f6 g1f3 e5e4 f3g5 f6g4
+A22	c2c4 e7e5 b1c3 g8f6 f2f4
+A23	c2c4 e7e5 b1c3 g8f6 g2g3 c7c6
+A23	c2c4 e7e5 b1c3 g8f6 g2g3 f8c5 f1g2 c7c6
+A24	c2c4 e7e5 b1c3 g8f6 g2g3 g7g6
+A25	c2c4 e7e5 b1c3 b8c6 g2g3 g7g6 a1b1 g8h6 f1g2 f8g7
+A25	c2c4 e7e5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 e2e3 d7d6 g1e2 g8h6
+A25	c2c4 e7e5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 e2e3 d7d6 g1e2 c8e6
+A25	c2c4 e7e5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 d2d3
+A25	c2c4 e7e5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 a1b1
+A25	c2c4 e7e5 b1c3 b8c6
+A25	c2c4 e7e5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7
+A26	c2c4 e7e5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 d2d3 d7d6 e2e4
+A26	c2c4 e7e5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 d2d3 d7d6
+A27	c2c4 e7e5 b1c3 b8c6 g1f3
+A28	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6 e2e4
+A28	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6
+A28	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6 d2d4 e5d4 f3d4 f8b4 c1g5 h7h6 g5h4 b4c3 b2c3 c6e5
+A28	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6 d2d4 e5e4
+A28	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6 d2d3
+A28	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6 a2a3
+A28	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6 e2e3
+A28	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6 e2e3 f8b4 d1c2 b4c3
+A28	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6 e2e3 f8b4 d1c2 e8g8 c3d5 f8e8 c2f5
+A29	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6 g2g3
+A29	c2c4 e7e5 g2g3 g8f6 f1g2 d7d5 c4d5 f6d5 g1f3 b8c6
+A29	c2c4 e7e5 g2g3 g8f6 f1g2 d7d5 c4d5 f6d5 g1f3 b8c6 d2d3
+A29	c2c4 e7e5 g2g3 g8f6 f1g2 d7d5 c4d5 f6d5 g1f3 b8c6 d2d3 f8e7 e1g1 e8g8
+A29	c2c4 e7e5 b1c3 g8f6 g2g3 f8b4 f1g2 e8g8 g1f3 f8e8 e1g1 e5e4 f3d4 b8c6
+A29	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6 g2g3 f8c5 d2d3 d7d6 f1g2
+A29	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6 g2g3 f8c5 d2d3 d7d6 f1g2 e8g8 e1g1
+A29	c2c4 e7e5 b1c3 g8f6 g2g3 b8c6 f1g2 d7d6 d2d3 f8e7 g1f3 e8g8
+A29	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6 g2g3 f8c5 d2d3 d7d6 f1g2 a7a6
+A29	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6 g2g3 f8c5 d2d3 d7d6 f1g2 h7h6
+A29	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6 g2g3 d7d5 c4d5 f6d5 f1g2 f8c5
+A29	c2c4 e7e5 b1c3 g8f6 g1f3 b8c6 g2g3 d7d5 c4d5 f6d5 f1g2 d5b6
+A30	c2c4 c7c5
+A30	c2c4 c7c5 g1f3
+A30	c2c4 e7e6 g1f3 g8f6 b1c3 c7c5 g2g3 b7b6 f1g2 c8b7 e1g1 f8e7
+A30	c2c4 c7c5 g1f3 g8f6 b2b4
+A30	c2c4 e7e6 g1f3 c7c5 b1c3 g8f6 g2g3 b7b6 f1g2 c8b7 e1g1 f8e7 d2d4 c5d4 d1d4 d7d6 f1d1 a7a6 b2b3 b8d7
+A30	c2c4 c7c5 b2b4
+A31	c2c4 g8f6 d2d4 c7c5 g1f3
+A32	c2c4 e7e6 d2d4 c7c5 g1f3 c5d4 f3d4 g8f6
+A33	c2c4 e7e6 g1f3 g8f6 b1c3 c7c5 d2d4 b8c6 g2g3 c5d4 f3d4 d8b6
+A33	c2c4 e7e6 g1f3 g8f6 b1c3 c7c5 d2d4 c5d4 f3d4 b8c6
+A34	c2c4 c7c5 g1f3 g8f6 b1c3 b8c6 g2g3 d7d5 d2d4 c5d4
+A34	c2c4 g8f6 b1c3 c7c5 g2g3
+A34	c2c4 c7c5 b1c3
+A34	c2c4 g8f6 b1c3 c7c5 g2g3 d7d5 c4d5 f6d5 f1g2 d5c7
+A34	c2c4 c7c5 g1f3 g8f6 b1c3 d7d5 c4d5 f6d5 g2g3 b8c6 f1g2 d5c7
+A34	c2c4 c7c5 b1c3 g8f6 g1f3
+A35	c2c4 c7c5 b1c3 g8f6 g1f3 e7e5
+A35	c2c4 g8f6 g1f3 c7c5 b1c3 b8c6
+A35	c2c4 c7c5 b1c3 b8c6
+A36	c2c4 c7c5 e2e4 b8c6 b1c3 g7g6 g2g3 f8g7 f1g2
+A36	c2c4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 e2e3 e7e5
+A36	c2c4 c7c5 b1c3 b8c6 g2g3
+A36	c2c4 c7c5 g2g3 g7g6 f1g2 f8g7 b1c3 b8c6
+A37	c2c4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 g1f3 e7e5
+A37	c2c4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 g1f3 e7e5 e1g1 d7d6
+A37	c2c4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 g1f3 e7e5 e1g1 g8e7
+A37	c2c4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 g1f3 e7e5 e1g1 g8e7 a2a3
+A37	c2c4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 g1f3 e7e5 e1g1 g8e7 d2d3
+A37	c2c4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 g1f3 e7e5 e1g1 g8e7 d2d3 d7d6
+A37	c2c4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 g1f3
+A38	c2c4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 g1f3 g8f6 e1g1 e8g8 b2b3
+A38	c2c4 g8f6 g1f3 g7g6 g2g3 f8g7 f1g2 e8g8 e1g1 c7c5 b1c3 b8c6 d2d3
+A38	c2c4 g8f6 g1f3 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7
+A39	c2c4 g8f6 g1f3 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 e1g1 e8g8 d2d4
+A40	d2d4 b8a6
+A40	d2d4 e7e6 c2c4 c7c5 d4d5 e6d5 c4d5 d7d6 b1c3 g7g6 e2e4 f8g7 g1f3 g8e7
+A40	d2d4 g7g5
+A40	d2d4 g7g6 g1f3 f8g7 e2e3 c7c5 f1d3 d8a5
+A40	d2d4 g7g6 g1f3 f8g7 e2e3 c7c5 f1d3 c5d4 f3d4 d8a5
+A40	d2d4 b7b6
+A40	d2d4 e7e6 c2c4 b7b6
+A40	d2d4 b7b6 c2c4 c8b7 b1c3 e7e5
+A40	c2c4 e7e6 d2d4 b7b6 b1c3 c8b7 e2e4 f7f5 e4f5 g8f6
+A40	c2c4 e7e6 d2d4 b7b6 b1c3 c8b7 e2e4 f7f5 d4d5
+A40	d2d4 e7e6 c2c4 b7b6 e2e4 c8b7 f1d3 b8c6
+A40	d2d4 e7e6 c2c4 b7b6 e2e4 c8b7 f2f3 f7f5 e4f5 g8h6
+A40	d2d4 e7e5
+A40	d2d4 e7e5 d4d5
+A40	d2d4 e7e5 d4d5 f8c5 e2e4 d8h4
+A40	d2d4 e7e5 g1f3
+A40	d2d4 e7e5 g1f3 e5e4 f3g1
+A40	d2d4 e7e5 e2e3
+A40	d2d4 e7e5 g1f3 e5e4
+A40	d2d4 e7e5 g1f3 e5e4 f3e5
+A40	d2d4 e7e5 d4e5 b8c6 g1f3 f8c5
+A40	d2d4 e7e5 d4e5 d7d6
+A40	d2d4 e7e5 d4e5 b8c6 g1f3 d8e7
+A40	d2d4 e7e5 d4e5 d8h4
+A40	d2d4 e7e5 d4e5 f7f6
+A40	d2d4 e7e5 d4e5 b8c6 g1f3 f7f6
+A40	d2d4 e7e5 d4e5 b8c6 g1f3 d8e7 d1d5
+A40	d2d4 e7e5 d4e5 b8c6 g1f3 g8e7
+A40	d2d4 e7e6
+A40	d2d4 e7e6 c2c4 e6e5
+A40	d2d4 e7e6 c2c4 f8b4
+A40	d2d4 e7e6 c2c4 f8b4 b1c3
+A40	d2d4 b8c6
+A40	d2d4 b8c6 c2c4 e7e5 d4d5 c6d4
+A40	d2d4 b8c6 c2c4 e7e5 d4d5 c6e7
+A40	d2d4 b8c6 c2c4 e7e5 d4e5 c6e5 b1c3 e5c4
+A40	d2d4 g7g6 c2c4 f8g7 b1c3 c7c5 d4d5 g7c3 b2c3 f7f5
+A40	d2d4 g7g6 h2h4 g8f6 h4h5
+A40	d2d4 b8c6 d4d5 c6b8
+A40	d2d4 b7b5
+A40	d2d4 b7b5 e2e4 c8b7 f1b5
+A40	d2d4 g7g6 c2c4 f8g7 b1c3 c7c5 d4d5 d7d6 e2e4 g7c3 b2c3 d8a5
+A40	d2d4 g7g6 c2c4 f8g7 e2e4 c7c5 d4d5 d8a5
+A40	d2d4 g7g6 c2c4 f8g7 b1c3 c7c5 d4d5 d8a5
+A40	d2d4 g7g6 c2c4 f8g7 b1c3 c7c5 d4d5 g7c3 b2c3 d8a5
+A40	d2d4 g7g6 g1f3 f8g7 g2g3 c7c5 f1g2 d8a5
+A40	d2d4 g7g6 c2c4 f8g7 b1c3 c7c5 e2e3
+A40	d2d4
+A40	d2d4 c7c6 c2c4 d7d6
+A40	d2d4 g7g6
+A40	d2d4 c7c6 g1f3 g8f6 c2c4 b7b5
+A40	d2d4 b8c6 d4d5 c6b8 e2e4 g8f6 e4e5 f6g8
+A41	d2d4 g7g6 c2c4 f8g7 b1c3 d7d6
+A41	d2d4 g7g6 c2c4 f8g7 e2e4 e7e5
+A41	d2d4 d7d6 c2c4
+A41	d2d4 d7d6
+A41	d2d4 d7d6 c2c4 e7e5
+A41	d2d4 d7d6 c2c4 e7e5 d4e5 b8c6
+A41	d2d4 d7d6 c2c4 e7e5 d4e5 c8e6
+A41	d2d4 d7d6 g1f3 g7g6 c2c4 f8g7 e2e4 c8g4
+A41	d2d4 d7d6 g1f3 c8g4
+A41	d2d4 d7d6 g1f3 c8g4 c2c4 b8d7 d1b3 a8b8
+A42	d2d4 g7g6 c2c4 f8g7 b1c3 d7d6 e2e4
+A42	d2d4 g7g6 c2c4 f8g7 e2e4 d7d6 c1e3 g8f6 f2f3
+A42	d2d4 g7g6 c2c4 f8g7 b1c3 d7d6 e2e4 b8c6
+A42	d2d4 g7g6 c2c4 f8g7 b1c3 d7d6 e2e4 f7f5
+A42	g1f3 c7c5 c2c4 g7g6 d2d4 f8g7 e2e4 d8a5 b1c3 d7d6
+A42	d2d4 g7g6 c2c4 f8g7 e2e4 d7d6 b1c3 c7c5 g1e2 d8a5
+A43	d2d4 c7c5 d4c5
+A43	d2d4 c7c5 d4c5 b8a6
+A43	d2d4 c7c5 d4d5 g8f6
+A43	d2d4 c7c5 d4d5 g8f6 g1f3
+A43	d2d4 c7c5 d4d5 f7f5 e2e4
+A43	d2d4 c7c5 d4c5 b7b6
+A43	e2e4 e7e6 d2d4 c7c5 d4d5
+A43	d2d4 g8f6 g1f3 c7c5 d4d5 c5c4
+A43	d2d4 c7c5
+A43	d2d4 c7c5 d4d5
+A43	d2d4 c7c5 d4d5 d7d6
+A43	d2d4 c7c5 d4d5 f7f5
+A43	d2d4 c7c5 d4d5 d7d6 b1c3 g7g6
+A43	d2d4 c7c5 d4d5 b8a6
+A43	d2d4 c7c5 d4d5 g8f6 b1c3 d8a5
+A43	d2d4 c7c5 b2b4
+A43	d2d4 c7c5 g1f3 c5d4 b2b4
+A43	d2d4 c7c5 g1f3 c5d4 b2b4 e7e5
+A43	d2d4 g8f6 g1f3 c7c5 d4d5 b7b5
+A43	d2d4 c7c5 c2c4 c5d4 e2e3
+A44	d2d4 c7c5 d4d5 e7e5
+A44	d2d4 c7c5 d4d5 e7e5 e2e4 d7d6
+A45	d2d4 g8f6 b1c3 d7d5 d1d3
+A45	d2d4 g8f6 f2f4
+A45	d2d4 g8f6
+A45	d2d4 g8f6 c1f4
+A45	d2d4 g8f6 f2f3 d7d5 g2g4
+A45	d2d4 g8f6 g2g4
+A45	d2d4 g8f6 g2g4 f6g4
+A45	d2d4 g8f6 g2g4 f6g4 f2f3 g4f6 e2e4
+A45	d2d4 g8f6 g2g4 e7e5
+A45	d2d4 g8f6 g2g4 f6g4 e2e4 d7d6 f1e2 g4f6 b1c3
+A45	d2d4 g8f6 b1d2 e7e5
+A45	d2d4 g8f6 b1c3 e7e5
+A45	d2d4 g8f6 e2e4
+A45	d2d4 g8f6 e2e4 f6e4 f1d3 e4f6 c1g5
+A45	d2d4 g8f6 f2f3 d7d5 e2e4
+A45	d2d4 g8f6 d4d5
+A45	d2d4 g8f6 b1c3 c7c5
+A45	d2d4 g8f6 g2g3
+A45	d2d4 g8f6 f2f3
+A45	d2d4 g8f6 b1c3 d7d5
+A45	d2d4 g8f6 f2f3 d7d5 b1c3
+A45	d2d4 g8f6 c1g5
+A45	d2d4 g8f6 c1g5 f6e4 g5f4 g7g5
+A45	d2d4 g8f6 c1g5 e7e6
+A45	d2d4 g8f6 c1g5 e7e6 e2e4
+A45	d2d4 g8f6 c1g5 f6e4 g5h4
+A45	d2d4 g8f6 c1g5 f6e4 g5h4 c7c6 b1d2 d8a5 c2c3 e4d2 d1d2 d7d5 e2e4
+A45	d2d4 g8f6 c1g5 f6e4 g5h4 d7d5 f2f3 e4f6 b1c3 c8f5 e2e4
+A45	d2d4 g8f6 c1g5 c7c5 d4d5 d8b6 b1c3
+A45	d2d4 g8f6 c1g5 f6e4 h2h4
+A45	d2d4 g8f6 c1g5 f6e4 h2h4 e4g5 h4g5 e7e5
+A46	d2d4 g8f6 g1f3 f6e4
+A46	d2d4 g8f6 g1f3 c7c6
+A46	d2d4 g8f6 g1f3
+A46	d2d4 g8f6 g1f3 a7a6
+A46	d2d4 g8f6 g1f3 e7e6 c1f4
+A46	d2d4 g8f6 g1f3 b7b5
+A46	d2d4 g8f6 g1f3 c7c5
+A46	d2d4 g8f6 g1f3 d7d6
+A46	d2d4 g8f6 g1f3 e7e6 c1g5 d7d5 e2e3 c7c5 c2c3 d8b6
+A46	d2d4 g8f6 g1f3 e7e6 b1c3 d7d5 c1g5
+A46	d2d4 g8f6 g1f3 e7e6 c1g5
+A46	d2d4 g8f6 g1f3 e7e6 c1g5 h7h6
+A46	d2d4 g8f6 g1f3 e7e6 c1g5 c7c5 e2e3 b7b6 d4d5
+A46	d2d4 g8f6 g1f3 e7e6 c1g5 c7c5 e2e4
+A46	d2d4 g8f6 g1f3 e7e6 e2e3
+A47	d2d4 g8f6 g1f3 b7b6 c2c3 e7e5
+A47	d2d4 g8f6 g1f3 b7b6 g2g3 c8b7 f1g2 c7c5
+A47	d2d4 g8f6 g1f3 b7b6 g2g3 c8b7 f1g2 c7c5 c2c4 c5d4 d1d4
+A47	d2d4 g8f6 g1f3 b7b6
+A47	d2d4 g8f6 g1f3 b7b6 e2e3 c8b7 f1d3 e7e6 b1d2 c7c5 b2b3 f8e7
+A48	d2d4 g8f6 g1f3 g7g6
+A48	d2d4 g8f6 g1f3 g7g6 e2e3 f8g7 f1d3 d7d6
+A48	d2d4 g8f6 g1f3 g7g6 c1f4
+A48	d2d4 g8f6 g1f3 g7g6 c1f4 f8g7 e2e3
+A48	d2d4 g8f6 g1f3 g7g6 c1f4 f8g7 e2e3 d7d6
+A48	d2d4 g8f6 g1f3 g7g6 c1f4 f8g7 e2e3 d7d6 f1d3
+A48	d2d4 g8f6 g1f3 g7g6 c1f4 f8g7 e2e3 d7d6 f1e2
+A48	d2d4 g8f6 g1f3 g7g6 c1f4 f8g7 e2e3 d7d6 f1e2 e8g8
+A48	d2d4 g8f6 g1f3 g7g6 c1f4 f8g7 e2e3 d7d6 h2h3 c7c5 f1e2
+A48	d2d4 g8f6 g1f3 g7g6 b1c3 d7d5 c1f4
+A48	d2d4 g8f6 g1f3 g7g6 b1c3 d7d5 c1f4 f8g7
+A48	d2d4 g8f6 g1f3 g7g6 b1c3 d7d5 c1f4 f8g7 e2e3 e8g8 f1e2
+A48	d2d4 g8f6 g1f3 g7g6 b1c3 d7d5 c1f4 f8g7 d1d2
+A48	d2d4 g8f6 g1f3 g7g6 c1g5 f8g7 b1d2 d7d5 e2e3 e8g8
+A48	d2d4 g8f6 g1f3 g7g6 c1g5
+A48	d2d4 g8f6 g1f3 g7g6 c1g5 f8g7 b1d2 c7c5
+A49	d2d4 g8f6 g1f3 g7g6 g2g3
+A50	d2d4 g8f6 c2c4 g7g5
+A50	d2d4 g8f6 c2c4
+A50	d2d4 g8f6 c2c4 b7b5
+A50	d2d4 g8f6 c2c4 b8c6
+A50	d2d4 g8f6 c2c4 b8c6 d4d5 c6e5 f2f4
+A50	d2d4 g8f6 c2c4 b7b6
+A50	d2d4 g8f6 c2c4 c7c6
+A51	d2d4 g8f6 c2c4 e7e5
+A51	d2d4 g8f6 c2c4 e7e5 d4e5
+A51	d2d4 g8f6 c2c4 e7e5 d4e5 f6e4
+A51	d2d4 g8f6 c2c4 e7e5 d4e5 f6e4 a2a3
+A51	d2d4 g8f6 c2c4 e7e5 d4e5 f6e4 d1c2
+A52	d2d4 g8f6 c2c4 e7e5 d4e5 f6g4
+A52	d2d4 g8f6 c2c4 e7e5 d4e5 f6g4 g1f3
+A52	d2d4 g8f6 c2c4 e7e5 d4e5 f6g4 e2e4
+A52	d2d4 g8f6 c2c4 e7e5 d4e5 f6g4 e2e4 g4e5
+A52	d2d4 g8f6 c2c4 e7e5 d4e5 f6g4 e2e4 d7d6
+A52	d2d4 g8f6 c2c4 e7e5 d4e5 f6g4 c1f4
+A53	d2d4 g8f6 c2c4 d7d6
+A53	d2d4 g8f6 c2c4 d7d6 g2g4
+A53	d2d4 g8f6 c2c4 d7d6 b1c3 c7c6
+A53	d2d4 g8f6 c2c4 d7d6 g1f3 c7c6
+A53	d2d4 g8f6 c2c4 d7d6 b1c3 c8f5
+A53	d2d4 g8f6 c2c4 d7d6 b1c3 c8f5 g2g3
+A53	d2d4 g8f6 c2c4 d7d6 b1c3 c8f5 e2e4
+A53	d2d4 g8f6 c2c4 d7d6 b1c3 c8f5 f2f3
+A54	d2d4 g8f6 c2c4 d7d6 b1c3 e7e5 e2e3 b8d7 f1d3
+A54	d2d4 g8f6 c2c4 d7d6 g1f3 c8g4
+A54	d2d4 g8f6 c2c4 d7d6 b1c3 e7e5 g1f3
+A54	d2d4 g8f6 c2c4 d7d6 b1c3 e7e5
+A55	d2d4 g8f6 c2c4 d7d6 b1c3 b8d7 e2e4 e7e5 g1f3
+A56	d2d4 g8f6 c2c4 c7c5
+A56	d2d4 g8f6 c2c4 c7c5 d4d5 e7e5
+A56	d2d4 g8f6 c2c4 c7c5 d4d5 d7d6
+A56	d2d4 g8f6 c2c4 c7c5 d4d5 e7e5 b1c3 d7d6 e2e4 g7g6
+A56	d2d4 g8f6 c2c4 c7c5 d4c5 e7e6
+A56	d2d4 g8f6 c2c4 c7c5 e2e3 g7g6 b1c3 f8g7 g1f3 e8g8 f1e2 c5d4 e3d4 d7d5 e1g1 b8c6
+A56	d2d4 g8f6 c2c4 c7c5 d4d5 f6e4
+A57	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5
+A57	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6
+A57	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6 f2f3
+A57	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6 e2e3
+A57	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6 b5b6
+A57	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c1g5
+A57	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 e2e4
+A57	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 g1f3
+A57	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 f2f3
+A57	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 b1d2
+A57	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 a2a4
+A57	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 g2g4
+A57	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6 b1c3 a6b5 e2e4 b5b4 c3b5 d7d6 f1c4
+A57	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6 b1c3
+A57	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6 b1c3 a6b5 e2e4 b5b4 c3b5
+A58	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6 b5a6 g7g6 b1c3 c8a6 f2f4
+A58	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6 b5a6 g7g6 b1c3 c8a6 g2g3 d7d6 f1g2 f8g7 g1f3
+A58	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6 b5a6
+A58	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6 b5a6 c8a6 b1c3 d7d6 g1f3 g7g6 g2g3
+A58	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6 b5a6 c8a6 b1c3 d7d6 g1f3 g7g6 f3d2
+A59	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6 b5a6 g7g6 b1c3 c8a6 e2e4 a6f1 e1f1 d7d6 g2g3
+A59	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6 b5a6 g7g6 b1c3 c8a6 g1f3 d7d6 e2e4 a6f1 e1f1 f8g7 g2g3 e8g8 f1g2
+A59	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6 b5a6 c8a6 b1c3 d7d6 e2e4
+A59	d2d4 g8f6 c2c4 c7c5 d4d5 b7b5 c4b5 a7a6 b5a6 g7g6 b1c3 c8a6 e2e4 a6f1 e1f1 d7d6 g1e2
+A60	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6
+A60	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 f8d6
+A61	d2d4 g8f6 c2c4 e7e6 g1f3 c7c5 d4d5 e6d5 c4d5 d7d6 b1c3 g7g6
+A61	d2d4 g8f6 c2c4 e7e6 g1f3 c7c5 d4d5 e6d5 c4d5 d7d6 b1c3 g7g6 g2g3
+A61	d2d4 g8f6 c2c4 e7e6 g1f3 c7c5 d4d5 e6d5 c4d5 d7d6 b1c3 g7g6 f3d2
+A61	d2d4 g8f6 c2c4 e7e6 g1f3 c7c5 d4d5 e6d5 c4d5 d7d6 b1c3 g7g6 c1g5
+A62	d2d4 g8f6 c2c4 e7e6 g2g3 c7c5 d4d5 e6d5 c4d5 d7d6 b1c3 g7g6 f1g2 f8g7 g1f3 e8g8
+A63	d2d4 g8f6 c2c4 e7e6 g2g3 c7c5 d4d5 e6d5 c4d5 d7d6 b1c3 g7g6 f1g2 f8g7 g1f3 e8g8 e1g1 b8d7
+A64	d2d4 g8f6 c2c4 e7e6 g2g3 c7c5 d4d5 e6d5 c4d5 d7d6 b1c3 g7g6 f1g2 f8g7 g1f3 e8g8 e1g1 a7a6 a2a4 b8d7 f3d2 f8e8
+A65	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4
+A65	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4 g7g6 f2f3 f8g7
+A65	d2d4 g8f6 c2c4 g7g6 f2f3 c7c5 d4d5 d7d6 e2e4 f8g7 b1c3 e7e6 c1e3 e8g8 d1d2 e6d5 c4d5
+A65	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4 g7g6 f2f3 f8g7 c1e3
+A65	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1g5 c7c5 d4d5
+A65	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4 g7g6 f2f3 f8g7 c1g5
+A65	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1g5 c7c5 d4d5 e7e6 d1d2 e6d5 e4d5
+A65	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4 g7g6 f2f3 f8g7 g1e2
+A65	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 g1e2 c7c5 d4d5 e7e6 e2g3 e6d5 c4d5
+A66	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4 g7g6 f2f4 f8g7 e4e5
+A66	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4 g7g6 f2f4
+A67	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4 g7g6 f2f4 f8g7 f1b5
+A68	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4 g7g6 f2f4 f8g7 g1f3 e8g8
+A69	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4 g7g6 f2f4 f8g7 g1f3 e8g8 f1e2 f8e8
+A70	d2d4 g8f6 c2c4 e7e6 g1f3 c7c5 d4d5 e6d5 c4d5 d7d6 b1c3 g7g6 e2e4
+A70	d2d4 g8f6 c2c4 e7e6 g1f3 c7c5 d4d5 e6d5 c4d5 d7d6 b1c3 g7g6 e2e4 f8g7 h2h3
+A70	d2d4 g8f6 c2c4 e7e6 g1f3 c7c5 d4d5 e6d5 c4d5 d7d6 b1c3 g7g6 e2e4 f8g7 f1e2
+A71	d2d4 g8f6 c2c4 e7e6 g1f3 c7c5 d4d5 e6d5 c4d5 d7d6 b1c3 g7g6 e2e4 f8g7 c1g5
+A72	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4 g7g6 g1f3 f8g7 f1e2 e8g8
+A73	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4 g7g6 g1f3 f8g7 f1e2 e8g8 e1g1
+A74	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4 g7g6 g1f3 f8g7 f1e2 e8g8 e1g1 a7a6 a2a4
+A75	d2d4 g8f6 c2c4 e7e6 g1f3 c7c5 d4d5 e6d5 c4d5 d7d6 b1c3 g7g6 e2e4 f8g7 f1e2 e8g8 e1g1 a7a6 a2a4 c8g4
+A76	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4 g7g6 g1f3 f8g7 f1e2 e8g8 e1g1 f8e8
+A77	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4 g7g6 g1f3 f8g7 f1e2 e8g8 e1g1 f8e8 f3d2
+A78	d2d4 g8f6 c2c4 e7e6 g1f3 c7c5 d4d5 e6d5 c4d5 d7d6 b1c3 g7g6 e2e4 f8g7 f1e2 e8g8 e1g1 f8e8 f3d2 b8a6
+A79	d2d4 g8f6 c2c4 c7c5 d4d5 e7e6 b1c3 e6d5 c4d5 d7d6 e2e4 g7g6 g1f3 f8g7 f1e2 e8g8 e1g1 f8e8 f3d2 b8a6 f2f3
+A80	d2d4 f7f5
+A80	d2d4 f7f5 d1d3
+A80	d2d4 f7f5 g2g4 e7e5
+A80	d2d4 f7f5 c1g5
+A80	d2d4 f7f5 h2h3 g8f6 g2g4
+A80	d2d4 f7f5 b1c3 d7d5 e2e4
+A80	d2d4 f7f5 h2h3
+A80	d2d4 f7f5 g2g4
+A80	d2d4 f7f5 g2g4 f5g4 e2e4 d7d5 b1c3
+A80	d2d4 f7f5 d1d3 e7e6 g2g4
+A80	d2d4 f7f5 d1d3 g7g6 g2g4
+A80	d2d4 f7f5 d1d3 d7d6 g2g4
+A80	d2d4 f7f5 d1d3 d7d5 g2g4
+A80	d2d4 f7f5 g1f3 e7e5
+A80	d2d4 f7f5 b1c3
+A80	d2d4 f7f5 c1f4 e7e6 g2g4
+A80	d2d4 f7f5 b1c3 g8f6 g2g4
+A80	d2d4 f7f5 b1c3 d7d5
+A81	d2d4 f7f5 g2g3 g8f6 f1g2 e7e6 g1h3
+A81	d2d4 f7f5 g2g3
+A81	d2d4 f7f5 g2g3 g7g6 f1g2 f8g7 g1h3
+A81	d2d4 f7f5 g2g3 c7c6 f1g2 g7g6 g1f3 f8g7 e1g1 g8h6
+A81	d2d4 f7f5 g2g3 g8f6 f1g2 g7g6
+A82	d2d4 f7f5 e2e4 f5e4 b1c3 g8f6 f2f3
+A82	d2d4 f7f5 e2e4
+A82	d2d4 f7f5 e2e4 f5e4
+A82	d2d4 f7f5 e2e4 f5e4 b1d2
+A82	d2d4 f7f5 e2e4 f5e4 b1c3 g8f6 g2g4
+A82	e2e4 d7d6 d2d4 f7f5
+A83	d2d4 f7f5 e2e4 f5e4 b1c3 g8f6 c1g5
+A83	d2d4 f7f5 e2e4 f5e4 b1c3 g8f6 c1g5 g7g6 h2h4
+A83	d2d4 f7f5 e2e4 f5e4 b1c3 g8f6 c1g5 c7c6
+A83	d2d4 f7f5 e2e4 f5e4 b1c3 g8f6 c1g5 g7g6 f2f3
+A83	d2d4 f7f5 e2e4 f5e4 b1c3 g8f6 c1g5 b7b6
+A84	d2d4 f7f5 c2c4
+A84	d2d4 f7f5 c2c4 e7e6 e2e4
+A84	d2d4 f7f5 c2c4 g7g6 b1c3 g8h6
+A84	d2d4 f7f5 c2c4 e7e6
+A84	d2d4 f7f5 c2c4 g8f6 b1c3 d7d6 g1f3 b8c6
+A84	d2d4 f7f5 c2c4 g8f6
+A84	d2d4 f7f5 c2c4 e7e6 b1c3
+A85	d2d4 f7f5 c2c4 g8f6 b1c3
+A86	d2d4 f7f5 c2c4 g8f6 g2g3
+A86	d2d4 f7f5 c2c4 g8f6 g2g3 d7d6 f1g2 c7c6 b1c3 d8c7
+A86	d2d4 f7f5 c2c4 g8f6 g2g3 g7g6
+A87	d2d4 f7f5 c2c4 g8f6 g2g3 g7g6 f1g2 f8g7 g1f3
+A88	d2d4 f7f5 g2g3 g8f6 f1g2 g7g6 g1f3 f8g7 e1g1 e8g8 c2c4 d7d6 b1c3 c7c6
+A89	d2d4 f7f5 g2g3 g8f6 f1g2 g7g6 g1f3 f8g7 e1g1 e8g8 c2c4 d7d6 b1c3 b8c6
+A90	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2
+A90	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 d7d5 g1f3
+A90	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8b4
+A90	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8b4 c1d2 b4e7
+A90	d2d4 f7f5 c2c4 e7e6 g1f3 g8f6 g2g3 c7c6 f1g2 d7d5 e1g1 f8d6
+A91	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7
+A91	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1h3
+A92	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1f3 e8g8 e1g1 f6e4
+A92	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1f3 e8g8
+A92	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1f3 e8g8 e1g1 d7d5 b1c3
+A92	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1f3 e8g8 e1g1 d7d5
+A93	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1f3 e8g8 e1g1 d7d5 b2b3
+A94	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1f3 e8g8 e1g1 d7d5 b2b3 c7c6 c1a3
+A95	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1f3 e8g8 e1g1 d7d5 b1c3 c7c6
+A95	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1f3 e8g8 e1g1 d7d5 b1c3 c7c6 d1c2 d8e8 c1g5
+A96	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1f3 e8g8 e1g1 d7d6
+A96	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1f3 e8g8 e1g1 d7d6 b1c3 a7a5
+A96	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1f3 e8g8 e1g1 d7d6 b1c3 f6e4
+A97	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1f3 e8g8 e1g1 d7d6 b1c3 d8e8
+A97	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1f3 e8g8 e1g1 d7d6 b1c3 d8e8 f1e1
+A98	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1f3 e8g8 e1g1 d7d6 b1c3 d8e8 d1c2
+A99	d2d4 f7f5 c2c4 g8f6 g2g3 e7e6 f1g2 f8e7 g1f3 e8g8 e1g1 d7d6 b1c3 d8e8 b2b3
+B00	e2e4 f7f6
+B00	e2e4 g7g5
+B00	e2e4 g7g5 d2d4 f8g7
+B00	e2e4 g7g5 d2d4 h7h6 h2h4 g5g4
+B00	e2e4 g7g5 d2d4 e7e5
+B00	e2e4 h7h6
+B00	e2e4 h7h6 d2d4 e7e5
+B00	e2e4 f7f5
+B00	e2e4 f7f6 d2d4 e8f7
+B00	e2e4 h7h5
+B00	e2e4 h7h5 d2d4 g8f6
+B00	e2e4 g8h6
+B00	e2e4 g8h6 d2d4 g7g6 c2c4 f7f6
+B00	e2e4
+B00	e2e4 b8a6
+B00	e2e4 d7d6 d2d4 g8f6 f2f3
+B00	e2e4 b8c6
+B00	e2e4 b8c6 d2d4
+B00	e2e4 b8c6 b1c3 g8f6 d2d4 e7e5
+B00	e2e4 b8c6 g1f3 f7f5
+B00	e2e4 b8c6 g1f3 f7f5 e4f5
+B00	e2e4 b8c6 g1f3
+B00	e2e4 b8c6 g1f3 g8f6 e4e5 f6g4
+B00	e2e4 b8c6 g1f3 g8f6 e4e5 f6g4 d2d4 d7d6 h2h3 g4h6 e5e6
+B00	e2e4 b8c6 g1f3 g8f6 e4e5 f6g4 d2d4 d7d6 h2h3 g4h6 e5d6
+B00	e2e4 b8c6 g1f3 g8f6 e4e5 f6g4 d2d4 d7d6 h2h3 g4h6 f1b5
+B00	e2e4 b8c6 g1f3 e7e6
+B00	e2e4 b8c6 b1c3 e7e6
+B00	e2e4 b8c6 d2d4 d7d5 c1e3
+B00	e2e4 b8c6 d2d4 e7e5
+B00	e2e4 b8c6 d2d4 e7e5 d4e5 f8c5
+B00	e2e4 b8c6 d2d4 e7e5 d4e5 f7f6
+B00	e2e4 b8c6 d2d4 e7e5 d4e5 d8h4
+B00	e2e4 b8c6 d2d4 e7e5 d4e5 c6e5 b1c3
+B00	e2e4 b8c6 d2d4 e7e5 d4d5
+B00	e2e4 b8c6 d2d4 e7e5 d4e5 c6e5 f2f4 e5g6
+B00	e2e4 b8c6 d2d4 e7e5 d4e5 c6e5 g1f3
+B00	e2e4 b8c6 d2d4 e7e5 d4e5 c6e5 f2f4 e5c6
+B00	e2e4 b8c6 d2d4 e7e5 d4e5 d7d6
+B00	e2e4 b8c6 d2d4 d7d6
+B00	e2e4 b8c6 d2d4 f7f6
+B00	e2e4 b8c6 b1c3 g7g6
+B00	e2e4 b8c6 f1b5
+B00	e2e4 b8c6 d2d4 d7d5
+B00	e2e4 b8c6 d2d4 d7d5 e4d5 c6b4
+B00	e2e4 b8c6 d2d4 d7d5 e4e5
+B00	e2e4 b8c6 d2d4 d7d5 b1c3
+B00	e2e4 b8c6 d2d4 d7d5 b1c3 d5e4
+B00	e2e4 b8c6 d2d4 d7d5 b1c3 a7a6
+B00	e2e4 b8c6 d2d4 d7d5 b1c3 g7g6
+B00	e2e4 b8c6 d2d4 d7d5 b1c3 e7e5
+B00	e2e4 b8c6 d2d4 d7d5 b1c3 d5e4 d4d5 c6e5
+B00	e2e4 b8c6 d2d4 d7d5 b1c3 d5e4 d4d5 c6b8 f2f3
+B00	e2e4 b8c6 d2d4 d7d5 b1c3 g8f6
+B00	e2e4 b8c6 d2d4 d7d5 e4d5 d8d5
+B00	e2e4 b8c6 d2d4 d7d5 e4d5 d8d5 b1c3
+B00	e2e4 b8c6 b2b4
+B00	e2e4 b8c6 g1f3 d7d6
+B00	e2e4 b8c6 d2d4 a7a6
+B00	e2e4 b7b6
+B00	e2e4 b7b6 d2d4 c8a6
+B00	e2e4 b7b6 d2d4 c7c5 d4c5 b8c6
+B00	e2e4 b7b6 d2d4 c8b7 f1d3 f7f5 e4f5 b7g2 d1h5 g7g6
+B00	e2e4 b7b6 d2d4 c8b7 c1g5
+B00	e2e4 b7b6 d2d4 c8b7 g1f3
+B00	e2e4 f7f6 d2d4 b7b6 c2c4 c8b7
+B00	e2e4 b7b6 d2d4 c8b7 f2f3 e7e5
+B00	e2e4 d7d6
+B00	e2e4 d7d6 d2d4
+B00	e2e4 d7d6 d2d4 g8f6
+B00	e2e4 d7d6 d2d4 g8f6 g1f3
+B00	e2e4 d7d6 d2d4 b8d7
+B00	e2e4 d7d6 f2f4 d6d5 e4d5 g8f6
+B00	e2e4 d7d6 f2f4
+B00	e2e4 d7d6 h2h4
+B00	e2e4 d7d6 g2g4
+B00	e2e4 a7a6
+B00	e2e4 a7a6 d2d4 b7b5 g1f3 c8b7 f1d3 e7e6
+B00	e2e4 a7a6 d2d4 b7b5 g1f3 c8b7 f1d3 d7d6 e1g1 g7g6 c2c3 f8g7
+B00	e2e4 a7a6 d2d4 e7e5
+B00	e2e4 b8c6 d2d4 d7d5 b1c3 d5e4 d4d5
+B00	e2e4 a7a5
+B00	e2e4 a7a5 d2d4 b8c6
+B01	e2e4 d7d5
+B01	e2e4 d7d5 b2b3
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5a5 d2d4 e7e5
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5a5 d2d4 e7e5 g1f3 c8g4
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5a5 d2d4 e7e5 g1f3
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5a5 d2d4 e7e5 d4e5 b8c6 g1f3 f8b4 c1d2
+B01	e2e4 d7d5 e4d5 c7c6 d5c6 b8c6
+B01	e2e4 d7d5 e4d5 c7c6
+B01	e2e4 d7d5 e4d5 e7e5 d5e6 c8e6
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5d6 d2d4 g8f6 g1f3 a7a6
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5a5 d2d4 g8f6 g1f3 c8f5
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5a5 d2d4 g8f6 g1f3 c8f5 f3e5 c7c6 g2g4
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5d6
+B01	e2e4 d7d5 e4d5 g8f6 c2c4 e7e6
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 f6d5 c2c4 d5b4
+B01	e2e4 d7d5 e4d5 c7c6 d5c6 e7e5
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 c7c6 d5c6 e7e5
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5a5 d2d4 g8f6 g1f3 c8g4 h2h3
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5a5
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5a5 b2b4
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5a5 d2d4 g8f6
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 f6d5
+B01	e2e4 d7d5 e4d5 d8d5
+B01	e2e4 d7d5 e4d5 g8f6
+B01	e2e4 d7d5 e4d5 g8f6 d2d4
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 f6d5 g1f3 c8g4
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 g7g6 c2c4 b7b5
+B01	e2e4 d7d5 e4d5 g8f6 c2c4 c7c6
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 c8g4
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 c8g4 f2f3 g4f5 c2c4
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 c8g4 g1f3
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 c8g4 f2f3 g4f5 g2g4
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 c8g4 f1b5 c7c6
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 c8g4 f2f3 g4f5 f1b5 b8d7 c2c4
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 c8g4 f1b5 b8d7 b5e2
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 c8g4 f2f3 g4f5 f1b5 b8d7 b1c3
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 c8g4 f1e2
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 f6d5 g1f3 g7g6
+B01	e2e4 d7d5 e4d5 g8f6 d2d4 g7g6
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5d6 d2d4 c7c6
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5d6 d2d4 g8f6 f1c4 c7c6 g1e2 c8f5 c1f4 d6b4
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5d8
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5d8 d2d4 g8f6 g1f3 c7c6
+B01	e2e4 d7d5 e4d5 d8d5 b1c3 d5d8 d2d4 g8f6 g1f3 c8g4
+B01	e2e4 d7d5 b2b4
+B01	e2e4 d7d5 b1c3 d5e4 c3e4 e7e5
+B02	e2e4 g8f6
+B02	e2e4 g8f6 e4e5 f6g8
+B02	e2e4 g8f6 e4e5 f6g8 d2d4 f7f5
+B02	e2e4 g8f6 e4e5 f6d5 b1a3
+B02	e2e4 g8f6 e4e5 f6d5 c2c4 d5b6 c4c5 b6d5 f1c4 e7e6 b1c3
+B02	e2e4 g8f6 e4e5 f6d5 c2c4 d5b6 c4c5 b6d5 b1c3 d5c3 d2c3 d7d6 c1g5
+B02	e2e4 g8f6 e4e5 f6d5 c2c4 d5b6 c4c5 b6d5 f1c4 e7e6 b1c3 d7d6 c3d5 e6d5 c4d5
+B02	e2e4 g8f6 e4e5 f6d5 f1c4 d5b6 c4b3 c7c5 d2d3
+B02	e2e4 g8f6 f1c4
+B02	e2e4 g8f6 f1c4 f6e4 c4f7
+B02	e2e4 g8f6 d2d3
+B02	e2e4 g8f6 e4e5 f6e4
+B02	e2e4 g8f6 e4e5 f6e4 d2d4 f7f6
+B02	e2e4 g8f6 e4e5 f6e4 d2d4 e7e6
+B02	e2e4 g8f6 e4e5 f6d5
+B02	e2e4 g8f6 b1c3 d7d5
+B02	e2e4 g8f6 b1c3 d7d5 e4d5 c7c6
+B02	e2e4 g8f6 b1c3 d7d5 d2d3 d5e4 c1g5
+B02	e2e4 g8f6 b1c3 d7d5 e4e5 f6d7 e5e6
+B02	e2e4 g8f6 e4e5 f6d5 c2c4 d5b6 b2b3
+B02	e2e4 g8f6 e4e5 f6d5 b1c3
+B02	e2e4 g8f6 e4e5 f6d5 c2c4 d5f4
+B02	e2e4 g8f6 e4e5 f6d5 c2c4
+B02	e2e4 g8f6 e4e5 f6d5 c2c4 d5b6 c4c5
+B02	e2e4 g8f6 e4e5 f6d5 c2c4 d5b6 c4c5 b6d5 f1c4 e7e6 b1c3 d7d6
+B02	e2e4 g8f6 e4e5 f6d5 c2c4 d5b6 a2a4
+B02	e2e4 g8f6 e4e5 f6d5 b2b3
+B03	e2e4 g8f6 e4e5 f6d5 d2d4
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 c2c4
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 f1c4
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 c2c4 d5b6 e5d6
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 c2c4 d5b6 e5d6 c7d6 b1c3 g7g6 h2h3 f8g7 g1f3 e8g8 f1e2 b8c6 e1g1 c8f5 c1f4
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 c2c4 d5b6 e5d6 c7d6 b1c3 g7g6 c1e3 f8g7 a1c1 e8g8 b2b3
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 c2c4 d5b6 f2f4
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 c2c4 d5b6 f2f4 g7g5
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 c2c4 d5b6 f2f4 g7g6
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 c2c4 d5b6 f2f4 d6e5 f4e5 b8c6 g1f3 c8g4 e5e6 f7e6 c4c5
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 c2c4 d5b6 f2f4 d6e5 f4e5 c8f5 b1c3 e7e6 g1f3 f8e7 f1e2 e8g8 e1g1 f7f6
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 c2c4 d5b6 f2f4 d6e5 f4e5 b8c6 c1e3
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 c2c4 d5b6 f2f4 d6e5 f4e5 b8c6 c1e3 c8f5 b1c3 e7e6 g1f3 d8d7 f1e2 e8c8 e1g1 f8e7
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 c2c4 d5b6 f2f4 c8f5
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 c2c4 d5b6 c4c5
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 c2c4 d5b6 g1f3 c8g4 f1e2
+B03	e2e4 g8f6 e4e5 f6d5 d2d4 b7b5
+B04	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 g1f3
+B04	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 g1f3 g7g6
+B04	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 g1f3 g7g6 f1c4 d5b6 c4b3 f8g7 a2a4
+B04	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 g1f3 d6e5
+B04	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 g1f3 b8c6
+B04	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 g1f3 d5b6
+B05	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 g1f3 c8g4 c2c4
+B05	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 g1f3 c8g4 f1e2 c7c6
+B05	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 g1f3 c8g4
+B05	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 g1f3 c8g4 h2h3
+B05	e2e4 g8f6 e4e5 f6d5 d2d4 d7d6 g1f3 c8g4 c2c4 d5b6 d4d5
+B06	e2e4 g7g6
+B06	e2e4 g7g6 d2d4 f8g7
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 c7c6 f1c4 d7d6 d1e2
+B06	e2e4 g7g6 d2d4 f8g7 f1c4
+B06	e2e4 g7g6 d2d4 f8g7 f1c4 b7b5
+B06	e2e4 g7g6 f1c4 f8g7 d1f3 e7e6 d2d4 g7d4
+B06	e2e4 g7g6 d2d4 f8g7 c2c4 d7d5 e4d5 c7c6 d5c6 g7d4
+B06	e2e4 g7g6 d2d4 f7f5
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 c7c6 f2f4 d7d5 e4e5 h7h5
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 d7d5
+B06	e2e4 g7g6 d2d4 g8h6 b1c3 f7f5 c1h6 f8h6 e4f5 e8g8
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 c7c5
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 b7b6
+B06	e2e4 g7g6 d2d4 f8g7 g1f3 b7b6
+B06	e2e4 g7g6 d2d4 g8f6
+B06	e2e4 g7g6 d2d4 g8f6 e4e5 f6h5 f1e2 d7d6
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 d7d6 f2f4
+B06	e2e4 g7g6 d2d4 f8g7 c2c4 c7c5 g1f3 d7d6 f1e2 d8a5
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 d7d6
+B06	e2e4 g7g6 d2d4 f8g7 b1c3
+B06	e2e4 g7g6 d2d4 f8g7 f2f4
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 d7d6 g1f3
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 c7c6 g1f3 d7d6
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 d7d6 g1f3 c7c6 c1g5 d8b6 d1d2 b6b2
+B06	e2e4 g7g6 d2d4 f8g7 c1d2
+B06	e2e4 g7g6 d2d4 f8g7 f1d3
+B06	e2e4 g7g6 d2d4 f8g7 f2f4 c7c5 g1f3 d8a5
+B06	e2e4 g7g6 b1c3 f8g7 f2f4 c7c5 g1f3 d8a5
+B06	e2e4 g7g6 d2d4 f8g7 f2f4 c7c5 c2c3 d8a5
+B06	e2e4 g7g6 d2d4 f8g7 c2c4 c7c5 b1c3 d7d6 c1e3 d8a5
+B06	e2e4 g7g6 d2d4 f8g7 c2c4 c7c5 d4d5 d7d6 b1c3 d8a5
+B06	e2e4 g7g6 d2d4 f8g7 c2c4 c7c5 b1c3 d7d6 d4c5 d8a5
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 c7c5 c1e3
+B06	d2d4 g7g6 e2e4 f8g7 b1c3 c7c5 d4d5
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 c7c5 d4d5 g7c3 b2c3 d8a5
+B06	d2d4 g7g6 b1c3 f8g7 e2e4 c7c5 d4d5 d8a5
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 c7c5 d4c5 g7c3 b2c3 d8a5
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 c7c5 d4c5 d8a5
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 c7c5 d4c5
+B06	e2e4 g7g6 d2d4 f8g7 g2g3 c7c5 g1f3 d8a5
+B06	e2e4 g7g6 d2d4 f8g7 g2g3 c7c5 d4c5 d8a5
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 c7c5 g1f3 d8a5 f1e2 d7d6
+B06	e2e4 g7g6 d2d4 f8g7 b1c3 c7c5 g1f3 d8a5 f1c4
+B06	e2e4 g7g6 d2d4 f8g7 g1f3 c7c5 c1e3 d8a5
+B06	e2e4 g7g6 g1f3 f8g7 d2d4 c7c5 f1c4 c5d4 f3d4 d8a5
+B06	e2e4 g7g6 d2d4 d7d6 b1c3 c7c6
+B07	e2e4 d7d6 d2d4 g8f6 b1c3 c7c6
+B07	e2e4 d7d6 d2d4 e7e5
+B07	e2e4 d7d6 d2d4 g8f6 b1c3 b8d7
+B07	e2e4 d7d6 d2d4 g8f6 b1c3 b8d7 f2f4
+B07	e2e4 d7d6 d2d4 g8f6 b1c3 b8d7 f2f4 e7e5
+B07	e2e4 d7d6 d2d4 g8f6 b1c3 b8d7 f2f4 e7e5 g1f3 e5d4 d1d4 c7c6 f1c4 d6d5
+B07	e2e4 d7d6 d2d4 g8f6 b1c3 b8d7 g2g4
+B07	e2e4 g7g6 d2d4 f8g7 g1f3 d7d6 c2c3
+B07	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6
+B07	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 c1e3 c7c6 d1d2
+B07	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 c1e3 c7c6 d1d2 c8g4
+B07	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 c1e3 c7c6 h2h3
+B07	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 f1e2 f8g7 h2h4
+B07	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 c1g5
+B07	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 f1e2 f8g7 g2g4
+B07	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 f1c4
+B07	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 g2g3
+B08	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 g1f3
+B08	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 g1f3 f8g7
+B08	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 g1f3 f8g7 f1e2
+B08	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 g1f3 f8g7 f1e2 e8g8 e1g1 b8c6
+B08	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 g1f3 f8g7 f1e2 e8g8 e1g1 c7c6
+B08	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 g1f3 f8g7 f1e2 e8g8 e1g1 c8g4
+B08	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 g1f3 f8g7 h2h3
+B09	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 f2f4
+B09	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 f2f4 f8g7 g1f3 e8g8
+B09	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 f2f4 f8g7 g1f3 c7c5
+B09	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 f2f4 f8g7 g1f3 e8g8 c1e3
+B09	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 f2f4 f8g7 f1c4
+B09	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 f2f4 f8g7 g1f3 e8g8 e4e5
+B09	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 f2f4 f8g7 g1f3 e8g8 e4e5 f6d7 h2h4
+B09	e2e4 d7d6 d2d4 g8f6 b1c3 g7g6 f2f4 f8g7 g1f3 e8g8 f1d3
+B10	e2e4 c7c6
+B10	e2e4 c7c6 b1c3
+B10	e2e4 c7c6 b1c3 d7d5
+B10	e2e4 c7c6 c2c4
+B10	e2e4 c7c6 c2c4 d7d5
+B10	e2e4 c7c6 c2c4 d7d5 e4d5 c6d5 c4d5 g8f6
+B10	e2e4 c7c6 c2c4 e7e5
+B10	e2e4 c7c6 c2c4 d7d5 e4d5 d8d5
+B10	e2e4 c7c6 c2c4 d7d5 c4d5 c6d5 d1b3
+B10	e2e4 c7c6 g1f3 d7d5 e4d5 c6d5 f3e5
+B10	e2e4 c7c6 d2d3
+B10	e2e4 c7c6 d2d3 d7d5 b1d2 g7g6 g1f3 f8g7 g2g3 e7e5 f1g2 g8e7 e1g1 e8g8 b2b4
+B10	e2e4 c7c6 g1f3 d7d5 d2d3 d5e4 f3g5
+B10	e2e4 c7c6 g1f3 d7d5 d2d3
+B10	e2e4 c7c6 g1f3 d7d5 d2d3 d5e4 d3e4 d8d1 e1d1
+B10	e2e4 c7c6 b2b3
+B10	e2e4 c7c6 b1c3 d7d5 d1f3
+B10	e2e4 c7c6 b1c3 d7d5 g1f3 d5e4 f3g5
+B10	e2e4 c7c6 f1c4
+B10	e2e4 c7c6 f1c4 d7d5 c4b3 d5e4 d1h5
+B10	e2e4 c7c6 b2b4
+B10	e2e4 c7c6 b2b4 d7d5 b4b5
+B10	e2e4 c7c6 b2b4 e7e5 c1b2
+B10	e2e4 c7c6 b1c3 d7d5 d2d3 d5e4 c1g5
+B10	e2e4 c7c6 g2g4
+B10	e2e4 c7c6 g2g4 d7d5 b1c3 d5e4 d2d3
+B10	e2e4 c7c6 b1c3 d7d5 h2h3
+B10	e2e4 c7c6 c2c4 d7d5 e4e5
+B10	e2e4 c7c6 b1c3 d7d5 g1f3
+B11	e2e4 c7c6 b1c3 d7d5 g1f3 c8g4
+B11	e2e4 c7c6 b1c3 d7d5 g1f3 c8g4 h2h3 g4f3
+B11	e2e4 c7c6 b1c3 d7d5 g1f3 c8g4 h2h3 g4h5
+B12	e2e4 c7c6 d2d4
+B12	e2e4 c7c6 d2d4 d7d5
+B12	e2e4 c7c6 d2d4 d7d5 e4e5
+B12	e2e4 c7c6 d2d4 d7d5 e4e5 c8f5 g2g4
+B12	e2e4 c7c6 d2d4 d7d5 e4e5 c6c5
+B12	e2e4 c7c6 d2d4 d7d5 e4e5 c8f5 g1e2
+B12	e2e4 c7c6 d2d4 d7d5 e4e5 c8f5 b2b4
+B12	e2e4 c7c6 d2d4 d7d5 e4e5 c8f5 g1f3
+B12	e2e4 c7c6 d2d4 d7d5 e4e5 c8f5 h2h4
+B12	e2e4 c7c6 d2d4 d7d5 e4e5 c8f5 b1c3
+B12	e2e4 c7c6 d2d4 d7d5 e4e5 c8f5 b1c3 e7e6 g2g4 f5g6 g1e2 c6c5 h2h4
+B12	e2e4 c7c6 d2d4 d7d5 e4e5 c8f5 b1c3 d8b6
+B12	e2e4 c7c6 d2d4 d7d5 e4e5 c8f5 c2c3 e7e6 f1e2
+B12	e2e4 c7c6 d2d4 b8a6
+B12	e2e4 c7c6 d2d4 b8a6 b1c3 a6c7
+B12	e2e4 c7c6 d2d4 d7d5 b1d2 d8b6
+B12	e2e4 c7c6 d2d4 d7d5 f2f3
+B12	e2e4 c7c6 d2d4 d7d5 f2f3 d5e4 f3e4 e7e5 g1f3 e5d4 f1c4
+B12	e2e4 c7c6 d2d4 g8f6
+B12	e2e4 c7c6 d2d4 f7f5
+B12	e2e4 c7c6 d2d4 d7d5 f1d3 g8f6 e4e5 f6d7 e5e6
+B12	e2e4 c7c6 d2d4 d7d5 c1e3
+B12	e2e4 c7c6 d2d4 d7d5 b1d2
+B12	e2e4 c7c6 d2d4 d7d5 g1f3 d5e4 f3g5
+B13	e2e4 c7c6 d2d4 d7d5 e4d5
+B13	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5
+B13	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 c1f4
+B13	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 g1f3 b8c6
+B13	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 g2g4
+B13	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 f1d3 b8c6 c2c3 g8f6 c1f4
+B13	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 c2c4
+B13	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 c2c4 g8f6 b1c3
+B13	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 c2c4 g8f6 c4c5
+B13	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 c2c4 g8f6 b1c3 b8c6
+B13	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 c2c4 g8f6 b1c3 b8c6 c1g5 e7e6
+B13	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 c2c4 g8f6 b1c3 b8c6 c1g5 d8a5
+B13	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 c2c4 g8f6 b1c3 b8c6 g1f3 c8g4
+B13	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 c2c4 g8f6 b1c3 b8c6 c1g5 d8b6
+B13	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 c2c4 g8f6 b1c3 b8c6 c1g5 d5c4 d4d5 c6a5
+B14	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 c2c4 g8f6 b1c3 e7e6
+B14	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 c2c4 g8f6 b1c3 g7g6
+B14	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 c2c4 g8f6 b1c3 g7g6 c4d5 f8g7
+B14	e2e4 c7c6 d2d4 d7d5 e4d5 c6d5 c2c4 g8f6 b1c3 e7e6 g1f3 f8b4
+B15	e2e4 c7c6 d2d4 d7d5 b1c3
+B15	e2e4 c7c6 d2d4 d7d5 b1c3 d5e4
+B15	e2e4 c7c6 d2d4 d7d5 b1c3 d5e4 c3e4 g8f6 f1d3
+B15	e2e4 c7c6 d2d4 d7d5 b1c3 d5e4 c3e4 g8f6 e4g5 h7h6 g5f7
+B15	e2e4 c7c6 d2d4 d7d5 b1c3 g8f6
+B15	e2e4 c7c6 d2d4 d7d5 b1c3 d5e4 c3e4 g8f6 e4f6 e7f6 f1c4
+B15	e2e4 c7c6 d2d4 d7d5 b1c3 b7b5
+B15	e2e4 c7c6 d2d4 d7d5 b1c3 g7g6
+B15	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4
+B15	e2e4 c7c6 d2d4 d7d5 b1c3 d5e4 f2f3
+B15	e2e4 c7c6 d2d4 d7d5 b1c3 d5e4 c3e4 g8f6 e4f6 e7f6
+B15	e2e4 c7c6 d2d4 d7d5 b1c3 d5e4 c3e4 g8f6 e4f6 e7f6 c2c3 f8d6 f1d3 e8g8 d1c2 h7h6
+B15	e2e4 c7c6 d2d4 d7d5 b1c3 d5e4 f1c4
+B16	e2e4 c7c6 d2d4 d7d5 b1c3 d5e4 c3e4 g8f6 e4f6 g7f6
+B16	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 h7h6
+B17	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 b8d7
+B17	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 b8d7 e4g5 g8f6 f1d3 e7e6 g1f3 f8d6 d1e2 h7h6 g5e4 f6e4 e2e4
+B17	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 b8d7 e4g5
+B17	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 b8d7 e4g5 d7f6
+B17	e2e4 c7c6 d2d4 d7d5 b1c3 d5e4 c3e4 b8d7 g1f3 g8f6 e4g3
+B17	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 b8d7 f1c4 g8f6 e4g5 e7e6 d1e2 d7b6
+B17	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 b8d7 f1c4 g8f6 e4g5 e7e6 d1e2 d7b6 c4b3
+B17	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 b8d7 f1c4 g8f6 e4f6 d7f6
+B18	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 c8f5
+B18	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 c8f5 e4g3 f5g6 g1h3
+B18	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 c8f5 e4g3 f5g6 h2h4
+B18	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 c8f5 e4g3 f5g6 f2f4
+B18	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 c8f5 e4g5 f5g6 g1f3 h7h6 g5e6
+B19	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 c8f5 e4g3 f5g6 h2h4 h7h6 g1f3 b8d7
+B19	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 c8f5 e4g3 f5g6 h2h4 h7h6 g1f3 b8d7 h4h5 g6h7 f1d3 h7d3 d1d3 e7e6 c1d2 g8f6 e1c1 f8e7
+B19	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 c8f5 e4g3 f5g6 h2h4 h7h6 g1f3 b8d7 h4h5 g6h7 f1d3 h7d3 d1d3 g8f6 c1d2 e7e6 e1c1 f8d6
+B19	e2e4 c7c6 d2d4 d7d5 b1d2 d5e4 d2e4 c8f5 e4g3 f5g6 h2h4 h7h6 g1f3 b8d7 h4h5
+B20	e2e4 c7c5
+B20	e2e4 c7c5 d1g4
+B20	e2e4 c7c5 d2d3 b8c6 c2c3 d7d6 f2f4
+B20	e2e4 c7c5 f1c4
+B20	e2e4 c7c5 g1h3
+B20	e2e4 c7c5 b2b3
+B20	e2e4 c7c5 b2b3 b7b6
+B20	e2e4 c7c5 b2b3 d7d5 c1b2
+B20	e2e4 c7c5 c2c4 d7d6 b1c3 b8c6 g2g3 h7h5
+B20	e2e4 c7c5 g2g4
+B20	e2e4 c7c5 g1e2
+B20	e2e4 c7c5 e1e2
+B20	e2e4 c7c5 b1a3
+B20	e2e4 c7c5 b1a3 b8c6 d2d4 c5d4 f1c4
+B20	e2e4 c7c5 g2g3
+B20	e2e4 c7c5 a2a3
+B20	e2e4 c7c5 a2a4
+B20	e2e4 c7c5 h2h4
+B20	e2e4 c7c5 c2c4
+B20	e2e4 c7c5 b2b4
+B20	e2e4 c7c5 b2b4 c5b4 c1b2
+B20	e2e4 c7c5 b2b4 c5b4 a2a3 b4a3
+B20	e2e4 c7c5 b2b4 c5b4 a2a3 d7d5 e4d5 d8d5 c1b2
+B20	e2e4 c7c5 b2b4 c5b4 a2a3
+B20	e2e4 c7c5 b2b4 c5b4 a2a3 d7d5 e4d5 d8d5 g1f3 e7e5 c2c4 d5e6 f1d3
+B20	e2e4 c7c5 b2b4 c5b4 a2a3 d7d5 e4d5 d8d5 g1f3 e7e5 c1b2 b8c6 c2c4 d5e6
+B20	e2e4 c7c5 b2b4 c5b4 c2c4
+B21	e2e4 c7c5 f2f4 d7d5 g1f3 d5e4
+B21	e2e4 c7c5 d2d4 c5d4 d1d4 b8c6 d4d1 g8f6 f1c4
+B21	e2e4 c7c5 d2d4 c5d4 f2f4
+B21	e2e4 c7c5 f2f4
+B21	e2e4 c7c5 f2f4 d7d5 e4d5 g8f6
+B21	e2e4 c7c5 f2f4 d7d5 b1c3
+B21	e2e4 c7c5 d2d4 c5d4 g1f3
+B21	e2e4 c7c5 d2d4 c5d4 g1f3 e7e5 c2c3
+B21	e2e4 c7c5 d2d4
+B21	e2e4 c7c5 d2d4 c5d4 c2c3
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 b8c6 f1c4 e7e6 g1f3 d7d6 e1g1 a7a6 d1e2 b7b5 c4b3 a8a7
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 d7d6 g1f3 e7e6 f1c4 g8f6 e1g1 a7a6
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 b8c6 g1f3 d7d6 f1c4 a7a6 e1g1 g8f6
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 g1f3
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 b8c6 g1f3 g7g6
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 e7e6 g1f3 d7d6 f1c4 a7a6 e1g1 f8e7 d1e2 g8f6
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 e7e6 g1f3 a7a6
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 b8c6 g1f3 e7e6 f1c4 d8c7 d1e2 a7a6 e1g1 f8d6
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 b8c6 g1f3 e7e6 f1c4 f8c5
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 b8c6 g1f3 e7e6 f1c4 a7a6 e1g1 b7b5 c4b3 f8c5
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 b8c6 g1f3 e7e6 f1c4 a7a6
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 b8c6 g1f3 e7e6 f1c4 f8b4
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 b8c6 g1f3 d7d6 f1c4 e7e6
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 b8c6 g1f3 e7e6 f1c4 d8c7
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 b8c6 g1f3 e7e6 f1c4 d8c7 d1e2 g8f6 e1g1 f6g4
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 b8c6 f1c4 e7e6 g1f3 d7d6 e1g1 a7a6 d1e2 b7b5
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4c3 b1c3 e7e6 f1c4 a7a6 g1f3 g8e7
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 g8f6
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 e7e5
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4d3 c3c4
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d4d3
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d7d5
+B21	e2e4 c7c5 d2d4 c5d4 c2c3 d8a5
+B22	e2e4 c7c5 c2c3
+B22	e2e4 c7c5 c2c3 d7d5 e4d5 g8f6
+B22	e2e4 c7c5 c2c3 d7d5 e4d5 d8d5
+B22	e2e4 c7c5 c2c3 d7d5 e4d5 d8d5 d2d4 c5d4 c3d4 b8c6 g1f3 c8g4
+B22	e2e4 c7c5 c2c3 d7d5 e4d5 d8d5 d2d4 c5d4 c3d4 b8c6 g1f3 c8g4 b1c3 g4f3 g2f3 d5d4 d1d4 c6d4
+B22	e2e4 c7c5 c2c3 d7d5 e4d5 d8d5 d2d4 b8c6 g1f3 c5d4 c3d4 e7e5 b1c3 f8b4 f1e2
+B22	e2e4 c7c5 c2c3 d7d5 e4d5 d8d5 d2d4 g8f6 g1f3 c8g4
+B22	e2e4 c7c5 c2c3 g8f6 e4e5 f6d5 d2d4 c5d4
+B22	e2e4 c7c5 c2c3 g8f6 e4e5 f6d5 g1f3 b8c6 f1c4 d5b6 c4b3
+B22	e2e4 c7c5 c2c3 g8f6 e4e5 f6d5 g1f3 b8c6 f1c4 d5b6 c4b3 c5c4 b3c2 d8c7 d1e2 g7g5
+B22	e2e4 c7c5 g1f3 e7e6 c2c3 d7d5 e4d5 d8d5 d2d4 g8f6
+B22	e2e4 c7c5 c2c3 g8f6 e4e5 f6d5 g1f3 b8c6 b1a3
+B23	e2e4 c7c5 b1c3
+B23	e2e4 c7c5 b1c3 e7e6
+B23	e2e4 c7c5 b1c3 e7e6 g2g3
+B23	e2e4 c7c5 b1c3 d7d6 d2d4 c5d4 d1d4 b8c6 d4d2
+B23	e2e4 c7c5 b1c3 b8c6 g1e2
+B23	e2e4 c7c5 b1c3 b8c6 g2g4
+B23	e2e4 c7c5 b1c3 e7e6 g2g3 d7d5
+B23	e2e4 c7c5 b1c3 b8c6 d2d3 g7g6 g2g4
+B23	e2e4 c7c5 b1c3 b8c6
+B23	e2e4 c7c5 b1c3 b8c6 f2f4
+B23	e2e4 c7c5 b1c3 b8c6 f2f4 g7g6 g1f3 f8g7 f1c4 e7e6 f4f5
+B24	e2e4 c7c5 b1c3 b8c6 g2g3 g7g6
+B24	e2e4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7
+B24	e2e4 c7c5 b1c3 b8c6 g2g3
+B24	e2e4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 d2d3 e7e6 c1e3 c6d4 c3e2
+B25	e2e4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 d2d3 d7d6
+B25	e2e4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 d2d3 d7d6 f2f4
+B25	e2e4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 d2d3 d7d6 f2f4 e7e5 g1h3 g8e7
+B25	e2e4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 d2d3 d7d6 g1e2 e7e5
+B25	e2e4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 d2d3 d7d6 f2f4 e7e5
+B26	e2e4 c7c5 b1c3 b8c6 g2g3 g7g6 f1g2 f8g7 d2d3 d7d6 c1e3
+B27	e2e4 c7c5 g1f3 g7g6 d2d4 f8g7 b1c3 d8a5
+B27	e2e4 c7c5 g1f3 g7g6 d2d4 f8g7 b1c3 d8a5 c1e3
+B27	e2e4 c7c5 g1f3 g7g6 d2d4 f8g7 b1c3 d8a5 d4d5
+B27	e2e4 c7c5 g1f3 g7g6 d2d4 f8g7 d4c5 d8a5 b1c3 g7c3 b2c3
+B27	e2e4 c7c5 g1f3 g7g6 d2d4 f8g7 d4c5 d8a5 b1c3
+B27	e2e4 c7c5 g1f3 g7g6 d2d4 f8g7 b1c3 d8a5 c1d2
+B27	e2e4 c7c5 g1f3 g7g6 c2c3 f8g7 d2d4 d8a5
+B27	e2e4 c7c5 g1f3 g7g6 d2d4 f8g7 d4c5 d8a5
+B27	e2e4 c7c5 g1f3
+B27	e2e4 c7c5 g1f3 g7g6 c2c4 f8h6
+B27	e2e4 c7c5 g1f3 f7f5
+B27	e2e4 c7c5 g1f3 h7h6
+B27	e2e4 c7c5 g1f3 f7f5 e4f5 g8h6
+B27	e2e4 c7c5 g1f3 g7g6 d2d4 f7f5
+B27	e2e4 c7c5 g1f3 g7g6
+B27	e2e4 c7c5 g1f3 g7g6 d2d4
+B27	e2e4 c7c5 g1f3 g7g6 d2d4 f8g7
+B27	e2e4 c7c5 g1f3 g7g6 d2d4 f8g7 d4c5 d8a5 b1c3 g7c3 b2c3 a5c3
+B27	e2e4 c7c5 g1f3 e7e5
+B27	e2e4 c7c5 g1f3 b7b6
+B27	e2e4 c7c5 g1f3 d8a5
+B27	e2e4 c7c5 g1f3 b7b5
+B27	e2e4 c7c5 g1f3 d8c7
+B28	e2e4 c7c5 g1f3 a7a6
+B28	e2e4 c7c5 g1f3 a7a6 f1e2
+B28	e2e4 c7c5 g1f3 a7a6 b2b3
+B28	e2e4 c7c5 g1f3 a7a6 c2c4
+B28	e2e4 c7c5 g1f3 a7a6 c2c4 e7e6
+B28	e2e4 c7c5 g1f3 a7a6 c2c4 d7d6
+B28	e2e4 c7c5 g1f3 a7a6 d2d4
+B28	e2e4 c7c5 g1f3 a7a6 d2d4 c5d4 f1c4
+B28	e2e4 c7c5 g1f3 a7a6 d2d4 c5d4 c2c3
+B28	e2e4 c7c5 g1f3 a7a6 d2d4 c5d4 f3d4 e7e5
+B28	e2e4 c7c5 g1f3 a7a6 d2d4 c5d4 d1d4
+B28	e2e4 c7c5 g1f3 a7a6 d2d3
+B28	e2e4 c7c5 g1f3 a7a6 g2g3
+B28	e2e4 c7c5 g1f3 a7a6 c2c3
+B28	e2e4 c7c5 g1f3 a7a6 c2c3 g8f6
+B28	e2e4 c7c5 g1f3 a7a6 c2c3 d7d5 e4d5 g8f6
+B28	e2e4 c7c5 g1f3 a7a6 c2c3 b7b5
+B28	e2e4 c7c5 g1f3 a7a6 c2c3 d7d6
+B28	e2e4 c7c5 g1f3 a7a6 b2b4
+B28	e2e4 c7c5 g1f3 a7a6 b1c3
+B29	e2e4 c7c5 g1f3 g8f6
+B29	e2e4 c7c5 g1f3 g8f6 e4e5
+B29	e2e4 c7c5 g1f3 g8f6 b1c3
+B29	e2e4 c7c5 g1f3 g8f6 e4e5 f6d5 b1c3 d5c3
+B29	e2e4 c7c5 g1f3 g8f6 e4e5 f6d5 b1c3 e7e6 c3d5 e6d5 d2d4 b8c6
+B30	e2e4 c7c5 g1f3 b8c6 b1c3 e7e5
+B30	e2e4 c7c5 g1f3 b8c6 b1c3 e7e5 f1c4 f8e7 d2d3 d7d6 f3d2 e7g5
+B30	e2e4 c7c5 g1f3 b8c6 b1c3 e7e5 f1c4 f8e7 d2d3 g8f6
+B30	e2e4 c7c5 g1f3 b8c6 b1c3 e7e5 f1c4 f8e7 d2d3 d7d6
+B30	e2e4 c7c5 g1f3 b8c6 f1b5
+B30	e2e4 c7c5 g1f3 b8c6 f1b5 c6b8
+B30	e2e4 c7c5 g1f3 b8c6 f1b5 c6a5 b2b4
+B30	e2e4 c7c5 g1f3 b8c6
+B30	e2e4 c7c5 g1f3 b8c6 b2b4
+B31	e2e4 c7c5 g1f3 b8c6 f1b5 g7g6
+B31	e2e4 c7c5 g1f3 b8c6 f1b5 g7g6 e1g1 f8g7 c2c3 e7e5 d2d4
+B31	e2e4 c7c5 g1f3 b8c6 f1b5 g7g6 e1g1 f8g7 c2c3 g8f6 d2d4
+B31	e2e4 c7c5 g1f3 b8c6 f1b5 g7g6 e1g1 f8g7 c2c3 g8f6 d1a4
+B31	e2e4 c7c5 g1f3 b8c6 f1b5 g7g6 e1g1 f8g7 f1e1 e7e5 b2b4
+B32	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6
+B32	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 d8c7
+B32	e2e4 c7c5 g1f3 b8c6 d2d4 e7e6
+B32	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 d8b6
+B32	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 e7e5 d4b5 d7d6
+B32	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 e7e5
+B32	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 d7d5
+B32	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 a7a6 c2c4 e7e5
+B32	e2e4 c7c5 g1f3 b8c6 d2d4
+B32	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4
+B32	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4
+B33	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 e7e5
+B33	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 e7e5 d4b5 d7d6 c1g5 a7a6 b5a3 c8e6
+B33	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 e7e5 d4c6
+B33	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 e7e5 d4f3
+B33	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 e7e5 d4b3
+B33	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 e7e5 d4b5 d7d6 c1g5 a7a6 b5a3 b7b5
+B33	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 e7e5 d4b5 d7d6 c1g5 a7a6 b5a3 b7b5 g5f6 g7f6 c3d5 f6f5
+B33	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 e7e5 d4b5 d7d6 c1g5 a7a6 b5a3 b7b5 c3d5
+B33	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 e7e5 d4b5 d7d6 c1g5 a7a6 b5a3 b7b5 g5f6 g7f6 c3d5 f8g7
+B33	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 e7e5 d4b5 d7d6 c1g5 a7a6 b5a3 b7b5 g5f6 g7f6 c3d5 f6f5 f1b5
+B33	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6
+B34	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 d4c6
+B34	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 b1c3
+B35	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 b1c3 f8g7 c1e3 g8f6 f1c4
+B35	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 b1c3 f8g7 c1e3 g8f6 f1c4 d7d6
+B36	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 c2c4
+B36	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 c2c4 g8f6 b1c3 c6d4 d1d4 d7d6
+B37	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 c2c4 f8g7
+B37	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 c2c4 f8g7 d4c2 d7d6 f1e2 g8h6
+B38	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 c2c4 f8g7 c1e3
+B39	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 c2c4 f8g7 c1e3 g8f6 b1c3 f6g4
+B40	e2e4 c7c5 g1f3 e7e6 c2c3 g8f6 e4e5 f6d5 d2d4 b8c6
+B40	e2e4 c7c5 g1f3 e7e6 c2c3
+B40	e2e4 c7c5 g1f3 e7e6 d2d4 a7a6
+B40	e2e4 c7c5 g1f3 e7e6
+B40	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6
+B40	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4
+B40	e2e4 c7c5 g1f3 e7e6 b2b3
+B40	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6 b1c3 d8b6
+B40	e2e4 c7c5 g1f3 e7e6 b1c3 a7a6 g2g3 b7b5 d2d4 c5d4 f3d4
+B40	e2e4 c7c5 g1f3 e7e6 c2c4
+B40	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 d8b6
+B40	e2e4 c7c5 g1f3 e7e6 d2d4 d7d5
+B40	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 f8c5
+B40	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6 b1c3 f8b4
+B40	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6 b1c3 f8b4 f1d3 e6e5
+B40	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6 b1c3 f8b4 e4e5
+B40	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 c2c3
+B40	e2e4 c7c5 g1f3 e7e6 b2b4
+B41	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 a7a6
+B41	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 a7a6 c2c4 g8f6 b1c3 f8b4 f1d3 b8c6
+B41	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 a7a6 c2c4 g8f6 b1c3 f8b4 f1d3 b8c6 d3c2
+B41	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 a7a6 c2c4 g7g6
+B41	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 a7a6 c2c4
+B42	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 a7a6 f1d3 g8f6 e1g1 d7d6 c2c4 g7g6
+B42	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 a7a6 f1d3
+B42	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 a7a6 f1d3 f8c5
+B42	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 a7a6 f1d3 g7g6
+B43	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 a7a6 b1c3
+B43	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 a7a6 b1c3 b7b5
+B43	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 a7a6 b1c3 b7b5 f1d3 d8b6 c1e3 f8c5 d1g4
+B43	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 a7a6 b1c3 b7b5 f1d3 d8b6 d4f3
+B44	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6
+B44	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 d4b5 d7d6 c2c4 g8f6 b1c3 a7a6 b5a3 d6d5
+B44	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 d4b5 d7d6 c2c4 g8f6 b1c3 a7a6 b5a3 f8e7 f1e2 e8g8 e1g1 b7b6
+B44	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 d4b5
+B45	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 b1c3 g8f6
+B45	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 b1c3 g8f6 d4b5 f8b4 b5d6
+B45	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 b1c3 g8f6 d4b5 f8c5
+B45	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 b1c3 g8f6 d4c6
+B45	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 b1c3 g8f6 d4b5 d7d6
+B45	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 b1c3
+B46	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 b1c3 a7a6
+B47	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 b1c3 d8c7
+B47	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 b1c3 d8c7 d4b5 c7b8 c1e3 a7a6 e3b6
+B48	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 b1c3 d8c7 c1e3
+B49	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 b1c3 d8c7 c1e3 a7a6 f1e2
+B50	e2e4 c7c5 g1f3 d7d6 d2d4
+B50	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4
+B50	e2e4 c7c5 g1f3 d7d6 c2c3 g8f6 f1e2 b8c6 d2d4 c5d4 c3d4 f6e4 d4d5 d8a5 b1c3 e4c3 b2c3
+B50	e2e4 c7c5 g1f3 d7d6 c2c3 g8f6 f1e2 b8c6 d2d4 c5d4 c3d4 f6e4
+B50	e2e4 c7c5 g1f3 d7d6 c2c3
+B50	e2e4 c7c5 g1f3 d7d6 f1d3
+B50	e2e4 c7c5 g1f3 d7d6 g2g3 b7b5
+B50	e2e4 c7c5 g1f3 d7d6
+B50	e2e4 c7c5 g1f3 d7d6 d2d4 g8f6
+B50	e2e4 c7c5 g1f3 d7d6 d2d4 g8f6 d4c5 f6e4
+B50	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 c2c3
+B50	e2e4 c7c5 g1f3 d7d6 b2b4
+B51	e2e4 c7c5 g1f3 d7d6 f1b5
+B51	e2e4 c7c5 g1f3 d7d6 f1b5 b8c6 e1g1 c8d7 d1e2 g7g6 e4e5
+B51	e2e4 c7c5 g1f3 d7d6 f1b5 b8c6 e1g1 c8d7 c2c3 g8f6 f1e1 a7a6 b5c6 d7c6 d2d4 c6e4 c1g5
+B52	e2e4 c7c5 g1f3 d7d6 f1b5 c8d7 b5d7 d8d7 e1g1 b8c6 c2c3 g8f6 d2d4
+B52	e2e4 c7c5 g1f3 d7d6 f1b5 c8d7
+B52	e2e4 c7c5 g1f3 d7d6 f1b5 c8d7 b5d7 d8d7 c2c4
+B53	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 d1d4
+B53	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 d1d4 b8c6 f1b5 d8d7
+B54	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g7g6
+B54	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 f1c4
+B54	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6
+B54	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 f2f3
+B55	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 f2f3 e7e5 f1b5
+B56	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6
+B56	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 g2g3
+B56	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 c8d7
+B56	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 d4e2
+B56	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 e7e5 f1b5
+B57	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1c4 d8b6
+B57	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 f1c4
+B57	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1c4 g7g6 d4c6 b7c6 e4e5
+B58	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 f1e2 e7e5
+B58	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1e2 e7e5 d4c6
+B58	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 f1e2
+B58	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 f1e2 c6d4 d1d4 g7g6
+B59	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1e2 e7e5 d4b3
+B60	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 c1g5
+B60	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 c1g5 g7g6
+B60	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 c1g5 c8d7
+B61	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 c1g5 c8d7 d1d2
+B62	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 c1g5 e7e6
+B62	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 c1g5 e7e6 d1d3
+B62	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 c1g5 e7e6 d4c6
+B62	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 c1g5 e7e6 d4b3
+B62	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 c1g5 e7e6 f1b5
+B63	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 c1g5 e7e6 d1d2 f8e7
+B63	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 c1g5 e7e6 d1d2 f8e7 e1c1 c6d4 d2d4 a7a6 f2f4 b7b5
+B63	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 c1g5 e7e6 d1d2 d8b6
+B63	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 c1g5 e7e6 d1d2
+B64	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 c1g5 e7e6 d1d2 f8e7 e1c1 e8g8 f2f4 e6e5
+B64	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 c1g5 e7e6 d1d2 f8e7 e1c1 e8g8 f2f4
+B65	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 c1g5 e7e6 d1d2 f8e7 e1c1 e8g8 f2f4 c6d4 d2d4
+B65	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 c1g5 e7e6 d1d2 f8e7 e1c1 e8g8 f2f4 c6d4
+B66	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 c1g5 e7e6 d1d2 a7a6
+B67	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 c1g5 e7e6 d1d2 a7a6 e1c1 c8d7
+B68	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 c1g5 e7e6 d1d2 a7a6 e1c1 c8d7 f2f4 f8e7
+B69	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 c1g5 e7e6 d1d2 a7a6 e1c1 c8d7 f2f4 f8e7 d4f3 b7b5 g5f6
+B70	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6
+B70	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 f1e2
+B70	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 g2g3
+B71	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 f2f4
+B71	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 f2f4 b8d7
+B72	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3
+B72	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f1e2
+B72	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f1e2 b8c6
+B72	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f1e2 b8c6 d4b3
+B72	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1e2 g7g6 c1e3 f8g7 d1d2
+B72	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1e2 g7g6 c1e3 f8g7 d1d2 e8g8 e1c1
+B73	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 f1e2 f8g7 e1g1 b8c6 c1e3
+B73	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 f1e2 f8g7 e1g1 e8g8 c1e3 b8c6 d1d2
+B73	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 c1e3 f8g7 f1e2 g8f6 b1c3 e8g8 e1g1 d7d6 f2f4 d8b6 e4e5
+B74	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 b1c3 f8g7 c1e3 g8f6 f1e2 e8g8 e1g1 d7d6 d4b3 a7a5
+B74	e2e4 c7c5 g1f3 g7g6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1e2 f8g7 e1g1 e8g8 c1e3 b8c6 d4b3 c8e6 f2f4 c6a5 f4f5 e6c4 e2d3 c4d3 c2d3 d6d5
+B74	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 f1e2 f8g7 e1g1 e8g8 c1e3 b8c6 d4b3 c8e6 f2f4 c6a5
+B74	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 f1e2 f8g7 e1g1 e8g8 c1e3 b8c6 d4b3
+B74	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g7g6 b1c3 f8g7 c1e3 g8f6 f1e2 e8g8 d4b3 d7d6 e1g1 c8e6 f2f4 c6a5 f4f5 e6c4 e2d3
+B74	e2e4 c7c5 b1c3 d7d6 f2f4 b8c6 g1f3 g7g6 d2d4 c5d4 f3d4 f8g7 c1e3 g8f6 f1e2 e8g8 d4b3 c8e6 e1g1 c6a5 f4f5 e6c4 b3a5 c4e2 d1e2 d8a5 g2g4
+B74	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 f1e2 f8g7 e1g1 e8g8 c1e3 b8c6 d4b3 c8e6 f2f4 d8c8
+B75	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 b8c6
+B75	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3
+B75	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 b8c6 f2f3 h7h5
+B76	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 e8g8
+B76	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 e8g8 d1d2 b8c6
+B76	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 b8c6 d1d2 e8g8 e1c1
+B76	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 e8g8 d1d2 b8c6 g2g4
+B77	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 e8g8 d1d2 b8c6 f1c4 a7a5
+B77	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 b8c6 d1d2 e8g8 f1c4 c6d4 e3d4 c8e6
+B77	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 b8c6 d1d2 e8g8 f1c4 c6d4 e3d4 c8e6 c4b3 d8a5
+B77	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 e8g8 d1d2 b8c6 f1c4
+B77	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 e8g8 d1d2 b8c6 f1c4 c8d7
+B77	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 e8g8 d1d2 b8c6 f1c4 c8d7 c4b3
+B77	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 b8c6 d1d2 e8g8 f1c4 f6d7
+B78	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 e8g8 d1d2 b8c6 f1c4 c8d7 e1c1
+B78	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 e8g8 d1d2 b8c6 f1c4 c8d7 e1c1 a8b8
+B78	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 e8g8 d1d2 b8c6 f1c4 c8d7 e1c1 a8c8
+B78	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 e8g8 d1d2 b8c6 f1c4 c8d7 e1c1 a8c8 c4b3 c6d4 e3d4
+B79	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 e8g8 d1d2 b8c6 f1c4 c8d7 h2h4 d8a5 e1c1 f8c8 c4b3
+B79	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 g7g6 c1e3 f8g7 f2f3 e8g8 d1d2 b8c6 f1c4 c8d7 e1c1 d8a5 h2h4 f8c8 c4b3 h7h5
+B80	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6
+B80	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1e3 e7e6 d1d2
+B80	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 g2g3
+B80	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1b5
+B81	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 g2g4
+B82	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f2f4
+B82	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f2f4 b8c6 c1e3 f8e7 d1f3
+B83	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1e2
+B83	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 b1c3 d7d6 f1e2 g8f6
+B83	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1e2 f8e7 e1g1 e8g8 f2f4 b8c6 c1e3
+B83	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1e2 f8e7 e1g1 e8g8 f2f4 b8c6 c1e3 c8d7 d4b3
+B84	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 f1e2 e7e6 e1g1 b8d7
+B84	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 f1e2 e7e6
+B84	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 f1e2 e7e6 e1g1 d8c7
+B85	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 b1c3 d8c7 f1e2 a7a6 e1g1 g8f6 c1e3 f8e7 f2f4 d7d6 d1e1 e8g8
+B85	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 f2f4 e7e6 f1e2 d8c7 e1g1 b8c6
+B85	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 b1c3 d8c7 f1e2 a7a6 e1g1 g8f6 c1e3 d7d6 f2f4
+B85	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 b8c6 b1c3 d8c7 f1e2 a7a6 e1g1 g8f6 g1h1 f8e7 f2f4 d7d6 a2a4
+B86	e2e4 c7c5 g1f3 e7e6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1c4
+B87	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 f1c4 e7e6 c4b3 b7b5
+B88	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1c4 e7e6 c4b3 f8e7 c1e3 e8g8 f2f4
+B88	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1c4 e7e6
+B89	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1c4 e7e6 c1e3
+B89	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 b8c6 f1c4 e7e6 c1e3 f8e7 c4b3 e8g8 e1g1 c6a5 f2f4 b7b6
+B89	e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 g8f6 b1c3 d7d6 f1c4 e7e6 c1e3 f8e7 d1e2
+B90	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6
+B90	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 h2h3
+B90	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 g2g4
+B90	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1e3
+B90	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1e3 e7e5 d4b3 c8e6 f2f3
+B90	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1e3 e7e5 d4b3 f8e7 f2f3
+B90	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1e3 e7e5 d4b3 c8e6 h2h3
+B90	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1e3 e7e5 d4b3 f8e7 h2h3
+B90	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1e3 f6g4
+B90	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 f1c4
+B90	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 h1g1
+B90	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 f1d3
+B90	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1e3 e7e6 g2g4
+B90	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1e3 e7e6 g2g4 e6e5 d4f5 g7g6 g4g5
+B90	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1e3 e7e6 f2f3
+B91	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 g2g3
+B92	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 f1e2
+B92	e2e4 c7c5 g1f3 g8f6 b1c3 d7d6 d2d4 c5d4 f3d4 a7a6 f1e2 e7e5 d4b3 c8e6 c1e3
+B92	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 f1e2 e7e5 d4b3 f8e7 e1g1 c8e6
+B92	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 f1e2 e7e5 d4b3 f8e7 e1g1 e8g8
+B93	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 f2f4
+B94	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1g5
+B94	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1g5 b8d7 f1c4 d8a5 d1d2 e7e6 e1c1 b7b5 c4b3 c8b7 h1e1 d7c5 e4e5
+B95	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1g5 e7e6
+B96	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1g5 e7e6 f2f4
+B96	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1g5 e7e6 f2f4 b8c6
+B96	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1g5 e7e6 f2f4 b7b5
+B96	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1g5 e7e6 f2f4 b7b5 e4e5 d6e5 f4e5 d8c7 d1e2
+B97	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1g5 e7e6 f2f4 d8b6 d1d2 b6b2 a1b1 b2a3
+B97	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1g5 e7e6 f2f4 d8b6
+B98	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1g5 e7e6 f2f4 f8e7
+B98	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1g5 e7e6 f2f4 f8e7 d1f3 h7h6 g5h4 d8c7
+B98	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1g5 e7e6 f2f4 f8e7 d1f3 h7h6 g5h4 g7g5
+B98	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1g5 e7e6 f2f4 f8e7 d1f3 d8c7
+B99	e2e4 c7c5 g1f3 d7d6 d2d4 c5d4 f3d4 g8f6 b1c3 a7a6 c1g5 e7e6 f2f4 f8e7 d1f3 d8c7 e1c1 b8d7
+C00	e2e4 e7e6
+C00	e2e4 e7e6 d2d4 d7d5
+C00	e2e4 e7e6 d2d4 d7d5 c1e3
+C00	e2e4 e7e6 d2d4 b7b5
+C00	e2e4 e7e6 b2b4
+C00	e2e4 e7e6 b2b4 f8b4 e4e5
+C00	e2e4 e7e6 f1b5
+C00	e2e4 e7e6 d2d4 d7d5 g1f3 d5e4 f3e5
+C00	e2e4 e7e6 d1e2
+C00	e2e4 e7e6 d2d4 d7d5 c2c4
+C00	e2e4 e7e6 d2d4 d7d5 c2c4 d5e4
+C00	e2e4 e7e6 d2d4 f7f5
+C00	e2e4 e7e6 d2d4 f7f5 e4f5
+C00	e2e4 e7e6 d2d4 c7c5
+C00	e2e4 e7e6 d2d4 d7d5 d1e2 e6e5 f2f4 e5f4
+C00	e2e4 e7e6 b2b3
+C00	e2e4 e7e6 b2b3 d7d5 c1b2
+C00	e2e4 e7e6 d2d3
+C00	e2e4 e7e6 d2d3 f7f5
+C00	e2e4 e7e6 g1f3
+C00	e2e4 e7e6 g1f3 f7f5
+C00	e2e4 e7e6 f2f4
+C00	e2e4 e7e6 f2f4 d7d5 g1f3 d5e4
+C00	e2e4 e7e6 d2d4 g8f6
+C00	e2e4 e7e6 d2d4 d7d5 g1h3
+C00	e2e4 e7e6 d2d4
+C00	e2e4 e7e6 c2c4 d7d5 c4d5 e6d5 d1b3
+C00	e2e4 e7e6 b1c3 d7d5 f2f4
+C00	e2e4 e7e6 d2d4 d7d5 g1f3
+C00	e2e4 e7e6 b1c3
+C00	e2e4 e7e6 d2d3 d7d5 b1d2 g8f6 g1f3 b8c6 f1e2
+C00	e2e4 e7e6 g2g3
+C00	e2e4 e7e6 d2d4 d7d5 f1d3
+C00	e2e4 e7e6 d2d4 a7a6
+C00	e2e4 e7e6 d2d4 a7a6 c2c4 b7b5
+C00	e2e4 e7e6 d2d4 a7a6 c2c4 b7b5 c4b5 a6b5
+C00	e2e4 e7e6 d2d4 a7a6 c2c4
+C00	e2e4 e7e6 d2d4 a7a6 g1f3 b7b5 f1d3 c7c5 c2c3 c8b7 e1g1 g8f6
+C00	e2e4 e7e6 c2c4
+C00	e2e4 e7e6 e4e5
+C00	e2e4 e7e6 g1f3 d7d5 b1c3
+C00	e2e4 e7e6 g1f3 d7d5 e4e5 c7c5 b2b4
+C00	d2d4 e7e6 e2e4 d7d6
+C01	e2e4 e7e6 d2d4 d7d5 e4d5
+C01	e2e4 e7e6 d2d4 d7d5 e4d5 e6d5 g1f3
+C01	e2e4 e7e6 d2d4 d7d5 e4d5 e6d5 b1c3
+C01	e2e4 e7e6 d2d4 d7d5 e4d5 e6d5 b1c3 g8f6 c1g5 b8c6
+C01	e2e4 e7e6 d2d4 d7d5 e4d5 e6d5 c2c4
+C01	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 e4d5 e6d5 c1g5
+C02	e2e4 e7e6 d2d4 d7d5 e4e5
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 c2c3
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 c2c3 b8c6
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 c2c3 b8c6 g1f3 c8d7
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c8d7
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 b2b4
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 c2c3 b8c6 c1e3
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 c2c3 b8c6 g1f3 d8b6 a2a3 g8h6
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 c2c3 b8c6 g1f3 d8b6 a2a3
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 c2c3 b8c6 g1f3 d8b6 f1d3
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 c2c3 b8c6 g1f3 d8b6 f1d3 c5d4 e1g1
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 c2c3 b8c6 g1f3 d8b6 f1d3 c5d4 e1g1 c8d7 f1e1
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 c2c3 b8c6 g1f3 d8b6 f1d3 c5d4 c3d4 c8d7 e1g1
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 c2c3 b8c6 g1f3 d8b6 f1d3 c5d4 c3d4 c8d7 e1g1 c6d4 f3g5
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 d1g4
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 d1g4 c5d4 g1f3
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 g1f3
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 c2c3 b8c6 g1f3
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 g1f3 c5d4 f1d3
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 d4c5
+C02	e2e4 e7e6 d2d4 d7d5 e4e5 c7c5 c2c3 d8b6 g1f3 c8d7
+C03	e2e4 e7e6 d2d4 d7d5 b1d2
+C03	e2e4 e7e6 d2d4 d7d5 b1d2 b8c6
+C03	e2e4 e7e6 d2d4 d7d5 b1d2 b8c6 c2c3 d5e4 d2e4 e6e5
+C03	e2e4 e7e6 d2d4 d7d5 b1d2 f7f5
+C03	e2e4 e7e6 d2d4 d7d5 b1d2 a7a6
+C03	e2e4 e7e6 d2d4 d7d5 b1d2 f8e7
+C04	e2e4 e7e6 d2d4 d7d5 b1d2 b8c6 g1f3 g8f6
+C05	e2e4 e7e6 d2d4 d7d5 b1d2 g8f6 e4e5 f6d7 f1d3 c7c5 c2c3 b7b6
+C05	e2e4 e7e6 d2d4 d7d5 b1d2 g8f6
+C05	e2e4 e7e6 d2d4 d7d5 b1d2 g8f6 e4e5 f6d7 f1d3 c7c5 c2c3 b8c6
+C05	e2e4 e7e6 d2d4 d7d5 b1d2 g8f6 e4e5 f6d7 f2f4
+C06	e2e4 e7e6 d2d4 d7d5 b1d2 g8f6 e4e5 f6d7 f1d3 c7c5 c2c3 b8c6 g1e2 c5d4 c3d4
+C06	e2e4 e7e6 d2d4 d7d5 b1d2 g8f6 e4e5 f6d7 f1d3 c7c5 c2c3 b8c6 g1e2 c5d4 c3d4 d7b6
+C07	e2e4 e7e6 d2d4 d7d5 b1d2 c7c5 e4d5 d8d5
+C07	e2e4 e7e6 d2d4 d7d5 b1d2 c7c5 e4d5 d8d5 g1f3 c5d4 f1c4 d5d6 e1g1 g8f6 d2b3 b8c6 b3d4 c6d4 f3d4 a7a6
+C07	e2e4 e7e6 d2d4 d7d5 b1d2 c7c5 e4d5 d8d5 g1f3 c5d4 f1c4 d5d8
+C07	e2e4 e7e6 d2d4 d7d5 b1d2 c7c5
+C07	e2e4 e7e6 d2d4 d7d5 b1d2 c7c5 g1f3
+C07	e2e4 e7e6 d2d4 d7d5 b1d2 c7c5 e4d5 g8f6
+C07	e2e4 e7e6 d2d4 d7d5 b1d2 c7c5 c2c3
+C08	e2e4 e7e6 d2d4 d7d5 b1d2 c7c5 e4d5 e6d5
+C08	e2e4 e7e6 d2d4 d7d5 b1d2 c7c5 e4d5 e6d5 g1f3 c5c4
+C09	e2e4 e7e6 d2d4 d7d5 b1d2 c7c5 e4d5 e6d5 g1f3 b8c6
+C10	e2e4 e7e6 d2d4 d7d5 b1c3 b8c6
+C10	e2e4 e7e6 d2d4 d7d5 b1c3 c7c5
+C10	e2e4 e7e6 d2d4 d7d5 b1c3
+C10	e2e4 e7e6 d2d4 d7d5 b1c3 d5e4
+C10	e2e4 e7e6 d2d4 d7d5 b1c3 d5e4 c3e4 b8d7
+C10	e2e4 e7e6 d2d4 d7d5 b1c3 d5e4 c3e4 b8d7 g1f3 g8f6 e4f6 d7f6 f3e5
+C10	e2e4 e7e6 d2d4 d7d5 b1c3 d5e4 c3e4 e6e5
+C10	e2e4 e7e6 d2d4 d7d5 b1c3 d5e4 c3e4 c8d7 g1f3 d7c6
+C10	e2e4 e7e6 d2d4 d7d5 b1d2 d5e4 d2e4 b8d7 g1f3 g8f6 e4f6 d7f6 c2c3
+C10	e2e4 e7e6 d2d4 d7d5 b1c3 d5e4 c3e4 d8d5
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 d5e4
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 d5e4 c3e4 f8e7 g5f6 e7f6 g1f3 e8g8
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 d5e4 c3e4 f8e7 g5f6 g7f6
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 e4d5
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 e4e5 f6d7 c3e2
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 e4e5
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 f1d3
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1e3
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 a7a6 g1f3 g8f6 e4e5 f6d7
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 a7a6 g1f3 g8f6 e4e5 f6d7 a2a3
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 a7a6 g1f3 g8f6 e4e5 f6d7 c3e2
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 e4e5 f6d7 f2f4 c7c5 d4c5 b8c6
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 e4e5 f6d7 f2f4 c7c5 g1f3
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 e4e5 f6d7 f2f4 c7c5 g1f3 b8c6 c1e3
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 e4e5 f6d7 f2f4 c7c5 d4c5 f8c5 d1g4
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 e4e5 f6d7 f2f4 c7c5 d4c5 b8c6 a2a3 f8c5 d1g4 e8g8 g1f3 f7f6
+C11	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 e4e5 f6d7 d1g4
+C12	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8b4
+C12	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8b4 e4e5
+C12	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8b4 e4e5 h7h6 g5h4
+C12	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8b4 e4d5 d8d5 g5f6 g7f6 d1d2 d5a5
+C12	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8b4 e4e5 h7h6 e5f6
+C12	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8b4 e4e5 h7h6 g5c1
+C12	e2e4 e7e6 b1c3 d7d5 d2d4 g8f6 c1g5 f8b4 e4e5 h7h6 g5d2 b4c3 b2c3 f6e4 d1g4 e8f8 d2c1
+C12	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8b4 e4d5
+C12	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8b4 e4e5 h7h6 e5f6 h6g5 f6g7 h8g8 h2h4 g5h4 d1g4
+C12	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8b4 e4e5 h7h6 g5e3
+C12	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8b4 e4e5 h7h6 g5d2 b4c3
+C12	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8b4 e4e5 h7h6 g5d2 b4c3 b2c3 f6e4 d1g4 g7g6
+C12	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8b4 e4e5 h7h6 g5d2 f6d7
+C13	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 h2h4
+C13	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 h2h4 e7g5 h4g5 d8g5
+C13	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 h2h4 c7c5
+C13	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 h2h4 a7a6
+C13	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 h2h4 e8g8
+C13	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 h2h4 f7f6
+C13	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 d5e4 c3e4 f8e7
+C13	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6g8 g5e3 b7b6
+C13	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7
+C13	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 g5f6
+C13	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 g5f6 e7f6 e4e5 f6e7 d1g4
+C13	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6e4
+C13	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6g8
+C14	e2e4 e7e6 d2d4 d7d5 b1c3 a7a6 g1f3 g8f6 e4e5 f6d7 c1g5
+C14	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 g5e7 d8e7
+C14	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 g5e7 d8e7 c3b5
+C14	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 g5e7 d8e7 d1g4
+C14	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 g5e7 d8e7 d1d2
+C14	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 g5e7 d8e7 f2f4 e8g8 g1f3 c7c5 d1d2 b8c6 e1c1 c5c4
+C14	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 g5e7 d8e7 f2f4
+C14	e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 g5e7 d8e7 f1d3
+C15	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 g1e2 g8f6 c1g5
+C15	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4
+C15	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 g1e2 d5e4 a2a3 b4c3
+C15	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 g1e2 d5e4 a2a3 b4e7 c3e4 g8f6 e2g3 e8g8 f1e2 b8c6
+C15	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 g1e2 d5e4 a2a3 b4c3 e2c3 b8c6
+C15	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 g1e2
+C15	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4d5
+C15	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4d5 e6d5 f1d3 g8e7 d1h5
+C15	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 c1d2
+C15	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 c1d2 d5e4 d1g4 d8d4
+C15	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 c1d2 d5e4 d1g4 g8f6 g4g7 h8g8 g7h6
+C15	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 c1d2 g8e7 c3b1
+C15	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 f1d3 c7c5 e4d5 d8d5 c1d2
+C15	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 a2a3 b4c3 b2c3 d5e4 f2f3
+C16	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5
+C16	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 d8d7
+C17	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5
+C17	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3
+C17	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 c5d4 a3b4 d4c3 g1f3
+C17	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 d1g4
+C17	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 c1d2
+C17	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 c1d2 g8e7 f2f4
+C17	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 c5d4 a3b4 d4c3
+C17	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4a5
+C17	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4a5 b2b4 c5d4
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 f1d3
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 f1d3 d8c7
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 h2h4
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 h2h4 d8c7
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 d8c7
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 d1g4 e8f8
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 d1g4 d8c7
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 d1g4 c5d4 g4g7
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 d1g4 c5d4 g4g7 h8g8 g7h7 b8c6
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 d1g4 d8c7 f1d3
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 d1g4 d8c7 g4g7 h8g8 g7h7 c5d4 g1e2
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 d1g4 d8c7 g4g7 h8g8 g7h7 c5d4 e1d1
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 d8a5
+C18	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 d1g4 e8g8
+C19	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 g8e7 a2a3 b4c3 b2c3 c7c5 a3a4
+C19	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 g8e7 a2a3 b4c3 b2c3 c7c5 a3a4 d8c7
+C19	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 a3a4 b8c6 g1f3
+C19	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 a3a4 b8c6 g1f3 d8a5 d1d2
+C19	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 a3a4 b8c6 g1f3 d8a5 d1d2 c8d7
+C19	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 a3a4 b8c6 g1f3 d8a5 c1d2
+C19	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 a3a4 b8c6 g1f3 d8a5 c1d2 c8d7
+C19	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 a3a4 b8c6 g1f3 d8a5 c1d2 c5c4
+C19	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 g1f3
+C19	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 b8c6 g1f3 g8e7
+C19	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 g1f3 d8c7
+C19	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 g1f3 d8c7 h2h4
+C19	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 g8e7 f1d3 b8c6 g1f3
+C19	e2e4 e7e6 d2d4 d7d5 b1c3 f8b4 e4e5 c7c5 a2a3 b4c3 b2c3 b8c6 g1f3 d8a5 c1d2 g8e7
+C20	f2f3 e7e5 e2e4 g8f6 f1c4
+C20	e2e4 e7e5 e1e2
+C20	e2e4 e7e5 d2d4
+C20	e2e4 e7e5 c2c4
+C20	e2e4 e7e5
+C20	e2e4 e7e5 g1e2
+C20	e2e4 e7e5 c2c4 d7d5
+C20	e2e4 e7e5 d2d4 d7d5
+C20	e2e4 e7e5 d2d3 f7f5
+C20	e2e4 e7e5 d2d3 g8f6 f2f4 f8c5
+C20	e2e4 e7e5 f2f3
+C20	e2e4 e7e5 f2f3 g8f6 b1c3
+C20	e2e4 e7e5 d2d3
+C20	e2e4 e7e5 c2c3
+C20	e2e4 e7e5 c2c3 f7f5
+C20	e2e4 e7e5 c2c3 d7d5 d1h5 f8d6
+C20	e2e4 e7e5 a2a3
+C20	e2e4 e7e5 d1f3
+C20	e2e4 e7e5 d2d4 d7d6 d4e5 c8d7
+C20	e2e4 e7e5 f1d3
+C20	e2e4 e7e5 d1h5
+C20	e2e4 e7e5 d1h5 g8f6
+C20	e2e4 e7e5 d1h5 b8c6 f1c4 g8h6 d2d3 g7g6 h5f3 f7f6 g1e2 d7d5
+C20	e2e4 e7e5 d2d3 d7d5 e4d5 c7c6 d5c6 b8c6
+C20	e2e4 e7e5 b2b3
+C20	e2e4 e7e5 d1g4 g8f6 g4f5
+C20	e2e4 e7e5 d1e2 b8c6 c2c3 g8f6 g1f3 f8c5 d2d4 e5d4 c3d4 c6d4
+C20	e2e4 e7e5 f1b5
+C20	e2e4 e7e5 f1b5 f8c5 b2b4
+C20	e2e4 e7e5 f1b5 g8f6 d2d4
+C21	e2e4 e7e5 d2d4 e5d4 d1d4
+C21	e2e4 e7e5 d2d4 e5d4
+C21	e2e4 e7e5 d2d4 e5d4 f2f4
+C21	e2e4 e7e5 d2d4 e5d4 f2f4 f8c5 g1f3 b8c6 c2c3
+C21	e2e4 e7e5 d2d4 e5d4 g1f3
+C21	e2e4 e7e5 d2d4 e5d4 g1f3 c7c5
+C21	e2e4 e7e5 d2d4 e5d4 g1f3 c7c5 f1c4
+C21	e2e4 e7e5 d2d4 e5d4 g1f3 f8c5 c2c3
+C21	e2e4 e7e5 d2d4 e5d4 g1f3 f8c5 c2c3 d4c3 f1c4
+C21	e2e4 e7e5 d2d4 e5d4 f1d3
+C21	e2e4 e7e5 d2d4 e5d4 f1c4
+C21	e2e4 e7e5 d2d4 e5d4 c2c3
+C21	e2e4 e7e5 d2d4 e5d4 c2c3 d4c3
+C21	e2e4 e7e5 d2d4 e5d4 c2c3 d4c3 f1c4 c3b2 c1b2 d8e7
+C21	e2e4 e7e5 d2d4 e5d4 c2c3 d4c3 f1c4 c3b2 c1b2 g8f6
+C21	e2e4 e7e5 d2d4 e5d4 c2c3 d4c3 f1c4 c3b2 c1b2 f8b4
+C21	e2e4 e7e5 d2d4 e5d4 c2c3 d4c3 f1c4 c3b2 c1b2 d7d5
+C21	e2e4 e7e5 d2d4 e5d4 c2c3 g8e7
+C21	e2e4 e7e5 d2d4 e5d4 c2c3 d7d5
+C22	e2e4 e7e5 d2d4 e5d4 d1d4 b8c6 d4e3 g8f6
+C22	e2e4 e7e5 d2d4 e5d4 d1d4 b8c6 d4e3 f8b4 c2c3 b4e7
+C22	e2e4 e7e5 d2d4 e5d4 d1d4 b8c6 d4c4
+C22	e2e4 e7e5 d2d4 e5d4 d1d4 b8c6 d4e3 g8f6 b1c3 f8b4 c1d2 e8g8 e1c1 f8e8 f1c4 d7d6 g1h3
+C22	e2e4 e7e5 d2d4 e5d4 d1d4 b8c6
+C22	e2e4 e7e5 d2d4 e5d4 d1d4 b8c6 d4e3
+C22	e2e4 e7e5 d2d4 e5d4 d1d4 b8c6 d4e3 f7f5
+C23	e2e4 e7e5 f1c4
+C23	e2e4 e7e5 f1c4 b7b5 c4b5 c7c6
+C23	e2e4 e7e5 f1c4 f8c5
+C23	e2e4 e7e5 f1c4 f7f5
+C23	e2e4 e7e5 f1c4 f7f5 d2d3
+C23	e2e4 e7e5 f1c4 f8c5 b2b4 c5b4 f2f4 e5f4 g1f3 b4e7 d2d4 e7h4 g2g3 f4g3 e1g1 g3h2 g1h1
+C23	e2e4 e7e5 f1c4 d7d5
+C23	e2e4 e7e5 f1c4 f8c5 c2c3 d7d5
+C23	e2e4 e7e5 f1c4 f8c5 c2c3 d7d5 c4d5 g8f6
+C23	e2e4 e7e5 f1c4 f8c5 c2c3 d7d5 c4d5 g8f6 d2d4
+C23	e2e4 e7e5 f1c4 f8c5 d2d4
+C23	e2e4 e7e5 f1c4 c7c6 d2d4 d7d5 e4d5 c6d5 c4b5 c8d7 b5d7 b8d7 d4e5 d7e5 g1e2
+C23	e2e4 e7e5 f1c4 f8c5 d1e2 b8c6 c2c3 g8f6 f2f4
+C23	e2e4 e7e5 f1c4 f8c5 d1e2
+C23	e2e4 e7e5 f1c4 f8c5 d1e2 g8f6 f2f4
+C23	e2e4 e7e5 f1c4 f8c5 b2b4
+C23	e2e4 e7e5 f1c4 f8c5 b2b4 c5b4 c2c3
+C23	e2e4 e7e5 f1c4 f8c5 b2b4 c5b4 f2f4
+C23	e2e4 e7e5 f1c4 c7c6
+C23	e2e4 e7e5 f1c4 f8c5 c2c3
+C23	e2e4 e7e5 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 e4e5 d7d5 e5f6 d5c4 d1h5 e8g8
+C23	e2e4 e7e5 f1c4 f8c5 f2f4
+C23	e2e4 e7e5 f1c4 b7b5 c4b5 f7f5
+C23	e2e4 e7e5 f1c4 f8c5 c2c3 d8g5
+C24	e2e4 e7e5 f1c4 g8f6
+C24	e2e4 e7e5 f1c4 g8f6 f2f4
+C24	e2e4 e7e5 f1c4 g8f6 d2d3 f8e7 g1f3 e8g8
+C24	e2e4 e7e5 f1c4 g8f6 f2f3 f8c5 g1e2 b8c6 b2b4
+C24	e2e4 e7e5 f1c4 g8f6 g1e2 f6e4 e2c3
+C24	e2e4 e7e5 f1c4 g8f6 d2d3 c7c6
+C24	e2e4 e7e5 f1c4 g8f6 d2d4
+C24	e2e4 e7e5 f1c4 g8f6 d2d4 e5d4 g1f3 d7d5 e4d5 f8b4 c2c3 d8e7
+C24	e2e4 e7e5 f1c4 g8f6 d2d3 b8c6 b1c3
+C24	e2e4 e7e5 f1c4 g8f6 d2d4 e5d4 c2c3
+C25	e2e4 e7e5 b1c3 b8c6 f2f4
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 e5f4 g1f3 f8e7
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3g5
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3g5 d7d6
+C25	e2e4 e7e5 f2f4 e5f4 g1f3 b8c6 b1c3 g7g5 h2h4 g5g4 f3g5 h7h6 g5f7 e8f7 d2d4
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 e1g1 g4f3
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 e5f4 g1f3
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 e5f4 g1f3 g7g5 d2d4
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 f8c5 f4e5 d7d6
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 e5f4 d2d4
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 e5f4 d2d4 d8h4 e1e2 b7b6
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 e5f4 d2d4 d8h4 e1e2
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 e5f4 d2d4 d8h4 e1e2 d7d6
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 e5f4 d2d4 d8h4 e1e2 g7g5
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 e5f4 d2d4 d8h4 e1e2 d7d5
+C25	e2e4 e7e5 b1c3
+C25	e2e4 e7e5 b1c3 f8c5
+C25	e2e4 e7e5 b1c3 b8c6 d2d4
+C25	e2e4 e7e5 b1c3 f8c5 d1g4
+C25	e2e4 e7e5 b1c3 f8c5 c3a4
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 e1g1
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 e1g1 g4f3 d1f3 c6e5 f3f4 d8f6
+C25	e2e4 e7e5 b1c3 b8c6
+C25	e2e4 e7e5 b1c3 d7d6 f2f4
+C25	e2e4 e7e5 b1c3 b8c6 g2g3
+C25	e2e4 e7e5 b1c3 b8c6 g2g3 g8f6 f1g2 f8c5 g1e2 d7d5
+C25	e2e4 e7e5 b1c3 b8c6 g2g3 f8c5 f1g2 h7h5 g1f3 h5h4
+C25	e2e4 e7e5 b1c3 b8c6 d2d4 f7f5
+C25	e2e4 e7e5 b1c3 b8c6 f2f4 e5f4 g1f3 g7g5 d2d4 g5g4 f1c4 g4f3 e1g1 d7d5 e4d5 c8g4 d5c6
+C25	e2e4 e7e5 b1c3 b8c6 f1c4 f8c5 d1g4 d8f6 c3d5
+C25	e2e4 e7e5 b1c3 f8b4 d1g4 g8f6
+C26	e2e4 e7e5 f1c4 g8f6 b1c3 b7b5
+C26	e2e4 e7e5 b1c3 g8f6 f1c4 f8c5 d2d3
+C26	e2e4 e7e5 b1c3 g8f6
+C26	e2e4 e7e5 b1c3 g8f6 a2a3
+C26	e2e4 e7e5 b1c3 g8f6 g2g3
+C26	e2e4 e7e5 b1c3 g8f6 g2g3 d7d5 e4d5 c7c6
+C26	e2e4 e7e5 b1c3 g8f6 g2g3 f8c5 f1g2 b8c6 g1e2 d7d5 e4d5
+C26	e2e4 e7e5 b1c3 g8f6 f1c4
+C26	e2e4 e7e5 b1c3 g8f6 f1c4 f8c5 g1e2 b7b5
+C26	e2e4 e7e5 b1c3 g8f6 f1c4 f8b4
+C27	e2e4 e7e5 g1f3 g8f6 f1c4 f6e4 b1c3
+C27	e2e4 e7e5 g1f3 g8f6 f1c4 f6e4 b1c3 d7d5
+C27	e2e4 e7e5 b1c3 g8f6 f1c4 f6e4 d1h5 e4d6 c4b3 b8c6 d2d4
+C27	e2e4 e7e5 b1c3 g8f6 f1c4 f6e4
+C27	e2e4 e7e5 b1c3 g8f6 f1c4 f6e4 d1h5 e4d6 c4b3 f8e7 g1f3 b8c6 f3e5
+C27	e2e4 e7e5 b1c3 g8f6 f1c4 f6e4 d1h5 e4d6 c4b3 b8c6 c3b5 g7g6 h5f3 f7f5 f3d5 d8e7 b5c7 e8d8 c7a8 b7b6
+C27	e2e4 e7e5 b1c3 g8f6 f1c4 f6e4 d1h5 e4d6 c4b3 f8e7
+C28	e2e4 e7e5 b1c3 b8c6 f1c4 g8f6 d2d3 f8b4 g1e2
+C28	e2e4 e7e5 b1c3 b8c6 f1c4 g8f6 f2f4 f6e4 g1f3
+C28	e2e4 e7e5 b1c3 b8c6 f1c4 g8f6
+C29	e2e4 e7e5 b1c3 g8f6 f2f4 d7d5 f4e5 f6e4 d1f3 f7f5 d2d4
+C29	e2e4 e7e5 b1c3 g8f6 f2f4
+C29	e2e4 e7e5 b1c3 g8f6 f2f4 d7d5 f4e5 f6e4 d1f3 f7f5
+C29	e2e4 e7e5 b1c3 g8f6 f2f4 d7d5 f4e5 f6e4 g1f3 f8e7
+C29	e2e4 e7e5 b1c3 g8f6 f2f4 d7d5 f4e5 f6e4 g1f3 c8g4 d1e2
+C29	e2e4 e7e5 b1c3 g8f6 f2f4 d7d5
+C29	e2e4 e7e5 b1c3 g8f6 f2f4 d7d5 f4e5 f6e4 d2d3
+C29	e2e4 e7e5 b1c3 g8f6 f2f4 d7d5 f4e5 f6e4 d1f3
+C29	e2e4 e7e5 b1c3 g8f6 f2f4 d7d5 d2d3
+C29	e2e4 e7e5 b1c3 g8f6 f2f4 d7d5 f4e5 f6e4 d2d3 d8h4 g2g3 e4g3 g1f3 h4h5 c3d5
+C30	e2e4 e7e5 f2f4
+C30	e2e4 e7e5 f2f4 f8c5
+C30	e2e4 e7e5 f2f4 f8c5 g1f3 d7d6 c2c3
+C30	e2e4 e7e5 f2f4 f8c5 g1f3 d7d6 c2c3 c8g4 f4e5 d6e5 d1a4
+C30	e2e4 e7e5 f2f4 f8c5 g1f3 d7d6 b2b4
+C30	e2e4 e7e5 f2f4 f8c5 g1f3 d7d6 c2c3 f7f5
+C30	e2e4 e7e5 f2f4 f8c5 d1h5
+C30	e2e4 e7e5 f2f4 f8c5 g1f3 d7d6 b1c3 b8d7
+C30	e2e4 e7e5 f2f4 f8c5 g1f3 d7d6 c2c3 f7f5 f4e5 d6e5 d2d4 e5d4 f1c4
+C30	e2e4 e7e5 f2f4 f8c5 g1f3 d7d6 f4e5
+C30	e2e4 e7e5 f1c4 b8c6 b1c3 g8f6 d2d3 f8c5 f2f4 d7d6 g1f3 c8g4 h2h3 g4f3 d1f3 e5f4
+C30	e2e4 e7e5 f2f4 b8c6 g1f3 g7g5 f4g5 h7h6
+C30	e2e4 e7e5 f2f4 d8h4 g2g3 h4e7
+C30	e2e4 e7e5 f2f4 d8h4
+C30	e2e4 e7e5 f2f4 d8h4 g2g3
+C30	e2e4 c7c5 f2f4 e7e5
+C30	e2e4 e7e5 f2f4 b8c6 g1f3 f7f5
+C30	e2e4 e7e5 f2f4 d8f6
+C30	e2e4 e7e5 f2f4 d8f6 b1c3 f6f4 g1f3 f8b4 f1c4
+C30	e2e4 e7e5 f2f4 d8f6 b1c3 f6f4 d2d4
+C30	e2e4 e7e5 f2f4 f7f5
+C30	e2e4 e7e5 f2f4 f7f5 e4f5 d8h4
+C30	e2e4 e7e5 f2f4 f7f5 e4f5 e5f4 d1h5 g7g6 f5g6 d8e7 e1d1
+C30	e2e4 e7e5 f2f4 f7f5 e4f5 f8c5
+C30	e2e4 e7e5 f2f4 f7f5 e4f5 e5f4 d1h5 e8e7
+C30	e2e4 e7e5 f2f4 f7f5 e4f5 e5f4 g1f3 d7d5 d2d4 f8d6 f1d3
+C30	e2e4 e7e5 f2f4 g8f6
+C30	e2e4 e7e5 f2f4 b8c6
+C30	e2e4 e7e5 f2f4 f8c5 g1f3 g7g5
+C30	e2e4 e7e5 f2f4 f7f6 f4e5 b8c6
+C30	e2e4 e7e5 f2f4 g7g5
+C30	e2e4 e7e5 f2f4 b8c6 g1f3 g7g5
+C31	e2e4 e7e5 f2f4 d7d5
+C31	e2e4 e7e5 f2f4 d7d5 e4d5
+C31	e2e4 e7e5 f2f4 d7d5 e4d5 e5e4 f1b5
+C31	e2e4 e7e5 f2f4 d7d5 g1f3
+C31	e2e4 e7e5 f2f4 d7d5 e4d5 e5e4 d2d3
+C31	e2e4 e7e5 b1c3 g8f6 f2f4 d7d5 e4d5 e5e4 d2d3 f8b4 c1d2 e4e3
+C31	e2e4 e7e5 f2f4 d7d5 d2d4
+C31	e2e4 e7e5 f2f4 d7d5 e4d5 f8c5
+C31	e2e4 e7e5 f2f4 d7d5 b1c3
+C31	e2e4 e7e5 f2f4 d7d5 e4d5 e5f4
+C31	e2e4 e7e5 f2f4 d7d5 e4d5 c7c6
+C31	e2e4 e7e5 f2f4 d7d5 e4d5 c7c6 d5c6 f8c5
+C31	e2e4 e7e5 f2f4 d7d5 e4d5 e5e4 b1c3 g8f6 d1e2
+C31	e2e4 e7e5 f2f4 d7d5 e4d5 e5e4
+C31	e2e4 e7e5 f2f4 d7d5 b1c3 d5e4 c3e4
+C32	e2e4 e7e5 f2f4 d7d5 e4d5 e5e4 d2d3 g8f6 d3e4 f6e4 g1f3 f8c5 d1e2 c5f2 e1d1 d8d5 f3d2
+C32	e2e4 e7e5 f2f4 d7d5 e4d5 e5e4 d2d3 g8f6 d3e4 f6e4 d1e2
+C32	e2e4 e7e5 f2f4 d7d5 e4d5 e5e4 d2d3 g8f6 d3e4
+C32	e2e4 e7e5 f2f4 d7d5 e4d5 e5e4 d2d3 g8f6 b1d2
+C32	e2e4 e7e5 f2f4 d7d5 e4d5 e5e4 d2d3 g8f6 d3e4 f6e4 g1f3 f8c5 d1e2 c8f5
+C32	e2e4 e7e5 f2f4 d7d5 e4d5 e5e4 d2d3 g8f6 d1e2
+C32	e2e4 e7e5 f2f4 d7d5 e4d5 e5e4 d2d3 g8f6 d3e4 f6e4 d1e2 d8d5 b1d2 f7f5 g2g4
+C32	e2e4 e7e5 f2f4 d7d5 e4d5 e5e4 d2d3 g8f6 d3e4 f6e4 g1f3 f8c5 d1e2 c8f5 g2g4 e8g8
+C33	e2e4 e7e5 f2f4 e5f4
+C33	e2e4 e7e5 f2f4 e5f4 d1e2
+C33	e2e4 e7e5 f2f4 e5f4 f1c4
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 g7g5
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d7d5 c4d5 c7c6
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d7d5 c4d5 g8f6
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d7d5
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d8h4 e1f1 b8c6
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 g8f6 b1c3 c7c6
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 g8f6 b1c3
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d7d5 c4d5 d8h4 e1f1 f8d6
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d8h4 e1f1 b7b5
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d8h4 e1f1 d7d5 c4d5 g7g5 g2g3
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d8h4 e1f1 g8e7 b1c3 g7g5 d2d4 f8g7
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d8h4 e1f1 g7g5 d1f3
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 g8f6
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d8h4 e1f1 d7d6
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d8h4 e1f1 g8f6
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d8h4 e1f1 g7g5 b1c3 f8g7 g2g3 f4g3 d1f3
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 f7f5
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d8h4 e1f1 f8c5
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d8h4 e1f1 g7g5 b1c3 f8g7 d2d4 d7d6 e4e5
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 b7b5
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 c7c6
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d8h4 e1f1 g7g5
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 b8c6
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d8h4 e1f1 g7g5 b1c3 f8g7 d2d4 g8e7 g2g3
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 d8h4 e1f1 g7g5 b1c3 f8g7 g2g3
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 g8f6 b1c3 f8b4 e4e5
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 g8e7
+C33	e2e4 e7e5 f2f4 e5f4 d1f3
+C33	e2e4 e7e5 f2f4 e5f4 d1h5
+C33	e2e4 e7e5 f2f4 e5f4 d1g4
+C33	e2e4 e7e5 f2f4 e5f4 g1h3
+C33	e2e4 e7e5 f2f4 e5f4 g2g3
+C33	e2e4 e7e5 f2f4 e5f4 f1c4 f7f5 d1e2 d8h4 e1d1 f5e4 b1c3 e8d8
+C33	e2e4 e7e5 f2f4 e5f4 b1c3
+C33	e2e4 e7e5 f2f4 e5f4 b2b3
+C33	e2e4 e7e5 f2f4 e5f4 g1e2
+C33	e2e4 e7e5 f2f4 e5f4 f1b5
+C33	e2e4 e7e5 f2f4 e5f4 f1d3
+C33	e2e4 e7e5 f2f4 e5f4 h2h4
+C33	e2e4 e7e5 f2f4 e5f4 f1e2
+C33	e2e4 e7e5 f2f4 e5f4 f1e2 f7f5 e4f5 d7d6
+C33	e2e4 e7e5 f2f4 e5f4 e1f2
+C33	e2e4 e7e5 f2f4 e5f4 d2d4
+C34	e2e4 e7e5 f2f4 e5f4 g1f3 h7h6
+C34	e2e4 e7e5 f2f4 e5f4 g1f3 g8e7
+C34	e2e4 e7e5 f2f4 e5f4 g1f3 d7d6
+C34	e2e4 e7e5 f2f4 e5f4 g1f3 d7d6 b2b4
+C34	e2e4 e7e5 f2f4 e5f4 g1f3 d7d6 d2d4 g8f6 f1d3
+C34	e2e4 e7e5 f2f4 e5f4 g1f3 f7f5
+C34	e2e4 e7e5 f2f4 e5f4 g1f3 d7d6 f1c4 h7h6 d2d4 g7g5 h2h4 f8g7
+C34	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5
+C34	e2e4 e7e5 f2f4 e5f4 g1f3
+C34	e2e4 e7e5 f2f4 e5f4 g1f3 b8c6
+C34	e2e4 e7e5 f2f4 e5f4 g1f3 g8f6
+C34	e2e4 e7e5 f2f4 e5f4 g1f3 g8f6 e4e5 f6h5 g2g4
+C34	e2e4 e7e5 f2f4 e5f4 g1f3 h7h5
+C35	e2e4 e7e5 f2f4 e5f4 g1f3 f8e7
+C35	e2e4 e7e5 f2f4 e5f4 g1f3 f8e7 f1c4 e7h4 g2g3
+C35	e2e4 e7e5 f2f4 e5f4 g1f3 f8e7 f1c4 e7h4 g2g3 f4g3 e1g1 g3h2 g1h1
+C35	e2e4 e7e5 f2f4 e5f4 g1f3 f8e7 f1c4 g8f6
+C36	e2e4 e7e5 f2f4 e5f4 g1f3 d7d5 e4d5 g8f6
+C36	e2e4 e7e5 f2f4 e5f4 g1f3 d7d5 e4d5 g8f6 f1b5 c7c6 d5c6 b7c6 b5c4 f6d5
+C36	e2e4 e7e5 f2f4 e5f4 g1f3 d7d5
+C36	e2e4 e7e5 f2f4 e5f4 g1f3 d7d5 e4d5
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 h2h4
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 b8c6 f1c4 g7g5
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 e1g1 g4f3 d1f3 d8f6 e4e5 f6e5 c4f7
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 e1g1 g4f3 d1f3 d8f6 b1c3 f6d4 g1h1 d4c4 c3d5
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 e1g1 g4f3 d1f3 d8f6 b1c3
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 e1g1 g4f3 d1f3 d8f6 e4e5 f6e5 d2d3 f8h6 b1c3 g8e7 c1d2 b8c6 a1e1
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 e1g1 g4f3 d1f3 d8f6 c4f7 e8f7 d2d4 f6d4 c1e3 d4f6 b1c3 f4e3
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 d2d4
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 d2d4 g4f3 d1f3
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 d2d4 g4f3 c1f4
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 c4f7
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 c4f7 e8f7 e1g1 g4f3 d1f3 d8f6 d2d4 f6d4 c1e3 d4f6 b1c3
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 b1c3
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 d7d6 e1g1 c8g4 h2h3 h7h5 h3g4 h5g4
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 e1g1 g4f3 d1f3 d8e7
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 e1g1 d7d5
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 e1g1 g4f3 d1f3 b8c6
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 e1g1 d8e7
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 e1g1 g4f3 d1f3 d8f6
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 e1g1
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 b1c3
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 d2d4
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 d2d4 g5g4 f3e5 d8h4 g2g3
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 d2d4 g5g4 b1c3
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 d2d4 g5g4 c1f4
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 f3e5
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 f3e5 d8h4 e1f1 g8h6 d2d4 d7d6
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 f3e5 d8h4 e1f1 f4f3
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 f3e5 d8h4 e1f1 g8f6
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 f3e5 d8h4 e1f1 g8h6
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 f3e5 d8h4 e1f1 b8c6
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 g5g4 f3e5 d8h4 e1f1 g8h6 d2d4 f4f3
+C37	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 d2d4 g5g4 f3e5
+C38	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 f8g7 h2h4 h7h6 d2d4 d7d6 b1c3 c7c6 h4g5 h6g5 h1h8 g7h8 f3e5
+C38	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 f8g7 e1g1
+C38	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 f8g7 d2d4 d7d6 c2c3
+C38	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 f8g7 h2h4
+C38	e2e4 e7e5 f2f4 e5f4 g1f3 h7h6 f1c4 d7d6 d2d4 g7g5 h2h4 f8g7 d1d3
+C38	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 f1c4 f8g7
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3g5
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3g5 h7h6 g5f7 e8f7 d2d4
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3g5 h7h6 g5f7 e8f7 f1c4
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3g5 h7h6 g5f7 e8f7 b1c3
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3g5 h7h6 g5f7 e8f7 d2d4 d7d5 c1f4 d5e4 f1c4 f7g7 f4e5
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3g5 h7h6 g5f7 e8f7 d1g4 g8f6 g4f4 f8d6
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3g5 g8f6
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3g5 h7h6 g5f7 e8f7 f1c4 d7d5 c4d5 f7g7 d2d4
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 g8f6 f1c4 d7d5 e4d5 f8d6
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 g8f6 f1c4 d7d5 e4d5 f8d6 d2d4 f6h5 c1f4 h5f4
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 g8f6
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 g8f6 d2d4
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 g8f6 e5g4 d7d5
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 d7d5
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 d7d5 d2d4 g8f6 c1f4
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 d7d5 d2d4 g8f6 c1f4 f6e4 b1d2
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3g5 h7h6 g5f7
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 d7d6
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 h7h5
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 b8c6
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 f8g7
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 g8f6 f1c4 d7d5 e4d5 f8g7
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 g8f6 f1c4 d7d5 e4d5 f8d6 e1g1 d6e5
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 d8e7
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 h7h5 f1c4 h8h7 d2d4 f8h6 b1c3
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 f8e7
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 g8f6 f1c4 d7d5 e4d5 f8d6 e1g1
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 d8e7 d2d4 f7f5 f1c4
+C39	e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4
+C40	e2e4 e7e5 g1f3 d7d5
+C40	e2e4 e7e5 g1f3 d7d5 e4d5 f8d6
+C40	e2e4 e7e5 g1f3 d7d5 e4d5 e5e4
+C40	e2e4 e7e5 g1f3 d7d5 f3e5 d5e4 f1c4 d8g5
+C40	e2e4 e7e5 g1f3 d8e7
+C40	e2e4 e7e5 g1f3
+C40	e2e4 e7e5 g1f3 f8c5
+C40	e2e4 e7e5 g1f3 f8c5 f3e5 b8c6
+C40	e2e4 e7e5 g1f3 f7f6
+C40	e2e4 e7e5 g1f3 f7f6 f3e5 f6e5 d1h5 g7g6 h5e5 d8e7 e5h8
+C40	e2e4 e7e5 g1f3 f7f6 f3e5 d8e7 e5f3 d7d5
+C40	e2e4 e7e5 g1f3 d8e7 f1c4 f7f5
+C40	e2e4 e7e5 g1f3 c7c6
+C40	e2e4 e7e5 g1f3 d8f6 f1c4 f6g6 e1g1
+C40	e2e4 e7e5 g1f3 d8f6
+C40	e2e4 e7e5 g1f3 f7f5
+C40	e2e4 e7e5 g1f3 f7f5 e4f5
+C40	e2e4 e7e5 g1f3 f7f5 f3e5 d8f6 d2d4 d7d6 e5c4
+C40	e2e4 e7e5 g1f3 f7f5 f3e5 d8f6 d2d4 d7d6 e5c4 f5e4 f1e2
+C40	e2e4 e7e5 g1f3 f7f5 f3e5 d8f6 d2d4 d7d6 e5c4 f5e4 d1h5 g7g6 h5e2
+C40	e2e4 e7e5 g1f3 f7f5 f3e5 d8f6 e5c4 f5e4 d2d3
+C40	e2e4 e7e5 g1f3 f7f5 f3e5 d8f6 e5c4
+C40	e2e4 e7e5 g1f3 f7f5 f3e5 d8f6 e5c4 f5e4 b1c3
+C40	e2e4 e7e5 g1f3 f7f5 f3e5 d8f6 d2d4
+C40	e2e4 e7e5 g1f3 f7f5 f3e5 d8f6 d2d4 d7d6 e5c4 f5e4 c4e3
+C40	e2e4 e7e5 g1f3 f7f5 f1c4 f5e4 f3e5 d8g5 e5f7 g5g2 h1f1 d7d5 f7h8 g8f6
+C40	e2e4 e7e5 g1f3 f7f5 f1c4 f5e4 f3e5 g8f6
+C40	e2e4 e7e5 g1f3 f7f5 f3e5 g8f6 f1c4 f5e4 e5f7 d8e7 f7h8 d7d5
+C40	e2e4 e7e5 g1f3 f7f5 c2c4
+C40	e2e4 e7e5 g1f3 f7f5 f3e5 b8c6
+C40	e2e4 e7e5 g1f3 f7f5 f3e5 d8e7
+C40	e2e4 e7e5 g1f3 f7f5 g2g4
+C40	e2e4 e7e5 g1f3 f7f5 d2d4
+C40	e2e4 e7e5 g1f3 f7f5 f1c4
+C40	e2e4 e7e5 g1f3 f7f5 f1c4 g8f6
+C40	e2e4 e7e5 g1f3 f7f5 f1c4 f5e4 f3e5 d8g5 d2d4 g5g2
+C40	e2e4 e7e5 g1f3 f7f5 f1c4 f5e4 f3e5 d7d5
+C40	e2e4 e7e5 g1f3 f7f5 f1c4 b7b5
+C40	e2e4 e7e5 g1f3 f7f5 b1c3
+C40	e2e4 e7e5 g1f3 f7f5 b2b4
+C41	e2e4 e7e5 g1f3 d7d6
+C41	e2e4 e7e5 g1f3 d7d6 d2d4
+C41	e2e4 e7e5 g1f3 d7d6 f1c4
+C41	e2e4 e7e5 g1f3 d7d6 f1c4 f8e7
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 c8g4 d4e5 b8d7
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 e5d4 f3d4 g8f6 b1c3 f8e7 f1e2 e8g8 e1g1 c7c5 d4f3 b8c6 c1g5 c8e6 f1e1
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 e5d4 c2c3
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 e5d4 d1d4 c8d7
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 e5d4
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 e5d4 f3d4
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 e5d4 f3d4 g8f6
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 b8d7
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 b8d7 f1c4 c7c6 c2c3
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 b8d7 f1c4 c7c6 e1g1
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 b8d7 f1c4 c7c6 b1c3
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 b8d7 f1c4 d7b6
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 b8d7 f1c4 c7c6 e1g1 f8e7 d4e5
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 b8d7 f1c4 c7c6 f3g5
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 e5d4 f3d4 g7g6
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 g8f6 b1c3 b8d7
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 g8f6 b1c3 b8d7 f1c4 f8e7 c4f7
+C41	e2e4 d7d6 d2d4 g8f6 b1c3 b8d7 g1f3 e7e5 f1c4 f8e7 d4e5 d6e5 c4f7
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 g8f6 b1c3 b8d7 f1c4 f8e7 f3g5 e8g8 c4f7 f8f7 g5e6
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 g8f6 b1c3 b8d7 f1c4 f8e7 e1g1 h7h6
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 g8f6 b1c3 b8d7 f1e2 f8e7 e1g1 c7c6
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 b8d7 b1c3 g8f6 g2g4
+C41	e2e4 d7d6 d2d4 g8f6 b1c3 e7e5 g1f3 b8d7 f1c4 f8e7 e1g1 e8g8 d1e2 c7c6 a2a4 e5d4
+C41	e2e4 e7e5 g1f3 d7d6 f1c4 f7f5
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 f7f5 f1c4 e5d4 f3g5 g8h6 g5h7
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 e5d4 f1c4
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 g8f6
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 g8f6 d4e5
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 g8f6 f1c4
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 g8f6 d4e5 f6e4 d1d5
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 g8f6 d4e5 f6e4 b1d2
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 g8f6 b1c3 b8d7 f1c4 f8e7 f3g5 e8g8 c4f7
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 g8f6 f3g5
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 e5d4 f3d4 d6d5 e4d5
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 f7f5
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 f7f5 d4e5 f5e4 f3g5 d6d5 e5e6 f8c5 b1c3
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 f7f5 b1c3
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 f7f5 d4e5 f5e4 f3g5 d6d5 e5e6
+C41	e2e4 e7e5 g1f3 d7d6 d2d4 c8d7
+C41	e2e4 e7e5 g1f3 d7d6 f1c4 f8e7 c2c3
+C42	e2e4 e7e5 g1f3 g8f6
+C42	e2e4 e7e5 g1f3 g8f6 f3e5
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4 d6d5 f1d3 f8e7 e1g1 b8c6 f1e1 c8g4 c2c3 f7f5 b1d2
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4 d6d5 f1d3 f8e7 e1g1 b8c6 f1e1
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4 d6d5 f1d3 b8c6 e1g1 f8e7 c2c4 c6b4 c4d5
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4 d6d5 f1d3 b8c6 e1g1 f8e7 c2c4 c6b4 d3e2
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4 e4f6
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4 d6d5 f1d3 b8c6 e1g1 f8e7 c2c4
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4 d6d5 f1d3 b8c6 e1g1 f8e7 f1e1 c8g4 c2c3 f7f5 c3c4
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4 d6d5 f1d3 f8d6 e1g1 e8g8 c2c4 c8g4 c4d5 f7f5 f1e1 d6h2
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4 d6d5 f1d3 f8d6
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4 d6d5 f1d3 f8d6 e1g1 e8g8 c2c4 c7c6 f1e1 c8g4
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4 d6d5 f1d3 f8e7 e1g1 b8c6 f1e1 c8g4 c2c3 f7f5 c3c4 e7h4
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4 d6d5 f1d3 f8e7 e1g1 e8g8
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4 d6d5 f1d3 b8c6
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4 d6d5 f1d3 f8d6 e1g1 e8g8 c2c4 c7c6
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d4 d6d5 f1d3 f8d6 e1g1 e8g8 c2c4 c8g4
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f7
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f7 e8f7 f1c4
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f7 e8f7 d2d4
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d1e2
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 f6e4
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 f6e4 d1e2 d8e7
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 d2d3
+C42	e2e4 e7e5 g1f3 g8f6 f1c4
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5d3
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 c2c4
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 f1d3
+C42	e2e4 e7e5 g1f3 g8f6 d1e2 b8c6 d2d4
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5f3 f6e4 b1c3
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 d7d6 e5c4
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 b8c6
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 b8c6 e5c6 d7c6
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 b8c6 e5c6 d7c6 b1c3 f8c5
+C42	e2e4 e7e5 g1f3 g8f6 f3e5 b8c6 e5c6 d7c6 d2d3 f8c5
+C42	e2e4 e7e5 g1f3 g8f6 b1c3
+C43	e2e4 e7e5 f1c4 g8f6 d2d4 e5d4 g1f3
+C43	e2e4 e7e5 f1c4 g8f6 d2d4 e5d4 g1f3 f6e4 d1d4
+C43	e2e4 e7e5 g1f3 g8f6 d2d4
+C43	e2e4 e7e5 g1f3 g8f6 d2d4 e5d4
+C43	e2e4 e7e5 g1f3 g8f6 d2d4 e5d4 e4e5 f6e4 d1e2 e4c5 f3d4 b8c6
+C43	e2e4 e7e5 g1f3 g8f6 d2d4 e5d4 e4e5 f6e4 d1d4
+C43	e2e4 e7e5 g1f3 g8f6 d2d4 f6e4 f1d3
+C43	e2e4 e7e5 g1f3 g8f6 d2d4 f6e4 f1d3 b8c6
+C43	e2e4 e7e5 g1f3 g8f6 d2d4 e5d4 e4e5 f6e4 d1e2
+C43	e2e4 e7e5 g1f3 g8f6 d2d4 d7d5
+C43	e2e4 e7e5 g1f3 g8f6 d2d4 e5d4 e4e5 f6e4 f1b5
+C43	e2e4 e7e5 g1f3 g8f6 d2d4 f6e4 f1d3 d7d5 f3e5 f8d6 e1g1 e8g8 c2c4 d6e5
+C44	e2e4 e7e5 g1f3 b8c6 c2c4 g8f6 f3e5
+C44	e2e4 e7e5 g1f3 b8c6 f3e5
+C44	e2e4 e7e5 g1f3 b8c6 g2g3
+C44	e2e4 e7e5 g1f3 b8c6
+C44	e2e4 e7e5 g1f3 b8c6 c2c4
+C44	e2e4 e7e5 g1f3 b8c6 b2b4
+C44	e2e4 e7e5 g1f3 b8c6 f3e5 c6e5 d2d4
+C44	e2e4 e7e5 g1f3 b8c6 f1e2
+C44	e2e4 e7e5 g1f3 b8c6 f1e2 g8f6 d2d4
+C44	e2e4 e7e5 g1f3 b8c6 f1e2 g8f6 d2d4 e5d4 e4e5
+C44	e2e4 e7e5 g1f3 b8c6 f1e2 g8f6 d2d3 d7d5 b1d2
+C44	e2e4 e7e5 g1f3 b8c6 d2d3 f7f5 e4f5
+C44	e2e4 e7e5 g1f3 b8c6 c2c3
+C44	e2e4 e7e5 g1f3 b8c6 c2c3 d7d5 d1a4 c8d7
+C44	e2e4 e7e5 g1f3 b8c6 c2c3 g8f6
+C44	e2e4 e7e5 g1f3 b8c6 c2c3 g8f6 d2d3
+C44	e2e4 e7e5 g1f3 b8c6 c2c3 g8f6 d2d3 d7d5
+C44	e2e4 e7e5 g1f3 b8c6 c2c3 g8f6 d2d3 d7d5 b1d2
+C44	e2e4 e7e5 g1f3 b8c6 c2c3 d7d5 d1a4 g8f6
+C44	e2e4 e7e5 g1f3 b8c6 c2c3 g8f6 f1c4
+C44	e2e4 e7e5 g1f3 b8c6 c2c3 f7f5
+C44	e2e4 e7e5 g1f3 b8c6 c2c3 f7f5 d2d4 d7d6 d4d5
+C44	e2e4 e7e5 g1f3 b8c6 c2c3 f8e7
+C44	e2e4 e7e5 g1f3 b8c6 c2c3 g8e7
+C44	e2e4 e7e5 g1f3 b8c6 c2c3 d7d5 f1b5
+C44	e2e4 e7e5 g1f3 b8c6 c2c3 d7d5 f1b5 d5e4 f3e5 d8d5 d1a4
+C44	e2e4 e7e5 g1f3 b8c6 c2c3 d7d5 d1a4 f7f6
+C44	e2e4 e7e5 g1f3 b8c6 c2c3 g8f6 d2d4 f6e4 d4d5 f8c5
+C44	e2e4 e7e5 g1f3 b8c6 d2d4
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4
+C44	e2e4 e7e5 g1f3 b8c6 f1c4 f8e7 d2d4 e5d4
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 f8b4 c2c3 d4c3 b2c3 b4a5 e4e5
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 f8c5 f3g5 g8h6 g5f7 h6f7 c4f7 e8f7 d1h5 g7g6 h5c5 d7d5
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 c2c3
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 c2c3 d4c3 f1c4 g8f6 b1c3 f8b4
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 c2c3 d4c3 f1c4
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 c2c3 d4c3 b1c3 f8b4
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 f8b4 c2c3 d4c3 e1g1 c3b2 c1b2 g8f6 f3g5 e8g8 e4e5 c6e5
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 f8c5
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 c6d4
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 c6d4 f3d4 e5d4 d1d4
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 c6d4 f3d4 e5d4 f1c4
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1b5
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 g8f6 e4e5
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 f8c5 e1g1 d7d6 c2c3 c8g4
+C44	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4 e5d4
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 c2c3 d7d5
+C44	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4 e5d4 e4e5 f6g4
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 f8b4
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 f8c5 f3g5
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 c2c3 d4c3 b1c3 d7d6 f1c4 c8g4 e1g1 c6e5 f3e5 g4d1 c4f7 e8e7 c3d5
+C44	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 f8c5 f3g5 g8h6 d1h5
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 d8h4 d4b5 f8b4 c1d2
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 g8f6 e4e5
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 f8c5 c1e3 d8f6 d4b5
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 d8h4 c1e3
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 f8c5
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 f8c5 c1e3 d8f6 c2c3 g8e7 d1d2
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 f8c5 d4c6 d8f6
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 f8c5 c1e3 d8f6 c2c3 f6g6
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 d8h4 d4f3
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 c6d4 d1d4 d7d6 f1d3
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 f8c5 c1e3 d8f6 c2c3 g8e7 d1d2 d7d5 d4b5 c5e3 d2e3 e8g8 b5c7 a8b8 c7d5 e7d5 e4d5 c6b4
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 d8h4 d4b5
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 d8h4 d4b5 f8b4 c1d2 h4e4 f1e2 e8d8 e1g1 b4d2 d1d2
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 f8b4
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 f8c5 c1e3 d8f6 c2c3 g8e7 d4c2
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 g8f6 d4c6 b7c6 e4e5
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 d8h4 b1c3 f8b4
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 f8c5 c1e3 d8f6 c2c3 g8e7 f1b5
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 d8h4 d4f5
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 f8c5 c1e3 d8f6 c2c3 g8e7 f1b5 c6d8
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 f8c5 d4b3
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 f8c5 d4b3 c5b4
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 d8h4 d4b5 f8b4 c1d2 h4e4 f1e2 e8d8 e1g1 b4d2 b1d2 e4g6
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 g8f6
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 d8h4
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 d8h4 b1c3
+C45	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f3d4 g8f6 d4c6 b7c6 b1d2
+C46	e2e4 e7e5 g1f3 b8c6 b1c3
+C46	e2e4 e7e5 g1f3 b8c6 b1c3 f8b4
+C46	e2e4 e7e5 g1f3 b8c6 b1c3 f8b4 c3d5 g8f6
+C46	e2e4 e7e5 g1f3 b8c6 b1c3 g7g6
+C46	e2e4 e7e5 g1f3 b8c6 b1c3 g7g6 d2d4 e5d4 c3d5
+C46	e2e4 e7e5 g1f3 b8c6 b1c3 f7f5
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 g2g3
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 g2g3 d7d5 e4d5 f6d5 f1g2 d5c3 b2c3
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 a2a3
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f3e5
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f3e5 c6e5 d2d4 e5g6 e4e5 f6g8 f1c4 f8b4 d1f3 f7f5
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f3e5 c6e5 d2d4 e5c6 d4d5 c6e5 f2f4 e5g6 e4e5 f6g8 d5d6 c7d6 e5d6 d8f6 c3b5 a8b8
+C47	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 b1c3
+C47	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 b1c3 f6e4 c4f7
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 c3d5
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 d2d4
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 d2d4 e5d4
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 d2d4 e5d4 f3d4 f8b4 d4c6 b7c6 f1d3 d7d5 e4d5 e8g8 e1g1
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 d2d4 e5d4 c3d5
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 d2d4 e5d4 c3d5 f6e4 d1e2 f7f5
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 d2d4 f8b4 f3e5
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 d2d4 f8b4 f3e5 d8e7
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 d2d4 f8b4 d4d5 c6d4
+C47	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 d2d4 e5d4 f3d4 f6e4
+C48	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5
+C48	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 f8c5 e1g1 e8g8 f3e5 c6e5 d2d4 c5d6 f2f4 e5c6 e4e5 d6b4
+C48	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 f8c5
+C48	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 a7a6 b5c6
+C48	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 c6d4
+C48	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 c6d4 b5e2
+C48	e2e4 e7e5 g1f3 g8f6 b1c3 b8c6 f1b5 c6d4 f3e5 d8e7 f2f4
+C48	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 c6d4 f3d4
+C48	e2e4 e7e5 g1f3 g8f6 b1c3 b8c6 f1b5 c6d4 e1g1
+C48	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 c6d4 b5a4 f8c5 f3e5 e8g8
+C48	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 c6d4 f3e5 f8c5 e1g1 e8g8
+C48	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 c6d4 b5e2 d4f3 e2f3 f8c5 e1g1 e8g8 d2d3 d7d6 c3a4 c5b6
+C48	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 a7a6 b5c6 d7c6 f3e5 f6e4 c3e4 d8d4 e1g1 d4e5 f1e1 c8e6 d2d4 e5d5
+C49	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 f8b4 e1g1 e8g8 d2d3 b4c3
+C49	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 f8b4 e1g1 e8g8 d2d3 d8e7 c3e2 d7d5
+C49	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 f8b4
+C49	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 f8b4 e1g1 e8g8 d2d3
+C49	e2e4 e7e5 g1f3 g8f6 b1c3 b8c6 f1b5 f8b4 e1g1 e8g8 c3d5 f6d5 e4d5 e5e4
+C49	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 f8b4 e1g1 e8g8 d2d3 b4c3 b2c3 d7d6 f1e1
+C49	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 f8b4 e1g1 e8g8 b5c6
+C49	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 f8b4 e1g1 e8g8 d2d3 b4c3 b2c3 d7d5
+C49	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 f8b4 e1g1 e8g8 d2d3 d7d6
+C49	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 f8b4 e1g1 e8g8 d2d3 d7d6 c1g5 b4c3 b2c3 d8e7 f1e1 c6d8 d3d4 c8g4
+C49	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 f8b4 e1g1 e8g8 d2d3 d7d6 c1g5 c6e7
+C49	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 f8b4 e1g1 e8g8 d2d3 d7d6 c3e2
+C49	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 f8b4 e1g1 e8g8 d2d3 d7d6 c1g5 c6e7 f3h4 c7c6 b5c4 d6d5 c4b3 d8d6
+C49	e2e4 e7e5 g1f3 b8c6 b1c3 g8f6 f1b5 f8b4 e1g1 e8g8 d2d3 d7d6 c1g5 b4c3 b2c3 d8e7
+C49	e2e4 e7e5 g1f3 g8f6 b1c3 b8c6 f1b5 f8b4 e1g1 e8g8 d2d3 d7d6 c1g5 c8e6
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b1c3 g8f6
+C50	e2e4 e7e5 g1f3 b8c6 f1c4
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 h7h6
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 c6d4
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 c2c3
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 d2d4
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 d2d3
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 e1g1 f8c5 b1c3 d7d6 d2d3
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b1c3 g8f6 e1g1 e8g8
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b1c3 g8f6 e1g1 e8g8 d2d3
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 d2d3 g8f6 b1c3 d7d6 c1g5
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 d2d3 f7f5 f3g5 f5f4
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 d2d3 g8f6 b1c3
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 d2d3 f7f5
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d3 f8c5
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f8e7
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f8e7 d2d4 e5d4 c2c3 g8f6 e4e5 f6e4
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c4f7
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 d7d6
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 d2d4
+C50	e2e4 e7e5 g1f3 b8c6 f1c4 f7f5
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4c5 d2d4 e5d4 e1g1 d7d6 c3d4 c5b6 b1c3 c8g4
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b6
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b6 a2a4
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b6 c1b2
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b6 b4b5 c6a5 f3e5 d8g5 d1f3 g5e5 f3f7 e8d8 c1b2
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b6 b4b5 c6a5 f3e5 d8g5
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b6 b4b5 c6a5 f3e5 g8h6
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b6 b4b5 c6a5 f3e5 g8h6 d2d4 d7d6 c1h6 d6e5 h6g7 h8g8 c4f7 e8f7 g7e5 d8g5 b1d2
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b6 a2a4 a7a6 b1c3
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b6 b4b5 c6a5 f3e5 d8g5 c4f7 e8e7 d1h5
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4e7
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4e7 d2d4 c6a5
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 b7b5
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4c5 d2d4 e5d4 e1g1 d7d6 c3d4 c5b6 b1c3 c8g4 d1a4
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4c5 d2d4 e5d4 e1g1 d7d6 c3d4 c5b6 b1c3 c8g4 d1a4 g4d7 a4b3 c6a5 c4f7 e8f8 b3c2
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4c5 d2d4 e5d4 e1g1 d7d6 c3d4 c5b6 b1c3 c6a5 c1g5
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4c5 d2d4 e5d4 c3d4 c5b4 c1d2
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 d7d5
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4f8
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4c5
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4c5 d2d4 e5d4 e1g1 d7d6 c3d4 c5b6
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 d2d4 e5d4 e1g1 d7d6 c3d4 a5b6 b1c3
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4c5 d2d4 e5d4 e1g1 d7d6 c3d4 c5b6 b1c3 c8g4 d1a4 g4d7 a4b3 c6a5 c4f7 e8f8 b3c2 f8f7
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4c5 d2d4 e5d4 e1g1 d7d6 c3d4 c5b6 d4d5 c6a5 c1b2 g8e7
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4c5 d2d4 e5d4 e1g1 d7d6 c3d4 c5b6 b1c3 c6a5 c1g5 f7f6 g5e3
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4d6
+C51	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4c5 d2d4 e5d4 e1g1 d7d6 c3d4 c5b6 d4d5 c6a5 c1b2
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 e1g1 d7d6
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 e1g1 d7d6 d2d4 c8g4
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 e1g1 g8f6 d2d4 e5d4
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 d2d4 d7d6
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 d2d4 e5d4 e1g1 d4c3
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 d2d4 e5d4 e1g1 d4c3 d1b3 d8f6 e4e5 f6g6 b1c3 g8e7 c1a3
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 d2d4 e5d4 e1g1 d4c3 d1b3 d8f6 e4e5 f6g6 b1c3 g8e7 f1d1
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 d2d4 e5d4 e1g1 d4d3
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 d2d4 e5d4 e1g1 b7b5
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 d2d4 g8f6
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 e1g1 d7d6 d2d4 a5b6
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 d2d4 b7b5
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 d2d4 d7d6 d1b3 d8d7 d4e5 d6e5 e1g1 a5b6 c1a3 c6a5 f3e5
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 d2d4 e5d4 e1g1 g8e7
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 d2d4 e5d4
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 e1g1 g8f6 d2d4 e8g8 f3e5
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 e1g1 d7d6 d2d4 c8d7
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 e1g1
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 d2d4 d7d6 c1g5
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 d2d4 d7d6 d1b3
+C52	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 b2b4 c5b4 c2c3 b4a5 d2d4 e5d4 e1g1 d7d6 d1b3
+C53	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 b2b4
+C53	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3
+C53	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 d8e7 d2d4 c5b6
+C53	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 d8e7
+C53	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 d8e7 d2d4 c5b6 d4d5 c6b8 d5d6
+C53	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 d7d6 d2d4 e5d4 c3d4 c5b6
+C53	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 d8e7 d2d4 c5b6 c1g5
+C53	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 d8e7 d2d4 c5b6 e1g1 d7d6 a2a4 a7a6 h2h3 g8f6 f1e1
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 e4e5 f6e4 c4d5 e4f2 e1f2 d4c3 f2g3
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d3
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d3 d7d6
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d3 d7d6 b1d2 e8g8 e1g1
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 d2d3 h7h6 c2c3
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 d2d3 d7d6 c2c3 a7a6
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 d2d3 d7d6 c2c3 a7a6 a2a4
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 d2d3 d7d6 c2c3 a7a6 a2a4 c5a7
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 d2d3 d7d6 c2c3 a7a6 a2a4 e8g8
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 d2d3 d7d6 c2c3 a7a6 f1e1
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 d2d3 d7d6 c2c3 a7a6 f1e1 c5a7
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 d2d3 d7d6 c2c3 h7h6 f1e1
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 d2d3 d7d6 c2c3 h7h6 b1d2
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 d2d3 e8g8 c2c3 d7d5
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 d2d3 e8g8 c2c3 d7d6
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d3 d7d6 b2b4
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d3 d7d6 e1g1 e8g8 f1e1 a7a6 c4b3 c5a7 h2h3
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d3 d7d6 e1g1 e8g8 a2a4 a7a5
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 d2d3 a7a5 c2c3
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d3 a7a6
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d3 d7d6 b1d2 a7a6
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 d2d3 d7d6 c2c3 h7h6
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 e4e5 d7d5 c4b5 f6e4 c3d4 c5b4
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 b2b4
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 c3d4 c5b4 b1c3 f6e4 e1g1 e4c3
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 c3d4 c5b4 b1c3 f6e4 e1g1 b4c3
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 e4e5
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 e4e5 d7d5
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 c3d4 c5b4 b1c3 f6e4 e1g1 b4c3 d4d5 c3f6 f1e1 c6e7 e1e4 d7d6 g2g4
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 c3d4 c5b4 b1c3 f6e4 e1g1 b4c3 d4d5
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 c3d4
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d3 d7d5
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 c3d4 c5b4 b1c3 f6e4 e1g1 e4c3 b2c3 b4c3 c1a3
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 c3d4 c5b4 b1c3 f6e4 e1g1 e4c3 b2c3 b4c3 d1b3 d7d5
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 c3d4 c5b4 e1f1
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 c3d4 c5b4 b1c3
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 e1g1 f8c5 d2d4 c5d4 f3d4 c6d4 c1g5 d7d6 f2f4 d8e7 f4e5 d6e5 b1c3
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 c3d4 c5b4 c1d2 f6e4 d2b4 c6b4 c4f7 e8f7 d1b3 d7d5 f3e5 f7f6 f2f3
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 e1g1 f8c5 d2d4 c5d4 f3d4 c6d4 c1g5 h7h6 g5h4 g7g5 f2f4
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 c3d4 c5b4 b1c3 f6e4 e1g1 b4c3 b2c3 d7d5 c1a3
+C54	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 c3d4 c5b4 b1c3 f6e4 e1g1 b4c3 d4d5 c3f6 f1e1 c6e7 e1e4 d7d6 c1g5 f6g5 f3g5 e8g8 g5h7
+C55	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6
+C55	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 e1g1 f8c5 d2d4 c5d4 f3d4 c6d4 c1g5 d7d6
+C55	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 b1c3 f6e4 c3e4 d7d5
+C55	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d3
+C55	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d3 f8e7
+C55	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d3 h7h6 e1g1 d7d6
+C56	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4 e5d4 e1g1
+C56	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4 e5d4 e1g1 f6e4 f1e1 d7d5 c4d5 d8d5 b1c3
+C56	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4 e5d4 e1g1 f6e4 f1e1 d7d5 c4d5 d8d5 b1c3 d5a5 c3e4 c8e6 c1d2 a5d5 d2g5
+C56	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 g8f6 e1g1 f6e4 f1e1 d7d5 b1c3
+C56	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4 e5d4 e1g1 f6e4
+C56	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 g8f6 e1g1 d7d6
+C56	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 g8f6 e1g1 f8c5
+C56	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4 e5d4 e4e5 d7d5 c4b5 f6e4
+C56	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 e1g1 g8f6 d2d4 e5d4 e4e5 d7d5 e5f6 d5c4 f1e1 c8e6 f6g7
+C56	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 g8f6 e1g1 f8c5 e4e5 d7d5 e5f6 d5c4 f1e1 c8e6 f3g5 d8d5 b1c3 d5f5 c3e4
+C56	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 g8f6 e1g1 f8c5 e4e5 f6g4
+C56	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4 e5d4 e1g1 f6e4 b1c3
+C56	e2e4 e7e5 g1f3 b8c6 f1c4 f8c5 c2c3 g8f6 d2d4 e5d4 e1g1
+C56	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 g8f6 e1g1 f8e7
+C56	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4 d7d6
+C56	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4 e5d4 e4e5 d7d5 c4b5 f6e4 f3d4 f8c5 d4c6 c5f2 e1f1 d8h4
+C56	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 g8f6 e1g1 f8c5 e4e5
+C56	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4 e5d4 e1g1 f8c5 e4e5 d7d5 e5f6 d5c4 f1e1 c8e6 f3g5 d8d5 b1c3 d5f5 g2g4 f5g6 c3e4 c5b6 f2f4 e8c8
+C56	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4 e5d4 e1g1 f8c5 e4e5 f6g4 c2c3
+C56	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 f8c5 e1g1 g8f6 e4e5 d7d5 e5f6 d5c4 f1e1 c8e6 f3g5 g7g6
+C56	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4 e5d4 e1g1 f8c5 e4e5 d7d5 e5f6 d5c4 f1e1 c8e6 f3g5 d8d5 b1c3 d5f5 c3e4 c5f8
+C56	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4
+C56	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4 e5d4 f3g5
+C56	e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 g8f6 e1g1 f6e4 f1e1 d7d5 c4d5 d8d5 b1c3 d5a5 c3e4 c8e6 c1g5 h7h6 g5h4 g7g5 e4f6 e8e7 b2b4
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 f6d5 g5f7 e8f7 d1f3 f7e6 b1c3 c6b4 f3e4 c7c6 a2a3 b4a6 d2d4 a6c7
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 f6d5 g5f7
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6d4
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6d4 c2c3 b7b5 c4f1 f6d5 g5e4
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6b4
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 f6d5 d2d4
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 f6d5 d2d4 f8b4
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 f6e4
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 f8c5
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 f8c5 c4f7
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 f8c5 g5f7 c5f2 e1f2 f6e4 f2e3
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 f8c5 g5f7
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 f8c5 c4f7 e8e7 d2d4
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 b7b5
+C57	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 b7b5 c4f1 h7h6 g5f7
+C58	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6a5 c4b5 c7c6 d5c6 b7c6 b5e2
+C58	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6a5 c4b5 c7c6 d5c6 b7c6 d1f3 c6b5
+C58	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6a5 c4b5 c7c6 d5c6 b7c6 d1f3 a8b8
+C58	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6a5 d2d3 h7h6 g5f3 e5e4 d1e2 a5c4 d3c4 f8e7
+C58	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6a5 c4b5 c7c6 d5c6 b7c6 d1f3 d8c7 b5d3
+C58	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6a5
+C58	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6a5 c4b5
+C58	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6a5 c4b5 c7c6 d5c6 b7c6 d1f3
+C58	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6a5 d2d3
+C58	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6a5 d2d3 h7h6 g5f3 e5e4 d1e2 a5c4 d3c4 f8c5 f3d2
+C59	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6a5 c4b5 c7c6 d5c6 b7c6 b5e2 h7h6 g5f3 e5e4 f3e5 f8d6 d2d4 d8c7 c1d2
+C59	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6a5 c4b5 c7c6 d5c6 b7c6 b5e2 h7h6 g5f3 e5e4 f3e5 d8c7
+C59	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6a5 c4b5 c7c6 d5c6 b7c6 b5e2 h7h6
+C59	e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 f3g5 d7d5 e4d5 c6a5 c4b5 c7c6 d5c6 b7c6 b5e2 h7h6 g5h3
+C60	e2e4 e7e5 g1f3 b8c6 f1b5
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 f8b4
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 f8b4 c2c3 b4a5 b5c6 d7c6
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 g7g5
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 a7a5
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 g8e7
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 g8e7 b1c3 g7g6
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 g7g6 d2d4 e5d4 f3d4 f8g7 c1e3 g8e7 b1c3 e8g8 d1d2 d7d5
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 g7g6
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 g7g6 c2c3 f7f5
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 f8e7
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 f7f6
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 c6a5
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 c6b8
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 b7b6
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 d7d5
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 d7d5 f3e5 d8g5 e1g1
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 d7d5 f3e5 d8g5 e5c6
+C60	e2e4 e7e5 g1f3 b8c6 f1b5 d8e7
+C61	e2e4 e7e5 g1f3 b8c6 f1b5 c6d4
+C61	e2e4 e7e5 g1f3 b8c6 f1b5 c6d4 f3d4 e5d4 e1g1 g8e7
+C62	e2e4 e7e5 g1f3 b8c6 f1b5 d7d6
+C62	e2e4 e7e5 g1f3 b8c6 f1b5 d7d6 d2d4
+C62	e2e4 e7e5 g1f3 b8c6 f1b5 d7d6 d2d4 e5d4 e1g1
+C62	e2e4 e7e5 g1f3 b8c6 f1b5 d7d6 d2d4 c8d7 b1c3 g8f6 b5c6
+C62	e2e4 e7e5 g1f3 b8c6 f1b5 d7d6 d2d4 c8d7 c2c4
+C63	e2e4 e7e5 g1f3 b8c6 f1b5 f7f5
+C63	e2e4 e7e5 g1f3 b8c6 f1b5 f7f5 b1c3 f5e4 c3e4 d7d5 f3e5 d5e4 e5c6 d8g5
+C63	e2e4 e7e5 g1f3 b8c6 f1b5 f7f5 b1c3
+C63	e2e4 e7e5 g1f3 b8c6 f1b5 f7f5 b5c6
+C63	e2e4 e7e5 g1f3 b8c6 f1b5 f7f5 e4f5
+C63	e2e4 e7e5 g1f3 b8c6 f1b5 f7f5 b1c3 f5e4 c3e4 f8e7
+C63	e2e4 e7e5 g1f3 b8c6 f1b5 f7f5 b1c3 f5e4 c3e4 d7d5 f3e5 d5e4 e5c6 d8d5
+C63	e2e4 e7e5 g1f3 b8c6 f1b5 f7f5 d2d4
+C63	e2e4 e7e5 g1f3 b8c6 f1b5 f7f5 b1c3 f5e4 c3e4 g8f6
+C64	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f8c5 c2c3 e8g8 d2d4 c5b6
+C64	e2e4 e7e5 g1f3 b8c6 f1b5 f8c5 c2c3 d8e7
+C64	e2e4 e7e5 g1f3 b8c6 f1b5 f8c5 e1g1 c6d4 b2b4
+C64	e2e4 e7e5 g1f3 b8c6 f1b5 f8c5
+C64	e2e4 e7e5 g1f3 b8c6 f1b5 f8c5 c2c3
+C64	e2e4 e7e5 g1f3 b8c6 f1b5 f8c5 c2c3 c5b6
+C64	e2e4 e7e5 g1f3 b8c6 f1b5 f8c5 c2c3 f7f5
+C64	e2e4 e7e5 g1f3 b8c6 f1b5 f8c5 c2c3 d7d5
+C64	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f8c5 c2c3 e8g8 d2d4 c5b6 c1g5
+C64	e2e4 e7e5 g1f3 b8c6 f1b5 f8c5 b2b4
+C65	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6
+C65	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1
+C65	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 d2d3
+C65	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 d2d3 d7d6 b5c6
+C65	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 d2d3 d7d6 c2c4
+C65	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 d2d3 f8c5 c1e3
+C65	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 d2d3 c6e7 f3e5 c7c6
+C65	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 d2d3 c6e7
+C65	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f8c5
+C65	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6g4
+C65	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 d2d4 e5d4 e1g1
+C65	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f8c5 c2c3
+C65	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 f3e5
+C66	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 d7d6 d2d4 c8d7 b1c3 f8e7 c1g5
+C66	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 d7d6 d2d4 c8d7 b1c3 f8e7 b5c6
+C66	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 d7d6 d2d4 c8d7 b1c3 e5d4
+C66	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 d7d6 d2d4 c8d7 b1c3 f8e7
+C66	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 d7d6
+C66	e2e4 e7e5 g1f3 b8c6 f1b5 d7d6 d2d4 c8d7 b1c3 g8f6 e1g1 f8e7 f1e1 e8g8
+C66	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 d7d6 d2d4 f6d7
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 d2d4 e4d6 b5c6 d7c6 d4e5 d6f5 d1d8 e8d8 b1c3 c8d7
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 d2d4 f8e7 d1e2 e4d6 b5c6 b7c6 d4e5 d6f5
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 d2d4 f8e7 d4e5
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 d2d4 f8e7 d1e2 e4d6 b5c6 b7c6 d4e5 d6b7 b2b3
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 d2d4 f8e7
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 d2d4 f8e7 d1e2 e4d6 b5c6 b7c6 d4e5 d6b7 b1c3 e8g8 f1e1 b7c5 f3d4 c5e6 c1e3 e6d4 e3d4 c6c5
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 d2d4 a7a6
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 d2d4 f8e7 d1e2 d7d5
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 d2d4 f8e7 d1e2 e4d6 b5c6 b7c6 d4e5 d6b7 f3d4
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 d2d4 f8e7 d1e2 e4d6 b5c6 b7c6 d4e5 d6b7 c2c4
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 d2d4 e4d6
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 d2d4 e4d6 b5c6 d7c6 d4e5 d6f5 d1d8 e8d8
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 d2d4 e4d6 b5c6 d7c6 d4e5 d6e4
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 d2d4 e4d6 b5a4
+C67	e2e4 e7e5 g1f3 b8c6 f1b5 g8f6 e1g1 f6e4 d2d4 e4d6 d4e5
+C68	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5c6
+C68	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5c6 d7c6 d2d4 e5d4 d1d4 d8d4 f3d4 f8d6
+C68	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5c6 d7c6 b1c3
+C68	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5c6 b7c6
+C68	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5c6 d7c6 b1c3 f7f6 d2d3
+C68	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5c6 d7c6 d2d4 e5d4 d1d4 d8d4 f3d4 c8d7
+C69	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5c6 d7c6 e1g1 c8g4 h2h3 h7h5
+C69	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5c6 d7c6 e1g1 d8d6
+C69	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5c6 d7c6 e1g1 f7f6
+C69	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5c6 d7c6 e1g1 f8d6
+C69	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5c6 d7c6 e1g1
+C70	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 c6d4
+C70	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6
+C70	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 f8b4
+C70	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 b7b5
+C70	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 f8c5
+C70	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8e7
+C70	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g7g6
+C70	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 b7b5 a4b3 f8c5
+C70	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 b7b5 a4b3 c6a5
+C70	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 b7b5 a4b3 c6a5 b3f7
+C70	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 f7f5
+C70	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 f7f5 e4f5
+C71	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 d7d6
+C71	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 d7d6 b1c3
+C71	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 d7d6 c2c4
+C71	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 b7b5 a4b3 d7d6 d2d4 c6d4 f3d4 e5d4 d1d4 c7c5
+C72	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 d7d6 e1g1 c8d7 c2c3 g8f6 d2d4 f8e7 b1d2 e8g8 f1e1 d7e8
+C72	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 d7d6 e1g1
+C73	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 d7d6 a4c6 b7c6 d2d4
+C73	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 d7d6 a4c6 b7c6 d2d4 f7f6
+C74	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 d7d6 c2c3
+C74	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 d7d6 c2c3 f7f5 e4f5 c8f5 e1g1
+C74	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 d7d6 c2c3 f7f5
+C75	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 d7d6 c2c3 c8d7
+C75	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 d7d6 c2c3 c8d7 d2d4 g8e7
+C76	e2e4 e7e5 g1f3 b8c6 f1b5 g7g6 c2c3 a7a6 b5a4 d7d6 d2d4 c8d7
+C77	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 d2d3
+C77	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 a4c6
+C77	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 d2d3 d7d6 c2c4
+C77	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 c2c3
+C77	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 d2d4
+C77	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 b1c3
+C77	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 d1e2
+C77	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 d1e2 b7b5 a4b3 f8e7 d2d4 d7d6 c2c3 c8g4
+C78	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 g7g6
+C78	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 d7d5
+C78	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1
+C78	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 b7b5 a4b3 d7d6
+C78	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 b7b5 a4b3 c8b7
+C78	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8c5
+C78	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 b7b5 a4b3 f8c5
+C78	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 b7b5 a4b3 f8e7 a2a4
+C78	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 b7b5 a4b3 d7d6 f3g5 d6d5 e4d5 c6d4 f1e1 f8c5 e1e5 e8f8
+C79	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 d7d6
+C79	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 d7d6 a4c6 b7c6 d2d4 f6e4
+C79	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 d7d6 a4c6 b7c6 d2d4 f6e4 f1e1 f7f5 d4e5 d6d5 b1c3
+C79	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 d7d6 a4c6 b7c6 d2d4 c8g4
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d1e2
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 a2a4 c6d4 f3d4 e5d4 b1c3
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 b1d2
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 b1d2 f8c5 d1e1
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 f3e5
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 c2c4
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 b1d2 e4c5 c2c3 d5d4 f3g5
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 b1c3
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 d4d5
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 e5d4
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 a2a4 c6d4
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 f1e1 d7d5
+C80	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c6e7
+C81	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 d1e2
+C81	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 d1e2 f8e7 c2c4
+C81	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 d1e2 f8e7 f1d1 e8g8 c2c4 b5c4 b3c4 d8d7
+C82	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 c2c3
+C82	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 c2c3 e4c5
+C82	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 c2c3 f8c5 b1d2 e8g8 b3c2 e4f2
+C82	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 c2c3 f8c5
+C82	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 c2c3 f8c5 d1d3
+C82	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 c2c3 f8c5 d1d3 c6e7
+C82	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 c2c3 f8c5 b1d2
+C83	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 c2c3 f8e7 f1e1 e8g8 f3d4 c6e5
+C83	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 c2c3 f8e7
+C83	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 b1d2 e4c5 c2c3 f8e7
+C83	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 f8e7 f1e1 b7b5 a4b3 d7d5 d4e5 c8e6 c2c3
+C83	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 c2c3 f8e7 b1d2 e8g8 d1e2
+C83	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f6e4 d2d4 b7b5 a4b3 d7d5 d4e5 c8e6 c2c3 f8e7 f1e1 e8g8 f3d4 d8d7 d4e6 f7e6 e1e4
+C84	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7
+C84	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 d2d4 e5d4 e4e5 f6e4 c2c3
+C84	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 d2d4
+C84	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 d2d4 e5d4 e4e5 f6e4 c2c3 d4c3
+C84	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 d2d3
+C84	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 b1c3
+C85	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 a4c6
+C86	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 d1e2
+C86	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 d1e2 b7b5 a4b3 e8g8
+C86	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 d1e2 f8e7 e1g1 b7b5 a4b3 e8g8 c2c3 d7d5 d2d3
+C86	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 d1e2 b7b5 a4b3 d7d6
+C87	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 d7d6
+C88	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3
+C88	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 e8g8
+C88	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 c6a5 b3c2 c7c5 d2d4 d8c7 b1d2 e8g8 d2f1 c8g4 f1e3 g4f3 d1f3
+C88	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 e8g8 a2a4
+C88	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 c6a5 b3c2 c7c5 d2d4 d8c7 a2a4
+C88	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 c6a5 b3c2 c7c5 d2d4 d8c7 h2h3 a5c6 d4d5 c6b8 b1d2 g7g5
+C88	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 d2d4
+C88	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 c8b7
+C88	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 d2d4 c6d4 f3d4 e5d4 d1d4 c7c5
+C89	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 e8g8 c2c3 d7d5
+C89	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 e8g8 c2c3 d7d5 e4d5 f6d5 f3e5 c6e5 e1e5 c7c6 d2d4
+C89	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 e8g8 c2c3 d7d5 e4d5 f6d5 f3e5 c6e5 e1e5 c7c6 d2d4 e7d6 e5e1 d8h4 g2g3 h4h3 c1e3 c8g4 d1d3 a8e8 b1d2 e8e6 a2a4 h3h5
+C89	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 e8g8 c2c3 d7d5 e4d5 f6d5 f3e5 c6e5 e1e5 c7c6 d2d4 e7d6 e5e1 d8h4 g2g3 h4h3
+C89	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 e8g8 c2c3 d7d5 e4d5 f6d5 f3e5 c6e5 e1e5 c7c6
+C89	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 e8g8 c2c3 d7d5 e4d5 f6d5 f3e5 c6e5 e1e5 d5f6
+C89	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 e8g8 c2c3 d7d5 e4d5 f6d5 f3e5 c6e5 e1e5 c7c6 b3d5 c6d5 d2d4 e7d6 e5e3
+C89	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 e8g8 c2c3 d7d5 e4d5 e5e4
+C90	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8
+C90	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 b3c2
+C90	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 e8g8 d2d3 d7d6 c2c3
+C90	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 a2a3
+C91	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 d2d4 c8g4
+C91	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 d2d4
+C91	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 d2d4 c8g4 a2a4
+C92	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3
+C92	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c8b7
+C92	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 f6d7
+C92	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c8e6
+C92	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c8b7 d2d4 f8e8 b1d2 e7f8 a2a3 h7h6
+C92	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 f8e8
+C93	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 h7h6
+C94	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6b8
+C94	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6b8 d2d3
+C95	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6b8 d2d4
+C95	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6b8 d2d4 b8d7 b1d2 c8b7 b3c2 c7c5
+C95	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6b8 d2d4 b8d7 f3h4
+C95	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6b8 d2d4 b8d7
+C96	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6a5 b3c2 c7c5 d2d4 a5c6
+C96	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6a5 b3c2
+C96	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6a5 b3c2 c7c5
+C96	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6a5 b3c2 d6d5
+C96	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6a5 b3c2 c7c5 d2d4 f6d7
+C96	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6a5 b3c2 c7c6 d2d4 d8c7
+C97	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6a5
+C97	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6a5 b3c2 c7c5 d2d4 d8c7
+C97	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6a5 b3c2 c7c5 d2d4 d8c7 b1d2 c8d7 d2f1 f8e8 f1e3 g7g6
+C98	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6a5 b3c2 c7c5 d2d4 d8c7 b1d2 a5c6
+C98	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6a5 b3c2 c7c5 d2d4 d8c7 b1d2 a5c6 d4c5
+C99	e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1 f8e7 f1e1 b7b5 a4b3 d7d6 c2c3 e8g8 h2h3 c6a5 b3c2 c7c5 d2d4 d8c7 b1d2 c5d4 c3d4
+D00	d2d4 d7d5 d1d3
+D00	d2d4 d7d5 e2e4
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 g7g6
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 g7g6 f1c4 f8g7 e1g1 e8g8 g1h1
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 g7g6 f1c4 f8g7 h2h4
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 g7g6 f1c4 f8g7 f3e5
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 g7g6 f1c4 f8g7 e1g1 e8g8 d1e1
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 e7e6
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 e7e6 f1d3
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 e7e6 c1g5 f8e7 f1d3 b8c6 e1g1 c6d4 g1h1
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 c8f5
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 c8f5 f3e5 e7e6 g2g4 f5e4
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 d8d6
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 c7c5
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 b8c6
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 b7b6
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 d1f3
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 b8d7
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 c8g4
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 c8g4 h2h3 g4f3 d1f3 c7c6 f3f2
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 c8g4 h2h3 g4f3 d1f3 c7c6 c1e3
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 c8g4 h2h3 g4f3 d1f3 c7c6 g2g4
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4f3 g1f3 c7c6
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 c7c5
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e7e5
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 a7a6
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 b8c6
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e4e3
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 c7c6
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 c8f5
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e7e6
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 f2f3 e7e6 f3e4
+D00	d2d4 d7d5 e2e4 d5e4 f2f3
+D00	d2d4 d7d5 e2e4 d5e4 c1e3
+D00	d2d4 d7d5 e2e4 d5e4 f1c4
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 e7e5
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 e7e5 d4e5
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 e7e5 c3e4
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 e7e5 g1e2
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 e7e5 d1h5
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 e7e5 c1e3
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 f7f5
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 c1e3
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 c7c5
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 c8f5
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 c8f5 f2f3 g8f6 f1c4
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 c1g5
+D00	d2d4 d7d5 e2e4 d5e4 b1c3 g8f6 c1g5 c8f5 g5f6 e7f6 g2g4 f5g6 d1e2 f8b4 e2b5
+D00	d2d4 d7d5
+D00	d2d4 d7d5 e2e3
+D00	d2d4 d7d5 e2e3 g8f6
+D00	d2d4 d7d5 c1f4
+D00	d2d4 d7d5 c1f4 c7c5
+D00	d2d4 d7d5 c1f4 c7c5 d4c5
+D00	d2d4 d7d5 c1f4 c7c5 e2e4
+D00	d2d4 d7d5 c1f4 c7c5 e2e4 d5e4
+D00	d2d4 d7d5 b1c3
+D00	d2d4 d7d5 b1c3 e7e6
+D00	d2d4 d7d5 b1c3 c8f5
+D00	d2d4 d7d5 b1c3 c8g4
+D00	d2d4 g7g6 g1f3 f8g7 b1c3 d7d5
+D00	d2d4 d7d5 b1c3 c7c5
+D00	d2d4 d7d5 b1c3 e7e5
+D00	d2d4 d7d5 b1c3 h7h5
+D00	d2d4 g8f6 b1c3 d7d5 e2e4
+D00	d2d4 d7d5 c1g5
+D00	d2d4 d7d5 c1g5 c8g4
+D00	d2d4 d7d5 f2f4
+D00	d2d4 d7d5 e2e3 g8f6 f1d3
+D00	d2d4 d7d5 g2g4
+D01	d2d4 d7d5 b1c3 g8f6 c1f4
+D01	d2d4 d7d5 b1c3 g8f6 c1f4 e7e6
+D01	d2d4 d7d5 b1c3 g8f6 c1f4 g7g6
+D01	d2d4 d7d5 b1c3 e7e6 c1f4
+D01	d2d4 g8f6 b1c3 d7d5 c1g5
+D01	d2d4 g8f6 b1c3 d7d5 c1g5 c8f5
+D01	d2d4 g8f6 b1c3 d7d5 c1g5 f6e4
+D01	d2d4 g8f6 b1c3 d7d5 c1g5 c7c5 g5f6 g7f6 e2e4 d5e4 d4d5
+D01	d2d4 g8f6 b1c3 d7d5 c1g5 c8f5 f2f3
+D01	d2d4 g8f6 b1c3 d7d5 c1g5 b8d7 g1f3
+D01	d2d4 g8f6 b1c3 d7d5 c1g5 b8d7 g1f3 g7g6
+D01	d2d4 g8f6 b1c3 d7d5 c1g5 c8f5 g5f6
+D02	d2d4 g8f6 g1f3 d7d5 c1f4 c7c5 e2e3 d8b6 b1c3
+D02	d2d4 d7d5 g1f3 c8f5 c2c4 e7e6 b1c3 c7c6
+D02	g1f3 d7d5 d2d4 c8g4
+D02	d2d4 d7d5 g1f3 c7c5 g2g3 c5d4 f1g2
+D02	d2d4 d7d5 g1f3 b8c6
+D02	d2d4 d7d5 g1f3 c7c5
+D02	d2d4 d7d5 g1f3 c7c6 c1g5 h7h6 g5h4 d8b6
+D02	d2d4 d7d5 g1f3 g8f6 c1f4
+D02	d2d4 d7d5 g1f3 g8f6 c1f4 c7c5 e2e3
+D02	d2d4 d7d5 g1f3 g8f6 c1f4 c7c5 e2e3 b8c6 b1d2
+D02	d2d4 d7d5 g1f3 g8f6 c1f4 c7c5 e2e3 b8c6 b1d2 e7e6 c2c3
+D02	d2d4 g7g6 g1f3 f8g7 c1f4 c7c5 c2c3 c5d4 c3d4 d8a5
+D02	d2d4 d7d5 g1f3 e7e6 c1f4
+D02	d2d4 d7d5 g1f3 e7e6 c1f4 g8f6
+D02	d2d4 d7d5 g1f3 g8f6
+D02	d2d4 d7d5 g1f3 g8f6 g2g3
+D02	d2d4 d7d5 g1f3 g8f6 g2g3 c7c6 f1g2 c8g4
+D02	g1f3 d7d5 g2g3 c7c6 f1g2 g8f6 e1g1 c8g4 d2d4 e7e6
+D02	d2d4 d7d5 g1f3 g8f6 c2c4 b7b5
+D02	d2d4 d7d5 g1f3
+D03	d2d4 d7d5 g1f3 g8f6 c1g5
+D03	d2d4 d7d5 g1f3 g8f6 c1g5 f6e4
+D03	d2d4 d7d5 g1f3 g8f6 c1g5 g7g6
+D04	d2d4 d7d5 g1f3 g8f6 e2e3
+D04	d2d4 d7d5 g1f3 g8f6 e2e3 c8f5
+D04	d2d4 d7d5 g1f3 g8f6 e2e3 g7g6 f1d3 f8g7
+D05	d2d4 d7d5 g1f3 g8f6 e2e3 e7e6
+D05	d2d4 d7d5 g1f3 g8f6 e2e3 e7e6 f1d3
+D05	d2d4 d7d5 g1f3 g8f6 e2e3 e7e6 b2b3
+D05	d2d4 d7d5 g1f3 g8f6 e2e3 e7e6 b2b3 c7c5 c1b2 b8c6
+D05	d2d4 d7d5 g1f3 g8f6 e2e3 e7e6 b2b3 c7c5 c1b2 b8c6 f1d3
+D05	d2d4 d7d5 g1f3 g8f6 e2e3 e7e6 b2b3 c7c5 c1b2 b8c6 b1d2
+D05	d2d4 g8f6 g1f3 e7e6 e2e3 b7b6 f1d3 c8b7 e1g1 c7c5 b2b3 f8e7 c1b2 e8g8 b1d2 d7d5
+D05	d2d4 g8f6 g1f3 e7e6 e2e3 c7c5 f1d3 d7d5 c2c3
+D05	d2d4 d7d5 g1f3 c7c5 e2e3 g8f6 b1d2 e7e6 b2b3
+D05	d2d4 g8f6 g1f3 e7e6 e2e3 c7c5 f1d3 d7d5 b2b3
+D05	d2d4 g8f6 g1f3 e7e6 e2e3 c7c5 f1d3 d7d5 b2b3 b8c6 e1g1 f8d6 c1b2 e8g8
+D05	d2d4 g8f6 g1f3 e7e6 e2e3 c7c5 f1d3 d7d5 b2b3 b8c6 e1g1 f8e7 c1b2 e8g8
+D05	d2d4 d7d5 g1f3 g8f6 e2e3 e7e6 f1d3 f8d6 e1g1 e8g8 b2b3 b8d7 c1b2
+D05	d2d4 d7d5 g1f3 g8f6 e2e3 e7e6 f1d3 f8d6 e1g1 e8g8 b2b3 b8d7 c1b2 c7c6
+D05	d2d4 d7d5 g1f3 g8f6 e2e3 e7e6 f1d3 f8d6 e1g1 e8g8 b2b3 b8d7 c1b2 c7c6 b1d2
+D06	d2d4 d7d5 c2c4
+D06	d2d4 d7d5 c2c4 c7c5 d4c5 d5d4
+D06	d2d4 d7d5 c2c4 c7c5
+D06	d2d4 d7d5 c2c4 c7c5 c4d5 g8f6
+D06	d2d4 d7d5 c2c4 c7c5 c4d5 g8f6 e2e4 f6e4 d4c5 d8a5
+D06	d2d4 d7d5 c2c4 c8f5
+D06	d2d4 d7d5 c2c4 c8f5 c4d5 f5b1 d1a4 c7c6 d5c6 b8c6
+D06	d2d4 d7d5 c2c4 c8f5 b1c3 e7e6 g1f3 b8c6
+D06	d2d4 d7d5 c2c4 c8f5 d1b3
+D06	d2d4 d7d5 c2c4 c8f5 b1c3 e7e6 d1b3
+D06	d2d4 d7d5 c2c4 g8f6
+D06	d2d4 d7d5 c2c4 g8f6 c4d5 c7c6
+D06	d2d4 d7d5 c2c4 b7b5
+D07	d2d4 d7d5 c2c4 b8c6
+D07	d2d4 d7d5 c2c4 b8c6 b1c3
+D07	d2d4 d7d5 c2c4 b8c6 b1c3 d5c4
+D07	d2d4 d7d5 c2c4 b8c6 c4d5 d8d5
+D07	d2d4 d7d5 c2c4 b8c6 c4d5 d8d5 e2e3 e7e5 b1c3 f8b4 c1d2 b4c3 d2c3 e5d4 g1e2
+D07	d2d4 d7d5 c2c4 b8c6 b1c3 d5c4 g1f3
+D07	d2d4 d7d5 c2c4 b8c6 g1f3 e7e5
+D07	d2d4 d7d5 c2c4 b8c6 g1f3 c8g4
+D07	d2d4 d7d5 c2c4 b8c6 g1f3 c8g4 d1a4
+D07	d2d4 d7d5 c2c4 b8c6 b1c3 d5c4 g1f3 g8f6
+D07	d2d4 d7d5 c2c4 b8c6 b1c3 e7e5
+D08	d2d4 d7d5 c2c4 e7e5
+D08	d2d4 d7d5 c2c4 e7e5 d4e5 d5d4 g1f3 b8c6 b1d2 d8e7
+D08	d2d4 d7d5 c2c4 e7e5 d4e5 d5d4 g1f3 b8c6 b1d2 f7f6
+D08	d2d4 d7d5 c2c4 e7e5 d4e5 d5d4 g1f3 b8c6 b1d2 c8g4 h2h3 g4f3 d2f3 f8b4 c1d2 d8e7
+D08	d2d4 d7d5 c2c4 e7e5 d4e5 d5d4 e2e3 f8b4 c1d2 d4e3
+D08	d2d4 d7d5 c2c4 e7e5 d4e5 d5d4 g1f3 b8c6 b1d2
+D08	d2d4 d7d5 c2c4 e7e5 d4e5 d5d4 g1f3
+D08	d2d4 d7d5 c2c4 e7e5 d4e5 d5d4 e2e4
+D08	d2d4 d7d5 c2c4 e7e5 d4e5 d5d4 g1f3 c7c5
+D09	d2d4 d7d5 c2c4 e7e5 d4e5 d5d4 g1f3 b8c6 g2g3
+D09	d2d4 d7d5 c2c4 e7e5 d4e5 d5d4 g1f3 b8c6 g2g3 c8e6
+D09	d2d4 d7d5 c2c4 e7e5 d4e5 d5d4 g1f3 b8c6 g2g3 c8f5
+D09	d2d4 d7d5 c2c4 e7e5 d4e5 d5d4 g1f3 b8c6 g2g3 c8g4
+D10	d2d4 d7d5 c2c4 c7c6
+D10	d2d4 d7d5 c2c4 c7c6 b1c3
+D10	d2d4 d7d5 c2c4 c7c6 b1c3 d5c4
+D10	d2d4 d7d5 c2c4 c7c6 e2e4
+D10	d2d4 d7d5 c2c4 c7c6 c4d5
+D10	d2d4 d7d5 c2c4 c7c6 c4d5 c6d5 b1c3 g8f6 f2f3
+D10	d2d4 d7d5 c2c4 c7c6 b1c3 d5c4 e2e4
+D10	d2d4 d7d5 c2c4 c7c6 b1c3 e7e5
+D10	d2d4 d7d5 c2c4 c7c6 b1c3 e7e5 e2e4
+D11	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 c1g5
+D11	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1d2
+D11	d2d4 d7d5 c2c4 c7c6 g1f3
+D11	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 g2g3 d5c4 f1g2 g7g6
+D11	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 g2g3 c8g4 f1g2 e7e6 e1g1
+D11	d2d4 d7d5 g1f3 g8f6 g2g3 c7c6 f1g2 c8g4 e1g1 b8d7 c2c4
+D11	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 e2e3
+D11	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 e2e3 c8g4
+D12	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 e2e3 c8f5 c4d5 c6d5 b1c3 e7e6 f3e5 f6d7
+D12	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 e2e3 c8f5 c4d5 c6d5 d1b3 d8c8 c1d2 e7e6 b1a3
+D12	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 e2e3 c8f5
+D12	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 e2e3 c8f5 b1c3 e7e6
+D13	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 c4d5 c6d5
+D13	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 e2e3 c8f5 c4d5 c6d5 b1c3
+D14	d2d4 d7d5 c2c4 c7c6 c4d5 c6d5 b1c3 g8f6 g1f3 b8c6 c1f4 c8f5
+D14	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 c4d5 c6d5 b1c3 b8c6 c1f4 c8f5 e2e3 e7e6 d1b3 f8b4
+D15	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 e2e3
+D15	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 a7a6
+D15	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 a7a6 e2e3 c8f5
+D15	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 a7a6 c4c5
+D15	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 e2e4
+D15	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 e2e4 b7b5 e4e5
+D15	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 g7g6
+D15	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d8b6
+D15	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3
+D15	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4
+D16	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4
+D16	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 b8a6
+D16	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 e7e6
+D16	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 c8g4
+D17	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 c8f5
+D17	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 c8f5 f3h4
+D17	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 c8f5 f3e5 b8d7 e5c4 d8c7 g2g3 e7e5
+D17	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 c8f5 f3e5 b8d7 e5c4 d8c7 g2g3 e7e5 d4e5 d7e5 c1f4 f6d7 f1g2 g7g5
+D17	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 c8f5 f3e5
+D17	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 c8f5 f3e5 b8a6 e2e4
+D17	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 c8f5 f3e5 e7e6
+D17	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 c8f5 f3e5 e7e6 f2f3 f8b4 e2e4
+D18	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 c8f5 e2e3
+D18	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 c8f5 e2e3 b8a6
+D19	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 c8f5 e2e3 e7e6 f1c4 f8b4 e1g1 e8g8 d1e2
+D19	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 c8f5 e2e3 e7e6 f1c4 f8b4 e1g1
+D19	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 d5c4 a2a4 c8f5 e2e3 e7e6 f1c4 f8b4 e1g1 e8g8 d1e2 f6e4 g2g4
+D20	d2d4 d7d5 c2c4 d5c4
+D20	d2d4 d7d5 c2c4 d5c4 d1a4
+D20	d2d4 d7d5 c2c4 d5c4 e2e4 g8f6
+D20	d2d4 d7d5 c2c4 d5c4 e2e4 b7b5
+D20	d2d4 d7d5 c2c4 d5c4 e2e4 e7e5
+D20	d2d4 d7d5 c2c4 d5c4 e2e4 e7e5 f1c4
+D20	d2d4 d7d5 c2c4 d5c4 e2e4 b8c6
+D20	d2d4 d7d5 c2c4 d5c4 e2e4 c7c5
+D20	d2d4 d7d5 c2c4 d5c4 e2e4 c7c5 d4d5 b7b5
+D20	d2d4 d7d5 c2c4 d5c4 e2e4 c7c5 d4d5 g8f6 b1c3 b7b5
+D20	d2d4 d7d5 c2c4 d5c4 e2e3
+D20	d2d4 d7d5 c2c4 d5c4 e2e3 e7e5 f1c4 e5d4 d1b3 d8e7 a2a3
+D20	d2d4 d7d5 c2c4 d5c4 e2e3 e7e5 f1c4 e5d4 d1b3 d8e7 g1f3
+D20	d2d4 d7d5 c2c4 d5c4 e2e3 e7e5 f1c4 e5d4 d1b3 d8e7 e1f1
+D20	d2d4 d7d5 c2c4 d5c4 e2e3 e7e5 f1c4 e5d4 d1b3 d8e7 b1d2
+D20	d2d4 d7d5 c2c4 d5c4 e2e4
+D20	d2d4 d7d5 c2c4 d5c4 e2e4 f7f5
+D21	d2d4 d7d5 c2c4 d5c4 g1f3 a7a6 e2e4
+D21	d2d4 d7d5 c2c4 d5c4 g1f3 b8d7
+D21	d2d4 d7d5 c2c4 d5c4 g1f3 c7c5
+D21	d2d4 d7d5 c2c4 d5c4 g1f3
+D21	d2d4 d7d5 c2c4 d5c4 g1f3 e7e6
+D21	d2d4 d7d5 c2c4 d5c4 g1f3 b7b5
+D22	d2d4 d7d5 c2c4 d5c4 g1f3 a7a6
+D22	d2d4 d7d5 c2c4 d5c4 g1f3 a7a6 e2e3 c8g4 f1c4 e7e6 d4d5
+D22	d2d4 d7d5 c2c4 d5c4 g1f3 a7a6 e2e3 b7b5
+D23	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6
+D23	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 d1a4
+D24	d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 b1c3 d5c4 e2e4
+D24	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 b1c3 a7a6 e2e4
+D24	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 b1c3 c7c5 d4d5 e7e6 e2e4 e6d5 e4e5
+D24	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 b1c3
+D25	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 c8g4
+D25	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3
+D25	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 g7g6
+D25	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 c8e6
+D26	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 e7e6 f1c4 c7c5
+D26	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 e7e6 f1c4 c7c5 e1g1
+D26	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 e7e6 f1c4 c7c5 e1g1 b8c6
+D26	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 e7e6 f1c4 c7c5 e1g1 c5d4
+D26	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 e7e6 f1c4 c7c5 d1e2 a7a6 d4c5 f8c5 e1g1 b8c6 e3e4 b7b5 e4e5
+D26	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 e7e6
+D27	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 e7e6 f1c4 c7c5 e1g1 a7a6
+D27	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 e7e6 f1c4 c7c5 e1g1 a7a6 a2a4
+D27	d2d4 d7d5 c2c4 d5c4 e2e3 g8f6 f1c4 e7e6 g1f3 c7c5 e1g1 a7a6 e3e4
+D27	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 e7e6 f1c4 c7c5 e1g1 a7a6 d4c5 f8c5
+D28	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 e7e6 f1c4 c7c5 e1g1 a7a6 d1e2
+D28	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 e7e6 f1c4 c7c5 e1g1 a7a6 d1e2 b7b5
+D28	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 e7e6 f1c4 c7c5 e1g1 a7a6 d1e2 b7b5 c4b3 b8c6 f1d1 c5c4 b3c2 c6b4 b1c3 b4c2 e2c2 c8b7 d4d5 d8c7
+D29	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 e7e6 f1c4 c7c5 e1g1 a7a6 d1e2 b7b5 c4b3 c8b7
+D29	d2d4 d7d5 c2c4 d5c4 g1f3 g8f6 e2e3 e7e6 f1c4 c7c5 e1g1 a7a6 d1e2 b7b5 c4b3 c8b7 f1d1 b8d7 b1c3 f8d6
+D30	d2d4 d7d5 c2c4 e7e6
+D30	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 c1g5 h7h6
+D30	d2d4 g8f6 g1f3 e7e6 c2c4 d7d5 c1g5 c7c6 b1d2 b8d7 e2e3
+D30	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 e2e3 e7e6 b1d2 b8d7 f1d3 c6c5
+D30	d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 e2e3 c7c6 b1d2 g7g6
+D30	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 e2e3 e7e6 b1d2 f6e4 f1d3 f7f5
+D30	d2d4 d7d5 c2c4 e7e6 g1f3 c7c5
+D30	d2d4 d7d5 c2c4 e7e6 g1f3 c7c5 c4d5 e6d5 c1g5
+D30	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 c1g5
+D30	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 c1g5 f8b4
+D30	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 e2e3 e7e6 b1d2
+D30	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 e2e3 e7e6 b1d2 b8d7
+D31	d2d4 e7e6 c2c4 b7b6 b1c3 d7d5
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 f8e7
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 f8e7 e2e4 d5e4 f2f3
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 a7a6
+D31	d2d4 d7d5 c2c4 e7e6 b1c3
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 g1f3 d5c4 a2a4 f8b4 e2e3 b7b5 c1d2 a7a5
+D31	d2d4 d7d5 c2c4 e7e6 g1f3 c7c6 b1c3 d5c4 a2a4 f8b4 e2e3 b7b5 c1d2 d8b6
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 g1f3 d5c4 e2e3 b7b5 a2a4 f8b4 c1d2 d8e7
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 e2e3 f7f5 g2g4
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 e2e4 d5e4 f2f3
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 e2e4
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 e2e4 d5e4 c3e4 f8b4 e4c3
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 e2e4 d5e4 c3e4 f8b4 c1d2
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 e2e4 d5e4 c3e4 f8b4 c1d2 d8d4 d2b4 d4e4 f1e2 c6c5 b4c5 e4g2
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 g1f3 d5c4
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 g1f3 d5c4 a2a4 f8b4 e2e3 b4c3 b2c3 b7b5 a4b5 c6b5
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 g1f3 d5c4 g2g3
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 g1f3 d5c4 c1g5
+D31	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 g1f3 d5c4 c1g5 f7f6
+D32	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5
+D32	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5
+D32	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 d4c5 d5d4 c3a4 b7b5
+D32	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 e2e4
+D32	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 c5d4
+D32	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 e2e3 g8f6 g1f3 b8c6
+D32	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 d4c5 d5d4 c3a4 b7b5
+D32	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3
+D32	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 c5d4 d1d4 b8c6 d4d1 e6d5 d1d5 c8e6
+D33	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 g8f6 f1g2 c5d4 f3d4 f8c5
+D33	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 g8f6
+D33	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3
+D33	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 c5c4
+D33	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 c5c4 e2e4
+D33	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 g8f6 f1g2 c8g4
+D34	d2d4 d7d5 c2c4 e7e6 g1f3 c7c5 c4d5 e6d5 g2g3 b8c6 f1g2 g8f6 e1g1 f8e7 b1c3 e8g8 c1g5 c8e6 a1c1 b7b6
+D34	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 g8f6 f1g2 f8e7 e1g1 e8g8
+D34	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 g8f6 f1g2 f8e7 e1g1 e8g8 c1g5 c5c4
+D34	d2d4 g8f6 c2c4 e7e6 b1c3 c7c5 g1f3 d7d5 c4d5 e6d5 g2g3 b8c6 f1g2 f8e7 e1g1 e8g8 c1g5 c8e6 a1c1 c5c4
+D34	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 g8f6 f1g2 f8e7 e1g1 e8g8 c1g5
+D34	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 g8f6 f1g2 f8e7 e1g1 e8g8 c1g5 c5d4 f3d4 h7h6 g5e3 f8e8 a1c1 c8e6
+D34	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 g8f6 f1g2 f8e7 e1g1 e8g8 d4c5 d5d4
+D34	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 g8f6 f1g2 f8e7 e1g1 e8g8 c1g5 c8e6
+D34	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 g8f6 f1g2 f8e7 e1g1 e8g8 c1g5 c5d4 f3d4 h7h6 g5e3 f8e8
+D34	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 g8f6 f1g2 f8e7 e1g1 e8g8 c1g5 c5d4 f3d4 f8e8
+D34	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 g8f6 f1g2 f8e7 e1g1 e8g8 d4c5 e7c5 c3a4
+D34	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 g8f6 f1g2 f8e7 e1g1 e8g8 c1g5 c5d4 f3d4 h7h6 g5e3 c8g4
+D34	d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 c4d5 e6d5 g1f3 b8c6 g2g3 g8f6 f1g2 f8e7
+D35	d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c4d5
+D35	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 e2e3 b7b6 b1c3 f8d6 c4d5 e6d5
+D35	d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c4d5 e6d5 c1g5 f8e7 e2e3 h7h6 g5h4 c8g4
+D35	d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c4d5 e6d5 c1g5 f8e7 e2e3 e8g8 f1d3 b8d7 d1c2 f8e8 g1e2 d7f8 e1c1
+D35	d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c4d5 e6d5 c1g5
+D35	d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c4d5 e6d5 c1g5 c7c6
+D35	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 b8d7 c4d5 e6d5 c1f4
+D35	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1f4
+D35	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6
+D36	d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c4d5 e6d5 c1g5 c7c6 d1c2
+D36	d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c4d5 e6d5 c1g5 c7c6 d1c2 f8e7 e2e3 b8d7 f1d3
+D36	d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c4d5 e6d5 c1g5 c7c6 d1c2 f8e7 e2e3 e8g8 f1d3
+D36	d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c4d5 e6d5 c1g5 c7c6 d1c2 f8e7 e2e3 e8g8 f1d3 h7h6 g5h4
+D37	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 b8d7
+D37	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1f4
+D37	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1f4 e8g8 e2e3 c7c5 d4c5 e7c5 d1c2 b8c6 a1d1 d8a5 a2a3
+D37	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1f4 e8g8 e2e3 c7c5 d4c5 e7c5 d1c2 b8c6 a2a3 d8a5 e1c1
+D37	d2d4 d7d5 c2c4 e7e6 b1c3 f8e7 g1f3 g8f6 c1f4 e8g8 e2e3 b7b6
+D37	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1f4 e8g8 e2e3 c7c5 d4c5 e7c5
+D37	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 g1f3 f8e7 c1f4 e8g8 e2e3 c7c6
+D37	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1f4 e8g8 e2e3 b8d7
+D37	d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 g1f3 f8e7 c1f4 e8g8 e2e3 b8d7 c4c5
+D37	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 b8d7 c1g5 h7h6 g5h4 d5c4
+D37	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 e8g8 d1c2
+D37	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3
+D37	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 d5c4
+D37	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 d5c4 e2e3
+D38	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8b4
+D38	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8b4 d1a4
+D38	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8b4 c1g5 b8d7 e2e3 c7c5
+D39	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8b4 c1g5 d5c4
+D40	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5
+D40	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 g1f3 c7c5 e2e3 b8c6 f1d3 f8d6 e1g1 e8g8 d1e2 d8e7 d4c5 d6c5 e3e4
+D40	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 g1f3 c7c5 c1g5
+D40	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 g1f3 c7c5 e2e3 b8c6 f1d3 f8d6 e1g1 e8g8
+D41	c2c4 c7c5 g1f3 g8f6 b1c3 b8c6 g2g3 d7d5 d2d4 e7e6
+D41	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5 c4d5
+D41	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5 c4d5 c5d4 d1d4 e6d5 e2e4 d5e4 d4d8
+D41	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5 c4d5 f6d5 e2e4
+D41	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5 c4d5 f6d5 e2e4 d5c3 b2c3
+D41	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 g1f3 c7c5 c4d5 f6d5 e2e4 d5c3 b2c3 c5d4 c3d4 f8b4 c1d2 b4d2 d1d2 e8g8 f1b5
+D41	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5 c4d5 f6d5 e2e3
+D41	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c4d5 f6d5 e2e4 d5c3 b2c3 c7c5 g1f3 c5d4 c3d4 f8b4 c1d2 d8a5
+D42	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c5 c4d5 f6d5 e2e3 b8c6 f1d3
+D43	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6
+D43	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 c1g5 h7h6 g5h4
+D43	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 c1g5 h7h6 g5f6 d8f6 d1b3
+D43	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 c1g5 h7h6 g5f6 d8f6
+D44	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 c1g5 d5c4
+D44	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 c1g5 d5c4 e2e4
+D44	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 c1g5 d5c4 e2e4 b7b5 e4e5 h7h6 g5h4 g7g5 f3g5
+D44	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c6 c1g5 d5c4 e2e4 b7b5 e4e5 h7h6 g5h4 g7g5 f3g5 f6d5
+D44	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 c1g5 d5c4 e2e4 b7b5 e4e5 h7h6 g5h4 g7g5 e5f6 g5h4 f3e5
+D44	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 c1g5 d5c4 e2e4 b7b5 e4e5 h7h6 g5h4 g7g5 f3g5 h6g5 h4g5 b8d7 g2g3
+D44	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 c7c6 c1g5 d5c4 e2e4 b7b5 e4e5 h7h6 g5h4 g7g5 f3g5 h6g5 h4g5 b8d7 d1f3
+D45	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 a7a6
+D45	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3
+D45	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7
+D45	g1f3 d7d5 e2e3 g8f6 c2c4 c7c6 b1c3 e7e6 b2b3 f8d6 c1b2 e8g8 d2d4 b8d7
+D45	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 g1f3 g8f6 e2e3 b8d7 b2b3 f8d6 c1b2 e8g8 f1e2
+D45	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 g1f3 g8f6 e2e3 b8d7 f3e5
+D45	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 d1c2
+D45	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 d1c2 b7b6 b2b3
+D45	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 d1c2 b7b6 b2b3 c8b7
+D45	d2d4 d7d5 g1f3 g8f6 c2c4 c7c6 e2e3 e7e6 b1c3 b8d7 d1c2 f8d6 b2b3
+D45	d2d4 d7d5 g1f3 g8f6 c2c4 c7c6 e2e3 e7e6 b1c3 b8d7 d1c2 f8d6 b2b3 e8g8 c1b2
+D45	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 e2e3 b8d7 d1c2 f8d6 e3e4
+D45	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 e2e3 b8d7 d1c2 f8d6 e3e4 d5e4 c3e4 f6e4 c2e4 e6e5 d4e5
+D45	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 e2e3 b8d7 d1c2 f8d6 g2g4
+D45	d2d4 d7d5 g1f3 g8f6 c2c4 c7c6 b1c3 e7e6 e2e3 f6e4 f1d3 f7f5
+D46	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 f8e7
+D46	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 f8d6
+D46	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 f8d6 d1c2
+D46	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 b2b3 f8d6 c1b2 e8g8 f1d3
+D46	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 d1c2 b7b6 b2b3 c8b7 f1d3
+D46	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 d1c2 f8d6 b2b3 e8g8 c1b2 f8e8 f1d3
+D46	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 d1c2 f8d6 b2b3 e8g8 c1b2 d8e7 f1d3
+D46	d2d4 d7d5 c2c4 c7c6 g1f3 e7e6 e2e3 g8f6 b1c3 f8d6 f1d3 d5c4 d3c4 b7b5 c4d3 b8d7 e1g1 e8g8 d1c2
+D46	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 f8d6 e1g1 c8b7 a2a3 e8g8 d1c2
+D46	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3
+D46	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 d1c2 b7b6 b2b3 c8b7 f1d3 f8e7 e1g1 e8g8 c1b2
+D46	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 f8b4
+D47	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 d5c4 d3c4 b7b5
+D47	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 e2e3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 b5b4
+D47	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 c8b7
+D47	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 c8b7 e3e4 b5b4 c3a4 c6c5 e4e5 f6d5 e1g1 c5d4 f3d4
+D47	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 c8b7 e3e4 b5b4 c3a4 c6c5 e4e5 f6d5
+D47	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 d5c4 d3c4
+D48	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 a7a6
+D48	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 a7a6 e3e4 c6c5
+D48	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 a7a6 e3e4 c6c5 e4e5
+D48	d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 e2e3 g8f6 g1f3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 a7a6 e3e4 b5b4
+D48	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 e2e3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 a7a6 e3e4 c6c5 d4d5
+D49	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 a7a6 e3e4 c6c5 e4e5 c5d4 c3b5
+D49	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 a7a6 e3e4 c6c5 e4e5 c5d4 c3b5 f6g4
+D49	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 g1f3 e7e6 e2e3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 a7a6 e3e4 c6c5 e4e5 c5d4 c3b5 d7e5 f3e5 a6b5 e1g1 d8d5 d1e2 c8a6 c1g5
+D49	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 e2e3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 a7a6 e3e4 c6c5 e4e5 c5d4 c3b5 d7e5
+D49	d2d4 d7d5 g1f3 g8f6 c2c4 c7c6 b1c3 e7e6 e2e3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 a7a6 e3e4 c6c5 e4e5 c5d4 c3b5 d7e5 f3e5 a6b5 e1g1
+D49	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 e7e6 g1f3 b8d7 f1d3 d5c4 d3c4 b7b5 c4d3 a7a6 e3e4 c6c5 e4e5 c5d4 c3b5 d7e5 f3e5 a6b5 d1f3
+D50	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 c7c5
+D50	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5
+D50	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 c7c5 c4d5
+D50	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 c7c5 c4d5 d8b6
+D50	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 c7c5 g1f3 c5d4 d1d4
+D50	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 c7c5 g1f3 c5d4 f3d4 e6e5 d4b5 a7a6 d1a4
+D51	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 b8d7 g1f3 c7c6 e2e4
+D51	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 b8d7 e2e3 c7c6 a2a3
+D51	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 b8d7 e2e3 f8b4
+D51	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 b8d7
+D51	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 b8d7 e2e3
+D51	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 b8d7 e2e3 c7c6
+D51	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 b8d7 g1f3 c7c6 a1c1 d8a5 g5d2
+D52	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 c1g5 b8d7 e2e3
+D52	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 c1g5 b8d7 e2e3 d8a5
+D52	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 c1g5 b8d7 e2e3 d8a5 c4d5
+D52	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 b8d7 e2e3 c7c6 g1f3 d8a5 f3d2 f8b4 d1c2 e8g8 g5h4
+D52	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 c1g5 b8d7 e2e3 d8a5 f3d2 f8b4 d1c2
+D52	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 b8d7 e2e3 c7c6 g1f3 d8a5 g5f6
+D52	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 c1g5 b8d7 e2e3 d8a5 f3d2 d5c4
+D52	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 c1g5 b8d7 e2e3 d8a5 c4d5 f6d5
+D53	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 f8e7
+D53	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 f8e7 g1f3
+D53	d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c1g5 f8e7 e2e3 f6e4
+D53	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 f8e7 g5f6
+D53	d2d4 d7d5 c2c4 e7e6 b1c3 f8e7 g1f3 g8f6 c1g5 h7h6 g5h4 e8g8 a1c1 d5c4
+D54	d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c1g5 f8e7 e2e3 e8g8 a1c1
+D55	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 e8g8 e2e3 h7h6 g5f6
+D55	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 h7h6 g5f6 e7f6 e2e3 e8g8 a1c1 c7c6 f1d3 b8d7 e1g1 d5c4 d3c4
+D55	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 e8g8 e2e3
+D55	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 e8g8 e2e3 h7h6
+D55	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 h7h6 g5h4 e8g8 e2e3
+D55	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 b1c3 d7d5 c4d5 e6d5 c1g5 f8e7 e2e3 e8g8 f1d3 c8b7 f3e5
+D56	d2d4 d7d5 c2c4 e7e6 b1c3 f8e7 g1f3 g8f6 c1g5 h7h6 g5h4 e8g8 e2e3 f6e4
+D56	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 f8e7 e2e3 e8g8 g1f3 h7h6 g5h4 f6e4 h4e7 d8e7 d1c2 e4f6 f1d3 d5c4 d3c4 c7c5 e1g1 b8c6 f1d1 c8d7
+D56	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 h7h6 g5h4 e8g8 e2e3 f6e4 h4e7 d8e7 d1c2
+D57	d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c1g5 f8e7 e2e3 h7h6 g5h4 e8g8 g1f3 f6e4 h4e7 d8e7 c4d5 e4c3 b2c3 e6d5 d1b3 e7d6
+D57	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 f8e7 e2e3 e8g8 g1f3 h7h6 g5h4 f6e4 h4e7 d8e7 c4d5 e4c3 b2c3 e6d5 d1b3 f8d8 c3c4 c8e6
+D57	d2d4 d7d5 c2c4 e7e6 b1c3 f8e7 g1f3 g8f6 c1g5 h7h6 g5h4 e8g8 e2e3 f6e4 h4e7 d8e7 c4d5 e4c3 b2c3
+D58	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 h7h6 g5h4 e8g8 e2e3 b7b6
+D58	d2d4 d7d5 c2c4 e7e6 b1c3 f8e7 g1f3 g8f6 c1g5 h7h6 g5h4 e8g8 e2e3 b7b6 c4d5 e6d5
+D59	d2d4 d7d5 c2c4 e7e6 b1c3 f8e7 g1f3 g8f6 c1g5 h7h6 g5h4 e8g8 e2e3 b7b6 c4d5 f6d5 h4e7 d8e7 c3d5 e6d5 a1c1 c8e6
+D59	d2d4 d7d5 c2c4 e7e6 b1c3 f8e7 g1f3 g8f6 c1g5 h7h6 g5h4 e8g8 e2e3 b7b6 c4d5 f6d5
+D60	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7
+D60	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 f1d3
+D60	d2d4 d7d5 g1f3 g8f6 c2c4 e7e6 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 d1b3
+D61	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 d1c2
+D62	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 d1c2 c7c5 c4d5
+D63	g1f3 d7d5 d2d4 g8f6 c2c4 e7e6 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 a1c1 b7b6 c4d5 e6d5 f1b5
+D63	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 a1c1 a7a6
+D63	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 a1c1
+D63	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 a1c1 c7c6
+D63	d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 c1g5 f8e7 e2e3 e8g8 g1f3 b8d7 a1c1 b7b6 c4d5 e6d5 f1d3
+D63	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 a1c1 a7a6 c4d5
+D64	d2d4 g8f6 c2c4 e7e6 b1c3 d7d5 g1f3 f8e7 c1g5 e8g8 e2e3 b8d7 a1c1 c7c6 a2a3 a7a6 d1c2
+D64	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 a1c1 c7c6 d1c2
+D64	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 a1c1 c7c6 d1c2 a7a6
+D64	g1f3 d7d5 d2d4 g8f6 c2c4 e7e6 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 a1c1 c7c6 d1c2 f6e4
+D65	d2d4 d7d5 g1f3 g8f6 c2c4 e7e6 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 a1c1 c7c6 d1c2 a7a6 c4d5
+D66	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 f8e7 e2e3 e8g8 g1f3 b8d7 a1c1 c7c6 f1d3
+D66	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 c7c6 g1f3 f8e7 e2e3 b8d7 a1c1 e8g8 f1d3 d5c4 d3c4 b7b5
+D67	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 f8e7 e2e3 e8g8 g1f3 b8d7 a1c1 c7c6 f1d3 d5c4 d3c4 f6d5 g5e7 d8e7 c3e4
+D67	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 f8e7 e2e3 e8g8 g1f3 b8d7 a1c1 c7c6 f1d3 d5c4 d3c4 f6d5 g5e7 d8e7
+D67	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 f8e7 e2e3 e8g8 g1f3 b8d7 a1c1 c7c6 f1d3 d5c4 d3c4 f6d5
+D67	d2d4 d7d5 g1f3 g8f6 c2c4 e7e6 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 a1c1 c7c6 f1d3 d5c4 d3c4 f6d5 h2h4
+D67	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 f8e7 e2e3 e8g8 g1f3 b8d7 a1c1 c7c6 f1d3 d5c4 d3c4 f6d5 g5e7 d8e7 e1g1
+D68	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 f8e7 e2e3 e8g8 g1f3 b8d7 a1c1 c7c6 f1d3 d5c4 d3c4 f6d5 g5e7 d8e7 e1g1 d5c3 c1c3 e6e5
+D68	d2d4 d7d5 c2c4 e7e6 g1f3 g8f6 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 a1c1 c7c6 f1d3 d5c4 d3c4 f6d5 g5e7 d8e7 e1g1 d5c3 c1c3 e6e5 d1b1
+D68	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 b1c3 f8e7 c1g5 e8g8 e2e3 b8d7 a1c1 c7c6 f1d3 d5c4 d3c4 f6d5 g5e7 d8e7 e1g1 d5c3 c1c3 e6e5 d1c2
+D69	d2d4 d7d5 c2c4 e7e6 b1c3 g8f6 c1g5 f8e7 e2e3 e8g8 g1f3 b8d7 a1c1 c7c6 f1d3 d5c4 d3c4 f6d5 g5e7 d8e7 e1g1 d5c3 c1c3 e6e5 d4e5 d7e5 f3e5 e7e5
+D70	d2d4 g8f6 c2c4 g7g6 f2f3 d7d5
+D70	d2d4 g8f6 c2c4 g7g6 g1f3 d7d5
+D70	d2d4 g8f6 c2c4 g7g6 g2g3 d7d5
+D71	d2d4 g8f6 c2c4 g7g6 g2g3 f8g7 f1g2 d7d5 c4d5 f6d5
+D72	d2d4 g8f6 c2c4 g7g6 g2g3 d7d5 f1g2 f8g7 c4d5 f6d5 e2e4 d5b6 g1e2
+D73	d2d4 g8f6 c2c4 g7g6 g2g3 d7d5 f1g2 f8g7 g1f3
+D74	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 d7d5 c4d5 f6d5 e1g1
+D75	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 g1f3 e8g8 g2g3 d7d5 c4d5 f6d5 f1g2 c7c5 e1g1
+D75	d2d4 g8f6 g1f3 g7g6 c2c4 f8g7 g2g3 e8g8 f1g2 d7d5 c4d5 f6d5 e1g1 c7c5 d4c5
+D76	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 d7d5 c4d5 f6d5 e1g1 d5b6
+D77	d2d4 g8f6 g1f3 g7g6 g2g3 f8g7 f1g2 e8g8 e1g1 d7d5 c2c4
+D77	d2d4 g8f6 g1f3 g7g6 g2g3 f8g7 f1g2 e8g8 e1g1 d7d5 c2c4 d5c4
+D77	d2d4 g8f6 g1f3 g7g6 g2g3 f8g7 f1g2 e8g8 e1g1 d7d5 c2c4 b8c6
+D78	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 c7c6 e1g1 d7d5
+D79	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 c7c6 e1g1 d7d5 c4d5 c6d5
+D80	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5
+D80	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g2g4
+D80	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c1g5 f6e4 c3e4 d5e4 d1d2 c7c5
+D80	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 f2f3
+D80	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 f2f3 c7c5 c4d5 f6d5 c3a4
+D80	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c1g5
+D80	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 h2h4
+D81	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 d1b3
+D82	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c1f4
+D83	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c1f4 f8g7 e2e3 e8g8
+D83	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c1f4 f8g7 e2e3 e8g8 a1c1 c7c5 d4c5 c8e6
+D83	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c1f4 f8g7 e2e3 e8g8 a1c1
+D83	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c1f4 f8g7 a1c1 e8g8 e2e3 c7c5 d4c5 d8a5
+D84	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c1f4 f8g7 e2e3 e8g8 c4d5 f6d5 c3d5 d8d5 f4c7
+D85	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c4d5 f6d5
+D85	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c4d5 f6d5 e2e4 d5c3 b2c3 f8g7 g1f3
+D85	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c4d5 f6d5 e2e4 d5c3 b2c3 f8g7 g1f3 c7c5
+D85	d2d4 g8f6 g1f3 g7g6 c2c4 f8g7 b1c3 d7d5 c4d5 f6d5 e2e4 d5c3 b2c3 c7c5 a1b1
+D85	d2d4 g8f6 g1f3 g7g6 c2c4 f8g7 b1c3 d7d5 c4d5 f6d5 e2e4 d5c3 b2c3 c7c5 h2h3
+D85	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c4d5 f6d5 e2e4 d5c3 b2c3 f8g7 g1f3 c7c5 a1b1 e8g8 f1e2 b8c6 d4d5 g7c3
+D85	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c4d5 f6d5 c3a4
+D86	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c4d5 f6d5 e2e4 d5c3 b2c3 f8g7 f1c4
+D86	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c4d5 f6d5 e2e4 d5c3 b2c3 f8g7 f1c4 e8g8 g1e2 d8d7
+D86	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c4d5 f6d5 e2e4 d5c3 b2c3 f8g7 f1c4 e8g8 g1e2 d8d7 e1g1 b7b6
+D86	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c4d5 f6d5 e2e4 d5c3 b2c3 f8g7 f1c4 e8g8 g1e2 b8c6
+D86	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c4d5 f6d5 e2e4 d5c3 b2c3 f8g7 f1c4 e8g8 g1e2 b7b6
+D87	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c4d5 f6d5 e2e4 d5c3 b2c3 f8g7 f1c4 c7c5 g1e2 b8c6 c1e3 e8g8 e1g1 c8g4 f2f3 c6a5 c4f7
+D87	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c4d5 f6d5 e2e4 d5c3 b2c3 f8g7 f1c4 c7c5 g1e2 e8g8
+D88	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c4d5 f6d5 e2e4 d5c3 b2c3 f8g7 f1c4 c7c5 g1e2 b8c6 c1e3 e8g8 e1g1 c5d4 c3d4
+D89	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c4d5 f6d5 e2e4 d5c3 b2c3 f8g7 f1c4 c7c5 g1e2 e8g8 e1g1 b8c6 c1e3 c8g4 f2f3 c6a5 c4d3 c5d4 c3d4 g4e6 d4d5
+D89	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 c4d5 f6d5 e2e4 d5c3 b2c3 f8g7 f1c4 c7c5 g1e2 b8c6 c1e3 e8g8 e1g1 c8g4 f2f3 c6a5 c4d3 c5d4 c3d4 g4e6
+D90	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 d1a4
+D90	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3
+D90	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7
+D91	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 c1g5
+D92	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 c1f4
+D93	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 c1f4 e8g8 e2e3
+D94	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 g7g6 g1f3 f8g7 f1d3 e8g8 e1g1 c8f5
+D94	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 e2e3 e8g8 b2b4
+D94	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 e2e3 e8g8 c1d2
+D94	d2d4 d7d5 c2c4 c7c6 b1c3 g8f6 e2e3 g7g6 g1f3 f8g7 f1d3 e8g8 e1g1 c8g4
+D94	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 e2e3
+D94	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 e2e3 e8g8 f1d3
+D95	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 e2e3 e8g8 d1b3 e7e6
+D95	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 e2e3 f8g7 d1b3 d5c4 f1c4 e8g8 g1f3 b8d7 f3g5
+D95	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 e2e3 e8g8 d1b3
+D96	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 d1b3
+D97	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 d1b3 d5c4 b3c4 e8g8 e2e4
+D97	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 d1b3 d5c4 b3c4 e8g8 e2e4 b8c6
+D97	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 d1b3 d5c4 b3c4 e8g8 e2e4 a7a6
+D97	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 d1b3 d5c4 b3c4 e8g8 e2e4 b7b6
+D97	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 d1b3 d5c4 b3c4 e8g8 e2e4 b8a6
+D97	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 d1b3 d5c4 b3c4 e8g8 e2e4 c7c6
+D98	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 d1b3 d5c4 b3c4 e8g8 e2e4 c8g4 c1e3 f6d7 f1e2 d7b6 c4d3 b8c6 e1c1
+D98	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 d1b3 d5c4 b3c4 e8g8 e2e4 c8g4
+D99	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 d1b3 d5c4 b3c4 e8g8 e2e4 c8g4 c1e3 f6d7 c4b3
+D99	d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 g1f3 f8g7 d1b3 d5c4 b3c4 e8g8 e2e4 c8g4 c1e3 f6d7 c4b3 c7c5
+E00	d2d4 g8f6 c2c4 e7e6 g2g3
+E00	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5
+E00	d2d4 g8f6 c2c4 e7e6 g2g3 e6e5
+E00	d2d4 g8f6 c2c4 e7e6 d1b3
+E00	d2d4 g8f6 c2c4 e7e6 g2g4
+E00	d2d4 g8f6 c2c4 e7e6 c1g5
+E01	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2
+E02	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 d5c4
+E03	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 d5c4 d1a4 b8d7 a4c4
+E03	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 d5c4 d1a4 b8d7 a4c4 a7a6 c4c2
+E04	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 d5c4 g1f3
+E04	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 c7c6 f1g2 d5c4
+E04	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 d5c4 g1f3 b8c6 d1a4 f8b4
+E05	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 d5c4 g1f3 f8e7
+E05	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 f8e7 f1g2 e8g8 e1g1 d5c4
+E06	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 f8e7 g1f3
+E06	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 f8b4 c1d2 b4e7 f1g2 e8g8 e1g1 c7c6 d2f4 b7b6
+E06	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 f8e7 g1f3 e8g8 e1g1 c7c6 d1c2 b7b6 b1d2 c8b7 e2e4 b8a6
+E07	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 f8e7 g1f3 e8g8 e1g1 b8d7
+E07	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 f8e7 g1f3 e8g8 e1g1 b8d7 b1c3 c7c6 d1d3
+E08	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 f8e7 g1f3 e8g8 e1g1 b8d7 d1c2
+E08	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 f8e7 g1f3 e8g8 e1g1 b8d7 d1c2 c7c6 b2b3
+E08	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 f8e7 g1f3 e8g8 e1g1 b8d7 d1c2 c7c6 b2b3 b7b6
+E08	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 f8e7 g1f3 e8g8 e1g1 c7c6 d1c2 b7b6 f1d1 b8d7 c1f4
+E08	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 f8e7 g1f3 e8g8 e1g1 b8d7 d1c2 c7c6 c1f4 b7b6 b1d2 c8b7 e2e4
+E08	d2d4 g8f6 c2c4 e7e6 g2g3 f8e7 f1g2 d7d5 g1f3 e8g8 e1g1 b8d7 d1c2 c7c6 b2b3 b7b6 f1d1 c8b7 b1c3 b6b5
+E08	d2d4 e7e6 c2c4 g8f6 g1f3 d7d5 g2g3 f8e7 f1g2 e8g8 e1g1 b8d7 d1c2 c7c6 f1d1 b7b6 a2a4
+E09	d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 d1c2 e7e6 b1d2 f8e7 g2g3 b8d7 f1g2 e8g8 e1g1 b7b5
+E09	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 f8e7 f1g2 e8g8 e1g1 b8d7 d1c2 c7c6 b1d2 b7b6
+E09	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 f8e7 f1g2 e8g8 e1g1 b8d7 d1c2 c7c6 b1d2
+E09	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 f8e7 f1g2 e8g8 e1g1 c7c6 d1c2 b7b6 b1d2 c8b7 e2e4 b8d7
+E09	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 f8e7 f1g2 e8g8 e1g1 b8d7 d1c2 c7c6 c1f4 b7b6 b1d2 c8b7 e2e4 d5e4 d2e4 f6e4 c2e4
+E09	d2d4 g8f6 c2c4 e7e6 g2g3 d7d5 f1g2 f8e7 g1f3 e8g8 e1g1 b8d7 d1c2 c7c6 b1d2 b7b6 b2b3 a7a5 c1b2 c8a6
+E10	d2d4 g8f6 c2c4 e7e6 g1f3 c7c5 d4d5 b7b5
+E10	d2d4 g8f6 c2c4 e7e6 g1f3 c7c5 d4d5 b7b5 d5e6 f7e6 c4b5 d7d5
+E10	d2d4 g8f6 c2c4 e7e6 g1f3 c7c5 d4d5 b7b5 c1g5
+E10	d2d4 g8f6 c2c4 e7e6 g1f3 c7c5 d4d5 b7b5 c1g5 e6d5 c4d5 h7h6
+E10	d2d4 g8f6 c2c4 e7e6 g1f3
+E10	d2d4 g8f6 c2c4 e7e6 g1f3 a7a6
+E10	d2d4 g8f6 c2c4 e7e6 g1f3 f6e4
+E11	d2d4 g8f6 c2c4 e7e6 g1f3 f8b4
+E11	d2d4 g8f6 c2c4 e7e6 g1f3 f8b4 c1d2 b4d2
+E11	d2d4 g8f6 c2c4 e7e6 g1f3 f8b4 b1d2
+E11	d2d4 g8f6 c2c4 e7e6 g1f3 f8b4 c1d2 b8c6
+E11	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 f8b4 c1d2 b4d2 d1d2 e8g8 b1c3 f6e4 d2c2 e4c3 f3g5
+E11	d2d4 g8f6 c2c4 e7e6 g1f3 f8b4 f3d2
+E11	d2d4 g8f6 c2c4 e7e6 g1f3 f8b4 c1d2 d8e7
+E11	d2d4 g8f6 c2c4 e7e6 g1f3 f8b4 c1d2 b4e7
+E11	d2d4 g8f6 c2c4 e7e6 g2g3 f8b4 c1d2 b4e7 f1g2 d7d5 g1f3
+E11	d2d4 g8f6 c2c4 e7e6 g2g3 f8b4 c1d2 b4e7 f1g2 d7d5 g1f3 e8g8
+E11	d2d4 g8f6 c2c4 e7e6 g2g3 f8b4 c1d2 b4e7 f1g2 d7d5 g1f3 e8g8 e1g1
+E11	d2d4 g8f6 c2c4 e7e6 g2g3 f8b4 c1d2 b4e7 f1g2 d7d5 g1f3 e8g8 d1c2 c7c6 e1g1
+E11	d2d4 g8f6 c2c4 e7e6 g2g3 f8b4 c1d2 b4e7 f1g2 d7d5 g1f3 b8d7 e1g1 e8g8 d1c2 c7c6
+E11	d2d4 g8f6 c2c4 e7e6 g2g3 f8b4 c1d2 b4e7 f1g2 d7d5 g1f3 b8d7 e1g1 e8g8 d1c2 c7c6 b2b3
+E11	d2d4 g8f6 c2c4 e7e6 g2g3 f8b4 c1d2 b4e7 f1g2 d7d5 g1f3 b8d7 e1g1 e8g8 d1c2 c7c6 f1c1
+E11	d2d4 g8f6 c2c4 e7e6 g2g3 f8b4 c1d2 b4e7 f1g2 d7d5 g1f3 b8d7 e1g1 e8g8 d1c2 c7c6 f1d1
+E11	d2d4 g8f6 c2c4 e7e6 g2g3 f8b4 c1d2 b4e7 f1g2 d7d5 g1f3 b8d7 e1g1 e8g8 d1c2 c7c6 f1d1 h7h6
+E11	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 f8b4 c1d2 b4e7 f1g2 e8g8 e1g1 c7c6 d1c2 b8d7 d2f4 b7b6 b1d2
+E11	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 g2g3 f8b4 c1d2 b4e7 f1g2 e8g8 e1g1 c7c6 d1c2 b8d7 d2f4 b7b6 b1d2 c8a6
+E11	d2d4 g8f6 c2c4 e7e6 g1f3 f8b4 c1d2 c7c5
+E11	d2d4 g8f6 c2c4 e7e6 g1f3 f8b4 c1d2 a7a5
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 b1c3
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 b1c3 c8b7 c1g5 h7h6 g5h4 g7g5 h4g3 f6h5
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 a2a3 c8b7 b1c3
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 a2a3 c8b7 b1c3 f6e4
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 a2a3 c8b7 b1c3 d7d5 c4d5 e6d5
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 a2a3 c8b7 b1c3 g7g6
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 a2a3 c8b7 b1c3 d7d5 c4d5 f6d5 d1c2
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 a2a3 c8b7 b1c3 d7d5
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 a2a3 c8b7 b1c3 f8e7
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 a2a3 c8b7 b1c3 d7d5 c4d5 f6d5
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 a2a3 c8b7 b1c3 d7d5 c4d5 f6d5 e2e3
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 b1c3 c8b7 a2a3 d7d5 c4d5 f6d5 e2e4
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 a2a3 c8b7 b1c3 d7d5 c4d5 f6d5 d1a4
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 a2a3 c8b7 b1c3 d7d5 c4d5 f6d5 c1d2
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 c1f4
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 a2a3
+E12	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 a2a3 c8a6 d1c2 a6b7
+E13	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 b1c3 f8b4 c1g5 h7h6 g5h4 c8b7
+E14	d2d4 g8f6 g1f3 e7e6 e2e3 b7b6 f1d3 c8b7 e1g1 c7c5 c2c4
+E14	d2d4 g8f6 g1f3 e7e6 e2e3 b7b6 f1d3 c8b7 e1g1 c7c5 c2c4 f8e7
+E14	d2d4 g8f6 g1f3 e7e6 e2e3 b7b6 f1d3 c8b7 e1g1 c7c5 c2c4 g7g6
+E14	d2d4 g8f6 g1f3 e7e6 e2e3 b7b6 f1d3 c8b7 e1g1 f8e7 c2c4 e8g8 b1c3
+E14	d2d4 g8f6 g1f3 e7e6 e2e3 b7b6 f1d3 c8b7 b1d2 c7c5 b2b3 f8e7 c1b2 d7d6 e1g1 e8g8 c2c4
+E14	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 e2e3 b7b6 b1c3 c8b7
+E14	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 e2e3 b7b6 b1c3 f8d6 f1d3
+E14	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 e2e3 b7b6 b1c3 f8d6 f1d3 e8g8 e1g1 c8b7
+E14	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 e2e3 f8e7 b1c3 e8g8 b2b3 b7b6
+E14	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 e2e3 f8e7 b2b3 e8g8 f1d3 b7b6
+E14	d2d4 g8f6 c2c4 e7e6 g1f3 d7d5 e2e3 f8e7 b2b3 e8g8 c1b2 b7b6 b1d2 c8b7 f1d3
+E14	d2d4 g8f6 c2c4 e7e6 g1f3 f8b4 b1d2 b7b6 a2a3 b4d2 d1d2 c8b7 e2e3
+E14	g1f3 d7d5 e2e3 g8f6 c2c4 e7e6 b1c3 f8e7 d2d4 e8g8 b2b3 b7b6 c4d5 e6d5 c1b2 c8b7 f1d3
+E14	d2d4 g8f6 g1f3 d7d5 c2c4 e7e6 e2e3 b7b6 b2b3 c8b7 f1d3 b8d7 e1g1 f8d6 c1b2 e8g8 b1d2
+E14	d2d4 g8f6 c2c4 e7e6 g1f3 f8b4 b1d2 b7b6 e2e3 c8b7
+E14	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 e2e3 c8b7 f1d3 c7c5 e1g1 f8e7 b2b3 e8g8 c1b2 c5d4 f3d4
+E14	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 e2e3
+E14	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 e2e3 c8b7
+E14	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 e2e3 c8b7 f1d3
+E14	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 e2e3 c8b7 f1d3 d7d5
+E14	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 e2e3 c8b7 f1d3 c7c5
+E14	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 e2e3 c8b7 f1d3 c7c5 b1c3 c5d4 e3d4 f8e7 e1g1 d7d5 c4d5 f6d5
+E15	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 c7c5 d4d5 e6d5 f3g5
+E15	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3
+E15	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8a6 b2b3 f8b4
+E15	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8a6 b2b3 f8b4 c1d2 b4e7
+E15	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8a6 b2b3 f8b4 c1d2 d8e7
+E15	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8a6
+E15	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8a6 d1a4
+E15	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8a6 b2b3
+E15	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8a6 d1b3
+E15	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 c7c5 d4d5 e6d5 f3h4
+E15	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 c7c5
+E15	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7
+E16	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 f8b4
+E16	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 f8b4 c1d2 b4e7
+E16	d2d4 g8f6 c2c4 e7e6 g1f3 f8b4 c1d2 a7a5 g2g3 b7b6 f1g2 c8b7
+E17	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 f8e7 b1c3
+E17	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 f8e7 e1g1
+E17	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 f8e7 e1g1 e8g8 d4d5 e6d5 f3h4
+E17	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 f8e7 e1g1 e8g8 d4d5 e6d5 f3d4
+E17	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 f8e7 e1g1 e8g8 b2b3
+E17	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 f8e7 e1g1 e8g8 f1e1
+E17	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 f8e7 b1c3 f6e4 c1d2
+E17	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 f8e7
+E18	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 f8e7 e1g1 e8g8 b1c3 b8a6
+E18	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 f8e7 e1g1 e8g8 b1c3
+E18	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 f8e7 e1g1 e8g8 b1c3 d7d5
+E19	d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8b7 f1g2 f8e7 e1g1 e8g8 b1c3 f6e4 d1c2 e4c3 c2c3
+E20	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4
+E20	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e4
+E20	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 f2f3
+E20	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1d3
+E20	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 g2g3
+E20	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 g1f3 c7c5 g2g3 e8g8 f1g2
+E20	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 g1f3 c7c5 g2g3 c5d4 f3d4 e8g8 f1g2 d7d5 c4d5 f6d5
+E21	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 g1f3
+E21	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 g1f3 c7c5 d4d5 f6e4
+E21	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 g1f3 c7c5 d4d5
+E21	d2d4 g8f6 c2c4 e7e6 g1f3 f8b4 b1c3 c7c5 d4d5 b7b5
+E22	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1b3
+E23	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1b3 c7c5 d4c5 b8c6 g1f3 f6e4 c1d2 e4d2
+E23	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1b3 c7c5 d4c5 b8c6
+E23	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1b3 c7c5 d4c5 b8c6 g1f3 f6e4 c1d2 e4c5
+E23	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1b3 c7c5 d4c5 b8c6 g1f3 f6e4 c1d2 e4c5 b3c2 f7f5 g2g3
+E24	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 a2a3
+E24	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 f2f3 d7d5 a2a3 b4c3 b2c3 c7c5 e2e3 e8g8 c4d5 f6d5
+E25	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 f2f3 d7d5 a2a3 b4c3 b2c3 c7c5 c4d5
+E25	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 f2f3 d7d5 a2a3 b4c3 b2c3 c7c5 c4d5 f6d5 d4c5
+E25	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 f2f3 d7d5 a2a3 b4c3 b2c3 c7c5 c4d5 f6d5 d4c5 f7f5
+E26	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 a2a3 b4c3 b2c3 c7c5 e2e3
+E26	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 a2a3 b4c3 b2c3 c7c5 e2e3 b7b6
+E27	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 a2a3 b4c3 b2c3 e8g8
+E28	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 a2a3 b4c3 b2c3
+E29	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 c7c5 f1d3 b8c6 a2a3 b4c3 b2c3 e8g8
+E29	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 c7c5 f1d3 b8c6 a2a3 b4c3 b2c3 e8g8 g1e2 b7b6 e3e4 f6e8
+E30	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 c1g5
+E30	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 c1g5 h7h6 g5h4 c7c5 d4d5 b7b5
+E31	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 c1g5 h7h6 g5h4 c7c5 d4d5 d7d6
+E32	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2
+E32	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 e8g8 a2a3 b4c3 c2c3 b7b6
+E32	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 e8g8 a2a3 b4c3 c2c3 b7b5
+E33	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 b8c6 g1f3 d7d6
+E33	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 b8c6
+E34	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 d7d5 c4d5 d8d5 g1f3 d5f5 c2d1 e6e5
+E34	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 d7d5
+E35	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 d7d5 c4d5 e6d5
+E36	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 d7d5 a2a3
+E36	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 d7d5 a2a3 b4c3 c2c3 b8c6
+E36	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 d7d5 a2a3 b4c3 c2c3 f6e4
+E36	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 d7d5 a2a3 b4c3 c2c3 c7c5
+E37	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 d7d5 a2a3 b4c3 c2c3 f6e4 c3c2 c7c5
+E37	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 d7d5 a2a3 b4c3 c2c3 f6e4 c3c2
+E37	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 d7d5 a2a3 b4c3 c2c3 f6e4 c3c2 b8c6 e2e3 e6e5
+E38	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 c7c5
+E38	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 e8g8 e2e3 d7d5 g1f3 c7c5
+E38	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 c7c5 d4c5 b4c3
+E39	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 c7c5 d4c5 e8g8 a2a3 b4c5 g1f3 b7b6
+E39	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 d1c2 c7c5 d4c5 e8g8
+E40	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3
+E40	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 b8c6
+E41	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 c7c5
+E41	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 c7c5 f1d3 b8c6 g1f3 b4c3 b2c3 d7d6
+E41	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 c7c5 f1d3 b8c6 g1f3 b4c3 b2c3 d7d6 e1g1 e8g8
+E42	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 c7c5 g1e2
+E42	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 c7c5 g1e2 c5d4 e3d4 e8g8 a2a3
+E42	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 c7c5 g1e2 c5d4 e3d4 e8g8 c4c5
+E43	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 b7b6
+E43	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 b7b6 f1d3 c8b7 g1f3
+E43	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 b7b6 f1d3 c8b7 g1f3 e8g8
+E43	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 b7b6 f1d3 c8b7 g1f3 e8g8 e1g1
+E43	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 b7b6 f1d3 c8b7 g1f3 e8g8 e1g1 c7c5
+E43	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 b7b6 f1d3 c8b7 g1f3 e8g8 e1g1 c7c5 c3a4 c5d4 a2a3 b4e7
+E43	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 f6e4 d1c2 f7f5 g1f3 b7b6 f1d3 c8b7
+E43	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 c7c5 g1f3 b7b6 e1g1 c8b7 c3a4 d8e7
+E43	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 g1f3 b4c3 b2c3 b7b6 e2e3 c8b7 f1d3 e8g8 e1g1
+E43	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 g1f3 b7b6 e2e3 f6e4 d1c2
+E43	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 g1f3 b7b6 e2e3 f6e4 d1c2 c8b7 f1d3 b4c3 b2c3 f7f5 e1g1
+E43	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 b7b6 f1d3 c8b7 g1f3 f6e4
+E44	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 b7b6 g1e2
+E44	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 b7b6 g1e2 f6e4
+E44	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 b7b6 g1e2 c7c5 a2a3 b4a5
+E45	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 b7b6 g1e2 c8a6
+E46	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8
+E46	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 g1e2
+E46	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 g1e2 d7d5 a2a3 b4d6
+E47	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3
+E48	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5
+E48	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5 g1f3 b8c6 e1g1
+E49	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5 a2a3 b4c3 b2c3
+E50	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 g1f3
+E51	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 g1f3 d7d5
+E51	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 g1f3 d7d5 a2a3
+E51	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5 g1f3 b8c6 e1g1 d5c4
+E52	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5 g1f3 b7b6
+E52	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 b7b6 f1d3 c8b7 g1f3 e8g8 e1g1 d7d5
+E53	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5 g1f3 c7c5
+E53	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5 g1f3 c7c5 e1g1 b8d7
+E53	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5 g1f3 c7c5 e1g1 b7b6
+E54	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5 g1f3 c7c5 e1g1 d5c4 d3c4
+E54	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5 g1f3 c7c5 e1g1 d5c4 d3c4 d8e7
+E55	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5 g1f3 c7c5 e1g1 d5c4 d3c4 b8d7
+E56	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5 g1f3 c7c5 e1g1 b8c6
+E57	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5 g1f3 c7c5 e1g1 b8c6 a2a3 d5c4 d3c4 c5d4
+E58	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5 g1f3 c7c5 e1g1 b8c6 a2a3 b4c3 b2c3
+E59	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5 g1f3 c7c5 e1g1 b8c6 a2a3 b4c3 b2c3 d5c4 d3c4
+E59	d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 e2e3 e8g8 f1d3 d7d5 a2a3 b4c3 b2c3 d5c4 d3c4 c7c5 g1f3 b8c6 e1g1 d8c7 d1c2
+E60	d2d4 g8f6 c2c4 g7g6 g2g3 f8g7 f1g2 d7d5
+E60	d2d4 g8f6 c2c4 g7g6 d4d5 b7b5
+E60	d2d4 g8f6 c2c4 g7g6 d4d5
+E60	d2d4 g8f6 c2c4 g7g6 f2f3
+E60	d2d4 g8f6 c2c4 g7g6 f2f3 e7e5
+E60	d2d4 g8f6 c2c4 g7g6 h2h4
+E60	d2d4 g8f6 c2c4 g7g6
+E60	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3
+E60	d2d4 g8f6 c2c4 g7g6 g2g3
+E60	d2d4 g8f6 g1f3 g7g6 c2c4
+E60	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 b2b4
+E60	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 g1f3 e8g8 e2e3 d7d6 f1e2 c7c6
+E60	d2d4 g8f6 g1f3 g7g6 c2c4 f8g7 b1c3 e8g8 e2e3 d7d6 f1e2 b8c6
+E60	d2d4 g8f6 c2c4 g7g6 d1c2
+E61	d2d4 g8f6 c2c4 g7g6 b1c3
+E61	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 g1f3 d7d6 g2g3 e8g8 f1g2 c7c6 e1g1 d8b6
+E61	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 g1f3 e8g8 e2e3 d7d6 f1e2
+E61	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 g1f3 e8g8 e2e3 d7d6 f1e2 b8d7 e1g1 e7e5 d4e5 d6e5
+E61	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 g1f3 e8g8 e2e3 d7d6 f1e2 b8d7 e1g1 e7e5 b2b4
+E61	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 g1f3 d7d6 c1g5
+E62	d2d4 g8f6 c2c4 g7g6 g2g3 f8g7 f1g2 e8g8 b1c3 d7d6 g1f3 b8c6
+E62	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 g1f3 d7d6 g2g3
+E62	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 d7d6 e1g1 c7c6 b1c3 d8a5
+E62	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 g1f3 d7d6 g2g3 e8g8 f1g2 c7c6 e1g1 c8f5
+E62	d2d4 g8f6 c2c4 g7g6 g2g3 f8g7 f1g2 e8g8 b1c3 d7d6 g1f3 b8c6 e1g1 c8f5
+E62	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 g1f3 d7d6 g2g3 e8g8 f1g2 b8c6 e1g1 c8g4
+E62	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 d7d6 e1g1 b8c6 b1c3 e7e5
+E63	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 d7d6 e1g1 b8c6 b1c3 a7a6
+E63	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 d7d6 e1g1 b8c6 b1c3 a7a6 d4d5 c6a5 f3d2 c7c5 d1c2 e7e5
+E63	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 d7d6 e1g1 b8c6 b1c3 a7a6 d4d5 c6a5 f3d2 c7c5 d1c2 a8b8 b2b3 b7b5 c1b2 b5c4 b3c4 g7h6
+E63	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 d7d6 e1g1 b8c6 b1c3 a7a6 h2h3 a8b8 c1e3 b7b5 f3d2
+E64	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 d7d6 f1g2 e8g8 e1g1 b8d7 b1c3 e7e5 b2b3
+E64	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 d7d6 f1g2 e8g8 e1g1 b8d7 b1c3 a7a6
+E64	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 c7c5 f1g2 d8a5
+E64	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 d7d6 f1g2 e8g8 e1g1 c7c5
+E64	d2d4 g8f6 c2c4 g7g6 g2g3 f8g7 f1g2 e8g8 b1c3 d7d6 g1f3 c7c5
+E65	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 d7d6 e1g1 c7c5 b1c3
+E65	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 d7d6 e1g1 c7c5 b1c3 b8c6 d4c5 d6c5
+E66	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 d7d6 e1g1 c7c5 b1c3 b8c6 d4d5
+E67	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 d7d6 e1g1 b8d7 b1c3 e7e5
+E67	d2d4 g8f6 c2c4 g7g6 g2g3 f8g7 f1g2 e8g8 b1c3 d7d6 g1f3 b8d7
+E68	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 d7d6 e1g1 b8d7 b1c3 e7e5 e2e4
+E68	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 g1f3 d7d6 g2g3 e8g8 f1g2 b8d7 e1g1 e7e5 e2e4 f8e8 h2h3 e5d4 f3d4 d7c5 f1e1 a7a5
+E69	d2d4 g8f6 c2c4 g7g6 g1f3 f8g7 g2g3 e8g8 f1g2 d7d6 e1g1 b8d7 b1c3 e7e5 e2e4 c7c6 h2h3
+E70	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 c1g5
+E70	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1e2
+E70	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4
+E70	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6
+E71	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 h2h3 e8g8 c1e3
+E71	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 h2h3
+E72	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g2g3
+E72	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g2g3 e8g8 f1g2 e7e5 g1e2
+E73	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f1e2 e8g8 c1g5
+E73	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f1e2 e8g8 c1g5 h7h6
+E73	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f1e2 e8g8 c1g5 b8d7
+E73	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f1e2 e8g8 c1g5 b8a6
+E73	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f1e2 e8g8 c1g5 b8a6 d1d2 c7c6
+E73	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f1e2 e8g8 c1g5 b8c6
+E73	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f1e2 e8g8 c1g5 a7a6
+E73	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f1e2
+E73	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f1e2 e8g8 c1e3
+E74	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f1e2 e8g8 c1g5 c7c5
+E74	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f1e2 e8g8 c1g5 c7c5 d4d5
+E74	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f1e2 e8g8 c1g5 c7c5 d4c5
+E75	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f1e2 e8g8 c1g5 c7c5 d4d5 e7e6
+E76	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f4
+E76	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f4 e8g8 g1f3 c7c5 d4d5
+E76	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f4 b8a6
+E77	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f1e2 e8g8 f2f4
+E77	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f4 e8g8 g1f3 c7c5 d4d5 e7e6 f1e2 e6d5 e4e5
+E77	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f4 e8g8 g1f3 c7c5 d4d5 e7e6 f1e2
+E77	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f4 e8g8 f1e2 c7c5 d4d5 e7e6 d5e6 f7e6 g2g4 b8c6 h2h4
+E78	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f4 e8g8 g1f3 c7c5 f1e2
+E79	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f4 e8g8 g1f3 c7c5 f1e2 c5d4 f3d4 b8c6 c1e3
+E80	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3
+E81	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1g5
+E81	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1g5 c7c5 d4d5 h7h6 g5f4
+E81	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1g5 c7c5 d4d5 e7e6 d1d2 e6d5 c3d5
+E81	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1g5 c7c5 d4d5 e7e6 d1d2 h7h6 g5h6
+E81	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 g1e2
+E81	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1e3 c7c6 f1d3 a7a6
+E81	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8
+E81	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1e3 c7c5
+E81	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1e3 c7c5 d4c5 d6c5 d1d8 f8d8 e3c5
+E82	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1e3 b7b6
+E83	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1e3 b8c6 g1e2 a7a6
+E83	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1e3 b8c6 g1e2 a8b8
+E83	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1e3 b8c6
+E84	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1e3 b8c6 g1e2 a7a6 d1d2 a8b8
+E85	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1e3 e7e5
+E86	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1e3 e7e5 g1e2 c7c6
+E87	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1e3 e7e5 d4d5 f6h5 d1d2 d8h4 g2g3 h5g3 d2f2 g3f1 f2h4 f1e3 e1e2
+E87	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1e3 e7e5 d4d5
+E87	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1e3 e7e5 d4d5 f6h5 d1d2 d8h4 g2g3 h5g3 d2f2 g3f1 f2h4 f1e3 e1e2 e3c4
+E88	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1e3 e7e5 d4d5 c7c6
+E89	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f2f3 e8g8 c1e3 e7e5 g1e2 c7c6 d4d5 c6d5
+E90	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 c1e3
+E90	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3
+E90	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 c1g5
+E91	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 b8a6
+E91	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2
+E92	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 d4e5
+E92	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5
+E92	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 c1e3
+E92	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 d4d5
+E92	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 d4d5 a7a5
+E93	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 d4d5 b8d7 c1g5 h7h6 g5h4 g6g5 h4g3 f6h5 h2h4
+E93	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 d4d5 b8d7
+E94	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1
+E94	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 c7c6
+E94	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 b8a6
+E94	d2d4 g8f6 c2c4 d7d6 b1c3 b8d7 e2e4 e7e5 g1f3 g7g6 f1e2 f8g7 e1g1 e8g8
+E94	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 b8d7 e1g1 e7e5 d4d5
+E94	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 a7a5
+E95	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 b8d7 f1e1
+E96	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 b8d7 f1e1 c7c6 e2f1 a7a5
+E97	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 b8c6
+E97	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 b8c6 d4d5 c6e7 b2b4
+E97	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 b8c6 d4d5 c6e7 b2b4 f6h5 f1e1
+E97	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 b8c6 d4d5 c6e7 b2b4 f6h5 d1c2
+E97	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 b8c6 d4d5 c6e7 c1d2
+E97	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 b8c6 d4d5 c6e7 f3d2
+E98	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 b8c6 d4d5 c6e7 f3e1
+E98	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 b8c6 d4d5 c6e7 f3e1 f6d7 c1e3 f7f5 f2f3 f5f4 e3f2 g6g5 a1c1 e7g6 c4c5
+E98	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 b8c6 d4d5 c6e7 f3e1 f6d7 c1e3
+E99	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 b8c6 d4d5 c6e7 f3e1 f6d7 f2f3 f7f5 g2g4
+E99	d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 g1f3 e8g8 f1e2 e7e5 e1g1 b8c6 d4d5 c6e7 f3e1 f6d7 f2f3 f7f5
