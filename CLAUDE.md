@@ -25,8 +25,11 @@ kein Programmierer — er denkt in Schach- und Bedien-Begriffen, nicht in Code.
 - **Positionsmodell ist primär** (Chessable-Stil): Repertoire = `RepertoireTree`-Bäume
   (`tree_store`, `repertoire_trees.json`); Training/Statistik/Auswertung/Prüfung laufen
   über Stellungen (EPD-Schlüssel), nicht über lineare Linien.
-- `self.lines` (altes lineares Modell) + Stack-Seite 0 sind **schlafend/unerreichbar**
-  (noch nicht gelöscht — „5b/5c" offen). Nicht versehentlich reaktivieren.
+- **Cutover Teil A erledigt (2026-06-25):** die schlafende lineare Seite-0-Trainings-
+  + Eval-Leisten-Maschinerie ist **gelöscht** (`_build_train_page` ist nur noch ein Stub).
+  `self.lines` **bleibt bewusst** als **Bibliotheks-Katalog** (Bibliothek/Statistik/Prüfung
+  lesen noch daraus). Teil B (`self.lines` ganz eliminieren) ist offen + riskant — nur auf
+  Achims ausdrücklichen Wunsch in eigener Session. Nicht versehentlich reaktivieren.
 - Reine, getestete Helfer in `opening_trainer/tree_session.py`, `position_book.py`,
   `position_training.py`, `opening_id.py` (Eröffnungs-Erkennung), `tree_sync.py`.
 - Daten der echten App: `~/Library/Application Support/Opening Trainer/`. In Tests
