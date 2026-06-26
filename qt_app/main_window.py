@@ -509,6 +509,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self._nav_history: list[int] = []
         self._nav_current = 0
         self._nav_suppress = False
+        # App-Standardschrift = Avenir Next, BEVOR Widgets gebaut werden: sonst
+        # berechnen Listen ihre Zeilenhöhe noch mit der alten (niedrigeren)
+        # Schrift und schneiden Unterlängen (g, y, p) ab. Pixelgröße leicht über
+        # der größten Zeilen-Schrift (15 px), damit nichts klemmt.
+        _app0 = QtWidgets.QApplication.instance()
+        if _app0 is not None:
+            _f = QtGui.QFont("Avenir Next")
+            _f.setPixelSize(16)
+            _app0.setFont(_f)
         self._build_ui()
         self._build_menu()
         self._install_shortcuts()
