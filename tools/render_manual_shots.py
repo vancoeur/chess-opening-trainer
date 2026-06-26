@@ -18,6 +18,7 @@ import qt_app.main_window as mw
 tmp = pathlib.Path(tempfile.mkdtemp()); data = tmp / "data"; data.mkdir()
 mw.data_dir = lambda: data
 win = mw.MainWindow(); win._set_language("de")
+win._set_ui_theme("light")          # Handbuch zeigt den hellen Standard-Look
 
 pgn = '''[Event "x"]
 [ChapterName "B18 · Caro-Kann: Klassisch"]

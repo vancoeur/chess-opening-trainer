@@ -35,20 +35,26 @@ verzweigte Bäume und besitzt sie dann selbst (speichern, üben, bearbeiten).
 
 ---
 
-## 3. Die Startseite — dein Verteiler
+## 3. Die Seitenleiste & die Startseite
 
 ![Startseite](handbuch/01_start.png)
 
-Erreichbar über **Gehe zu → Start** (⌘1). Oben siehst du, **wie viel heute fällig
-ist**, und der große grüne Knopf **„Heute fällig üben"** startet direkt. Darunter
-führen Kacheln in vier Spalten überallhin:
+Links liegt die **Navigations-Seitenleiste** — sie ist auf **jeder** Seite sichtbar
+und bringt dich überallhin, gruppiert in vier Bereiche:
 
-- **Üben:** Heute fällig · Bäume üben · Repertoire-Prüfung
+- **Üben:** Heute fällig · Baum frei durchspielen · Repertoire-Prüfung
 - **Repertoire:** Repertoire-Baum · Alle Eröffnungen · Repertoire-Editor
 - **Auswerten:** Fortschritt · Trefferquote & Fehler · Partien auswerten
 - **Erkunden:** Eröffnungs-Explorer · Gegen Stockfish
 
-> **Orientierung:** Die graue **Kopfzeile** oben und der Fenstertitel zeigen immer, auf welcher Seite du gerade bist. Mit **„‹ Zurück"** geht es zur vorigen Seite.
+Die Seite, auf der du gerade bist, ist in der Leiste **farbig markiert**. Ganz oben
+führt **Start** (⌘1) auf die hier gezeigte **Übersicht**: eine große
+**„Heute fällig"-Karte** mit dem Knopf **„Jetzt üben"**, darunter drei Kennzahlen —
+wie viele **Repertoires**, wie viele **Stellungen** und wie viel **diese Woche
+fällig** ist. (Hast du noch kein Repertoire, steht hier stattdessen
+**„Beispiel-Eröffnungen ausprobieren".)**
+
+> **Orientierung:** Die markierte Seite in der Leiste und der Fenstertitel zeigen immer, wo du gerade bist. Mit **„‹ Zurück"** geht es zur vorigen Seite.
 
 ---
 
@@ -58,8 +64,9 @@ führen Kacheln in vier Spalten überallhin:
 
 ![Heute fällig](handbuch/02_heute_faellig.png)
 
-Einstieg: grüner Knopf auf der Startseite oder **Gehe zu → Heute fällig** (⌘D). Du
-siehst eine Vorschau (heute / morgen / diese Woche / neu) und **pro Eröffnung**,
+Einstieg: der Knopf **„Jetzt üben"** auf der Startseite oder in der Seitenleiste
+**Üben → Heute fällig** (⌘D). Du siehst eine Vorschau (heute / morgen / diese Woche
+/ neu) und **pro Eröffnung**,
 wie viel fällig bzw. neu ist — jeweils mit eigenem „üben"-Knopf. **„Alles üben"**
 startet die ganze Tagessitzung.
 
@@ -193,9 +200,10 @@ eigene Sektion.
 
 ## 14. Ansicht & Einstellungen
 
-Im Menü **Ansicht**: **Brettfarbe** (Grün/Holz/Blau/Grau), **Sprache** (Deutsch/
-English, sofort umschaltbar) und **Bewertungs-Leiste** ein/aus (zeigt neben dem
-Brett, wie gut die Stellung steht — sofern Stockfish vorhanden ist).
+Im Menü **Ansicht**: **Erscheinungsbild** (**Hell/Dunkel** — die Oberfläche schaltet
+sofort um und merkt sich die Wahl; im Dunkelmodus stellt sie automatisch ein passendes
+Brett ein), **Brettfarbe** (Grün/Holz/Blau/Grau) und **Sprache** (Deutsch/English,
+sofort umschaltbar).
 
 ---
 

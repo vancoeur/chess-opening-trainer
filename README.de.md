@@ -13,13 +13,13 @@ lass dein Material *und* deine gespielten Partien von **Stockfish** prüfen.
 > eigenständig, ohne weitere Installation. Die Oberfläche gibt es auf
 > **Deutsch und Englisch**.
 
-![Screenshot — Opening Trainer auf Deutsch, mit der Stockfish-Bewertungsleiste](docs/screenshot.de.png)
+![Screenshot — Opening Trainer auf Deutsch: der Repertoire-Baum mit der neuen Seitenleiste](docs/screenshot.de.png)
 
-*Oberfläche auf **Deutsch und Englisch** (Ansicht → Sprache). Hier auf Deutsch — das [gleiche Fenster auf Englisch](docs/screenshot.en.png).*
+*Moderne Oberfläche mit fester Seitenleiste. **Hell oder dunkel** (Ansicht → Erscheinungsbild) und **Deutsch oder Englisch** (Ansicht → Sprache). Hier auf Deutsch, hell — das [gleiche Fenster auf Englisch](docs/screenshot.en.png).*
 
-**Der erste Start in 13 Sekunden** — ein Klick auf die Beispiel-Eröffnungen, und das Training läuft:
+**Ein kurzer Rundgang** — Start-Dashboard, Repertoire-Baum, Fortschritt und Dunkelmodus:
 
-![Demo: erster Start, Beispiel-Eröffnungen, Training mit Bewertungs-Leiste](docs/demo.de.gif)
+![Demo: Rundgang durch die Oberfläche — Dashboard, Repertoire-Baum, Fortschritt, Dunkelmodus](docs/demo.de.gif)
 
 ## Download (fertige App)
 
