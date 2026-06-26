@@ -13,7 +13,7 @@ kein Programmierer — er denkt in Schach- und Bedien-Begriffen, nicht in Code.
 - **Tests (Sekunden, immer zuerst):**
   `QT_QPA_PLATFORM=offscreen python3 -m pytest -q`
   (bei Hängern in der Hintergrund-Shell hilft `-p no:cacheprovider`).
-  Aktuell ~363 Tests, müssen grün bleiben.
+  Aktuell ~368 Tests, müssen grün bleiben.
 - **App aus dem Quellcode starten (Sekunden, zum Ausprobieren):**
   `python3 qt_main.py`
 - **Bundle bauen + deployen (Minuten — NUR wenn Achim es real testen/„rausgeben"
@@ -32,6 +32,16 @@ kein Programmierer — er denkt in Schach- und Bedien-Begriffen, nicht in Code.
   Achims ausdrücklichen Wunsch in eigener Session. Nicht versehentlich reaktivieren.
 - Reine, getestete Helfer in `opening_trainer/tree_session.py`, `position_book.py`,
   `position_training.py`, `opening_id.py` (Eröffnungs-Erkennung), `tree_sync.py`.
+- **Oberfläche/Design (modernisiert 2026-06-26):** EIN Stylesheet via
+  `build_style(UI_THEMES[...])` in `main_window.py` — **Hell/Dunkel** (Akzent Indigo,
+  Ansicht→Erscheinungsbild, QSettings `ui_theme`), feste **Navigations-Seitenleiste** links
+  (`_build_sidebar`/`_nav_buttons`, aktive Seite via `_update_nav_active`) statt „Gehe zu"-Menü;
+  Startseite = Dashboard (`_build_home_page`). Schrift: Serifen-Titel + Avenir-Body
+  (`FONT_SERIF`/`FONT_SANS`); App-Standardschrift in `__init__` früh setzen, sonst schneiden
+  Listen Unterlängen ab. Selbstgemalte Balken via `board_view.set_ui_palette`.
+  **ACHTUNG: Offscreen-Render-/Vorschau-Skripte schreiben über `_set_ui_theme`/`_set_language` in
+  die ECHTEN QSettings (nur `data_dir` ist monkeypatchbar) — danach `ui_theme`/`board_theme`/
+  `language` zurücksetzen, sonst startet Achims App falsch.**
 - Daten der echten App: `~/Library/Application Support/Opening Trainer/`. In Tests
   per `monkeypatch.setattr(mw, "data_dir", lambda: tmp)` umbiegen (nie die echten
   Daten beschreiben; für Read-only-Checks eine Kopie verwenden).
@@ -45,6 +55,9 @@ kein Programmierer — er denkt in Schach- und Bedien-Begriffen, nicht in Code.
   Direkt auf `main`, dann `git push` (Achims Workflow; nicht branchen, außer er sagt es).
 - **Release** (eigener Schritt, nur auf Achims Wunsch): `APP_VERSION` in
   `qt_app/main_window.py` bumpen + `CHANGELOG.md` ergänzen + `gh release create vX.Y …`.
+  **Bei sichtbaren Änderungen IMMER Bilder + Handbuch mitziehen** (Achims Regel): README-Shots
+  `docs/ui-*.png` / `docs/tour-*.gif`, Handbuch via `tools/render_manual_shots.py` +
+  `tools/make_manual_pdf.py`. Vollständige Checkliste im Memory [[opening-trainer-release-prozess]].
 
 ## Arbeitsweise mit Achim (wichtig)
 - **Schritte einzeln quittieren** bei riskanter Arbeit: Diagnose → Vorschlag → sein OK →
