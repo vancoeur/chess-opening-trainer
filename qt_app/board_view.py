@@ -35,6 +35,20 @@ SOLUTION = QtGui.QColor(120, 200, 120, 150)
 COORD_LIGHT = QtGui.QColor("#ebecd0")
 COORD_DARK = QtGui.QColor("#779556")
 
+# Vom UI-Theme (hell/dunkel) gesetzte Palette für selbstgemalte Hilfs-Widgets
+# (MasteryBar/Koordinaten), damit sie im Dunkelmodus nicht hell aufleuchten.
+UI_MUTED = QtGui.QColor("#6b7180")
+UI_BORDER = QtGui.QColor("#e4e6ef")
+UI_NEUTRAL = QtGui.QColor("#d2d2c8")     # »neu/leer«-Segment der Fortschritts-Leiste
+
+
+def set_ui_palette(muted: str, border: str, neutral: str) -> None:
+    """UI-Farben für die selbstgemalten Balken/Koordinaten setzen (in-place,
+    alle Widgets teilen sie sich). Vom Oberflächen-Theme aufgerufen."""
+    UI_MUTED.setNamedColor(muted)
+    UI_BORDER.setNamedColor(border)
+    UI_NEUTRAL.setNamedColor(neutral)
+
 
 def set_board_theme(name: str) -> None:
     """Setzt die aktuelle Brettfarbe (mutiert die geteilten LIGHT/DARK-Objekte).
@@ -264,7 +278,7 @@ class BoardView(QtWidgets.QWidget):
         font.setPointSize(11)
         font.setBold(True)
         p.setFont(font)
-        p.setPen(QtGui.QColor("#6b7066"))
+        p.setPen(UI_MUTED)
         board_bottom = m + g.board_size
         # Buchstaben unter dem Brett, Ziffern links daneben – im Rand.
         for col, label in enumerate(g.bottom_file_labels()):
@@ -429,7 +443,7 @@ class MasteryBar(QtWidgets.QWidget):
 
     _GREEN = QtGui.QColor("#779556")
     _YELLOW = QtGui.QColor("#d8a657")
-    _GREY = QtGui.QColor("#d2d2c8")
+    # »neu/leer« folgt dem UI-Theme (hell/dunkel) statt fest hellgrau zu sein.
 
     def __init__(self, height: int = 24) -> None:
         super().__init__()
@@ -454,10 +468,10 @@ class MasteryBar(QtWidgets.QWidget):
         path.addRoundedRect(rect, 5, 5)
         p.setClipPath(path)
         counts = [self._sitzt, self._wackelt, self._neu]
-        colors = [self._GREEN, self._YELLOW, self._GREY]
+        colors = [self._GREEN, self._YELLOW, UI_NEUTRAL]
         total = sum(counts)
         if total <= 0:
-            p.fillRect(0, 0, w, h, self._GREY)
+            p.fillRect(0, 0, w, h, UI_NEUTRAL)
             self._draw_border(p, rect)
             p.end()
             return
@@ -488,7 +502,7 @@ class MasteryBar(QtWidgets.QWidget):
     @staticmethod
     def _draw_border(p, rect) -> None:
         p.setClipping(False)
-        pen = QtGui.QPen(QtGui.QColor("#c2c4b8"))
+        pen = QtGui.QPen(UI_BORDER)
         pen.setWidth(1)
         p.setPen(pen)
         p.setBrush(QtCore.Qt.NoBrush)

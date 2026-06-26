@@ -29,6 +29,7 @@ from opening_trainer.migration_v2 import run_migration
 from opening_trainer.tree_sync import sync_auto_trees
 from qt_app.board_view import (
     BoardView, EvalBar, MasteryBar, WdlBar, BOARD_THEMES, set_board_theme,
+    set_ui_palette,
 )
 from qt_app import i18n
 from qt_app.i18n import t
@@ -45,13 +46,13 @@ from qt_app.paths import data_dir, sample_pgn_path
 UI_THEMES = {
     "light": dict(
         bg="#f4f5fa", card="#ffffff", side="#ffffff", header="#ffffff",
-        text="#1c1f2b", muted="#6b7180", border="#e4e6ef",
+        text="#1c1f2b", muted="#6b7180", border="#e4e6ef", neutral="#d6d8e2",
         accent="#5b54e6", accent_h="#4a43d6", accent_dis="#cdcbf2", on_accent_dis="#ffffff",
         hover="#eeecfb", press="#e4e1f8", sel="#e7e4fb", scroll="#c7cad6", herotint="#eeecfb",
     ),
     "dark": dict(
         bg="#14161e", card="#1e2230", side="#181b25", header="#1a1d28",
-        text="#e7e9f2", muted="#9aa0b2", border="#2c3142",
+        text="#e7e9f2", muted="#9aa0b2", border="#2c3142", neutral="#343a4d",
         accent="#7d76ff", accent_h="#9089ff", accent_dis="#3a3766", on_accent_dis="#8e8bb5",
         hover="#272c3d", press="#2f3548", sel="#2a2f42", scroll="#3a4055", herotint="#23213a",
     ),
@@ -469,6 +470,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._ui_theme = self._eval_settings.value("ui_theme", "light", type=str)
         if self._ui_theme not in UI_THEMES:
             self._ui_theme = "light"
+        _pal = UI_THEMES[self._ui_theme]
+        set_ui_palette(_pal["muted"], _pal["border"], _pal["neutral"])
         self._show_eval_bar = self._eval_settings.value("show_eval_bar", True, type=bool)
         from qt_app.engine import find_stockfish
         self._stockfish_available = find_stockfish() is not None
@@ -2496,6 +2499,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._ui_theme = code
         self._eval_settings.setValue("ui_theme", code)
         self.setStyleSheet(build_style(UI_THEMES[code]))
+        pal = UI_THEMES[code]
+        set_ui_palette(pal["muted"], pal["border"], pal["neutral"])
         # Passende Brettfarbe mitnehmen und alle Bretter neu zeichnen.
         board_code = THEME_BOARD.get(code)
         if board_code and board_code in BOARD_THEMES:
