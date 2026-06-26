@@ -61,9 +61,17 @@ UI_THEMES = {
 THEME_BOARD = {"light": "green", "dark": "blue"}
 
 
+# Typografie: klarer serifenloser Fließtext (Avenir Next), elegante Serifen für
+# Überschriften und große Zahlen (Charter) — beide auf macOS vorhanden, mit
+# Rückfall-Kette für den Notfall.
+FONT_SANS = "'Avenir Next', -apple-system, 'Helvetica Neue', Arial, sans-serif"
+FONT_SERIF = "'Charter', 'Georgia', serif"
+
+
 def build_style(t: dict) -> str:
     return f"""
-QWidget {{ background: {t['bg']}; color: {t['text']}; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; font-size: 14px; }}
+QWidget {{ background: {t['bg']}; color: {t['text']}; font-family: {FONT_SANS}; font-size: 14px; }}
+QLabel#name, QLabel#brand, QLabel#heroT, QLabel#cardN, QLabel#cathead, QLabel#navgroup {{ font-family: {FONT_SERIF}; }}
 QLabel {{ background: transparent; color: {t['text']}; }}
 QLabel#eyebrow {{ color: {t['accent']}; font-size: 12px; font-weight: 700; }}
 QLabel#pagehead {{ background: {t['header']}; color: {t['text']}; font-size: 15px; font-weight: 700; padding: 11px 20px; border-bottom: 1px solid {t['border']}; }}
