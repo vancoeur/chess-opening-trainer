@@ -7,6 +7,24 @@ version are on the [Releases page](https://github.com/vancoeur/chess-opening-tra
 The interface is bilingual (English/German); version numbers follow
 `MAJOR.MINOR.PATCH`.
 
+## [1.2.0] — 2026-06-26
+
+**A modern redesign.**
+
+- **New look, light & dark.** A refreshed interface with an indigo accent, cleaner
+  cards and spacing. Switch between **light and dark mode** under *View →
+  Appearance* — the choice is remembered, and dark mode also picks a fitting board.
+- **Fixed sidebar navigation.** A navigation rail on the left is now visible on
+  every page, grouped *Practice / Repertoire / Review / Explore*, with the current
+  page highlighted. It replaces the old “Go” menu; the familiar ⌘1–6 / R / E / D / T
+  shortcuts still work.
+- **Home is a dashboard.** The start page now shows a “due today” hero card with the
+  train button plus at-a-glance cards (repertoires, positions, due this week).
+- **More elegant typography.** Serif headings and numbers paired with a clean,
+  humanist body font.
+- **Streamlined training.** The position-based repertoire model is now the single
+  training path; the old dormant linear-training code has been removed.
+
 ## [1.1.2] — 2026-06-24
 
 **A home start page and smarter back navigation.**
