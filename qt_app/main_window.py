@@ -39,56 +39,101 @@ from opening_trainer.position_book import build_san_book
 from opening_trainer.opening_names_en import to_english
 from qt_app.paths import data_dir, sample_pgn_path
 
-STYLE = """
-QWidget { background: #f6f6f3; color: #23241f; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; font-size: 14px; }
-QLabel#eyebrow { color: #8a8f80; font-size: 12px; font-weight: 600; }
-QLabel#pagehead { background: #eceae3; color: #3a3d35; font-size: 15px; font-weight: 700; padding: 9px 18px; border-bottom: 1px solid #d8d6cd; }
-QLabel#name    { font-size: 23px; font-weight: 600; color: #23241f; }
-QLabel#hint    { color: #6b7066; font-size: 14px; }
-QLabel#note    { color: #6b6f66; font-size: 13px; font-style: italic; }
-QLabel#status  { font-size: 15px; color: #3a3d35; }
-QLabel#due     { color: #8a8f80; font-size: 13px; }
-QLabel#empty   { color: #9a9f90; font-size: 16px; }
-QPushButton { background: #ffffff; border: 1px solid #c2cdb0; border-radius: 9px; padding: 9px 15px; color: #4f6a38; font-weight: 600; }
-QPushButton:hover { background: #eef2e8; border-color: #779556; }
-QPushButton:pressed { background: #e2e6d8; }
-QPushButton:disabled { background: #f2f2ee; color: #bcbcb3; border-color: #e8e8e1; }
-QPushButton#primary { background: #779556; border: none; color: white; font-weight: 600; }
-QPushButton#primary:hover { background: #6b8a4c; }
-QPushButton#primary:disabled { background: #cdd6c0; color: #eef2e8; }
-QPushButton#more { background: #ffffff; border: 1px solid #c2cdb0; border-radius: 9px; padding: 9px 15px; color: #4f6a38; font-weight: 600; }
-QPushButton#more:hover { background: #eef2e8; border-color: #779556; }
-QPushButton#more:pressed { background: #e2e6d8; }
-QPushButton#more:disabled { background: #f2f2ee; color: #bcbcb3; border-color: #e8e8e1; }
-QLabel { background: transparent; }
-QLabel#rowname { font-size: 15px; font-weight: 600; color: #23241f; }
-QLabel#rowsub  { font-size: 12px; color: #8a8f80; }
-QLabel#duename { font-size: 13px; font-weight: 600; color: #23241f; }
-QWidget#libraryrow { background: transparent; }
-QListWidget#library { background: transparent; border: none; }
-QListWidget#library::item { background: transparent; border: none; margin: 2px 0; }
-QListWidget#library::item:enabled { background: #ffffff; border: 1px solid #e4e5dd; border-radius: 8px; color: #23241f; }
-QListWidget#library::item:hover:enabled { background: #f0f2ea; }
-QListWidget#library::item:selected { background: #dbe7c8; border: 1px solid #779556; color: #23241f; }
-QPushButton#seg { background: #ffffff; border: 1px solid #dadbd2; border-radius: 8px; padding: 7px 14px; color: #3a3d35; }
-QPushButton#seg:hover { background: #eef0e8; }
-QPushButton#seg:checked { background: #779556; border: 1px solid #779556; color: white; font-weight: 600; }
-QLabel#cathead { color: #2f3a25; font-size: 18px; font-weight: 800; padding: 14px 4px 6px 4px; }
-QLabel#subhead { color: #5b6b48; font-size: 14px; font-weight: 700; padding: 8px 4px 3px 22px; }
-QLineEdit#search {
-    font-size: 15px; padding: 9px 12px; margin: 2px 0 6px 0;
-    border: 1px solid #d9d9cf; border-radius: 9px; background: #ffffff;
+# Zwei Oberflächen-Themes (hell/dunkel), Akzent Indigo. Das Aussehen hängt
+# komplett an EINEM Stylesheet, das aus diesen Farb-Paletten gebaut wird —
+# Umschalten zur Laufzeit ändert nur die Palette, nie die Logik.
+UI_THEMES = {
+    "light": dict(
+        bg="#f4f5fa", card="#ffffff", side="#ffffff", header="#ffffff",
+        text="#1c1f2b", muted="#6b7180", border="#e4e6ef",
+        accent="#5b54e6", accent_h="#4a43d6", accent_dis="#cdcbf2", on_accent_dis="#ffffff",
+        hover="#eeecfb", press="#e4e1f8", sel="#e7e4fb", scroll="#c7cad6", herotint="#eeecfb",
+    ),
+    "dark": dict(
+        bg="#14161e", card="#1e2230", side="#181b25", header="#1a1d28",
+        text="#e7e9f2", muted="#9aa0b2", border="#2c3142",
+        accent="#7d76ff", accent_h="#9089ff", accent_dis="#3a3766", on_accent_dis="#8e8bb5",
+        hover="#272c3d", press="#2f3548", sel="#2a2f42", scroll="#3a4055", herotint="#23213a",
+    ),
 }
-QLineEdit#search:focus { border-color: #6f8a4f; }
+# Passende Brettfarbe je Oberflächen-Theme (dunkles Brett zu hellem Brett-Set).
+THEME_BOARD = {"light": "green", "dark": "blue"}
 
-/* Scrollbalken deutlich sichtbar (vorher kaum erkennbar) */
-QScrollBar:vertical   { background: #e9eae1; width: 14px; margin: 0; border-radius: 7px; }
-QScrollBar:horizontal { background: #e9eae1; height: 14px; margin: 0; border-radius: 7px; }
-QScrollBar::handle:vertical   { background: #9aa789; min-height: 36px; border-radius: 7px; }
-QScrollBar::handle:horizontal { background: #9aa789; min-width: 36px;  border-radius: 7px; }
-QScrollBar::handle:hover { background: #7f8e6a; }
-QScrollBar::add-line, QScrollBar::sub-line { width: 0; height: 0; background: none; border: none; }
-QScrollBar::add-page, QScrollBar::sub-page { background: none; }
+
+def build_style(t: dict) -> str:
+    return f"""
+QWidget {{ background: {t['bg']}; color: {t['text']}; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; font-size: 14px; }}
+QLabel {{ background: transparent; color: {t['text']}; }}
+QLabel#eyebrow {{ color: {t['accent']}; font-size: 12px; font-weight: 700; }}
+QLabel#pagehead {{ background: {t['header']}; color: {t['text']}; font-size: 15px; font-weight: 700; padding: 11px 20px; border-bottom: 1px solid {t['border']}; }}
+QLabel#name    {{ font-size: 27px; font-weight: 800; color: {t['text']}; }}
+QLabel#hint    {{ color: {t['muted']}; font-size: 14px; }}
+QLabel#note    {{ color: {t['muted']}; font-size: 13px; font-style: italic; }}
+QLabel#status  {{ font-size: 15px; color: {t['text']}; }}
+QLabel#due     {{ color: {t['muted']}; font-size: 13px; }}
+QLabel#empty   {{ color: {t['muted']}; font-size: 16px; }}
+QLabel#rowname {{ font-size: 15px; font-weight: 600; color: {t['text']}; }}
+QLabel#rowsub  {{ font-size: 12px; color: {t['muted']}; }}
+QLabel#duename {{ font-size: 13px; font-weight: 600; color: {t['text']}; }}
+QLabel#cathead {{ color: {t['text']}; font-size: 18px; font-weight: 800; padding: 14px 4px 6px 4px; }}
+QLabel#subhead {{ color: {t['accent']}; font-size: 14px; font-weight: 700; padding: 8px 4px 3px 22px; }}
+
+QPushButton {{ background: {t['card']}; border: 1px solid {t['border']}; border-radius: 11px; padding: 9px 15px; color: {t['text']}; font-weight: 600; }}
+QPushButton:hover {{ background: {t['hover']}; border-color: {t['accent']}; }}
+QPushButton:pressed {{ background: {t['press']}; }}
+QPushButton:disabled {{ background: {t['card']}; color: {t['muted']}; border-color: {t['border']}; }}
+QPushButton#primary {{ background: {t['accent']}; border: none; color: white; font-weight: 700; padding: 11px 18px; }}
+QPushButton#primary:hover {{ background: {t['accent_h']}; }}
+QPushButton#primary:disabled {{ background: {t['accent_dis']}; color: {t['on_accent_dis']}; }}
+QPushButton#more {{ background: {t['card']}; border: 1px solid {t['border']}; border-radius: 11px; padding: 9px 15px; color: {t['text']}; font-weight: 600; }}
+QPushButton#more:hover {{ background: {t['hover']}; border-color: {t['accent']}; }}
+QPushButton#more:pressed {{ background: {t['press']}; }}
+QPushButton#more:disabled {{ background: {t['card']}; color: {t['muted']}; border-color: {t['border']}; }}
+QPushButton#seg {{ background: {t['card']}; border: 1px solid {t['border']}; border-radius: 9px; padding: 7px 14px; color: {t['text']}; }}
+QPushButton#seg:hover {{ background: {t['hover']}; }}
+QPushButton#seg:checked {{ background: {t['accent']}; border: 1px solid {t['accent']}; color: white; font-weight: 700; }}
+
+/* Seitenleiste (feste Navigation links) */
+QWidget#sidebar {{ background: {t['side']}; border-right: 1px solid {t['border']}; }}
+QLabel#brand {{ font-size: 17px; font-weight: 800; color: {t['text']}; padding: 2px 6px 2px 6px; }}
+QLabel#navgroup {{ color: {t['muted']}; font-size: 11px; font-weight: 700; padding: 14px 8px 4px 8px; }}
+QPushButton#nav {{ text-align: left; background: transparent; border: none; border-radius: 9px; padding: 9px 12px; color: {t['text']}; font-size: 14px; font-weight: 500; }}
+QPushButton#nav:hover {{ background: {t['sel']}; }}
+QPushButton#navon {{ text-align: left; background: {t['accent']}; border: none; border-radius: 9px; padding: 9px 12px; color: white; font-size: 14px; font-weight: 700; }}
+
+/* Dashboard-Karten der Startseite */
+QFrame#hero {{ background: {t['herotint']}; border: 1px solid {t['accent']}; border-radius: 16px; }}
+QFrame#statcard {{ background: {t['card']}; border: 1px solid {t['border']}; border-radius: 14px; }}
+QLabel#heroT {{ font-size: 21px; font-weight: 800; color: {t['text']}; }}
+QLabel#cardN {{ font-size: 26px; font-weight: 800; color: {t['text']}; }}
+QLabel#cardL {{ font-size: 13px; color: {t['muted']}; }}
+
+QWidget#libraryrow {{ background: transparent; }}
+QListWidget#library {{ background: transparent; border: none; }}
+QListWidget#library::item {{ background: transparent; border: none; margin: 3px 0; }}
+QListWidget#library::item:enabled {{ background: {t['card']}; border: 1px solid {t['border']}; border-radius: 10px; color: {t['text']}; }}
+QListWidget#library::item:hover:enabled {{ background: {t['hover']}; }}
+QListWidget#library::item:selected {{ background: {t['sel']}; border: 1px solid {t['accent']}; color: {t['text']}; }}
+
+QLineEdit#search {{ font-size: 15px; padding: 10px 14px; margin: 2px 0 6px 0; border: 1px solid {t['border']}; border-radius: 11px; background: {t['card']}; color: {t['text']}; }}
+QLineEdit#search:focus {{ border-color: {t['accent']}; }}
+
+QComboBox {{ background: {t['card']}; border: 1px solid {t['border']}; border-radius: 9px; padding: 7px 12px; color: {t['text']}; }}
+QComboBox:hover {{ border-color: {t['accent']}; }}
+QComboBox QAbstractItemView {{ background: {t['card']}; color: {t['text']}; selection-background-color: {t['accent']}; selection-color: white; }}
+
+QMenuBar {{ background: {t['header']}; color: {t['text']}; }}
+QMenuBar::item:selected {{ background: {t['sel']}; }}
+QMenu {{ background: {t['card']}; color: {t['text']}; border: 1px solid {t['border']}; }}
+QMenu::item:selected {{ background: {t['accent']}; color: white; }}
+
+QScrollBar:vertical   {{ background: transparent; width: 12px; margin: 0; border-radius: 6px; }}
+QScrollBar:horizontal {{ background: transparent; height: 12px; margin: 0; border-radius: 6px; }}
+QScrollBar::handle:vertical   {{ background: {t['scroll']}; min-height: 36px; border-radius: 6px; }}
+QScrollBar::handle:horizontal {{ background: {t['scroll']}; min-width: 36px;  border-radius: 6px; }}
+QScrollBar::handle:hover {{ background: {t['accent']}; }}
+QScrollBar::add-line, QScrollBar::sub-line {{ width: 0; height: 0; background: none; border: none; }}
+QScrollBar::add-page, QScrollBar::sub-page {{ background: none; }}
 """
 
 
@@ -420,6 +465,10 @@ class MainWindow(QtWidgets.QMainWindow):
         if self._board_theme not in BOARD_THEMES:
             self._board_theme = "green"
         set_board_theme(self._board_theme)
+        # Oberflächen-Theme (hell/dunkel) — wird im Stylesheet angewandt.
+        self._ui_theme = self._eval_settings.value("ui_theme", "light", type=str)
+        if self._ui_theme not in UI_THEMES:
+            self._ui_theme = "light"
         self._show_eval_bar = self._eval_settings.value("show_eval_bar", True, type=bool)
         from qt_app.engine import find_stockfish
         self._stockfish_available = find_stockfish() is not None
@@ -483,41 +532,26 @@ class MainWindow(QtWidgets.QMainWindow):
         reset_act = file_menu.addAction(t("Repertoire leeren …", "Clear repertoire …"))
         reset_act.triggered.connect(self._reset_repertoire)
 
-        go_menu = self.menuBar().addMenu(t("Gehe zu", "Go"))
-        for label_de, label_en, shortcut, slot in [
-            ("Start", "Home", "Ctrl+1", self._open_home),
-            ("Alle Eröffnungen", "All openings", "Ctrl+2", self._open_library),
-            ("Trefferquote & Fehler", "Accuracy & mistakes", "Ctrl+3", self._open_stats),
-            ("Fortschritt", "Progress", "Ctrl+4", self._open_progress),
-            ("Partien auswerten", "Review games", "Ctrl+5", self._open_game_review),
-            ("Repertoire-Prüfung", "Repertoire check", "Ctrl+6", self._open_tuv),
-        ]:
-            act = go_menu.addAction(t(label_de, label_en))
-            act.setShortcut(QtGui.QKeySequence(shortcut))
-            act.triggered.connect(lambda _=False, s=slot: s())
-        go_menu.addSeparator()
-        reptree_act = go_menu.addAction(t("Repertoire-Baum", "Repertoire tree"))
-        reptree_act.setShortcut(QtGui.QKeySequence("Ctrl+R"))
-        reptree_act.triggered.connect(self._open_repertoire_tree)
-        editor_act = go_menu.addAction(t("Repertoire-Editor", "Repertoire editor"))
-        editor_act.setShortcut(QtGui.QKeySequence("Ctrl+E"))
-        editor_act.triggered.connect(self._open_editor)
-        due_act = go_menu.addAction(t("Heute fällig", "Due today"))
-        due_act.setShortcut(QtGui.QKeySequence("Ctrl+D"))
-        due_act.triggered.connect(self._open_due_overview)
-        drill_act = go_menu.addAction(t("Baum frei durchspielen", "Free-play a tree"))
-        drill_act.setShortcut(QtGui.QKeySequence("Ctrl+T"))
-        drill_act.triggered.connect(self._open_tree_drill)
-        go_menu.addSeparator()
-        spar_act = go_menu.addAction(t("Gegen Stockfish spielen", "Play vs Stockfish"))
-        spar_act.triggered.connect(self._open_sparring)
-        expl_act = go_menu.addAction(t("Eröffnungs-Explorer (Lichess)", "Opening explorer (Lichess)"))
-        expl_act.triggered.connect(self._open_explorer)
+        # (Das frühere »Gehe zu«-Menü ist entfallen — die feste Seitenleiste links
+        #  übernimmt die Navigation. Die gewohnten Tastenkürzel bleiben über
+        #  _install_shortcuts erhalten.)
 
         view_menu = self.menuBar().addMenu(t("Ansicht", "View"))
 
+        appearance_menu = view_menu.addMenu(t("Erscheinungsbild", "Appearance"))
+        self._theme_actions = {}
+        appearance_group = QtGui.QActionGroup(self)
+        for code, label in [("light", t("Hell", "Light")), ("dark", t("Dunkel", "Dark"))]:
+            act = appearance_menu.addAction(label)
+            act.setCheckable(True)
+            act.setChecked(self._ui_theme == code)
+            act.triggered.connect(lambda _=False, c=code: self._set_ui_theme(c))
+            appearance_group.addAction(act)
+            self._theme_actions[code] = act
+
         theme_menu = view_menu.addMenu(t("Brettfarbe", "Board color"))
         theme_group = QtGui.QActionGroup(self)
+        self._board_actions = {}
         for code, label in [
             ("green", t("Grün", "Green")),
             ("brown", t("Holz", "Wood")),
@@ -529,6 +563,7 @@ class MainWindow(QtWidgets.QMainWindow):
             act.setChecked(self._board_theme == code)
             act.triggered.connect(lambda _=False, c=code: self._set_board_theme(c))
             theme_group.addAction(act)
+            self._board_actions[code] = act
 
         lang_menu = view_menu.addMenu(t("Sprache", "Language"))
         self._lang_actions = {}
@@ -1510,81 +1545,86 @@ class MainWindow(QtWidgets.QMainWindow):
         if items:
             self._run_position_session(items, t("REPERTOIRE ÜBEN", "TRAIN REPERTOIRE"))
 
-    # ---- Start-Hub: Verteiler-Seite, von der aus alles verzweigt ----
+    # ---- Start-Hub: Dashboard (Navigation macht die Seitenleiste) ----
     def _build_home_page(self) -> QtWidgets.QWidget:
         page = QtWidgets.QWidget()
         outer = QtWidgets.QVBoxLayout(page)
-        outer.setContentsMargins(40, 34, 40, 34)
-        outer.setSpacing(14)
+        outer.setContentsMargins(36, 30, 36, 30)
+        outer.setSpacing(18)
 
-        title = QtWidgets.QLabel("Opening Trainer")
+        title = QtWidgets.QLabel(t("Start", "Home"))
         title.setObjectName("name")
         outer.addWidget(title)
+        subtitle = QtWidgets.QLabel(t("Willkommen zurück — hier ist dein Überblick.",
+                                      "Welcome back — here's your overview."))
+        subtitle.setObjectName("hint")
+        outer.addWidget(subtitle)
 
-        # Tagesaktion + Vorschau
+        # --- Hero-Karte: heutige Übung (sichtbar, sobald ein Repertoire da ist) ---
+        self.home_hero = QtWidgets.QFrame()
+        self.home_hero.setObjectName("hero")
+        hero = QtWidgets.QHBoxLayout(self.home_hero)
+        hero.setContentsMargins(26, 22, 26, 22)
+        hero.setSpacing(16)
+        col = QtWidgets.QVBoxLayout()
+        col.setSpacing(4)
+        hero_title = QtWidgets.QLabel(t("Heute fällig", "Due today"))
+        hero_title.setObjectName("heroT")
+        col.addWidget(hero_title)
         self.home_forecast = self._plain_label("")
-        self.home_forecast.setObjectName("hint")
+        self.home_forecast.setObjectName("cardL")
         self.home_forecast.setWordWrap(True)
-        outer.addWidget(self.home_forecast)
-        self.home_due_btn = QtWidgets.QPushButton(t("▶  Heute fällig üben", "▶  Train what's due"))
+        col.addWidget(self.home_forecast)
+        hero.addLayout(col, 1)
+        self.home_due_btn = QtWidgets.QPushButton(t("▶  Jetzt üben", "▶  Train now"))
         self.home_due_btn.setObjectName("primary")
         self.home_due_btn.clicked.connect(self._open_due_overview)
-        outer.addWidget(self.home_due_btn, 0, QtCore.Qt.AlignLeft)
+        hero.addWidget(self.home_due_btn, 0, QtCore.Qt.AlignVCenter)
+        outer.addWidget(self.home_hero)
 
-        # Erst-Nutzer: Beispiele / Hinweis (statt der Tagesaktion)
+        # --- Kennzahl-Karten ---
+        self.home_stats = QtWidgets.QWidget()
+        stats = QtWidgets.QHBoxLayout(self.home_stats)
+        stats.setContentsMargins(0, 0, 0, 0)
+        stats.setSpacing(16)
+        self._home_stat_labels = []
+        for caption in (t("Repertoires", "Repertoires"),
+                        t("Stellungen im Repertoire", "Positions in repertoire"),
+                        t("Diese Woche fällig", "Due this week")):
+            card = QtWidgets.QFrame()
+            card.setObjectName("statcard")
+            cv = QtWidgets.QVBoxLayout(card)
+            cv.setContentsMargins(22, 18, 22, 18)
+            cv.setSpacing(4)
+            n = QtWidgets.QLabel("0")
+            n.setObjectName("cardN")
+            cv.addWidget(n)
+            lab = QtWidgets.QLabel(caption)
+            lab.setObjectName("cardL")
+            cv.addWidget(lab)
+            stats.addWidget(card)
+            self._home_stat_labels.append(n)
+        outer.addWidget(self.home_stats)
+
+        # --- Leer-Zustand (kein Repertoire): Beispiele / Hinweis ---
+        self.home_empty = QtWidgets.QWidget()
+        ev = QtWidgets.QVBoxLayout(self.home_empty)
+        ev.setContentsMargins(0, 0, 0, 0)
+        ev.setSpacing(10)
         self.home_sample_btn = QtWidgets.QPushButton(
             t("🎁  Beispiel-Eröffnungen ausprobieren", "🎁  Try the sample openings"))
+        self.home_sample_btn.setObjectName("primary")
         self.home_sample_btn.clicked.connect(self._load_sample_lines)
-        outer.addWidget(self.home_sample_btn, 0, QtCore.Qt.AlignLeft)
+        ev.addWidget(self.home_sample_btn, 0, QtCore.Qt.AlignLeft)
         self.home_new_hint = self._plain_label(t(
             "Noch kein Repertoire geladen — hol dir die Beispiele oder lade ein PGN "
-            "über »Alle Eröffnungen«.",
-            "No repertoire loaded yet — grab the samples or load a PGN via »All openings«."))
+            "links über »Alle Eröffnungen«.",
+            "No repertoire loaded yet — grab the samples or load a PGN via »All openings« on the left."))
         self.home_new_hint.setObjectName("hint")
         self.home_new_hint.setWordWrap(True)
-        outer.addWidget(self.home_new_hint)
+        ev.addWidget(self.home_new_hint)
+        outer.addWidget(self.home_empty)
 
-        outer.addSpacing(12)
-
-        # Verteiler-Kacheln, gruppiert
-        groups = [
-            (t("Üben", "Practice"), [
-                (t("Heute fällig", "Due today"), self._open_due_overview),
-                (t("Baum frei durchspielen", "Free-play a tree"), self._open_tree_drill),
-                (t("Repertoire-Prüfung", "Repertoire check"), self._open_tuv),
-            ]),
-            (t("Repertoire", "Repertoire"), [
-                (t("Repertoire-Baum", "Repertoire tree"), self._open_repertoire_tree),
-                (t("Alle Eröffnungen", "All openings"), self._open_library),
-                (t("Repertoire-Editor", "Repertoire editor"), self._open_editor),
-            ]),
-            (t("Auswerten", "Review"), [
-                (t("Fortschritt", "Progress"), self._open_progress),
-                (t("Trefferquote & Fehler", "Accuracy & mistakes"), self._open_stats),
-                (t("Partien auswerten", "Review games"), self._open_game_review),
-            ]),
-            (t("Erkunden", "Explore"), [
-                (t("Eröffnungs-Explorer", "Opening explorer"), self._open_explorer),
-                (t("Gegen Stockfish", "Play Stockfish"), self._open_sparring),
-            ]),
-        ]
-        grid = QtWidgets.QGridLayout()
-        grid.setHorizontalSpacing(16)
-        grid.setVerticalSpacing(8)
-        grid.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
-        for col, (header, items) in enumerate(groups):
-            h = QtWidgets.QLabel(header)
-            h.setObjectName("eyebrow")
-            grid.addWidget(h, 0, col)
-            for row, (label, cb) in enumerate(items, start=1):
-                b = QtWidgets.QPushButton(label)
-                b.setObjectName("more")
-                b.setMinimumWidth(210)
-                b.clicked.connect(lambda _=False, c=cb: c())
-                grid.addWidget(b, row, col, QtCore.Qt.AlignTop)
-        holder = QtWidgets.QWidget()
-        holder.setLayout(grid)
-        outer.addWidget(holder, 0, QtCore.Qt.AlignLeft)
         outer.addStretch(1)
         return page
 
@@ -1593,7 +1633,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stack.setCurrentIndex(12)
 
     def _refresh_home(self) -> None:
-        from opening_trainer.tree_session import due_forecast
+        from opening_trainer.tree_session import due_forecast, build_user_position_index
         today = date.today()
         fc = {"today": 0, "tomorrow": 0, "week": 0, "new": 0}
         for side_name, color in (("white", chess.WHITE), ("black", chess.BLACK)):
@@ -1603,14 +1643,24 @@ class MainWindow(QtWidgets.QMainWindow):
         has_rep = bool(self.lines) or bool(self.tree_store.all())
         total = len(self._due_items())
         self.home_forecast.setText(t(
-            f"Fällig: heute {fc['today']} · morgen {fc['tomorrow']} · Woche {fc['week']}"
-            f"      ·      Noch nie geübt: {fc['new']}",
-            f"Due: today {fc['today']} · tomorrow {fc['tomorrow']} · week {fc['week']}"
-            f"      ·      Not started yet: {fc['new']}"))
+            f"heute {fc['today']} fällig   ·   morgen {fc['tomorrow']}  ·  diese Woche {fc['week']}"
+            f"   ·   noch nie geübt {fc['new']}",
+            f"today {fc['today']} due   ·   tomorrow {fc['tomorrow']}  ·  this week {fc['week']}"
+            f"   ·   never trained {fc['new']}"))
         # Tagesportion = fällige Wiederholungen + ein paar neue Stellungen.
-        self.home_due_btn.setText(t(f"▶  Heute üben  ({total})", f"▶  Train today  ({total})"))
+        self.home_due_btn.setText(t(f"▶  Jetzt üben  ({total})", f"▶  Train now  ({total})"))
         self.home_due_btn.setEnabled(total > 0)
-        self.home_forecast.setVisible(has_rep)
+        # Kennzahl-Karten füllen.
+        reps = len(self.tree_store.all())
+        positions = (len(build_user_position_index(self.tree_store.all(), chess.WHITE))
+                     + len(build_user_position_index(self.tree_store.all(), chess.BLACK)))
+        for label, value in zip(self._home_stat_labels, (reps, positions, fc["week"])):
+            label.setText(str(value))
+        # Sichtbarkeit: Dashboard bei vorhandenem Repertoire, sonst Leer-Zustand.
+        self.home_hero.setVisible(has_rep)
+        self.home_stats.setVisible(has_rep)
+        self.home_empty.setVisible(not has_rep)
+        self.home_forecast.setVisible(has_rep)      # explizit (Tests prüfen die Knöpfe direkt)
         self.home_due_btn.setVisible(has_rep)
         self.home_sample_btn.setVisible(not has_rep)
         self.home_new_hint.setVisible(not has_rep)
@@ -1984,9 +2034,21 @@ class MainWindow(QtWidgets.QMainWindow):
         )
 
     def _install_shortcuts(self) -> None:
+        # Die gewohnten Sprung-Kürzel (früher am »Gehe zu«-Menü) bleiben erhalten,
+        # auch ohne sichtbares Menü — die Seitenleiste übernimmt die Navigation.
         for keys, slot in [
+            ("Ctrl+1", self._open_home),
+            ("Ctrl+2", self._open_library),
+            ("Ctrl+3", self._open_stats),
+            ("Ctrl+4", self._open_progress),
+            ("Ctrl+5", self._open_game_review),
+            ("Ctrl+6", self._open_tuv),
+            ("Ctrl+R", self._open_repertoire_tree),
+            ("Ctrl+E", self._open_editor),
+            ("Ctrl+D", self._open_due_overview),
+            ("Ctrl+T", self._open_tree_drill),
         ]:
-            QtGui.QShortcut(keys, self).activated.connect(slot)
+            QtGui.QShortcut(QtGui.QKeySequence(keys), self).activated.connect(slot)
 
     def _restore_geometry(self) -> None:
         self._qsettings = QtCore.QSettings("OpeningTrainer", "OpeningTrainer")
@@ -2306,16 +2368,19 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _build_ui(self) -> None:
         self.stack = QtWidgets.QStackedWidget()
-        # Durchgehende Kopfzeile ÜBER dem Inhalt: zeigt auf JEDER Seite, wo man
-        # ist (Orientierung). Wird bei jedem Seitenwechsel aktualisiert.
+        # Feste Navigations-Seitenleiste LINKS, Inhalt rechts. Die Leiste ist auf
+        # jeder Seite sichtbar und ersetzt das frühere »Gehe zu«-Menü.
         central = QtWidgets.QWidget()
-        outer = QtWidgets.QVBoxLayout(central)
-        outer.setContentsMargins(0, 0, 0, 0)
-        outer.setSpacing(0)
+        root = QtWidgets.QHBoxLayout(central)
+        root.setContentsMargins(0, 0, 0, 0)
+        root.setSpacing(0)
+        root.addWidget(self._build_sidebar())
+        # Orientierungs-Label bleibt (unsichtbar) erhalten, damit Fenstertitel-Code
+        # weiterläuft — die eigentliche Überschrift steht jetzt je Seite im Inhalt.
         self.page_head = QtWidgets.QLabel("")
         self.page_head.setObjectName("pagehead")
-        outer.addWidget(self.page_head)
-        outer.addWidget(self.stack, 1)
+        self.page_head.setVisible(False)
+        root.addWidget(self.stack, 1)
         self.setCentralWidget(central)
         self.stack.addWidget(self._build_train_page())     # 0
         self.stack.addWidget(self._build_library_page())   # 1
@@ -2331,11 +2396,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stack.addWidget(self._build_due_overview_page())  # 11
         self.stack.addWidget(self._build_home_page())          # 12  (Start-Hub)
         self.stack.addWidget(self._build_repertoire_tree_page())  # 13  (Repertoire-Baum)
-        self.setStyleSheet(STYLE)
-        self.resize(1000, 700)
+        self.setStyleSheet(build_style(UI_THEMES[self._ui_theme]))
+        self.resize(1040, 720)
         # Seitenwechsel mitschreiben (für »Zurück« zur vorigen Seite).
         self._nav_current = self.stack.currentIndex()
         self.page_head.setText(self._page_name(self._nav_current))   # Kopfzeile von Anfang an
+        self._update_nav_active(self._nav_current)
         self.stack.currentChanged.connect(self._on_page_changed)
 
     def _on_page_changed(self, new: int) -> None:
@@ -2348,10 +2414,100 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setWindowTitle(self._page_title(new))   # Orientierung: Fenstertitel …
         if hasattr(self, "page_head"):               # … und sichtbare Kopfzeile
             self.page_head.setText(self._page_name(new))
+        self._update_nav_active(new)             # aktive Seite in der Leiste markieren
         if new == 11:                            # »Heute fällig«-Übersicht stets frisch zeigen
             self._refresh_due_overview()
         elif new == 12:                          # Start-Hub aktualisieren
             self._refresh_home()
+
+    # --- Seitenleiste (feste Navigation) ---------------------------------
+
+    @staticmethod
+    def _amp(label: str) -> str:
+        """»&« in Knopf-Beschriftungen verdoppeln, sonst macht Qt daraus ein
+        Tastatur-Kürzel (»Trefferquote & Fehler« → »Trefferquote _Fehler«)."""
+        return label.replace("&", "&&")
+
+    def _build_sidebar(self) -> QtWidgets.QWidget:
+        side = QtWidgets.QWidget()
+        side.setObjectName("sidebar")
+        side.setFixedWidth(244)
+        v = QtWidgets.QVBoxLayout(side)
+        v.setContentsMargins(14, 18, 14, 14)
+        v.setSpacing(2)
+        v.addWidget(QtWidgets.QLabel("♟  Opening Trainer", objectName="brand"))
+        self._nav_buttons: dict[int, QtWidgets.QPushButton] = {}
+
+        def item(label: str, opener, target: int) -> None:
+            b = QtWidgets.QPushButton(self._amp(label))
+            b.setObjectName("nav")
+            b.setCursor(QtCore.Qt.PointingHandCursor)
+            b.clicked.connect(lambda _=False, o=opener: o())
+            self._nav_buttons[target] = b
+            v.addWidget(b)
+
+        item(t("⌂  Start", "⌂  Home"), self._open_home, 12)
+        groups = [
+            (t("ÜBEN", "PRACTICE"), [
+                (t("▶  Heute fällig", "▶  Due today"), self._open_due_overview, 11),
+                (t("Baum frei durchspielen", "Free-play a tree"), self._open_tree_drill, 10),
+                (t("Repertoire-Prüfung", "Repertoire check"), self._open_tuv, 3),
+            ]),
+            (t("REPERTOIRE", "REPERTOIRE"), [
+                (t("Repertoire-Baum", "Repertoire tree"), self._open_repertoire_tree, 13),
+                (t("Alle Eröffnungen", "All openings"), self._open_library, 1),
+                (t("Repertoire-Editor", "Repertoire editor"), self._open_editor, 9),
+            ]),
+            (t("AUSWERTEN", "REVIEW"), [
+                (t("Fortschritt", "Progress"), self._open_progress, 5),
+                (t("Trefferquote & Fehler", "Accuracy & mistakes"), self._open_stats, 2),
+                (t("Partien auswerten", "Review games"), self._open_game_review, 7),
+            ]),
+            (t("ERKUNDEN", "EXPLORE"), [
+                (t("Eröffnungs-Explorer", "Opening explorer"), self._open_explorer, 6),
+                (t("Gegen Stockfish", "Play Stockfish"), self._open_sparring, 4),
+            ]),
+        ]
+        for header, items in groups:
+            v.addWidget(QtWidgets.QLabel(header, objectName="navgroup"))
+            for label, opener, target in items:
+                item(label, opener, target)
+        v.addStretch(1)
+        return side
+
+    def _nav_active_for(self, page: int) -> int:
+        """Welcher Navigations-Eintrag wird für diese Seite hervorgehoben?
+        Seiten ohne eigenen Eintrag spiegeln auf den passenden zurück."""
+        return {8: 7, 10: 10, 0: 12}.get(page, page)
+
+    def _update_nav_active(self, page: int) -> None:
+        target = self._nav_active_for(page)
+        for idx, btn in getattr(self, "_nav_buttons", {}).items():
+            name = "navon" if idx == target else "nav"
+            if btn.objectName() != name:
+                btn.setObjectName(name)
+                btn.style().unpolish(btn)
+                btn.style().polish(btn)
+
+    def _set_ui_theme(self, code: str) -> None:
+        """Oberfläche hell/dunkel live umschalten (gemerkt wie die Brettfarbe)."""
+        if code not in UI_THEMES:
+            return
+        self._ui_theme = code
+        self._eval_settings.setValue("ui_theme", code)
+        self.setStyleSheet(build_style(UI_THEMES[code]))
+        # Passende Brettfarbe mitnehmen und alle Bretter neu zeichnen.
+        board_code = THEME_BOARD.get(code)
+        if board_code and board_code in BOARD_THEMES:
+            self._board_theme = board_code
+            self._eval_settings.setValue("board_theme", board_code)
+            set_board_theme(board_code)
+            for c, act in getattr(self, "_board_actions", {}).items():
+                act.setChecked(c == board_code)
+        for bv in self.findChildren(BoardView):
+            bv.update()
+        for c, act in getattr(self, "_theme_actions", {}).items():
+            act.setChecked(c == code)
 
     def _page_name(self, index: int) -> str:
         """Klartext-Name der Seite (für Kopfzeile + Fenstertitel)."""
@@ -2419,7 +2575,7 @@ class MainWindow(QtWidgets.QMainWindow):
         back.clicked.connect(self._go_back)
         title = QtWidgets.QLabel(t("Deine Eröffnungen", "Your openings"))
         title.setObjectName("name")
-        self.stats_btn = QtWidgets.QPushButton(t("Trefferquote & Fehler", "Accuracy & mistakes"))
+        self.stats_btn = QtWidgets.QPushButton(self._amp(t("Trefferquote & Fehler", "Accuracy & mistakes")))
         self.stats_btn.setObjectName("more")
         self.stats_btn.clicked.connect(self._open_stats)
         self.load_btn = QtWidgets.QPushButton(t("PGN laden …", "Load PGN …"))
