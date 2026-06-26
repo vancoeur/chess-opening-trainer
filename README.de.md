@@ -13,13 +13,13 @@ lass dein Material *und* deine gespielten Partien von **Stockfish** prüfen.
 > eigenständig, ohne weitere Installation. Die Oberfläche gibt es auf
 > **Deutsch und Englisch**.
 
-![Screenshot — Opening Trainer auf Deutsch: der Repertoire-Baum mit der neuen Seitenleiste](docs/screenshot.de.png)
+![Screenshot — Opening Trainer auf Deutsch: der Repertoire-Baum mit der neuen Seitenleiste](docs/ui-de.png)
 
-*Moderne Oberfläche mit fester Seitenleiste. **Hell oder dunkel** (Ansicht → Erscheinungsbild) und **Deutsch oder Englisch** (Ansicht → Sprache). Hier auf Deutsch, hell — das [gleiche Fenster auf Englisch](docs/screenshot.en.png).*
+*Moderne Oberfläche mit fester Seitenleiste. **Hell oder dunkel** (Ansicht → Erscheinungsbild) und **Deutsch oder Englisch** (Ansicht → Sprache). Hier auf Deutsch, hell — das [gleiche Fenster auf Englisch](docs/ui-en.png).*
 
 **Ein kurzer Rundgang** — Start-Dashboard, Repertoire-Baum, Fortschritt und Dunkelmodus:
 
-![Demo: Rundgang durch die Oberfläche — Dashboard, Repertoire-Baum, Fortschritt, Dunkelmodus](docs/demo.de.gif)
+![Demo: Rundgang durch die Oberfläche — Dashboard, Repertoire-Baum, Fortschritt, Dunkelmodus](docs/tour.de.gif)
 
 ## Download (fertige App)
 
@@ -73,7 +73,8 @@ Die App bringt **drei Beispiel-Eröffnungen** mit (Italienische Partie, Caro-Kan
     einprägst. Jeder Fund ist anklickbar zum Üben.
   - **„War mein Zug gut?"** — weichst du beim Üben vom Repertoire-Zug ab, sagt
     die Engine, ob dein Zug gleichwertig, ungenau oder ein Fehler war.
-  - **Bewertungs-Leiste** beim Üben (abschaltbar im Menü „Ansicht").
+  - **Bewertungs-Leiste** neben den Analyse-Brettern (Repertoire-Prüfung,
+    Partie-Betrachter), sofern Stockfish vorhanden ist.
   - **Sparring** — die Eröffnungsstellung gegen Stockfish ausspielen (drei
     Stärken), mit „Zug zurück" und Patzer-Hinweis.
 - **Lichess-Eröffnungsexplorer** — sehen, was in jeder Stellung tatsächlich
@@ -86,8 +87,10 @@ Die App bringt **drei Beispiel-Eröffnungen** mit (Italienische Partie, Caro-Kan
 - **PGN laden** (einzelne Datei oder ganzer Ordner) — **Varianten bleiben
   erhalten** und speisen die Stellungs-Wiederholung. Deine PGN bleibt
   Originalmaterial; Trainingsdaten bleiben lokal und privat.
-- **Deutsch / Englisch** — jederzeit umschaltbar über das Menü
-  „Ansicht → Sprache" (greift nach Neustart). Auch die Eröffnungsnamen werden übersetzt.
+- **Moderne Oberfläche** — feste Seitenleiste für die Navigation und ein
+  **Hell-/Dunkel-Modus** (*Ansicht → Erscheinungsbild*).
+- **Deutsch / Englisch** — jederzeit umschaltbar über *Ansicht → Sprache*; die
+  Oberfläche wechselt **sofort**, ohne Neustart. Auch die Eröffnungsnamen werden übersetzt.
 
 ## Voraussetzungen
 

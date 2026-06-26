@@ -12,13 +12,13 @@ wrong, and have **Stockfish** check your lines and your played games.
 > Modern Qt/PySide6 interface. Stockfish is bundled — the app runs on its own,
 > no extra installation. The interface is available in **English and German**.
 
-![Screenshot — Opening Trainer in English: the repertoire tree with the new sidebar](docs/screenshot.en.png)
+![Screenshot — Opening Trainer in English: the repertoire tree with the new sidebar](docs/ui-en.png)
 
-*Modern interface with a fixed sidebar. **Light or dark** (View → Appearance) and **English or German** (View → Language). Here in English, light — the [same window in German](docs/screenshot.de.png).*
+*Modern interface with a fixed sidebar. **Light or dark** (View → Appearance) and **English or German** (View → Language). Here in English, light — the [same window in German](docs/ui-de.png).*
 
 **A quick tour** — the home dashboard, your repertoire tree, progress, and dark mode:
 
-![Demo: a tour of the interface — dashboard, repertoire tree, progress, dark mode](docs/demo.en.gif)
+![Demo: a tour of the interface — dashboard, repertoire tree, progress, dark mode](docs/tour.en.gif)
 
 ## Download (ready-to-run app)
 
@@ -71,7 +71,8 @@ The app ships with **three sample openings** (Italian Game, Caro-Kann, Queen’s
     Each finding is clickable to train.
   - **“Was my move good?”** — when you deviate while practising, the engine
     tells you whether your move was equal, slightly worse, or a mistake.
-  - **Evaluation bar** while practising (toggle in the “View” menu).
+  - **Evaluation bar** beside the analysis boards (repertoire check, game
+    viewer) when Stockfish is present.
   - **Sparring** — play the opening position out against Stockfish (three
     strengths), with take-back and a blunder hint.
 - **Lichess opening explorer** — see what is actually played in each position
@@ -83,8 +84,11 @@ The app ships with **three sample openings** (Italian Game, Caro-Kann, Queen’s
 - **Load PGN** (single file or whole folder) — **variations are kept** and feed
   the position review. Your PGN stays original material; training data stays
   local and private.
-- **English / German interface** — switch any time via the “View → Language”
-  menu (takes effect after a restart). Opening names are translated too.
+- **Modern interface** — a fixed sidebar for navigation and a **light/dark**
+  mode (*View → Appearance*).
+- **English / German interface** — switch any time via *View → Language*; the
+  interface changes **instantly**, no restart needed. Opening names are
+  translated too.
 
 ## Requirements
 
