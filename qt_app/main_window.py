@@ -27,6 +27,7 @@ from opening_trainer.repertoire_tree_store import RepertoireTreeStore
 from opening_trainer.position_schedule_store import PositionScheduleStore
 from opening_trainer.migration_v2 import run_migration
 from opening_trainer.tree_sync import sync_auto_trees
+from opening_trainer.catalog import build_catalog
 from qt_app.board_view import (
     BoardView, EvalBar, MasteryBar, WdlBar, BOARD_THEMES, set_board_theme,
     set_ui_palette,
@@ -424,17 +425,19 @@ class MainWindow(QtWidgets.QMainWindow):
         self._explorer_seed_plies = 0
         self._explorer_cache: dict = {}  # fen -> ExplorerResult (schont die API)
         self._explorer_nam = None        # QNetworkAccessManager (lazy)
-        self.lines = self._load_lines()
-        self._migrate_sides_from_groups()
+        # Legacy-Linien NUR für die einmalige Migration parsen — NICHT als Dauer-
+        # zustand halten. Die Bibliothek/Partien/Seiten-Zuordnung leiten ihre
+        # Eröffnungen jetzt aus den Bäumen ab (siehe _catalog()).
+        legacy_lines = self._load_lines()
+        self._migrate_sides_from_groups(legacy_lines)
         self.train_color = chess.BLACK if self.settings_store.settings.train_color == "black" else chess.WHITE
 
-        # Repertoire-Bäume (neue, baum-basierte Datenhaltung): einmalige, idempotente
-        # Migration der linearen Bestandsdaten, danach laden. ADDITIV — die bisherige
-        # lineare Trainingslogik bleibt vorerst aktiv (Umstellung folgt separat).
+        # Repertoire-Bäume sind die alleinige Datenhaltung: einmalige, idempotente
+        # Migration der linearen Bestandsdaten, danach laden + synchronisieren.
         self.trees_path = data / "repertoire_trees.json"
         self.position_schedule_path = data / "position_schedule.json"
         try:
-            run_migration(data, self.lines)
+            run_migration(data, legacy_lines)
         except Exception:  # noqa: BLE001 — die Migration darf den Start nie verhindern
             pass
         self.tree_store = RepertoireTreeStore.load(self.trees_path)
@@ -1660,7 +1663,7 @@ class MainWindow(QtWidgets.QMainWindow):
             f = due_forecast(self.tree_store.by_side(side_name), color, self.position_schedule, today)
             for k in fc:
                 fc[k] += f[k]
-        has_rep = bool(self.lines) or bool(self.tree_store.all())
+        has_rep = bool(self.tree_store.all())
         total = len(self._due_items())
         self.home_forecast.setText(t(
             f"heute {fc['today']} fällig   ·   morgen {fc['tomorrow']}  ·  diese Woche {fc['week']}"
@@ -2173,6 +2176,12 @@ class MainWindow(QtWidgets.QMainWindow):
                     lines.append(line)
         return lines
 
+    def _catalog(self) -> list:
+        """Die Eröffnungs-Liste (früher self.lines) — abgeleitet aus den Auto-Bäumen,
+        also direkt aus der EINZIGEN Quelle. Ein Eintrag je Auto-Baum (Name/Quelle/
+        Hauptpfad/Seite); Editor-eigene Bäume zeigt die Bibliothek separat."""
+        return build_catalog(self.tree_store.all())
+
     def _sync_auto_trees(self) -> None:
         """Hält die automatisch erzeugten Repertoire-Bäume + Positions-Karten mit den
         geladenen Quellen + Seiten-Zuordnungen in Sync (speist die Tagessitzung).
@@ -2188,20 +2197,17 @@ class MainWindow(QtWidgets.QMainWindow):
     def _add_pgn_source(self, path: str) -> int:
         """Fügt eine PGN-Quelle (Datei ODER Ordner) HINZU (ersetzt nicht). Gibt die
         Zahl der neu hinzugekommenen Eröffnungen zurück."""
+        before = len(self._catalog())
         srcs = self._effective_sources()
         path = str(Path(path))
         if path not in srcs:
             srcs.append(path)
         self.settings_store.update(pgn_sources=tuple(srcs))
         self.settings_store.save(self.settings_path)
-        before = len(self.lines)
-        self.lines = self._load_lines()
-        self._migrate_sides_from_groups()
+        self._migrate_sides_from_groups(self._load_lines())
         self._sync_auto_trees()
-        pass
         self._refresh_library()
-        pass
-        return max(0, len(self.lines) - before)
+        return max(0, len(self._catalog()) - before)
 
     def _custom_trees(self) -> list:
         """Bäume, die NICHT aus einer geladenen PGN-Quelle stammen (selbst gebaut,
@@ -2287,7 +2293,6 @@ class MainWindow(QtWidgets.QMainWindow):
             return
         self.settings_store.update(pgn_sources=(), last_pgn_path="", last_pgn_folder="", last_pgn_kind="")
         self.settings_store.save(self.settings_path)
-        self.lines = []
         # ALLE Bäume leeren (auch Nicht-Auto): sonst überleben alte/verwaiste Bäume
         # das Leeren und verfälschen weiter Zähler/Repertoire-Baum.
         self.tree_store = RepertoireTreeStore()
@@ -2310,11 +2315,8 @@ class MainWindow(QtWidgets.QMainWindow):
         srcs = [s for s in self._effective_sources() if s != src]
         self.settings_store.update(pgn_sources=tuple(srcs))
         self.settings_store.save(self.settings_path)
-        self.lines = self._load_lines()
         self._sync_auto_trees()
-        pass
         self._refresh_library()
-        pass
 
     def _manage_sources(self) -> None:
         dlg = QtWidgets.QDialog(self)
@@ -4406,7 +4408,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def _refresh_library(self) -> None:
         self.library_list.clear()
         editor_trees = self._editor_own_trees()
-        if not self.lines and not self.tree_store.all():
+        if not self.tree_store.all():
             self.library_empty.setVisible(True)
             self.library_list.setVisible(False)
             return
@@ -4455,16 +4457,17 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.library_list.addItem(item)
                 self.library_list.setItemWidget(item, row)
 
-    def _migrate_sides_from_groups(self) -> None:
+    def _migrate_sides_from_groups(self, lines) -> None:
         """Übernimmt einmalig die vorhandene Gruppen-Zuordnung (Tkinter-Daten) in
-        das Pro-Eröffnung-Modell, damit das bestehende Repertoire erhalten bleibt."""
+        das Pro-Eröffnung-Modell, damit das bestehende Repertoire erhalten bleibt.
+        ``lines`` sind die einmalig geparsten Legacy-Linien (kein Dauerzustand)."""
         if self.opening_sides.sides:
             return
         rep = self.repertoire_store.repertoire
-        white = {(l.source_name, l.name) for l in rep.lines_for_side(SIDE_WHITE, self.lines)}
-        black = {(l.source_name, l.name) for l in rep.lines_for_side(SIDE_BLACK, self.lines)}
+        white = {(l.source_name, l.name) for l in rep.lines_for_side(SIDE_WHITE, lines)}
+        black = {(l.source_name, l.name) for l in rep.lines_for_side(SIDE_BLACK, lines)}
         changed = False
-        for line in self.lines:
+        for line in lines:
             key = (line.source_name, line.name)
             if key in white:
                 self.opening_sides.set_side(line.source_name, line.name, "white")
@@ -4482,7 +4485,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if side not in ("white", "black"):
             return 0
         count = 0
-        for line in self.lines:
+        for line in self._catalog():
             if line.source_name != source_name:
                 continue
             if self.opening_sides.side_of(line.source_name, line.name) is None:
@@ -4499,7 +4502,7 @@ class MainWindow(QtWidgets.QMainWindow):
         Quelle (»Weiss …« → Weiß, »Schwarz …« → Schwarz). Bestehende Zuordnungen
         und mehrdeutige Namen bleiben unberührt. Gibt die Zahl der Treffer zurück."""
         count = 0
-        for line in self.lines:
+        for line in self._catalog():
             if self.opening_sides.side_of(line.source_name, line.name) is not None:
                 continue
             guess = side_from_name(line.source_name)
@@ -4513,6 +4516,9 @@ class MainWindow(QtWidgets.QMainWindow):
         return count
 
     def _side_of_line(self, line) -> str | None:
+        # Seite PRO Eröffnung aus der Zuordnung (nicht die Datei-Mehrheit des Baums) —
+        # so zeigt die Bibliothek gemischte Dateien korrekt (z. B. die Beispiele:
+        # Italienisch=Weiß, Caro/Damengambit=Schwarz).
         side = self.opening_sides.side_of(line.source_name, line.name)
         return side if side in ("white", "black") else None
 
@@ -4521,12 +4527,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self._refresh_library()
 
     def _filtered_lines(self) -> list:
+        catalog = self._catalog()
         if self._side_filter is None:
-            lines = self.lines
+            lines = catalog
         elif self._side_filter in ("white", "black"):
-            lines = [l for l in self.lines if self._side_of_line(l) == self._side_filter]
+            lines = [l for l in catalog if self._side_of_line(l) == self._side_filter]
         else:
-            lines = [l for l in self.lines if self._side_of_line(l) is None]
+            lines = [l for l in catalog if self._side_of_line(l) is None]
         if self.search_query:
             lines = [l for l in lines if self._matches_search(l)]
         return lines
@@ -4660,10 +4667,12 @@ class MainWindow(QtWidgets.QMainWindow):
         except Exception as exc:  # noqa: BLE001
             QtWidgets.QMessageBox.warning(self, t("Laden fehlgeschlagen", "Loading failed"), str(exc))
             return
-        self.lines = lines
+        # Die Beispiel-Datei als saubere Einzeldatei-Quelle eintragen (NICHT über
+        # last_pgn_folder=Eltern-Ordner — der enthält dieselbe Datei und würde sie
+        # ein zweites Mal laden, also Dubletten erzeugen).
         self.settings_store.update(
+            pgn_sources=(str(path),),
             last_pgn_path=str(path),
-            last_pgn_folder=str(path.parent),
             last_pgn_kind="file",
         )
         self.settings_store.save(self.settings_path)
@@ -4699,8 +4708,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._ask_and_assign_side(Path(path).name)
         self._open_library()                 # Ergebnis sichtbar machen (Feedback am richtigen Ort)
         self.lib_sub.setText(t(
-            f"{added} Eröffnungen hinzugefügt — {len(self.lines)} insgesamt. Klick eine an, um sie zu üben.",
-            f"Added {added} openings — {len(self.lines)} in total. Click one to train it."))
+            f"{added} Eröffnungen hinzugefügt — {len(self._catalog())} insgesamt. Klick eine an, um sie zu üben.",
+            f"Added {added} openings — {len(self._catalog())} in total. Click one to train it."))
         self._show_tree_report(source=path)  # Bericht + »Jetzt diese Datei üben«
 
     def _tree_report_lines(self) -> list:
@@ -4761,7 +4770,7 @@ class MainWindow(QtWidgets.QMainWindow):
         """Fragt beim Laden einer Datei einmal nach der Spielerfarbe (Vorschlag aus
         dem Dateinamen) und ordnet alle noch nicht zugeordneten Eröffnungen dieser
         Datei der gewählten Seite zu. Sind bereits alle zugeordnet, wird nicht gefragt."""
-        file_lines = [l for l in self.lines if l.source_name == source_name]
+        file_lines = [l for l in self._catalog() if l.source_name == source_name]
         if file_lines and all(
             self.opening_sides.side_of(l.source_name, l.name) is not None for l in file_lines
         ):
@@ -4798,9 +4807,10 @@ class MainWindow(QtWidgets.QMainWindow):
             return
         added = self._add_pgn_source(folder)   # HINZUFÜGEN statt ersetzen
         assigned = self._auto_fill_sides_by_filename()   # je Datei aus dem Namen (Weiss…/Schwarz…)
-        unassigned = sum(1 for l in self.lines if self._side_of_line(l) is None)
-        msg_de = f"{added} Eröffnungen aus dem Ordner hinzugefügt — {len(self.lines)} insgesamt."
-        msg_en = f"Added {added} openings from the folder — {len(self.lines)} in total."
+        catalog = self._catalog()
+        unassigned = sum(1 for l in catalog if self._side_of_line(l) is None)
+        msg_de = f"{added} Eröffnungen aus dem Ordner hinzugefügt — {len(catalog)} insgesamt."
+        msg_en = f"Added {added} openings from the folder — {len(catalog)} in total."
         if assigned:
             msg_de += f" {assigned} automatisch zugeordnet."
             msg_en += f" {assigned} auto-assigned."

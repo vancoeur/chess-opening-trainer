@@ -50,14 +50,11 @@ SAMPLE = Path(__file__).resolve().parent.parent / "assets" / "sample" / "sample_
 
 def test_library_empty_state_toggles_with_data(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
-    win.lines = []
     win._refresh_library()
-    assert not win.library_empty.isHidden()      # Leer-Hinweis sichtbar
+    assert not win.library_empty.isHidden()      # Leer-Hinweis sichtbar (kein Repertoire)
     assert win.library_list.isHidden()           # leere Liste verborgen
 
-    from opening_trainer.pgn_loader import load_pgn_file
-    win.lines = load_pgn_file(SAMPLE)
-    win._auto_fill_sides_by_filename()
+    win._add_pgn_source(str(SAMPLE))             # lädt die Beispiele als Quelle -> Bäume
     win._refresh_library()
     assert win.library_empty.isHidden()          # jetzt verborgen
     assert not win.library_list.isHidden()        # Liste sichtbar

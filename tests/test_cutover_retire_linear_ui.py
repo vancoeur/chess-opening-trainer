@@ -34,7 +34,7 @@ def _load_white(win, tmp_path):
 
 
 def _white_line(win):
-    return next(l for l in win.lines if win._side_of_line(l) == "white" and l.moves_uci)
+    return next(l for l in win._catalog() if win._side_of_line(l) == "white" and l.moves_uci)
 
 
 def _fen_after(ucis):

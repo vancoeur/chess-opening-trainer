@@ -33,26 +33,26 @@ def test_load_pgn_adds_and_dedupes(tmp_path, monkeypatch):
     data.mkdir()
     monkeypatch.setattr(mw, "data_dir", lambda: data)
     win = mw.MainWindow()
-    assert win.lines == []
+    assert win._catalog() == []
 
     # erste Quelle: die 3 Beispiel-Eröffnungen
     added1 = win._add_pgn_source(str(SAMPLE))
-    assert added1 == 3 and len(win.lines) == 3
+    assert added1 == 3 and len(win._catalog()) == 3
 
     # zweite Quelle hinzufügen (ersetzt NICHT)
     extra = tmp_path / "extra.pgn"
     extra.write_text(PGN_EXTRA, encoding="utf-8")
     added2 = win._add_pgn_source(str(extra))
-    assert added2 == 1 and len(win.lines) == 4         # beide Quellen vorhanden
+    assert added2 == 1 and len(win._catalog()) == 4         # beide Quellen vorhanden
 
     # dieselbe Quelle erneut -> keine Dubletten, keine zweite Quelle
     added3 = win._add_pgn_source(str(SAMPLE))
-    assert added3 == 0 and len(win.lines) == 4
+    assert added3 == 0 and len(win._catalog()) == 4
     assert win.settings_store.settings.pgn_sources.count(str(SAMPLE)) == 1
 
     # nach Neustart (neue Instanz, gleicher Datenordner) bleiben beide Quellen geladen
     win2 = mw.MainWindow()
-    assert len(win2.lines) == 4
+    assert len(win2._catalog()) == 4
 
 
 def test_clear_repertoire_empties_sources(tmp_path, monkeypatch):
@@ -62,12 +62,12 @@ def test_clear_repertoire_empties_sources(tmp_path, monkeypatch):
     monkeypatch.setattr(mw, "data_dir", lambda: data)
     win = mw.MainWindow()
     win._add_pgn_source(str(SAMPLE))
-    assert len(win.lines) == 3
+    assert len(win._catalog()) == 3
     # _reset_repertoire fragt nach; den Dialog mit „Yes" beantworten
     monkeypatch.setattr(QtWidgets.QMessageBox, "question",
                         staticmethod(lambda *a, **k: QtWidgets.QMessageBox.StandardButton.Yes))
     win._reset_repertoire()
-    assert win.lines == []
+    assert win._catalog() == []
     assert win.settings_store.settings.pgn_sources == ()
 
 
@@ -81,10 +81,10 @@ def test_remove_one_source_keeps_the_others(tmp_path, monkeypatch):
     extra.write_text(PGN_EXTRA, encoding="utf-8")
     win._add_pgn_source(str(SAMPLE))
     win._add_pgn_source(str(extra))
-    assert len(win.lines) == 4
+    assert len(win._catalog()) == 4
 
     win._remove_pgn_source(str(extra))
-    assert len(win.lines) == 3                       # nur die Extra-Quelle weg
+    assert len(win._catalog()) == 3                       # nur die Extra-Quelle weg
     assert str(extra) not in win.settings_store.settings.pgn_sources
     assert str(SAMPLE) in win.settings_store.settings.pgn_sources
 

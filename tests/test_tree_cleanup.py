@@ -48,4 +48,4 @@ def test_clear_repertoire_removes_all_trees(tmp_path, monkeypatch):
                         lambda *a, **k: QtWidgets.QMessageBox.StandardButton.Yes)
     win._reset_repertoire()
     assert win.tree_store.all() == []           # auch die Geister sind weg
-    assert win.lines == []
+    assert win._catalog() == []
