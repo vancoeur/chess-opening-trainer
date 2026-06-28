@@ -155,6 +155,9 @@ REPO_URL = "https://github.com/vancoeur/chess-opening-trainer"
 # der Rest für die nächste Runde.
 WEAK_SESSION_LIMIT = 15
 
+# Länge eines Blitz-Sprints in Sekunden (Tempo-Auffrischung).
+BLITZ_SECONDS = 60
+
 # Stichwort -> Eröffnungs-Familie (erste passende Übereinstimmung gewinnt)
 _FAMILY_KEYWORDS = [
     ("sizilian", "Sizilianisch"), ("alapin", "Sizilianisch"),
@@ -466,6 +469,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self._due_session = False      # True: „Heute fällig (Bäume)"-Sitzung läuft
         self._due_queue: list = []     # offene fällige Stellungen (tree, node_id, color)
         self._due_total = 0
+        # Blitz-Sprint (Tempo-Auffrischung): eigener Modus neben _due_session,
+        # rührt Lernplan/Statistik NICHT an — zählt nur den Punktestand.
+        self._blitz = False
+        self._blitz_score = 0
+        self._blitz_pool: list = []    # voller Vorrat, aus dem die Runde nachfüllt
+        self._blitz_remaining = 0
+        self._blitz_over = False
+        self._blitz_timer = QtCore.QTimer(self)
+        self._blitz_timer.setInterval(1000)
+        self._blitz_timer.timeout.connect(self._blitz_tick)
         self._had_wrong = False
         self._queue: list = []
         self._drill = False
@@ -1063,6 +1076,20 @@ class MainWindow(QtWidgets.QMainWindow):
         self.drill_eyebrow = QtWidgets.QLabel(t("BAUM ÜBEN", "TRAIN TREE"))
         self.drill_eyebrow.setObjectName("eyebrow")
         side.addWidget(self.drill_eyebrow)
+        # Blitz-Anzeige: Uhr + Punktestand (nur im Blitz-Modus sichtbar).
+        self.blitz_bar = QtWidgets.QWidget()
+        bb = QtWidgets.QHBoxLayout(self.blitz_bar)
+        bb.setContentsMargins(0, 0, 0, 0)
+        bb.setSpacing(16)
+        self.blitz_clock = QtWidgets.QLabel("⏱ 60")
+        self.blitz_clock.setObjectName("heroT")
+        self.blitz_score_label = QtWidgets.QLabel(t("Punkte: 0", "Score: 0"))
+        self.blitz_score_label.setObjectName("heroT")
+        bb.addWidget(self.blitz_clock)
+        bb.addWidget(self.blitz_score_label)
+        bb.addStretch(1)
+        self.blitz_bar.setVisible(False)
+        side.addWidget(self.blitz_bar)
         self.tree_drill_combo = QtWidgets.QComboBox()
         self.tree_drill_combo.currentIndexChanged.connect(self._drill_combo_changed)
         side.addWidget(self.tree_drill_combo)
@@ -1146,6 +1173,7 @@ class MainWindow(QtWidgets.QMainWindow):
         tree = tree if tree is not None else (self._drill_tree or self.editor_tree)
         if tree is None:
             return
+        self._blitz_stop()                         # falls vorher ein Blitz lief
         self._due_session = False
         self.tree_drill_feedback.setText("")
         self.drill_eyebrow.setText(t("BAUM ÜBEN", "TRAIN TREE"))
@@ -1658,6 +1686,32 @@ class MainWindow(QtWidgets.QMainWindow):
         weak.addWidget(self.home_weak_btn, 0, QtCore.Qt.AlignVCenter)
         outer.addWidget(self.home_weak)
 
+        # --- Blitz-Karte: kurze Tempo-Auffrischung ---
+        self.home_blitz = QtWidgets.QFrame()
+        self.home_blitz.setObjectName("hero")
+        blitz = QtWidgets.QHBoxLayout(self.home_blitz)
+        blitz.setContentsMargins(26, 22, 26, 22)
+        blitz.setSpacing(16)
+        bcol = QtWidgets.QVBoxLayout()
+        bcol.setSpacing(4)
+        blitz_title = QtWidgets.QLabel(t("⏱ Blitz-Auffrischung", "⏱ Blitz refresh"))
+        blitz_title.setObjectName("heroT")
+        bcol.addWidget(blitz_title)
+        blitz_desc = self._plain_label(t(
+            f"{BLITZ_SECONDS} Sekunden Tempo — so viele richtige Züge wie möglich. Zählt nur den Spaß, "
+            "nicht den Lernplan.",
+            f"{BLITZ_SECONDS} seconds against the clock — as many correct moves as you can. Just for fun, "
+            "the schedule stays untouched."))
+        blitz_desc.setObjectName("cardL")
+        blitz_desc.setWordWrap(True)
+        bcol.addWidget(blitz_desc)
+        blitz.addLayout(bcol, 1)
+        self.home_blitz_btn = QtWidgets.QPushButton(t("▶  Blitz starten", "▶  Start blitz"))
+        self.home_blitz_btn.setObjectName("primary")
+        self.home_blitz_btn.clicked.connect(self._start_blitz_session)
+        blitz.addWidget(self.home_blitz_btn, 0, QtCore.Qt.AlignVCenter)
+        outer.addWidget(self.home_blitz)
+
         # --- Leer-Zustand (kein Repertoire): Beispiele / Hinweis ---
         self.home_empty = QtWidgets.QWidget()
         ev = QtWidgets.QVBoxLayout(self.home_empty)
@@ -1727,6 +1781,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.home_hero.setVisible(has_rep)
         self.home_stats.setVisible(has_rep)
         self.home_weak.setVisible(has_rep and weak > 0)
+        self.home_blitz.setVisible(has_rep)
         self.home_empty.setVisible(not has_rep)
         self.home_forecast.setVisible(has_rep)      # explizit (Tests prüfen die Knöpfe direkt)
         self.home_due_btn.setVisible(has_rep)
@@ -1742,6 +1797,7 @@ class MainWindow(QtWidgets.QMainWindow):
         """Fährt eine stellungs-basierte Sitzung über die übergebenen
         ``(tree, node_id, color)``-Items auf der Drill-Seite — gemeinsamer Kern
         für »Heute fällig«, »Stellung üben« (Einzel-Drill) und »Fehler üben«."""
+        self._blitz_stop()                         # falls vorher ein Blitz lief
         self._due_queue = list(items)
         self._due_total = len(self._due_queue)
         self._due_session = True
@@ -1808,6 +1864,108 @@ class MainWindow(QtWidgets.QMainWindow):
         wie »Heute fällig«."""
         self._drill_positions_for_fens(
             self._weak_fens(limit=WEAK_SESSION_LIMIT), t("SCHWÄCHEN", "WEAK SPOTS"))
+
+    # --- Blitz-Sprint (Tempo-Auffrischung) -------------------------------
+
+    def _start_blitz_session(self) -> None:
+        """Startet einen Blitz-Sprint: gemischter Vorrat aller eigenen Stellungen,
+        die Uhr läuft, jeder Treffer ein Punkt. Lernplan und Fehler-Statistik
+        bleiben dabei unberührt — reine Tempo-Übung."""
+        from opening_trainer.tree_session import blitz_pool
+        pool = blitz_pool(self.tree_store.by_side("white"), self.tree_store.by_side("black"))
+        if not pool:
+            QtWidgets.QMessageBox.information(
+                self, t("Nichts zu üben", "Nothing to train"),
+                t("Lade zuerst ein Repertoire — dann gibt es Stellungen für den Blitz.",
+                  "Load a repertoire first — then there are positions to blitz."))
+            return
+        self._blitz_pool = pool
+        self._blitz = True
+        self._due_session = False
+        self._blitz_over = False
+        self._blitz_score = 0
+        self._blitz_remaining = BLITZ_SECONDS
+        self._drill_manual = False
+        self._tree_drill_wrong = False
+        self.drill_eyebrow.setText(t("⏱ BLITZ", "⏱ BLITZ"))
+        self.tree_drill_feedback.setText(t(
+            "Tempo! So viele richtige Züge wie möglich, bis die Zeit abläuft.",
+            "Go! As many correct moves as you can before the clock runs out."))
+        # Normale Übe-Steuerung aus, Blitz-Anzeige an.
+        self.tree_drill_combo.setVisible(False)
+        self.drill_manual_check.setVisible(False)
+        self.drill_learn_check.setVisible(False)
+        self.drill_learned_btn.setVisible(False)
+        self.blitz_bar.setVisible(True)
+        self._blitz_update_labels()
+        self._due_queue = self._blitz_shuffled()
+        self._due_total = len(self._due_queue)
+        self.stack.setCurrentIndex(10)
+        self._blitz_present_current()
+        self._blitz_timer.start()
+
+    def _blitz_shuffled(self) -> list:
+        items = list(self._blitz_pool)
+        random.shuffle(items)
+        return items
+
+    def _blitz_update_labels(self) -> None:
+        self.blitz_clock.setText(f"⏱ {self._blitz_remaining}")
+        self.blitz_score_label.setText(
+            t(f"Punkte: {self._blitz_score}", f"Score: {self._blitz_score}"))
+
+    def _blitz_present_current(self) -> None:
+        """Zeigt die aktuelle Blitz-Stellung — ohne Learn-Modus, ohne »X von Y«.
+        Ist der Vorrat leer, wird neu gemischt: in 60 s gehen die Aufgaben nie aus."""
+        if not self._due_queue:
+            self._due_queue = self._blitz_shuffled()
+        tree, node_id, color = self._due_queue[0]
+        from opening_trainer.position_training import PositionTrainer
+        self._tree_trainer = PositionTrainer(tree, color, start_node_id=node_id, auto_opponent=True)
+        self._tree_drill_wrong = False
+        self._drill_learn_active = False
+        self.tree_drill_board.edit_mode = False
+        self.tree_drill_board.train_color = color
+        self.tree_drill_name.setText(self._tname(tree.name))
+        last = None
+        if self._tree_trainer.last_move_uci:
+            m = chess.Move.from_uci(self._tree_trainer.last_move_uci)
+            last = (m.from_square, m.to_square)
+        self.tree_drill_board.set_flipped(color == chess.BLACK)
+        self.tree_drill_board.set_board(self._tree_trainer.board, last_move=last)
+        self.tree_drill_status.setText(t("Du bist am Zug.", "Your move."))
+        self._drill_update_context()
+
+    def _blitz_advance(self) -> None:
+        if self._due_queue:
+            self._due_queue.pop(0)
+        self._blitz_present_current()
+
+    def _blitz_tick(self) -> None:
+        self._blitz_remaining -= 1
+        if self._blitz_remaining <= 0:
+            self._blitz_remaining = 0
+            self._blitz_update_labels()
+            self._blitz_finish()
+            return
+        self._blitz_update_labels()
+
+    def _blitz_finish(self) -> None:
+        """Zeit abgelaufen: Uhr stoppen, Brett sperren, Endstand zeigen."""
+        self._blitz_timer.stop()
+        self._blitz_over = True
+        self._tree_trainer = None
+        self.tree_drill_status.setText(t(
+            f"⏱ Zeit! Endstand: {self._blitz_score} Treffer. »Neu« startet eine neue Runde.",
+            f"⏱ Time! Final score: {self._blitz_score}. »Restart« for another round."))
+        self.tree_drill_feedback.setText("")
+
+    def _blitz_stop(self) -> None:
+        """Blitz verlassen (z. B. Seitenwechsel): Uhr stoppen, Anzeige und Modus aus."""
+        self._blitz_timer.stop()
+        self._blitz = False
+        self._blitz_over = False
+        self.blitz_bar.setVisible(False)
 
     def _drill_positions_for_fens(self, fens, eyebrow: str) -> None:
         """Lenkt die alten Einzelstellungs-Drills (Statistik-Fehler, »Fehler
@@ -1969,6 +2127,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._due_present_current()
 
     def _tree_drill_on_move(self, from_square: int, to_square: int) -> None:
+        if self._blitz_over:                    # Zeit abgelaufen: keine Züge mehr
+            return
         tr = self._tree_trainer
         if tr is None or tr.is_finished() or self._drill_learn_active:
             return
@@ -1996,11 +2156,19 @@ class MainWindow(QtWidgets.QMainWindow):
         if result.kind == "wrong":
             self._tree_drill_wrong = True
             self.tree_drill_board.flash_wrong(to_square)
-            hint = ("  " + t("Richtig wäre:", "Correct would be:") + " " + result.expected_san) if result.expected_san else ""
+            # Im Blitz keinen verratenden Hinweis zeigen — nur »nochmal«.
+            hint = ""
+            if not self._blitz and result.expected_san:
+                hint = "  " + t("Richtig wäre:", "Correct would be:") + " " + result.expected_san
             self.tree_drill_status.setText(t("Noch nicht.", "Not yet.") + hint)
             return
 
         if result.kind == "correct":
+            if self._blitz:                      # Tempo-Modus: Punkt, dann weiter —
+                self._blitz_score += 1           # Lernplan/Statistik bleiben unberührt
+                self._blitz_update_labels()
+                self._blitz_advance()
+                return
             passed = not self._tree_drill_wrong
             today = date.today()
             card = self.position_schedule.card_for(epd_before)
@@ -2035,7 +2203,9 @@ class MainWindow(QtWidgets.QMainWindow):
                 "✓ Correct (with help) — comes up again today."))
 
     def _tree_drill_restart(self) -> None:
-        if self._due_session:
+        if self._blitz:
+            self._start_blitz_session()          # »Neu« = neue Blitz-Runde
+        elif self._due_session:
             self._start_due_session()
         elif self._drill_tree is not None:
             self._start_tree_drill(self._drill_tree)
@@ -2501,6 +2671,8 @@ class MainWindow(QtWidgets.QMainWindow):
         if hasattr(self, "page_head"):               # … und sichtbare Kopfzeile
             self.page_head.setText(self._page_name(new))
         self._update_nav_active(new)             # aktive Seite in der Leiste markieren
+        if new != 10 and self._blitz:            # Drill-Seite verlassen -> Blitz beenden
+            self._blitz_stop()
         if new == 11:                            # »Heute fällig«-Übersicht stets frisch zeigen
             self._refresh_due_overview()
         elif new == 12:                          # Start-Hub aktualisieren
@@ -2524,18 +2696,20 @@ class MainWindow(QtWidgets.QMainWindow):
         v.addWidget(QtWidgets.QLabel("♟  Opening Trainer", objectName="brand"))
         self._nav_buttons: dict[int, QtWidgets.QPushButton] = {}
 
-        def item(label: str, opener, target: int) -> None:
+        def item(label: str, opener, target) -> None:
             b = QtWidgets.QPushButton(self._amp(label))
             b.setObjectName("nav")
             b.setCursor(QtCore.Qt.PointingHandCursor)
             b.clicked.connect(lambda _=False, o=opener: o())
-            self._nav_buttons[target] = b
+            if target is not None:               # None = Aktion ohne eigene Seite
+                self._nav_buttons[target] = b
             v.addWidget(b)
 
         item(t("⌂  Start", "⌂  Home"), self._open_home, 12)
         groups = [
             (t("ÜBEN", "PRACTICE"), [
                 (t("▶  Heute fällig", "▶  Due today"), self._open_due_overview, 11),
+                (t("⏱  Blitz", "⏱  Blitz"), self._start_blitz_session, None),
                 (t("Baum frei durchspielen", "Free-play a tree"), self._open_tree_drill, 10),
                 (t("Repertoire-Prüfung", "Repertoire check"), self._open_tuv, 3),
             ]),

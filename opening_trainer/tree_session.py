@@ -396,6 +396,18 @@ def weak_position_fens(white_trees, black_trees, stats_store, limit=None) -> lis
     return fens[:limit] if limit is not None else fens
 
 
+def blitz_pool(white_trees, black_trees) -> list[tuple]:
+    """Alle eigenen Stellungen BEIDER Seiten als ``(tree, node_id, color)`` —
+    der Vorrat für den Blitz-Sprint. Feste Reihenfolge (Weiß zuerst, dann in
+    Index-Reihenfolge); das Mischen macht die Oberfläche. Pro EPD genau eine
+    Stelle (Transpositionen zählen einmal). Unabhängig vom Lernplan."""
+    out: list[tuple] = []
+    for trees, color in ((white_trees, chess.WHITE), (black_trees, chess.BLACK)):
+        for tree, node_id in build_user_position_index(trees, color).values():
+            out.append((tree, node_id, color))
+    return out
+
+
 def due_forecast(trees, side, schedule, today) -> dict:
     """Ausblick über das ganze Repertoire (eigene Stellungen, dedupliziert per EPD):
     wie viele heute (inkl. überfällig), morgen, später diese Woche fällig werden — und neu."""
