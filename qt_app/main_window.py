@@ -1629,6 +1629,30 @@ class MainWindow(QtWidgets.QMainWindow):
             self._home_stat_labels.append(n)
         outer.addWidget(self.home_stats)
 
+        # --- Schwächen-Karte: offene Fehlerstellungen gezielt üben ---
+        # Nur sichtbar, wenn es offene Fehler gibt; unabhängig vom Lernplan
+        # (eine Stellung kann »nicht fällig«, aber trotzdem wacklig sein).
+        self.home_weak = QtWidgets.QFrame()
+        self.home_weak.setObjectName("hero")
+        weak = QtWidgets.QHBoxLayout(self.home_weak)
+        weak.setContentsMargins(26, 22, 26, 22)
+        weak.setSpacing(16)
+        wcol = QtWidgets.QVBoxLayout()
+        wcol.setSpacing(4)
+        weak_title = QtWidgets.QLabel(t("Das sitzt noch nicht", "Not solid yet"))
+        weak_title.setObjectName("heroT")
+        wcol.addWidget(weak_title)
+        self.home_weak_label = self._plain_label("")
+        self.home_weak_label.setObjectName("cardL")
+        self.home_weak_label.setWordWrap(True)
+        wcol.addWidget(self.home_weak_label)
+        weak.addLayout(wcol, 1)
+        self.home_weak_btn = QtWidgets.QPushButton(t("▶  Schwächen üben", "▶  Drill weak spots"))
+        self.home_weak_btn.setObjectName("primary")
+        self.home_weak_btn.clicked.connect(self._start_weak_session)
+        weak.addWidget(self.home_weak_btn, 0, QtCore.Qt.AlignVCenter)
+        outer.addWidget(self.home_weak)
+
         # --- Leer-Zustand (kein Repertoire): Beispiele / Hinweis ---
         self.home_empty = QtWidgets.QWidget()
         ev = QtWidgets.QVBoxLayout(self.home_empty)
@@ -1679,9 +1703,16 @@ class MainWindow(QtWidgets.QMainWindow):
                      + len(build_user_position_index(self.tree_store.all(), chess.BLACK)))
         for label, value in zip(self._home_stat_labels, (reps, positions, fc["week"])):
             label.setText(str(value))
+        # Schwächen-Karte: nur zeigen, wenn es offene Fehler gibt.
+        weak = len(self._weak_fens())
+        self.home_weak_label.setText(t(
+            f"{weak} Stellungen hast du zuletzt daneben gehabt — die wackligsten zuerst.",
+            f"{weak} positions you got wrong last time — the shakiest first."))
+        self.home_weak_btn.setText(t(f"▶  Schwächen üben  ({weak})", f"▶  Drill weak spots  ({weak})"))
         # Sichtbarkeit: Dashboard bei vorhandenem Repertoire, sonst Leer-Zustand.
         self.home_hero.setVisible(has_rep)
         self.home_stats.setVisible(has_rep)
+        self.home_weak.setVisible(has_rep and weak > 0)
         self.home_empty.setVisible(not has_rep)
         self.home_forecast.setVisible(has_rep)      # explizit (Tests prüfen die Knöpfe direkt)
         self.home_due_btn.setVisible(has_rep)
@@ -1744,6 +1775,21 @@ class MainWindow(QtWidgets.QMainWindow):
     def _start_due_session(self, only_tree=None, only_side=None) -> None:
         self._run_position_session(
             self._due_items(only_tree, only_side), t("HEUTE FÄLLIG", "DUE TODAY"))
+
+    def _weak_fens(self) -> list:
+        """FENs der offenen Fehlerstellungen über beide Seiten (häufigste zuerst)
+        — Grundlage für die Schwächen-Kachel und die »Schwächen üben«-Sitzung."""
+        from opening_trainer.tree_session import weak_position_fens
+        return weak_position_fens(
+            self.tree_store.by_side("white"),
+            self.tree_store.by_side("black"),
+            self.stats_store,
+        )
+
+    def _start_weak_session(self) -> None:
+        """Übt gezielt nur die wackligen Stellungen (offene Fehler), häufigste
+        zuerst — nutzt dieselbe Sitzungs-Maschinerie wie »Heute fällig«."""
+        self._drill_positions_for_fens(self._weak_fens(), t("SCHWÄCHEN", "WEAK SPOTS"))
 
     def _drill_positions_for_fens(self, fens, eyebrow: str) -> None:
         """Lenkt die alten Einzelstellungs-Drills (Statistik-Fehler, »Fehler

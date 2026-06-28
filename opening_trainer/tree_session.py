@@ -373,6 +373,29 @@ def open_error_positions(trees, side, stats_store) -> list[dict]:
     return problems
 
 
+def weak_position_fens(white_trees, black_trees, stats_store, limit=None) -> list[str]:
+    """FENs der offenen Fehlerstellungen über BEIDE Seiten — die wackligsten
+    zuerst (häufigste Fehler oben), per FEN dedupliziert. Für eine gezielte
+    »Schwächen üben«-Sitzung über das ganze Repertoire.
+
+    ``limit`` deckelt die Länge (z. B. nur die Top-N), ``None`` = alle. Quelle ist
+    ``open_error_positions`` (varianten-bewusst, transpositions-dedupliziert)."""
+    problems = (
+        open_error_positions(white_trees, chess.WHITE, stats_store)
+        + open_error_positions(black_trees, chess.BLACK, stats_store)
+    )
+    problems.sort(key=lambda p: -p["count"])
+    fens: list[str] = []
+    seen: set = set()
+    for p in problems:
+        fen = p["fen"]
+        if fen in seen:
+            continue
+        seen.add(fen)
+        fens.append(fen)
+    return fens[:limit] if limit is not None else fens
+
+
 def due_forecast(trees, side, schedule, today) -> dict:
     """Ausblick über das ganze Repertoire (eigene Stellungen, dedupliziert per EPD):
     wie viele heute (inkl. überfällig), morgen, später diese Woche fällig werden — und neu."""

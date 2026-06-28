@@ -8,7 +8,11 @@ import chess
 
 from opening_trainer.repertoire_tree import RepertoireTree, WHITE, BLACK
 from opening_trainer.stats_store import StatsStore
-from opening_trainer.tree_session import tree_progress_rows, open_error_positions
+from opening_trainer.tree_session import (
+    tree_progress_rows,
+    open_error_positions,
+    weak_position_fens,
+)
 
 
 def _white_tree(name="ital"):
@@ -92,3 +96,52 @@ def test_open_error_ignores_other_side():
     store = StatsStore()
     _add(store, ["e2e4", "e7e5"], "Nf3", "Bc4", False)
     assert open_error_positions([t], chess.BLACK, store) == []
+
+
+# --- weak_position_fens (Schwächen-Übungsliste) ---------------------------
+
+def _black_tree(name="caro"):
+    # 1.e4 c6 — Schwarz am Zug nach 1.e4 (eigene Stellung mit vorgesehenem c6).
+    t = RepertoireTree.new(name, BLACK)
+    p = t.root_id
+    for u in ["e2e4", "c7c6"]:
+        p = t.add_child(p, u).id
+    return t
+
+
+def test_weak_fens_empty_without_errors():
+    assert weak_position_fens([_white_tree()], [], StatsStore()) == []
+
+
+def test_weak_fens_orders_most_wrong_first():
+    t = _white_tree()
+    store = StatsStore()
+    # Stellung A (nach 1.e4 e5): zweimal daneben -> count 2
+    _add(store, ["e2e4", "e7e5"], "Nf3", "Bc4", False)
+    _add(store, ["e2e4", "e7e5"], "Nf3", "Bc4", False)
+    # Stellung B (nach 2.Nf3 Nc6): einmal daneben -> count 1
+    _add(store, ["e2e4", "e7e5", "g1f3", "b8c6"], "Bc4", "Bb5", False)
+    fens = weak_position_fens([t], [], store)
+    assert fens == [_fen(["e2e4", "e7e5"]), _fen(["e2e4", "e7e5", "g1f3", "b8c6"])]
+
+
+def test_weak_fens_spans_both_sides():
+    white = _white_tree()
+    black = _black_tree()
+    store = StatsStore()
+    _add(store, ["e2e4", "e7e5"], "Nf3", "Bc4", False)          # Weiß-Fehler
+    _add(store, ["e2e4"], "c6", "e6", False)                    # Schwarz-Fehler
+    fens = weak_position_fens([white], [black], store)
+    assert _fen(["e2e4", "e7e5"]) in fens
+    assert _fen(["e2e4"]) in fens
+    assert len(fens) == 2
+
+
+def test_weak_fens_respects_limit():
+    t = _white_tree()
+    store = StatsStore()
+    _add(store, ["e2e4", "e7e5"], "Nf3", "Bc4", False)
+    _add(store, ["e2e4", "e7e5"], "Nf3", "Bc4", False)
+    _add(store, ["e2e4", "e7e5", "g1f3", "b8c6"], "Bc4", "Bb5", False)
+    fens = weak_position_fens([t], [], store, limit=1)
+    assert fens == [_fen(["e2e4", "e7e5"])]
