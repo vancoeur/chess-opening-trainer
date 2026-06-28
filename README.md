@@ -54,8 +54,8 @@ The app ships with **three sample openings** (Italian Game, Caro-Kann, Queen’s
   the **in-app editor** (add lines, promote a variation to the main line, delete,
   comment, export back to PGN).
 - **Practice on the board** (drag or click-click) with automatic opponent
-  replies; or switch to **“play a line”** mode to rehearse a whole line end to
-  end.
+  replies; or **free-play a tree** to step through a whole line end to end —
+  optionally playing the opponent’s moves yourself.
 - **White/Black repertoire:** the side is auto-detected from the file name on
   load; assign or change it any time, and train a whole side or your whole
   repertoire.
@@ -64,7 +64,8 @@ The app ships with **three sample openings** (Italian Game, Caro-Kann, Queen’s
 - **Analysis** with a mistake log and targeted mistake drills.
 - **Progress** view — see at a glance which openings are solid, shaky or
   untrained, and filter by category.
-- **Notes** — keep a personal reminder on any opening.
+- **Notes** — add a personal reminder to any opening (under “All openings”);
+  it shows with a 📝 in the list.
 - **Stockfish features:**
   - **Repertoire check** — scans every assigned line and flags suspicious moves
     of your side (blunders / inaccuracies), so you don’t memorise mistakes.

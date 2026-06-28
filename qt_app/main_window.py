@@ -2681,14 +2681,20 @@ class MainWindow(QtWidgets.QMainWindow):
             "Entfernt nur die Weiß/Schwarz-Zuordnung. Die Eröffnung bleibt geladen.",
             "Removes only the White/Black assignment. The opening stays loaded."))
         self.assign_none_btn.clicked.connect(lambda: self._assign_selected("none"))
+        self.note_btn = QtWidgets.QPushButton(t("📝 Notiz", "📝 Note"))
+        self.note_btn.setToolTip(t(
+            "Persönlichen Merktext zu dieser Eröffnung hinterlegen (erscheint 📝 in der Liste).",
+            "Add a personal note to this opening (shown as 📝 in the list)."))
+        self.note_btn.clicked.connect(self._edit_note_selected)
         self.train_one_btn = QtWidgets.QPushButton(t("Üben", "Train"))
         self.train_one_btn.setObjectName("primary")
         self.train_one_btn.clicked.connect(self._train_selected_library)
-        for btn in (self.assign_white_btn, self.assign_black_btn, self.assign_none_btn, self.train_one_btn):
+        for btn in (self.assign_white_btn, self.assign_black_btn, self.assign_none_btn, self.note_btn, self.train_one_btn):
             btn.setEnabled(False)
         action_bar.addWidget(self.assign_white_btn)
         action_bar.addWidget(self.assign_black_btn)
         action_bar.addWidget(self.assign_none_btn)
+        action_bar.addWidget(self.note_btn)
         action_bar.addStretch(1)
         action_bar.addWidget(self.train_one_btn)
         outer.addLayout(action_bar)
@@ -4628,9 +4634,25 @@ class MainWindow(QtWidgets.QMainWindow):
         data = items[0].data(QtCore.Qt.UserRole) if items else None
         is_tree = self._is_tree_item(data)
         is_line = data is not None and not is_tree
-        for btn in (self.assign_white_btn, self.assign_black_btn, self.assign_none_btn):
-            btn.setEnabled(is_line)                 # Zuordnung nur für Linien
+        for btn in (self.assign_white_btn, self.assign_black_btn, self.assign_none_btn, self.note_btn):
+            btn.setEnabled(is_line)                 # Zuordnung + Notiz nur für Linien
         self.train_one_btn.setEnabled(is_line or is_tree)   # üben für beides
+
+    def _edit_note_selected(self) -> None:
+        """Persönliche Notiz zur ausgewählten Eröffnung anlegen/ändern (📝 in der Liste)."""
+        line = self._selected_library_line()
+        if line is None:
+            return
+        current = self.line_notes.note_of(line.source_name, line.name)
+        label = t(f"Notiz zu »{self._display_name(line)}«:",
+                  f"Note on »{self._display_name(line)}«:")
+        text, ok = QtWidgets.QInputDialog.getMultiLineText(
+            self, t("Notiz", "Note"), label, current)
+        if not ok:
+            return
+        self.line_notes.set_note(line.source_name, line.name, text.strip())
+        self.line_notes.save(self.notes_path)
+        self._refresh_library()
 
     def _train_selected_library(self) -> None:
         items = self.library_list.selectedItems()

@@ -56,8 +56,8 @@ Die App bringt **drei Beispiel-Eröffnungen** mit (Italienische Partie, Caro-Kan
   ein Repertoire Zug für Zug im **eingebauten Editor** (Linien anhängen, eine
   Variante zur Hauptlinie machen, löschen, kommentieren, als PGN exportieren).
 - **Am Brett üben** (Ziehen oder Klick-Klick) mit automatischen Gegnerzügen; oder
-  in den Modus **„Linie durchspielen"** wechseln, um eine ganze Linie am Stück zu
-  wiederholen.
+  einen **Baum frei durchspielen** — eine ganze Linie am Stück wiederholen, auf
+  Wunsch die Gegnerzüge selbst spielen.
 - **Repertoire Weiß/Schwarz:** die Seite wird beim Laden aus dem Dateinamen
   erkannt; jederzeit zuordnen/ändern und eine ganze Seite oder dein gesamtes
   Repertoire trainieren.
@@ -66,7 +66,8 @@ Die App bringt **drei Beispiel-Eröffnungen** mit (Italienische Partie, Caro-Kan
 - **Auswertung** mit Fehlerprotokoll und gezieltem Fehler-Drill.
 - **Fortschritt** — auf einen Blick sehen, welche Eröffnungen sitzen, wackeln
   oder noch nie geübt wurden, mit Filter nach Kategorie.
-- **Notizen** — zu jeder Eröffnung einen persönlichen Merktext hinterlegen.
+- **Notizen** — zu jeder Eröffnung einen persönlichen Merktext hinterlegen (unter
+  „Alle Eröffnungen"); er erscheint mit 📝 in der Liste.
 - **Stockfish-Funktionen:**
   - **Repertoire-Prüfung** — prüft jede zugeordnete Linie und meldet verdächtige
     Züge deiner Seite (Patzer/Ungenauigkeiten), damit du dir keine Fehler
