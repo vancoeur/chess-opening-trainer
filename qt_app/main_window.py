@@ -150,6 +150,11 @@ QScrollBar::add-page, QScrollBar::sub-page {{ background: none; }}
 APP_VERSION = "1.3.0"
 REPO_URL = "https://github.com/vancoeur/chess-opening-trainer"
 
+# Eine »Schwächen üben«-Runde nimmt höchstens so viele Stellungen (hartnäckigste
+# zuerst), damit sie nicht uferlos lang wird. Gibt es mehr offene Fehler, bleibt
+# der Rest für die nächste Runde.
+WEAK_SESSION_LIMIT = 15
+
 # Stichwort -> Eröffnungs-Familie (erste passende Übereinstimmung gewinnt)
 _FAMILY_KEYWORDS = [
     ("sizilian", "Sizilianisch"), ("alapin", "Sizilianisch"),
@@ -1705,10 +1710,19 @@ class MainWindow(QtWidgets.QMainWindow):
             label.setText(str(value))
         # Schwächen-Karte: nur zeigen, wenn es offene Fehler gibt.
         weak = len(self._weak_fens())
-        self.home_weak_label.setText(t(
-            f"{weak} Stellungen hast du zuletzt daneben gehabt — die wackligsten zuerst.",
-            f"{weak} positions you got wrong last time — the shakiest first."))
-        self.home_weak_btn.setText(t(f"▶  Schwächen üben  ({weak})", f"▶  Drill weak spots  ({weak})"))
+        this_round = min(weak, WEAK_SESSION_LIMIT)      # eine Runde ist gedeckelt
+        if weak > WEAK_SESSION_LIMIT:
+            self.home_weak_label.setText(t(
+                f"{weak} Stellungen wackeln noch — diese Runde übst du die "
+                f"{this_round} hartnäckigsten.",
+                f"{weak} positions still shaky — this round drills the "
+                f"{this_round} most stubborn."))
+        else:
+            self.home_weak_label.setText(t(
+                f"{weak} Stellungen hast du zuletzt daneben gehabt — die wackligsten zuerst.",
+                f"{weak} positions you got wrong last time — the shakiest first."))
+        self.home_weak_btn.setText(t(
+            f"▶  Schwächen üben  ({this_round})", f"▶  Drill weak spots  ({this_round})"))
         # Sichtbarkeit: Dashboard bei vorhandenem Repertoire, sonst Leer-Zustand.
         self.home_hero.setVisible(has_rep)
         self.home_stats.setVisible(has_rep)
@@ -1776,20 +1790,24 @@ class MainWindow(QtWidgets.QMainWindow):
         self._run_position_session(
             self._due_items(only_tree, only_side), t("HEUTE FÄLLIG", "DUE TODAY"))
 
-    def _weak_fens(self) -> list:
+    def _weak_fens(self, limit=None) -> list:
         """FENs der offenen Fehlerstellungen über beide Seiten (häufigste zuerst)
-        — Grundlage für die Schwächen-Kachel und die »Schwächen üben«-Sitzung."""
+        — Grundlage für die Schwächen-Kachel und die »Schwächen üben«-Sitzung.
+        ``limit`` deckelt auf die N hartnäckigsten, ``None`` = alle."""
         from opening_trainer.tree_session import weak_position_fens
         return weak_position_fens(
             self.tree_store.by_side("white"),
             self.tree_store.by_side("black"),
             self.stats_store,
+            limit=limit,
         )
 
     def _start_weak_session(self) -> None:
         """Übt gezielt nur die wackligen Stellungen (offene Fehler), häufigste
-        zuerst — nutzt dieselbe Sitzungs-Maschinerie wie »Heute fällig«."""
-        self._drill_positions_for_fens(self._weak_fens(), t("SCHWÄCHEN", "WEAK SPOTS"))
+        zuerst und auf eine Runde gedeckelt — nutzt dieselbe Sitzungs-Maschinerie
+        wie »Heute fällig«."""
+        self._drill_positions_for_fens(
+            self._weak_fens(limit=WEAK_SESSION_LIMIT), t("SCHWÄCHEN", "WEAK SPOTS"))
 
     def _drill_positions_for_fens(self, fens, eyebrow: str) -> None:
         """Lenkt die alten Einzelstellungs-Drills (Statistik-Fehler, »Fehler
@@ -2775,6 +2793,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stats_sub.setObjectName("hint")
         self.stats_sub.setWordWrap(True)
         outer.addWidget(self.stats_sub)
+
+        # Alle offenen Fehler am Stück üben (gedeckelt) — statt nur einzeln klicken.
+        self.stats_drill_all = QtWidgets.QPushButton(t("▶  Alle üben", "▶  Drill all"))
+        self.stats_drill_all.setObjectName("primary")
+        self.stats_drill_all.clicked.connect(self._start_weak_session)
+        outer.addWidget(self.stats_drill_all, 0, QtCore.Qt.AlignLeft)
 
         self.stats_empty = self._empty_state(
             "Noch keine Trainingsdaten. Übe ein paar Eröffnungen — hier siehst du dann deinen Stand.",
@@ -4260,6 +4284,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.stats_sub.setText("")
             self.stats_empty.setVisible(True)
             self.stats_list.setVisible(False)
+            self.stats_drill_all.setVisible(False)
             return
         self.stats_empty.setVisible(False)
         self.stats_list.setVisible(True)
@@ -4286,11 +4311,16 @@ class MainWindow(QtWidgets.QMainWindow):
                 "Keine offenen Fehler — stark! 💪  Alle bisher verpassten Züge sitzen wieder.",
                 "No open mistakes — great! 💪  All previously missed moves are back.",
             ))
+            self.stats_drill_all.setVisible(False)
             return
         self.stats_sub.setText(t(
             f"Diese {len(problems)} Stellungen sitzen noch nicht — klick eine an, um sie gezielt zu üben:",
             f"These {len(problems)} positions aren't solid yet — click one to drill it:",
         ))
+        this_round = min(len(problems), WEAK_SESSION_LIMIT)
+        self.stats_drill_all.setText(t(
+            f"▶  Alle üben  ({this_round})", f"▶  Drill all  ({this_round})"))
+        self.stats_drill_all.setVisible(True)
         for problem in problems:
             item = QtWidgets.QListWidgetItem()
             item.setData(QtCore.Qt.UserRole, problem)

@@ -72,3 +72,29 @@ def test_weak_card_shows_and_drills_open_errors(tmp_path, monkeypatch):
     win._start_weak_session()                     # Knopf startet die Sitzung
     assert win.stack.currentIndex() == 10         # Drill-Seite
     assert win._due_total == 1                    # genau die wacklige Stellung
+
+
+def test_weak_card_text_is_honest_when_capped(tmp_path, monkeypatch):
+    import chess
+    import qt_app.main_window as mw
+    monkeypatch.setattr(mw, "WEAK_SESSION_LIMIT", 1)      # Runde nimmt nur 1
+    from opening_trainer.repertoire_tree import RepertoireTree
+    win = _win(tmp_path, monkeypatch)
+    tr = RepertoireTree.new("Caro", "black")              # 1.e4 c6 2.d4 d5
+    n1 = tr.add_child(tr.root_id, "e2e4").id
+    n2 = tr.add_child(n1, "c7c6").id
+    n3 = tr.add_child(n2, "d2d4").id
+    tr.add_child(n3, "d7d5")
+    win.tree_store.add(tr)
+    for ucis, exp, played in ((["e2e4"], "c6", "e6"),
+                              (["e2e4", "c7c6", "d2d4"], "d5", "Nf6")):
+        b = chess.Board()
+        for u in ucis:
+            b.push(chess.Move.from_uci(u))
+        win.stats_store.add_event(source_name="s", line_name="l",
+                                  fen_before=b.fen(), expected_san=exp,
+                                  played_san=played, correct=False)
+    win._open_home()
+    assert not win.home_weak.isHidden()
+    assert "2" in win.home_weak_label.text()              # Gesamtzahl ehrlich
+    assert "(1)" in win.home_weak_btn.text()              # aber nur 1 pro Runde

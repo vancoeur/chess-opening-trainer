@@ -84,3 +84,39 @@ def test_stats_error_problems_from_positions(tmp_path, monkeypatch):
     # ausgebügelt -> verschwindet
     _seed(win, ["e2e4"], "d5", "d5", True)
     assert win._collect_error_problems() == []
+
+
+# --- »Alle üben« / Schwächen-Sitzung -------------------------------------
+
+def test_drill_all_button_hidden_without_errors(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    _load_black(win, tmp_path)
+    _seed(win, ["e2e4"], "d5", "d5", True)        # nur Treffer, kein Fehler
+    win._refresh_stats()
+    assert win.stats_drill_all.isHidden()
+
+
+def test_drill_all_button_starts_weak_session(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    _load_black(win, tmp_path)
+    _seed(win, ["e2e4"], "d5", "e5", False)       # offener Fehler
+    win._refresh_stats()
+    assert not win.stats_drill_all.isHidden()
+    assert "1" in win.stats_drill_all.text()
+    win.stats_drill_all.click()
+    assert win.stack.currentIndex() == 10         # Drill-Seite
+    assert win._due_total == 1
+
+
+def test_weak_session_capped_to_limit(tmp_path, monkeypatch):
+    import qt_app.main_window as mw
+    monkeypatch.setattr(mw, "WEAK_SESSION_LIMIT", 2)
+    win = _win(tmp_path, monkeypatch)
+    _load_black(win, tmp_path)
+    # Drei offene Fehler an den drei Schwarz-Stellungen der Linie.
+    _seed(win, ["e2e4"], "d5", "e5", False)
+    _seed(win, ["e2e4", "d7d5", "e4d5"], "Qxd5", "Nf6", False)
+    _seed(win, ["e2e4", "d7d5", "e4d5", "d8d5", "b1c3"], "Qa5", "Qd8", False)
+    assert len(win._collect_error_problems()) == 3        # alle drei wackeln
+    win._start_weak_session()
+    assert win._due_total == 2                            # Runde auf 2 gedeckelt
