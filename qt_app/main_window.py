@@ -106,7 +106,7 @@ QPushButton#seg:checked {{ background: {t['accent']}; border: 1px solid {t['acce
 /* Seitenleiste (feste Navigation links) */
 QWidget#sidebar {{ background: {t['side']}; border-right: 1px solid {t['border']}; }}
 QLabel#brand {{ font-size: 17px; font-weight: 800; color: {t['text']}; padding: 2px 6px 2px 6px; }}
-QLabel#navgroup {{ color: {t['muted']}; font-size: 11px; font-weight: 700; padding: 14px 8px 4px 8px; }}
+QLabel#navgroup {{ color: {t['accent']}; font-size: 12px; font-weight: 800; letter-spacing: 1px; padding: 16px 8px 5px 8px; }}
 QPushButton#nav {{ text-align: left; background: transparent; border: none; border-radius: 9px; padding: 9px 12px; color: {t['text']}; font-size: 14px; font-weight: 500; }}
 QPushButton#nav:hover {{ background: {t['sel']}; }}
 QPushButton#navon {{ text-align: left; background: {t['accent']}; border: none; border-radius: 9px; padding: 9px 12px; color: white; font-size: 14px; font-weight: 700; }}
