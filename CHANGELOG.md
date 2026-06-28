@@ -7,6 +7,24 @@ version are on the [Releases page](https://github.com/vancoeur/chess-opening-tra
 The interface is bilingual (English/German); version numbers follow
 `MAJOR.MINOR.PATCH`.
 
+## [1.4.0] — 2026-06-28
+
+**Two new ways to practise: a weak-spots radar and a timed blitz.**
+
+- **Weak-spots radar.** The home screen now surfaces the positions you keep
+  getting wrong as a **“Not solid yet”** card, with one button to drill exactly
+  those — the most-missed first. This is separate from “Due today”: a position can
+  be not due yet still trip you up every time, and now it won’t slip through. The
+  **“Accuracy & mistakes”** page also gained a **“Drill all”** button to practise
+  the whole mistake list at once instead of clicking each one. A single weak-spots
+  round is capped so it stays short; the rest waits for the next round.
+- **Blitz refresh.** A new **60-second sprint**: positions from your whole
+  repertoire come fast, every correct move scores a point, and when the clock runs
+  out you get your score and a restart. It’s a pressure-free speed drill, so it
+  deliberately leaves your review schedule and mistake stats untouched — fast
+  clicking can’t distort when things are next due. Start it from the home card or
+  the **⏱ Blitz** entry in the sidebar.
+
 ## [1.3.0] — 2026-06-28
 
 **A new look, a new icon, and notes are back.**
@@ -151,6 +169,7 @@ repertoires.** The biggest update so far — daily review is now Chessable-style
 - **Review your games** — load a PGN of your played games and see where you left
   your repertoire and where you blundered.
 
+[1.4.0]: https://github.com/vancoeur/chess-opening-trainer/releases/tag/v1.4.0
 [1.1.2]: https://github.com/vancoeur/chess-opening-trainer/releases/tag/v1.1.2
 [1.1.1]: https://github.com/vancoeur/chess-opening-trainer/releases/tag/v1.1.1
 [1.1.0]: https://github.com/vancoeur/chess-opening-trainer/releases/tag/v1.1.0

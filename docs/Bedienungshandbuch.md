@@ -42,7 +42,7 @@ verzweigte Bäume und besitzt sie dann selbst (speichern, üben, bearbeiten).
 Links liegt die **Navigations-Seitenleiste** — sie ist auf **jeder** Seite sichtbar
 und bringt dich überallhin, gruppiert in vier Bereiche:
 
-- **Üben:** Heute fällig · Baum frei durchspielen · Repertoire-Prüfung
+- **Üben:** Heute fällig · ⏱ Blitz · Baum frei durchspielen · Repertoire-Prüfung
 - **Repertoire:** Repertoire-Baum · Alle Eröffnungen · Repertoire-Editor
 - **Auswerten:** Fortschritt · Trefferquote & Fehler · Partien auswerten
 - **Erkunden:** Eröffnungs-Explorer · Gegen Stockfish
@@ -51,8 +51,10 @@ Die Seite, auf der du gerade bist, ist in der Leiste **farbig markiert**. Ganz o
 führt **Start** (⌘1) auf die hier gezeigte **Übersicht**: eine große
 **„Heute fällig"-Karte** mit dem Knopf **„Jetzt üben"**, darunter drei Kennzahlen —
 wie viele **Repertoires**, wie viele **Stellungen** und wie viel **diese Woche
-fällig** ist. (Hast du noch kein Repertoire, steht hier stattdessen
-**„Beispiel-Eröffnungen ausprobieren".)**
+fällig** ist. Darunter erscheinen — sobald sie etwas zu zeigen haben — zwei weitere
+Karten: **„Das sitzt noch nicht"** (deine wackligen Stellungen, siehe 4.4) und
+**„Blitz-Auffrischung"** (kurzer Tempo-Modus, siehe 4.5). (Hast du noch kein
+Repertoire, steht hier stattdessen **„Beispiel-Eröffnungen ausprobieren".)**
 
 > **Orientierung:** Die markierte Seite in der Leiste und der Fenstertitel zeigen immer, wo du gerade bist. Mit **„‹ Zurück"** geht es zur vorigen Seite.
 
@@ -94,6 +96,36 @@ Einstieg sanft: Eine **neue** Stellung wird dir **mit der Lösung gezeigt** (der
 ist grün am Brett markiert, Text: „Der Zug hier ist …"). Du musst **nicht raten** —
 ein Klick auf **„✓ Verstanden, weiter"** merkt sie vor und geht zur nächsten. Schon
 **gelernte** Stellungen werden weiterhin abgefragt.
+
+### 4.4 Schwächen üben — „Das sitzt noch nicht"
+
+Die App merkt sich die Stellungen, in denen du **zuletzt daneben** gegriffen hast.
+Gibt es solche, erscheint auf der Startseite die Karte **„Das sitzt noch nicht"** mit
+dem Knopf **„Schwächen üben"** — der übt **gezielt nur diese** Stellungen, die
+häufigsten Fehler zuerst. Das ist bewusst etwas anderes als „Heute fällig": Eine
+Stellung kann laut Lernplan **nicht** dran sein, dir aber **trotzdem** jedes Mal
+durchrutschen — genau die holt dich hier ab. Eine Runde ist auf die hartnäckigsten
+gedeckelt, damit sie kurz bleibt; der Rest kommt in der nächsten Runde.
+
+Dieselbe Liste findest du auch unter **Auswerten → Trefferquote & Fehler** (⌘3): dort
+kannst du eine einzelne Stellung anklicken **oder** mit **„Alle üben"** die ganze
+Liste am Stück nehmen.
+
+### 4.5 Blitz-Auffrischung — gegen die Uhr
+
+![Blitz-Auffrischung](handbuch/12_blitz.png)
+
+Einstieg: die Karte **„Blitz-Auffrischung"** auf der Startseite oder **Üben → ⏱ Blitz**
+in der Seitenleiste. Es läuft eine **Uhr (60 Sekunden)** und ein **Punktestand**:
+Stellungen aus deinem **ganzen Repertoire** kommen schnell nacheinander, jeder
+richtige Zug ist ein Punkt. Gehen die Aufgaben durch, mischt der Vorrat neu — in 60
+Sekunden geht dir nie etwas aus. Läuft die Zeit ab, siehst du deinen **Endstand**;
+**„Neu"** startet eine frische Runde.
+
+Der Blitz ist eine **lockere Tempo-Übung**: Er **zählt nur den Punktestand** und
+**rührt deinen Lernplan und die Fehler-Statistik nicht an** — schnelles Klicken
+verschiebt deine echten Wiederholungs-Termine also nicht. Ein Fehlzug blinkt kurz
+(ohne die Lösung zu verraten), du darfst es gleich nochmal versuchen.
 
 ---
 
