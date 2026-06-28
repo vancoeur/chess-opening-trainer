@@ -13,13 +13,13 @@ lass dein Material *und* deine gespielten Partien von **Stockfish** prüfen.
 > eigenständig, ohne weitere Installation. Die Oberfläche gibt es auf
 > **Deutsch und Englisch**.
 
-![Screenshot — Opening Trainer auf Deutsch: der Repertoire-Baum mit der neuen Seitenleiste](docs/ui-de.png)
+![Screenshot — Opening Trainer auf Deutsch: der Repertoire-Baum mit der neuen Seitenleiste](docs/screen-de.png)
 
-*Moderne Oberfläche mit fester Seitenleiste. **Hell oder dunkel** (Ansicht → Erscheinungsbild) und **Deutsch oder Englisch** (Ansicht → Sprache). Hier auf Deutsch, hell — das [gleiche Fenster auf Englisch](docs/ui-en.png).*
+*Moderne Oberfläche mit fester Seitenleiste. **Hell oder dunkel** (Ansicht → Erscheinungsbild) und **Deutsch oder Englisch** (Ansicht → Sprache). Hier auf Deutsch, hell — das [gleiche Fenster auf Englisch](docs/screen-en.png).*
 
 **Ein kurzer Rundgang** — Start-Dashboard, Repertoire-Baum, Fortschritt und Dunkelmodus:
 
-![Demo: Rundgang durch die Oberfläche — Dashboard, Repertoire-Baum, Fortschritt, Dunkelmodus](docs/tour.de.gif)
+![Demo: Rundgang durch die Oberfläche — Dashboard, Repertoire-Baum, Fortschritt, Dunkelmodus](docs/tour-de.gif)
 
 ## Download (fertige App)
 

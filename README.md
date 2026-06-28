@@ -12,13 +12,13 @@ wrong, and have **Stockfish** check your lines and your played games.
 > Modern Qt/PySide6 interface. Stockfish is bundled — the app runs on its own,
 > no extra installation. The interface is available in **English and German**.
 
-![Screenshot — Opening Trainer in English: the repertoire tree with the new sidebar](docs/ui-en.png)
+![Screenshot — Opening Trainer in English: the repertoire tree with the new sidebar](docs/screen-en.png)
 
-*Modern interface with a fixed sidebar. **Light or dark** (View → Appearance) and **English or German** (View → Language). Here in English, light — the [same window in German](docs/ui-de.png).*
+*Modern interface with a fixed sidebar. **Light or dark** (View → Appearance) and **English or German** (View → Language). Here in English, light — the [same window in German](docs/screen-de.png).*
 
 **A quick tour** — the home dashboard, your repertoire tree, progress, and dark mode:
 
-![Demo: a tour of the interface — dashboard, repertoire tree, progress, dark mode](docs/tour.en.gif)
+![Demo: a tour of the interface — dashboard, repertoire tree, progress, dark mode](docs/tour-en.gif)
 
 ## Download (ready-to-run app)
 
