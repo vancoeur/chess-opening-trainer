@@ -1,5 +1,6 @@
-"""Repertoire-Baum-Seite (Stack 13): viele Linien einer Seite als EIN
-verzweigter, eingerückter Baum; Klick zeigt die Stellung, eigene Züge drillbar.
+"""Repertoire-Baum-Seite (Stack 13): namens-orientierte, aufklappbare Übersicht
+(QTreeWidget). Oben benannte Varianten, darunter der verschachtelte Zug-Baum;
+Klick zeigt die Stellung, eigene Züge drillbar, Doppelklick übt die Variante.
 Offscreen gegen die echte ``MainWindow``.
 """
 import os
@@ -34,25 +35,60 @@ def _load_two_caro(win):
     win.tree_store.add(_black("Klassisch", ["e2e4", "c7c6", "d2d4", "d7d5", "b1c3", "d5e4"]))
 
 
-def test_page_merges_and_lists(tmp_path, monkeypatch):
+def _all_items(tree):
+    out = []
+
+    def walk(it):
+        out.append(it)
+        for i in range(it.childCount()):
+            walk(it.child(i))
+
+    for i in range(tree.topLevelItemCount()):
+        walk(tree.topLevelItem(i))
+    return out
+
+
+def _move_items(tree):
+    """Nur Zug-Knoten (nicht die Gruppen-Köpfe)."""
+    out = []
+    for it in _all_items(tree):
+        d = it.data(0, QtCore.Qt.UserRole)
+        if isinstance(d, dict) and "is_user_move" in d:
+            out.append(it)
+    return out
+
+
+def test_page_groups_named_variations(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     _load_two_caro(win)
     win._open_repertoire_tree()
     assert win.stack.currentIndex() == 13
     assert win.reptree_side_combo.currentData() == "black"      # Seite mit Repertoire
-    assert win.reptree_list.count() > 0
-    # eine Verzweigung ist vorhanden (markiert mit ⎇)
-    texts = [win.reptree_list.item(i).text() for i in range(win.reptree_list.count())]
-    assert any("⎇" in tx for tx in texts)
+    # Zwei benannte Varianten = zwei oberste Einträge (statt einer flachen Liste).
+    assert win.reptree_tree.topLevelItemCount() == 2
+    tops = [win.reptree_tree.topLevelItem(i).text(0) for i in range(2)]
+    assert any("Advance" in x for x in tops)
+    assert any("Klassisch" in x for x in tops)
+
+
+def test_branch_marker_within_a_named_variation(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    # EINE benannte Variante, die sich intern verzweigt (…Bf5 / …Nf6).
+    base = ["e2e4", "c7c6", "d2d4", "d7d5", "b1c3", "d5e4", "c3e4"]
+    win.tree_store.add(_black("Klassisch", base + ["c8f5"]))
+    win.tree_store.add(_black("Klassisch", base + ["g8f6"]))
+    win._open_repertoire_tree()
+    assert win.reptree_tree.topLevelItemCount() == 1            # ein Name
+    texts = [it.text(0) for it in _all_items(win.reptree_tree)]
+    assert any("⎇" in tx for tx in texts)                      # interne Verzweigung markiert
 
 
 def test_click_user_move_enables_drill_and_drills(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     _load_two_caro(win)
     win._open_repertoire_tree()
-    idx = next(i for i in range(win.reptree_list.count())
-               if win.reptree_list.item(i).data(QtCore.Qt.UserRole)["is_user_move"])
-    item = win.reptree_list.item(idx)
+    item = next(it for it in _move_items(win.reptree_tree)
+                if it.data(0, QtCore.Qt.UserRole)["is_user_move"])
     win._reptree_clicked(item)
     assert win.reptree_drill_btn.isEnabled() is True
     win._reptree_drill()
@@ -63,10 +99,19 @@ def test_opponent_move_not_drillable(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     _load_two_caro(win)
     win._open_repertoire_tree()
-    idx = next(i for i in range(win.reptree_list.count())
-               if not win.reptree_list.item(i).data(QtCore.Qt.UserRole)["is_user_move"])
-    win._reptree_clicked(win.reptree_list.item(idx))
+    item = next(it for it in _move_items(win.reptree_tree)
+                if not it.data(0, QtCore.Qt.UserRole)["is_user_move"])
+    win._reptree_clicked(item)
     assert win.reptree_drill_btn.isEnabled() is False           # Weiß-Zug: nichts zu üben
+
+
+def test_double_click_name_trains_variation(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    _load_two_caro(win)
+    win._open_repertoire_tree()
+    top = win.reptree_tree.topLevelItem(0)                      # ein Varianten-Kopf
+    win._reptree_item_double_clicked(top)
+    assert win.stack.currentIndex() == 10                       # Variante wird geübt
 
 
 def test_tree_report_lines_after_load(tmp_path, monkeypatch):
@@ -98,11 +143,11 @@ def test_family_selection_filters_tree_and_trains(tmp_path, monkeypatch):
     win.tree_store.add(_black("B18 · Caro-Kann: Klassisch", ["e2e4", "c7c6", "d2d4", "d7d5"]))
     win.tree_store.add(_black("C65 · Ruy López: Berliner", ["e2e4", "e7e5", "g1f3", "b8c6", "f1b5", "a7a6"]))
     win._open_repertoire_tree()
-    # Caro-Kann wählen -> nur diese Linie im Baum (keine Ruy-Züge)
+    # Caro-Kann wählen -> nur diese Züge im Baum (keine Ruy-Züge)
     idx = next(i for i in range(win.reptree_family_combo.count())
                if win.reptree_family_combo.itemData(i) == "Caro-Kann")
     win.reptree_family_combo.setCurrentIndex(idx)
-    texts = " ".join(win.reptree_list.item(i).text() for i in range(win.reptree_list.count()))
+    texts = " ".join(it.text(0) for it in _move_items(win.reptree_tree))
     assert "c6" in texts and "e5" not in texts
     # dieses Repertoire üben -> Stellungs-Sitzung
     win._reptree_train()
@@ -125,8 +170,8 @@ def test_gap_shown_and_jumps_to_editor(tmp_path, monkeypatch):
     win.tree_store.add(_black("Caro", ["e2e4", "c7c6", "d2d4"]))
     win._open_repertoire_tree()
     assert "⚠" in win.reptree_hint.text()
-    gap_items = [win.reptree_list.item(i) for i in range(win.reptree_list.count())
-                 if win.reptree_list.item(i).data(QtCore.Qt.UserRole).get("_gap")]
+    gap_items = [it for it in _move_items(win.reptree_tree)
+                 if it.data(0, QtCore.Qt.UserRole).get("is_gap")]
     assert gap_items, "es sollte eine Lücken-Zeile geben"
     win._reptree_clicked(gap_items[0])
     assert win.reptree_gap_btn.isEnabled()
@@ -166,5 +211,5 @@ def test_empty_side_shows_hint(tmp_path, monkeypatch):
     _load_two_caro(win)
     win._open_repertoire_tree()
     win.reptree_side_combo.setCurrentIndex(0)                   # Weiß: kein Repertoire
-    assert win.reptree_list.count() == 0
+    assert win.reptree_tree.topLevelItemCount() == 0
     assert "kein Repertoire" in win.reptree_hint.text() or "No repertoire" in win.reptree_hint.text()

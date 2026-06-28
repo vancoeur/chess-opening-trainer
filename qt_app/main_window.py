@@ -124,6 +124,11 @@ QListWidget#library::item {{ background: transparent; border: none; margin: 3px 
 QListWidget#library::item:enabled {{ background: {t['card']}; border: 1px solid {t['border']}; border-radius: 10px; color: {t['text']}; }}
 QListWidget#library::item:hover:enabled {{ background: {t['hover']}; }}
 QListWidget#library::item:selected {{ background: {t['sel']}; border: 1px solid {t['accent']}; color: {t['text']}; }}
+QTreeWidget#reptree {{ background: {t['card']}; border: 1px solid {t['border']}; border-radius: 10px; padding: 4px; }}
+QTreeWidget#reptree::item {{ padding: 5px 2px; color: {t['text']}; border-radius: 6px; }}
+QTreeWidget#reptree::item:hover {{ background: {t['hover']}; }}
+QTreeWidget#reptree::item:selected {{ background: {t['sel']}; color: {t['text']}; }}
+QTreeWidget#reptree QTreeView {{ background: transparent; }}
 
 QLineEdit#search {{ font-size: 15px; padding: 10px 14px; margin: 2px 0 6px 0; border: 1px solid {t['border']}; border-radius: 11px; background: {t['card']}; color: {t['text']}; }}
 QLineEdit#search:focus {{ border-color: {t['accent']}; }}
@@ -1380,10 +1385,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.reptree_hint.setObjectName("hint")
         self.reptree_hint.setWordWrap(True)
         col.addWidget(self.reptree_hint)
-        self.reptree_list = QtWidgets.QListWidget()
-        self.reptree_list.setObjectName("library")
-        self.reptree_list.itemClicked.connect(self._reptree_clicked)
-        col.addWidget(self.reptree_list, 1)
+        self.reptree_tree = QtWidgets.QTreeWidget()
+        self.reptree_tree.setObjectName("reptree")
+        self.reptree_tree.setHeaderHidden(True)
+        self.reptree_tree.setUniformRowHeights(True)
+        self.reptree_tree.itemClicked.connect(self._reptree_clicked)
+        self.reptree_tree.itemDoubleClicked.connect(self._reptree_item_double_clicked)
+        self.reptree_tree.itemExpanded.connect(self._reptree_on_expanded)
+        col.addWidget(self.reptree_tree, 1)
         btn_row = QtWidgets.QHBoxLayout()
         self.reptree_train_btn = QtWidgets.QPushButton(t("▶  Dieses Repertoire üben", "▶  Train this repertoire"))
         self.reptree_train_btn.setObjectName("primary")
@@ -1489,16 +1498,24 @@ class MainWindow(QtWidgets.QMainWindow):
             trees = [tr for tr in trees if self._tree_family(tr) == fam]
         return trees, color
 
+    def _reptree_germ(self, text: str) -> str:
+        """Schach-Notation germanisieren, wenn Deutsch aktiv ist (N→S, B→L …)."""
+        if i18n.language() == "de":
+            return text.translate(str.maketrans({"N": "S", "B": "L", "R": "T", "Q": "D"}))
+        return text
+
     def _refresh_repertoire_tree(self) -> None:
-        from opening_trainer.tree_session import merge_side_trees, overview_rows, repertoire_gaps
-        self.reptree_list.clear()
+        from opening_trainer.tree_session import (
+            merge_side_trees, overview_rows, repertoire_gaps, variation_outline)
+        self.reptree_tree.clear()
         self.reptree_drill_btn.setEnabled(False)
         self.reptree_gap_btn.setEnabled(False)
         self._reptree_fen = None
         self._reptree_gap = None
         trees, color = self._reptree_selected_trees()
         self._reptree_gap_map = {g["epd"]: g for g in repertoire_gaps(trees, color)}
-        rows = overview_rows(merge_side_trees(trees, color), color)
+        merged = merge_side_trees(trees, color)
+        rows = overview_rows(merged, color)
         self.reptree_board.set_flipped(color == chess.BLACK)
         self.reptree_board.set_board(chess.Board())
         self.reptree_train_btn.setEnabled(bool(rows))
@@ -1507,51 +1524,99 @@ class MainWindow(QtWidgets.QMainWindow):
                 "Für diese Auswahl ist kein Repertoire geladen.",
                 "No repertoire loaded for this selection."))
             return
+        groups = variation_outline(merged, color)
         branches = sum(1 for r in rows if r["children"] > 1)
         variations = sum(1 for r in rows if r["children"] == 0)   # vollständige Linien = Blätter
         fam = self.reptree_family_combo.currentData()
         scope = (self._reptree_family_label(fam, self.reptree_side_combo.currentData())
                  if fam is not None else t("ganzes Repertoire", "whole repertoire"))
-        var_de = "Variante" if variations == 1 else "Varianten"
-        var_en = "variation" if variations == 1 else "variations"
-        br_de = "Verzweigung" if branches == 1 else "Verzweigungen"
-        br_en = "branch" if branches == 1 else "branches"
+        nvar = len(groups)
+        nv_de = "benannte Variante" if nvar == 1 else "benannte Varianten"
+        nv_en = "named variation" if nvar == 1 else "named variations"
+        var_de = "Linie" if variations == 1 else "Linien"
+        var_en = "line" if variations == 1 else "lines"
         gaps_n = len(self._reptree_gap_map)
         luecke = "Lücke" if gaps_n == 1 else "Lücken"
         gap_en = "gap" if gaps_n == 1 else "gaps"
-        gaps_de = f" · ⚠ {gaps_n} {luecke} (ohne deine Antwort)" if gaps_n else ""
-        gaps_en = f" · ⚠ {gaps_n} {gap_en} (no reply yet)" if gaps_n else ""
+        gaps_de = f" · ⚠ {gaps_n} {luecke}" if gaps_n else ""
+        gaps_en = f" · ⚠ {gaps_n} {gap_en}" if gaps_n else ""
         self.reptree_hint.setText(t(
-            f"{scope}: {variations} {var_de} · {branches} {br_de} (⎇){gaps_de}. "
-            "Klick eine Zeile für die Stellung — ⚠ = Lücke, »Im Editor ergänzen«.",
-            f"{scope}: {variations} {var_en} · {branches} {br_en} (⎇){gaps_en}. "
-            "Click a row for the position — ⚠ = gap, »Add in editor«."))
-        de = (i18n.language() == "de")
-        for r in rows:
-            label = r["label"]
-            if de:
-                label = label.translate(str.maketrans({"N": "S", "B": "L", "R": "T", "Q": "D"}))
-            prefix = "    " * r["depth"] + ("" if r["depth"] == 0 else "└ ")
-            mark = "  ⎇" if r["children"] > 1 else ""
-            # Lücke? = Blatt, dessen Folgestellung in der Lücken-Liste steht.
-            r["_gap"] = None
-            if r["children"] == 0:
-                try:
-                    b = chess.Board(r["fen_before"])
-                    b.push(chess.Move.from_uci(r["move_uci"]))
-                    r["_gap"] = self._reptree_gap_map.get(b.epd())
-                except (ValueError, KeyError):
-                    pass
-            warn = "  ⚠" if r["_gap"] else ""
-            # Am Ende einer Linie (Blatt) den Eröffnungsnamen anzeigen.
-            name = f"   · {r['comment']}" if (r["comment"] and r["children"] == 0) else ""
-            item = QtWidgets.QListWidgetItem(prefix + label + mark + warn + name)
-            item.setData(QtCore.Qt.UserRole, r)
-            self.reptree_list.addItem(item)
+            f"{scope}: {nvar} {nv_de} · {variations} {var_de}{gaps_de}. "
+            "Variante aufklappen, Zeile anklicken für die Stellung — Doppelklick auf "
+            "einen Namen übt diese Variante. ⚠ = Lücke.",
+            f"{scope}: {nvar} {nv_en} · {variations} {var_en}{gaps_en}. "
+            "Expand a variation, click a row for the position — double-click a name to "
+            "train that variation. ⚠ = gap."))
+        line_de = "Linie" if False else None  # (Wortwahl je Gruppe unten)
+        for g in groups:
+            name = g["name"] or t("ohne Namen", "unnamed")
+            n = g["lines"]
+            lw = (t("Linie", "line") if n == 1 else t("Linien", "lines"))
+            counts = f"{n} {lw}"
+            if g["gaps"]:
+                counts += f"  ·  ⚠ {g['gaps']}"
+            top = QtWidgets.QTreeWidgetItem([f"{name}      {counts}"])
+            top.setData(0, QtCore.Qt.UserRole, {"_group": g})
+            f = top.font(0)
+            f.setBold(True)
+            top.setFont(0, f)
+            top.setForeground(0, QtGui.QBrush(QtGui.QColor(UI_THEMES[self._ui_theme]["accent"])))
+            if g["preview"]:
+                top.setToolTip(0, self._reptree_germ(g["preview"]))
+            self._reptree_add_nodes(top, g["nodes"])
+            self.reptree_tree.addTopLevelItem(top)
+        self.reptree_tree.collapseAll()           # erst nur die Namen zeigen
 
-    def _reptree_clicked(self, item: QtWidgets.QListWidgetItem) -> None:
-        r = item.data(QtCore.Qt.UserRole)
-        if not r:
+    def _reptree_on_expanded(self, item: QtWidgets.QTreeWidgetItem) -> None:
+        """Beim Aufklappen den geraden Strang automatisch bis zur ersten echten
+        Verzweigung mit öffnen — so sieht man die Linie auf einen Klick, statt
+        jeden Halbzug einzeln aufzuklappen."""
+        if item.childCount() == 1:
+            item.child(0).setExpanded(True)        # löst per Signal die nächste Stufe aus
+
+    def _reptree_add_nodes(self, parent_item, nodes) -> None:
+        for n in nodes:
+            label = self._reptree_germ(n["label"])
+            mark = "  ⎇" if len(n["children"]) > 1 else ""
+            warn = "  ⚠" if n["is_gap"] else ""
+            name = (f"      · {self._reptree_germ(n['name'])}"
+                    if (n["name"] and not n["children"]) else "")
+            it = QtWidgets.QTreeWidgetItem([label + mark + warn + name])
+            it.setData(0, QtCore.Qt.UserRole, n)
+            parent_item.addChild(it)
+            self._reptree_add_nodes(it, n["children"])
+
+    def _reptree_group_user_fens(self, group) -> list:
+        """Alle eigenen Stellungen (FEN vor dem Zug) einer Varianten-Gruppe — für
+        »diese Variante üben«."""
+        fens: list = []
+        seen: set = set()
+
+        def walk(nodes):
+            for n in nodes:
+                if n["is_user_move"] and n["fen_before"] not in seen:
+                    seen.add(n["fen_before"])
+                    fens.append(n["fen_before"])
+                walk(n["children"])
+
+        walk(group["nodes"])
+        return fens
+
+    def _reptree_item_double_clicked(self, item: QtWidgets.QTreeWidgetItem, _col: int = 0) -> None:
+        data = item.data(0, QtCore.Qt.UserRole) or {}
+        group = data.get("_group")
+        if group is None:
+            return
+        fens = self._reptree_group_user_fens(group)
+        if fens:
+            self._drill_positions_for_fens(fens, t("VARIANTE ÜBEN", "TRAIN VARIATION"))
+
+    def _reptree_clicked(self, item: QtWidgets.QTreeWidgetItem, _col: int = 0) -> None:
+        r = item.data(0, QtCore.Qt.UserRole)
+        if not r or "_group" in r:                # Gruppen-Kopf: nur auf-/zuklappen
+            item.setExpanded(not item.isExpanded())
+            self.reptree_drill_btn.setEnabled(False)
+            self.reptree_gap_btn.setEnabled(False)
             return
         try:
             board = chess.Board(r["fen_before"])
@@ -1564,8 +1629,9 @@ class MainWindow(QtWidgets.QMainWindow):
         # … geübt wird die Entscheidung davor (nur bei eigenen Zügen).
         self._reptree_fen = r["fen_before"] if r["is_user_move"] else None
         self.reptree_drill_btn.setEnabled(bool(self._reptree_fen))
-        # Lücke? -> »Im Editor ergänzen« freischalten.
-        self._reptree_gap = r.get("_gap")
+        # Lücke? -> aus der Lücken-Karte holen (Folgestellung) und »Im Editor
+        # ergänzen« freischalten.
+        self._reptree_gap = self._reptree_gap_map.get(board.epd()) if r.get("is_gap") else None
         self.reptree_gap_btn.setEnabled(self._reptree_gap is not None)
 
     def _reptree_drill(self) -> None:
