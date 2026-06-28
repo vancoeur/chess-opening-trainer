@@ -74,7 +74,6 @@ def test_blitz_timeout_locks_board(tmp_path, monkeypatch):
     win._blitz_remaining = 1
     win._blitz_tick()                             # 1 -> 0 -> Ablauf
     assert win._blitz_over is True
-    assert win._tree_trainer is None
     low = win.tree_drill_status.text().lower()
     assert "zeit" in low or "time" in low
     # Nach Ablauf werden Züge ignoriert (kein Absturz, kein Punkt).
@@ -91,6 +90,34 @@ def test_blitz_pool_refills_when_empty(tmp_path, monkeypatch):
     win._blitz_present_current()                  # muss neu mischen, nicht abbrechen
     assert win._tree_trainer is not None
     assert len(win._due_queue) >= 1
+    win._blitz_stop()
+
+
+def test_show_solution_marks_board_after_timeout(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    _black_caro(win)
+    win._start_blitz_session()
+    win._blitz_remaining = 1
+    win._blitz_tick()                             # Zeit abgelaufen
+    assert win._blitz_over is True
+    assert win._tree_trainer is not None          # Trainer bleibt für »Lösung zeigen«
+    win._tree_drill_solution()                    # Knopf »Lösung zeigen«
+    assert win.tree_drill_board.solution_squares is not None   # Zug ist farbig markiert
+    win._blitz_stop()
+
+
+def test_idea_text_has_no_raw_markup(tmp_path, monkeypatch):
+    from opening_trainer.repertoire_tree import RepertoireTree
+    win = _win(tmp_path, monkeypatch)
+    tr = RepertoireTree.new("Caro", "black")
+    n1 = tr.add_child(tr.root_id, "e2e4").id
+    # Schwarz-Zug mit Lichess-Pfeil-Markup als Kommentar:
+    tr.add_child(n1, "c7c6", comment="[%csl Ga5][%cal Gc6a5]")
+    win.tree_store.add(tr)
+    win._start_blitz_session()
+    # Es muss die Caro-Stellung sein (nur eine eigene Stellung im Baum).
+    txt = win.tree_drill_note.text()
+    assert "[%" not in txt                        # kein roher Code mehr
     win._blitz_stop()
 
 

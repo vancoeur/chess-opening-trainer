@@ -1951,10 +1951,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self._blitz_update_labels()
 
     def _blitz_finish(self) -> None:
-        """Zeit abgelaufen: Uhr stoppen, Brett sperren, Endstand zeigen."""
+        """Zeit abgelaufen: Uhr stoppen, Brett sperren, Endstand zeigen.
+        Der Trainer bleibt erhalten (``_blitz_over`` sperrt Züge), damit
+        »Lösung zeigen« die letzte Stellung noch farbig markieren kann."""
         self._blitz_timer.stop()
         self._blitz_over = True
-        self._tree_trainer = None
         self.tree_drill_status.setText(t(
             f"⏱ Zeit! Endstand: {self._blitz_score} Treffer. »Neu« startet eine neue Runde.",
             f"⏱ Time! Final score: {self._blitz_score}. »Restart« for another round."))
@@ -2068,10 +2069,12 @@ class MainWindow(QtWidgets.QMainWindow):
             line = (line + "   …?") if line else t("Du bist am Zug …?", "Your move …?")
         self.tree_drill_line.setText(line)
         # Idee = Kommentar des ersten vorgesehenen Zuges an dieser Stellung.
+        # Rohe PGN-Zeichen-Anweisungen ([%cal]/[%csl]/…) raus — nur lesbarer Text.
+        from opening_trainer.comments import clean_comment_text
         note = ""
         kids = tr.tree.children_of(tr.node.id)
         if kids and kids[0].comment:
-            note = kids[0].comment
+            note = clean_comment_text(kids[0].comment)
         self.tree_drill_note.setText(t("💡 Idee: ", "💡 Idea: ") + note if note else "")
         self.tree_drill_note.setVisible(bool(note))
 
