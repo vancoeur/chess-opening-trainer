@@ -34,13 +34,13 @@ def test_theme_toggle_applies_and_remembers(tmp_path, monkeypatch):
         win._set_ui_theme("dark")
         assert win._ui_theme == "dark"
         assert win._eval_settings.value("ui_theme") == "dark"
-        assert win._board_theme == "blue"           # dunkles UI nimmt helles Brett-Set
-        assert "#14161e" in win.styleSheet()        # dunkle Grundfarbe aktiv
+        assert win._board_theme == "green"          # passendes Brett-Set
+        assert "#302e2a" in win.styleSheet()        # dunkle (Anthrazit) Grundfarbe aktiv
 
         win._set_ui_theme("light")
         assert win._ui_theme == "light"
         assert win._board_theme == "green"
-        assert "#f4f5fa" in win.styleSheet()        # helle Grundfarbe aktiv
+        assert "#eff6fd" in win.styleSheet()        # helle Grundfarbe (dezent hellblau) aktiv
     finally:
         win._eval_settings.setValue("ui_theme", orig_ui if orig_ui is not None else "light")
         win._eval_settings.setValue("board_theme", orig_board if orig_board is not None else "green")

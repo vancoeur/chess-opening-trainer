@@ -41,32 +41,32 @@ from opening_trainer.position_book import build_san_book
 from opening_trainer.opening_names_en import to_english
 from qt_app.paths import data_dir, sample_pgn_path
 
-# Zwei Oberflächen-Themes (hell/dunkel), Akzent Indigo. Das Aussehen hängt
-# komplett an EINEM Stylesheet, das aus diesen Farb-Paletten gebaut wird —
-# Umschalten zur Laufzeit ändert nur die Palette, nie die Logik.
+# Zwei Oberflächen-Themes: HELL = ruhiges Blau mit dezent hellblauem Hintergrund,
+# DUNKEL = warmes Anthrazit mit kräftigem Grün (chess.com-Stil). Das Aussehen hängt
+# komplett an EINEM Stylesheet aus diesen Paletten — Umschalten ändert nur die Palette.
 UI_THEMES = {
     "light": dict(
-        bg="#f4f5fa", card="#ffffff", side="#ffffff", header="#ffffff",
-        text="#1c1f2b", muted="#6b7180", border="#e4e6ef", neutral="#d6d8e2",
-        accent="#5b54e6", accent_h="#4a43d6", accent_dis="#cdcbf2", on_accent_dis="#ffffff",
-        hover="#eeecfb", press="#e4e1f8", sel="#e7e4fb", scroll="#c7cad6", herotint="#eeecfb",
+        bg="#eff6fd", card="#ffffff", side="#dfeaf8", header="#dfeaf8",
+        text="#1b232c", muted="#5f6a76", border="#d2def0", neutral="#ccd9e8",
+        accent="#3a86c8", accent_h="#2f72ad", accent_dis="#bcd9ee", on_accent_dis="#ffffff",
+        hover="#d0e3f5", press="#c3dbf2", sel="#cee2f6", scroll="#b6c8db", herotint="#d9e8f8",
     ),
     "dark": dict(
-        bg="#14161e", card="#1e2230", side="#181b25", header="#1a1d28",
-        text="#e7e9f2", muted="#9aa0b2", border="#2c3142", neutral="#343a4d",
-        accent="#7d76ff", accent_h="#9089ff", accent_dis="#3a3766", on_accent_dis="#8e8bb5",
-        hover="#272c3d", press="#2f3548", sel="#2a2f42", scroll="#3a4055", herotint="#23213a",
+        bg="#302e2a", card="#3a3834", side="#24221f", header="#24221f",
+        text="#ededeb", muted="#a8a7a1", border="#46433d", neutral="#46433d",
+        accent="#81b64c", accent_h="#8fc257", accent_dis="#4a5a36", on_accent_dis="#9a9a92",
+        hover="#2f2d29", press="#403d37", sel="#38402d", scroll="#514d47", herotint="#33402a",
     ),
 }
-# Passende Brettfarbe je Oberflächen-Theme (dunkles Brett zu hellem Brett-Set).
-THEME_BOARD = {"light": "green", "dark": "blue"}
+# Passende Brettfarbe je Oberflächen-Theme (klassisches Grün passt zu beiden).
+THEME_BOARD = {"light": "green", "dark": "green"}
 
 
-# Typografie: klarer serifenloser Fließtext (Avenir Next), elegante Serifen für
-# Überschriften und große Zahlen (Charter) — beide auf macOS vorhanden, mit
-# Rückfall-Kette für den Notfall.
-FONT_SANS = "'Avenir Next', -apple-system, 'Helvetica Neue', Arial, sans-serif"
-FONT_SERIF = "'Charter', 'Georgia', serif"
+# Typografie: durchgängig klare, serifenlose Schrift (Lucida Grande — klassischer,
+# ruhiger Mac-App-Look), auch für Überschriften. FONT_SERIF zeigt bewusst auf
+# dieselbe Schrift, damit nirgends Serifen erscheinen.
+FONT_SANS = "'Lucida Grande', -apple-system, 'Helvetica Neue', Arial, sans-serif"
+FONT_SERIF = FONT_SANS
 
 
 def build_style(t: dict) -> str:
