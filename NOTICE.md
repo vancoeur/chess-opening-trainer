@@ -51,6 +51,15 @@ replaced.
 - **License:** Multi-license **GPLv2+ / BSD / GFDL** (free to use with
   attribution). See `assets/pieces/README.md`.
 
+## App icon — knight shape (STIX Two Math)
+
+- **Use:** The faceted knight in the app icon (`assets/app_icon.*`) is built from
+  the chess-knight glyph (♞) of the STIX Two Math font as its base outline, then
+  recolored and faceted (`tools/make_app_icon.py`).
+- **Project:** STIX Fonts — https://www.stixfonts.org/
+- **License:** **SIL Open Font License 1.1** (OFL). The OFL permits using the
+  font and its glyph outlines to create derivative artwork.
+
 ## PyInstaller (build only)
 
 - **Use:** Builds the standalone Mac app from source (`build_app.sh`). The
