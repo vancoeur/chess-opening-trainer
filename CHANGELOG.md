@@ -7,6 +7,21 @@ version are on the [Releases page](https://github.com/vancoeur/chess-opening-tra
 The interface is bilingual (English/German); version numbers follow
 `MAJOR.MINOR.PATCH`.
 
+## [1.3.0] — 2026-06-28
+
+**A new look, a new icon, and notes are back.**
+
+- **Refreshed colours & type.** The interface now uses a calm **blue** accent in
+  light mode — on a subtle light-blue background with a distinct sidebar — and a
+  warm charcoal with **green** in dark mode, set in a clean sans-serif. Switch
+  under *View → Appearance*.
+- **New app icon** — a faceted, dark Staunton knight in blue.
+- **Per-opening notes are back.** Add a personal reminder to any opening from the
+  “All openings” list (📝 button); it shows with a 📝 next to the opening.
+- **One repertoire model.** Internal cleanup: the app now keeps a single
+  position-based model of your repertoire (the old linear catalogue is gone), so
+  the library, game review and side assignments all derive from the same trees.
+
 ## [1.2.0] — 2026-06-26
 
 **A modern redesign.**

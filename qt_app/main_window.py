@@ -147,7 +147,7 @@ QScrollBar::add-page, QScrollBar::sub-page {{ background: none; }}
 """
 
 
-APP_VERSION = "1.2.0"
+APP_VERSION = "1.3.0"
 REPO_URL = "https://github.com/vancoeur/chess-opening-trainer"
 
 # Stichwort -> Eröffnungs-Familie (erste passende Übereinstimmung gewinnt)
