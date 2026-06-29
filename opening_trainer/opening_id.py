@@ -93,8 +93,12 @@ def _eco_to_family(eco: str) -> str | None:
     return None
 
 
-# --- ECO-Datenbank: uci-Tuple -> ECO-Code (lazy geladen, gecacht) ---------
-_ECO: dict[tuple, str] | None = None
+# --- ECO-Datenbank: uci-Tuple -> (ECO-Code, Name) (lazy geladen, gecacht) ---
+_ECO: dict[tuple, tuple[str, str]] | None = None
+
+# Standardtiefe für die Namens-Erkennung: ein Kapitel wird über die ersten ~20
+# Halbzüge seiner Hauptlinie identifiziert (tiefe Sub-Sub-Varianten zählen nicht).
+ECO_NAME_MAXPLY = 20
 
 
 def _data_file() -> str | None:
@@ -109,7 +113,7 @@ def _data_file() -> str | None:
     return None
 
 
-def _eco_table() -> dict[tuple, str]:
+def _eco_table() -> dict[tuple, tuple[str, str]]:
     global _ECO
     if _ECO is None:
         _ECO = {}
@@ -118,10 +122,16 @@ def _eco_table() -> dict[tuple, str]:
             try:
                 with open(path, encoding="utf-8") as fh:
                     for ln in fh:
-                        eco, _, uci = ln.partition("\t")
+                        parts = ln.rstrip("\n").split("\t")
+                        if len(parts) >= 3:                 # eco, name, uci
+                            eco, name, uci = parts[0], parts[1], parts[2]
+                        elif len(parts) == 2:               # alt: eco, uci (ohne Name)
+                            eco, name, uci = parts[0], "", parts[1]
+                        else:
+                            continue
                         uci = uci.strip()
                         if uci:
-                            _ECO[tuple(uci.split())] = eco
+                            _ECO[tuple(uci.split())] = (eco, name)
             except OSError:
                 pass
     return _ECO
@@ -143,9 +153,9 @@ def identify_opening(moves_uci) -> str | None:
     table = _eco_table()
     if table:
         for k in range(len(moves), 0, -1):
-            eco = table.get(tuple(moves[:k]))
-            if eco:
-                fam = _eco_to_family(eco)
+            entry = table.get(tuple(moves[:k]))
+            if entry:
+                fam = _eco_to_family(entry[0])
                 if fam:
                     return fam
                 break
@@ -156,3 +166,32 @@ def identify_opening(moves_uci) -> str | None:
         if n > best_len and n <= len(moves) and moves[:n] == seq:
             best_name, best_len = name, n
     return best_name
+
+
+def identify_opening_name(moves_uci, maxply: int = ECO_NAME_MAXPLY) -> str | None:
+    """Voller **ECO-Eröffnungsname** für eine Zugfolge (z. B. »Caro-Kann Defense:
+    Advance Variation«), sonst ``None``.
+
+    Genommen wird der TIEFSTE benannte ECO-Eintrag innerhalb der ersten
+    ``maxply`` Halbzüge — bevorzugt einer mit echtem Varianten-Namen
+    (Doppelpunkt), damit eine Linie ihren spezifischen Namen bekommt und nicht
+    nur die nackte Familie. Reine Funktion (Datenbank wird gecacht)."""
+    if not moves_uci:
+        return None
+    moves = list(moves_uci)[:maxply]
+    table = _eco_table()
+    if not table:
+        return None
+    fallback = None
+    for k in range(len(moves), 0, -1):
+        entry = table.get(tuple(moves[:k]))
+        if not entry:
+            continue
+        name = entry[1].strip()
+        if not name:
+            continue
+        if ":" in name:                 # echter Varianten-Name -> sofort nehmen
+            return name
+        if fallback is None:            # nackte Familie -> nur als Rückfall merken
+            fallback = name
+    return fallback

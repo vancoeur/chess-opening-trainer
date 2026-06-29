@@ -64,11 +64,11 @@ def test_page_groups_named_variations(tmp_path, monkeypatch):
     win._open_repertoire_tree()
     assert win.stack.currentIndex() == 13
     assert win.reptree_side_combo.currentData() == "black"      # Seite mit Repertoire
-    # Zwei benannte Varianten = zwei oberste Einträge (statt einer flachen Liste).
+    # Zwei Varianten = zwei oberste Einträge, benannt über die ECO-Datenbank.
     assert win.reptree_tree.topLevelItemCount() == 2
     tops = [win.reptree_tree.topLevelItem(i).text(0) for i in range(2)]
-    assert any("Advance" in x for x in tops)
-    assert any("Klassisch" in x for x in tops)
+    assert any("Advance Variation" in x for x in tops)          # ECO-Name, nicht »Advance«-Kapitel
+    assert any("Caro-Kann Defense" in x for x in tops)
 
 
 def test_branch_marker_within_a_named_variation(tmp_path, monkeypatch):

@@ -197,23 +197,25 @@ def _common_prefix(lists):
 
 
 def variation_outline(trees, side) -> list[dict]:
-    """Gliedert die Bäume EINER Seite nach ihrem KAPITELNAMEN (``tree.name``) —
+    """Gliedert die Bäume EINER Seite nach ihrem **ECO-Eröffnungsnamen** —
     die übersichtliche, namens-orientierte Alternative zur flachen ``overview_rows``.
 
-    Genau das, was der Nutzer als »Variante« kennt: eine Gruppe je Kapitelname
-    (z. B. »Chapter #12 · Caro-Kann: Klassisch«), in Lade-Reihenfolge.
-    Gleichnamige Kapitel werden zu einer Gruppe verschmolzen (gemeinsamer Stamm
-    einmal, Verzweigung am ersten Unterschied). **Bewusst NICHT nach
-    Blatt-Kommentaren** gruppiert — die sind in echten Studien Prosa/Pfeil-Codes/
-    Partie-Zitate, keine Namen. Felder je Gruppe: ``name``, ``lines`` (Anzahl
-    Linien), ``gaps`` (Lücken), ``preview`` (gemeinsame SAN-Vorhut), ``nodes``
-    (verschachtelte Zugknoten). Reine Funktion."""
+    Jedes Kapitel wird über die ersten ~20 Halbzüge seiner Hauptlinie in der
+    ECO-Datenbank identifiziert (``identify_opening_name``) → ein einheitlicher,
+    kanonischer Name (z. B. »Caro-Kann Defense: Advance Variation«). Kapitel mit
+    demselben ECO-Namen landen in EINER Gruppe (gemeinsamer Stamm einmal,
+    Verzweigung am ersten Unterschied). Rückfall auf den Kapitelnamen nur, wenn
+    ECO gar nichts erkennt. **Bewusst nicht nach Blatt-Kommentaren** (Prosa/
+    Pfeil-Codes in echten Studien). Felder je Gruppe: ``name``, ``lines``,
+    ``gaps``, ``preview``, ``nodes``. Reine Funktion."""
+    from opening_trainer.opening_id import identify_opening_name
     want = _SIDE_NAME.get(side)
     chapters = [t for t in trees if t.side == want and not t.start_fen]
     order: list[str] = []
     bucket: dict[str, list] = {}
     for tr in chapters:
-        nm = (tr.name or "").strip()
+        eco = identify_opening_name(tree_mainline_uci(tr))
+        nm = eco or (tr.name or "").strip()
         if nm not in bucket:
             bucket[nm] = []
             order.append(nm)

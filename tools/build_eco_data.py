@@ -1,6 +1,8 @@
 """Lädt die gemeinfreie ECO-Eröffnungsdatenbank (lichess-org/chess-openings, CC0)
 und schreibt sie kompakt nach opening_trainer/data/eco_openings.tsv
-(Spalten: eco <TAB> uci-Zugfolge). Einmal-Schritt; Datendatei wird eingecheckt.
+(Spalten: eco <TAB> name <TAB> uci-Zugfolge). Einmal-Schritt; Datendatei wird
+eingecheckt. Der **Name** (z. B. »Caro-Kann Defense: Advance Variation«) wird
+mitgeführt, damit Linien über die ECO-Datenbank einen Eröffnungsnamen bekommen.
 
 Aufruf:  python3 tools/build_eco_data.py
 """
@@ -35,7 +37,7 @@ for f in "abcde":
         eco, name, pgn = parts[0], parts[1], parts[2]
         uci = to_uci(pgn)
         if uci:
-            rows.append((eco, " ".join(uci)))
+            rows.append((eco, name.strip(), " ".join(uci)))
 
-OUT.write_text("".join(f"{eco}\t{uci}\n" for eco, uci in rows), encoding="utf-8")
+OUT.write_text("".join(f"{eco}\t{name}\t{uci}\n" for eco, name, uci in rows), encoding="utf-8")
 print(f"{len(rows)} Eröffnungen -> {OUT} ({OUT.stat().st_size//1024} KB)")
