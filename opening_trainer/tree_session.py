@@ -123,34 +123,51 @@ def _format_line_sans(sans) -> str:
     return " ".join(parts)
 
 
-def variation_outline(tree, side) -> list[dict]:
-    """Gliedert den (verschmolzenen) Übersichtsbaum nach BENANNTEN Varianten —
-    die übersichtliche, namens-orientierte Alternative zur flachen ``overview_rows``.
-
-    Eine Gruppe je Variantenname (aus den Blatt-Kommentaren des verschmolzenen
-    Baums), in Baum-Reihenfolge (Hauptlinie zuerst). Jede Gruppe trägt den
-    verschachtelten Zug-Teilbaum ihrer Linien; der gemeinsame Stamm erscheint
-    unter jeder Gruppe (so liest sich jede Variante ab Zug 1). Felder je Gruppe:
-    ``name`` (kann leer sein), ``lines`` (Anzahl Linien/Blätter), ``gaps``
-    (Lücken: Blätter, an denen die Seite am Zug ist), ``preview`` (gemeinsame
-    SAN-Vorhut), ``nodes`` (verschachtelte Zugknoten). Jeder Zugknoten:
-    ``label`` (»3.Nc3«/»3…Bf5«), ``move_uci``, ``fen_before`` (Drill-Ziel bei
-    eigenen Zügen), ``is_user_move``, ``is_gap``, ``node_id``, ``name``
-    (Blattname am Linienende), ``children``. Reine Funktion."""
-    # 1. Blätter mit Name, Knoten-Pfad (IDs), SAN-Folge und Lücken-Flag sammeln.
+def _outline_nodes(tree, side):
+    """Verschachtelte Zugknoten EINES Baums (für die Varianten-Übersicht) plus
+    Zähler (Blätter, Lücken). Jeder Knoten: ``label`` (»3.Nc3«/»3…Bf5«),
+    ``move_uci``, ``fen_before``, ``is_user_move``, ``is_gap``, ``node_id``,
+    ``children``."""
     board = _start_board(tree)
-    leaves: list[dict] = []
 
-    def collect(node, ids, sans):
+    def build(node):
+        out, leaves, gaps = [], 0, 0
+        for child in tree.children_of(node.id):
+            mv = _legal_move(board, child.move_uci)
+            if mv is None:
+                continue
+            fen_before = board.fen()
+            is_user = board.turn == side
+            white = board.turn == chess.WHITE
+            san = board.san(mv)
+            label = f"{board.fullmove_number}.{san}" if white else f"{board.fullmove_number}…{san}"
+            board.push(mv)
+            kids, kl, kg = build(child)
+            is_leaf = not kids
+            is_gap = is_leaf and board.turn == side
+            leaves += kl + (1 if is_leaf else 0)
+            gaps += kg + (1 if is_gap else 0)
+            board.pop()
+            out.append({
+                "label": label, "move_uci": child.move_uci, "fen_before": fen_before,
+                "is_user_move": is_user, "is_gap": is_gap, "node_id": child.id,
+                "children": kids,
+            })
+        return out, leaves, gaps
+
+    return build(tree.root)
+
+
+def _leaf_sanlists(tree):
+    """Alle Wurzel-zu-Blatt-SAN-Folgen eines Baums (für die Vorschau-Vorhut)."""
+    board = _start_board(tree)
+    out: list[list[str]] = []
+
+    def walk(node, sans):
         kids = tree.children_of(node.id)
         if not kids:
             if node.id != tree.root_id:
-                leaves.append({
-                    "name": node.comment or "",
-                    "ids": list(ids),
-                    "sans": list(sans),
-                    "gap": board.turn == side,
-                })
+                out.append(list(sans))
             return
         for child in kids:
             mv = _legal_move(board, child.move_uci)
@@ -158,75 +175,63 @@ def variation_outline(tree, side) -> list[dict]:
                 continue
             san = board.san(mv)
             board.push(mv)
-            collect(child, ids + [child.id], sans + [san])
+            walk(child, sans + [san])
             board.pop()
 
-    collect(tree.root, [], [])
+    walk(tree.root, [])
+    return out
 
-    # 2. Nach Name gruppieren (Erst-Auftreten = Reihenfolge).
+
+def _common_prefix(lists):
+    if not lists:
+        return []
+    pref = lists[0]
+    for lst in lists[1:]:
+        i = 0
+        while i < len(pref) and i < len(lst) and pref[i] == lst[i]:
+            i += 1
+        pref = pref[:i]
+        if not pref:
+            break
+    return pref
+
+
+def variation_outline(trees, side) -> list[dict]:
+    """Gliedert die Bäume EINER Seite nach ihrem KAPITELNAMEN (``tree.name``) —
+    die übersichtliche, namens-orientierte Alternative zur flachen ``overview_rows``.
+
+    Genau das, was der Nutzer als »Variante« kennt: eine Gruppe je Kapitelname
+    (z. B. »Chapter #12 · Caro-Kann: Klassisch«), in Lade-Reihenfolge.
+    Gleichnamige Kapitel werden zu einer Gruppe verschmolzen (gemeinsamer Stamm
+    einmal, Verzweigung am ersten Unterschied). **Bewusst NICHT nach
+    Blatt-Kommentaren** gruppiert — die sind in echten Studien Prosa/Pfeil-Codes/
+    Partie-Zitate, keine Namen. Felder je Gruppe: ``name``, ``lines`` (Anzahl
+    Linien), ``gaps`` (Lücken), ``preview`` (gemeinsame SAN-Vorhut), ``nodes``
+    (verschachtelte Zugknoten). Reine Funktion."""
+    want = _SIDE_NAME.get(side)
+    chapters = [t for t in trees if t.side == want and not t.start_fen]
     order: list[str] = []
-    groups: dict[str, dict] = {}
-    for lf in leaves:
-        g = groups.get(lf["name"])
-        if g is None:
-            g = {"ids": set(), "lines": 0, "gaps": 0, "sanlists": []}
-            groups[lf["name"]] = g
-            order.append(lf["name"])
-        g["ids"].update(lf["ids"])
-        g["lines"] += 1
-        g["gaps"] += 1 if lf["gap"] else 0
-        g["sanlists"].append(lf["sans"])
-
-    # 3. Verschachtelten Zug-Teilbaum je Gruppe (nur erlaubte Knoten) bauen.
-    def build(parent_node, brd, allowed):
-        out = []
-        for child in tree.children_of(parent_node.id):
-            if child.id not in allowed:
-                continue
-            mv = _legal_move(brd, child.move_uci)
-            if mv is None:
-                continue
-            fen_before = brd.fen()
-            is_user = brd.turn == side
-            white = brd.turn == chess.WHITE
-            san = brd.san(mv)
-            label = f"{brd.fullmove_number}.{san}" if white else f"{brd.fullmove_number}…{san}"
-            brd.push(mv)
-            kids = build(child, brd, allowed)
-            is_leaf = not kids
-            is_gap = is_leaf and brd.turn == side
-            name = child.comment if is_leaf else ""
-            brd.pop()
-            out.append({
-                "label": label, "move_uci": child.move_uci, "fen_before": fen_before,
-                "is_user_move": is_user, "is_gap": is_gap, "node_id": child.id,
-                "name": name, "children": kids,
-            })
-        return out
-
-    def common_prefix(lists):
-        if not lists:
-            return []
-        pref = lists[0]
-        for lst in lists[1:]:
-            i = 0
-            while i < len(pref) and i < len(lst) and pref[i] == lst[i]:
-                i += 1
-            pref = pref[:i]
-            if not pref:
-                break
-        return pref
+    bucket: dict[str, list] = {}
+    for tr in chapters:
+        nm = (tr.name or "").strip()
+        if nm not in bucket:
+            bucket[nm] = []
+            order.append(nm)
+        bucket[nm].append(tr)
 
     out_groups: list[dict] = []
-    for name in order:
-        g = groups[name]
-        nodes = build(tree.root, _start_board(tree), g["ids"])
-        pref = common_prefix(g["sanlists"])
+    for nm in order:
+        sub = merge_side_trees(bucket[nm], side)      # gleichnamige Kapitel vereinen
+        nodes, leaves, gaps = _outline_nodes(sub, side)
+        if not nodes:
+            continue
+        sanlists = _leaf_sanlists(sub)
+        pref = _common_prefix(sanlists)
         preview = _format_line_sans(pref)
-        if any(len(s) > len(pref) for s in g["sanlists"]):
+        if any(len(s) > len(pref) for s in sanlists):
             preview = (preview + " …").strip()
         out_groups.append({
-            "name": name, "lines": g["lines"], "gaps": g["gaps"],
+            "name": nm, "lines": leaves, "gaps": gaps,
             "preview": preview, "nodes": nodes,
         })
     return out_groups

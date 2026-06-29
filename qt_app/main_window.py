@@ -1505,8 +1505,7 @@ class MainWindow(QtWidgets.QMainWindow):
         return text
 
     def _refresh_repertoire_tree(self) -> None:
-        from opening_trainer.tree_session import (
-            merge_side_trees, overview_rows, repertoire_gaps, variation_outline)
+        from opening_trainer.tree_session import repertoire_gaps, variation_outline
         self.reptree_tree.clear()
         self.reptree_drill_btn.setEnabled(False)
         self.reptree_gap_btn.setEnabled(False)
@@ -1514,19 +1513,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self._reptree_gap = None
         trees, color = self._reptree_selected_trees()
         self._reptree_gap_map = {g["epd"]: g for g in repertoire_gaps(trees, color)}
-        merged = merge_side_trees(trees, color)
-        rows = overview_rows(merged, color)
+        groups = variation_outline(trees, color)
         self.reptree_board.set_flipped(color == chess.BLACK)
         self.reptree_board.set_board(chess.Board())
-        self.reptree_train_btn.setEnabled(bool(rows))
-        if not rows:
+        self.reptree_train_btn.setEnabled(bool(groups))
+        if not groups:
             self.reptree_hint.setText(t(
                 "Für diese Auswahl ist kein Repertoire geladen.",
                 "No repertoire loaded for this selection."))
             return
-        groups = variation_outline(merged, color)
-        branches = sum(1 for r in rows if r["children"] > 1)
-        variations = sum(1 for r in rows if r["children"] == 0)   # vollständige Linien = Blätter
+        variations = sum(g["lines"] for g in groups)              # vollständige Linien
         fam = self.reptree_family_combo.currentData()
         scope = (self._reptree_family_label(fam, self.reptree_side_combo.currentData())
                  if fam is not None else t("ganzes Repertoire", "whole repertoire"))
@@ -1579,9 +1575,7 @@ class MainWindow(QtWidgets.QMainWindow):
             label = self._reptree_germ(n["label"])
             mark = "  ⎇" if len(n["children"]) > 1 else ""
             warn = "  ⚠" if n["is_gap"] else ""
-            name = (f"      · {self._reptree_germ(n['name'])}"
-                    if (n["name"] and not n["children"]) else "")
-            it = QtWidgets.QTreeWidgetItem([label + mark + warn + name])
+            it = QtWidgets.QTreeWidgetItem([label + mark + warn])
             it.setData(0, QtCore.Qt.UserRole, n)
             parent_item.addChild(it)
             self._reptree_add_nodes(it, n["children"])
