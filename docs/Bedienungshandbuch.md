@@ -144,12 +144,15 @@ und nach** eingeführt, nicht alle auf einmal.
 
 ![Repertoire-Baum](handbuch/05_repertoire_baum.png)
 
-Hier siehst du dein Repertoire als **einen verzweigten Baum**.
+Hier siehst du dein Repertoire **nach Varianten gegliedert** — kein endloses
+Scrollen mehr.
 
-- **Zwei Auswahlfelder oben:** links die **Seite** (Weiß/Schwarz), rechts das **konkrete Repertoire** — „Alles" oder eine benannte Eröffnung (z. B. „Caro-Kann", „Sizilianisch"). So zeigst du gezielt **ein** Repertoire.
-- **Die Liste** ist der Baum: Hauptlinie flach, **Verzweigungen eingerückt** und mit **⎇** markiert. Am Linien-Ende steht der **Eröffnungsname** (aus der PGN oder von der App aus den Zügen erkannt).
-- **Lücken (⚠):** Eine ⚠-Zeile bedeutet — die Linie endet, **du bist am Zug, aber es ist keine Antwort hinterlegt**. Oben steht die Zahl der Lücken. Klick eine ⚠-Zeile, dann **„⚠ Im Editor ergänzen"** springt genau dorthin.
-- **„▶ Dieses Repertoire üben"** startet eine Sitzung für die gewählte Eröffnung; **„Diese Stellung üben"** drillt die angeklickte Stellung.
+- **Zwei Auswahlfelder oben:** links die **Seite** (Weiß/Schwarz), rechts das **konkrete Repertoire** — „Alles" oder eine benannte Eröffnung (z. B. „Caro-Kann", „London-System"). So zeigst du gezielt **ein** Repertoire.
+- **Benannte Varianten als aufklappbarer Baum:** Oben stehen — fett, in der Akzentfarbe — die **Varianten-Namen** mit Anzahl Linien und ⚠ Lücken. Die Namen kommen aus einer eingebauten **ECO-Eröffnungsdatenbank** (z. B. „Advance Variation", „Panov Attack", „Two Knights Attack"). Klick auf einen Namen **klappt die Variante auf** — der gerade Zug-Strang öffnet sich automatisch bis zur ersten echten **Verzweigung (⎇)**; tiefere Äste öffnest du nach Bedarf.
+- **Wenn ECO keinen eindeutigen Namen findet** (typisch bei Aufbausystemen wie dem **London-System**, die in fremde Schubladen transponieren), nimmt die App stattdessen deinen **eigenen Kapitelnamen** aus der PGN (gesäubert) — nie ein falsches Etikett.
+- **Lehrmaterial** (Einführungen, Musterpartien, Mittelspiel-Pläne) wird in **einer** Sammelgruppe **„Lehrmaterial"** ganz unten gebündelt, nicht unter die Varianten gemischt.
+- **Lücken (⚠):** eine ⚠-Zeile bedeutet — die Linie endet, **du bist am Zug, aber es ist keine Antwort hinterlegt**. Klick die Zeile, dann **„⚠ Im Editor ergänzen"** springt genau dorthin.
+- **Üben:** **Doppelklick auf einen Varianten-Namen** übt genau diese Variante. **„▶ Dieses Repertoire üben"** nimmt die ganze Auswahl; **„Diese Stellung üben"** drillt die angeklickte Stellung.
 
 > Der Repertoire-Baum ist zugleich deine **To-do-Liste**: Wo ein ⚠ steht, fehlt dir noch eine Antwort.
 

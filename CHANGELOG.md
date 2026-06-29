@@ -7,6 +7,30 @@ version are on the [Releases page](https://github.com/vancoeur/chess-opening-tra
 The interface is bilingual (English/German); version numbers follow
 `MAJOR.MINOR.PATCH`.
 
+## [1.4.1] — 2026-06-29
+
+**A clearer repertoire view — openings named by their ECO names.**
+
+- **Repertoire tree, reorganised.** The repertoire page is no longer one long,
+  endlessly-scrolling move list. It now shows your **named variations** as a
+  **collapsible tree**: a handful of opening names up top, each expanding to its
+  moves (the straight line opens to the first real branch in one click).
+- **Openings named from the ECO database.** Each line is identified by its first
+  moves against a built-in **ECO opening database** and grouped under its real
+  opening name (e.g. *Caro-Kann Defense: Advance Variation*, *Sicilian Defense:
+  Alapin Variation*). Where a line transposes into a foreign system that ECO can't
+  name unambiguously (typical for setup systems like the **London**), the view
+  falls back to your own — cleaned — chapter name instead of a wrong label.
+- **Teaching chapters kept aside.** Introductions, instructive games and
+  middlegame plans are collected into one **“Study material”** group at the end,
+  so they don't clutter your opening variations.
+- **Double-click a variation name** to train just that variation.
+- **Blitz fix.** After a blitz round ends, **“Show solution”** now correctly
+  marks the move on the board; the **“Idea”** line no longer shows raw Lichess
+  arrow codes (`[%cal]`/`[%csl]`).
+- **Clearer sidebar.** The section headers (Practice / Repertoire / Review /
+  Explore) now stand out in the accent colour.
+
 ## [1.4.0] — 2026-06-28
 
 **Two new ways to practise: a weak-spots radar and a timed blitz.**
@@ -169,6 +193,7 @@ repertoires.** The biggest update so far — daily review is now Chessable-style
 - **Review your games** — load a PGN of your played games and see where you left
   your repertoire and where you blundered.
 
+[1.4.1]: https://github.com/vancoeur/chess-opening-trainer/releases/tag/v1.4.1
 [1.4.0]: https://github.com/vancoeur/chess-opening-trainer/releases/tag/v1.4.0
 [1.1.2]: https://github.com/vancoeur/chess-opening-trainer/releases/tag/v1.1.2
 [1.1.1]: https://github.com/vancoeur/chess-opening-trainer/releases/tag/v1.1.1
