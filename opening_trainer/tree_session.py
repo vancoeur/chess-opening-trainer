@@ -7,6 +7,7 @@ Pure (no UI); the UI starts a ``PositionTrainer`` at each returned (tree, node).
 """
 from __future__ import annotations
 
+import re
 from datetime import date, timedelta
 
 import chess
@@ -196,7 +197,8 @@ def _common_prefix(lists):
     return pref
 
 
-def variation_outline(trees, side, misc_label: str = "Study material") -> list[dict]:
+def variation_outline(trees, side, misc_label: str = "Study material",
+                      strip_family: bool = False) -> list[dict]:
     """Gliedert die Bäume EINER Seite nach ihrem **ECO-Eröffnungsnamen** —
     die übersichtliche, namens-orientierte Alternative zur flachen ``overview_rows``.
 
@@ -226,10 +228,19 @@ def variation_outline(trees, side, misc_label: str = "Study material") -> list[d
                 # Untervarianten (»…: Advance Variation, Short«) zur Hauptvariante
                 # (»…: Advance Variation«) zusammenlaufen statt zu zersplittern.
                 nm = eco.split(",", 1)[0].strip()
+                if strip_family:
+                    # Bei EINER gewählten Familie das »Caro-Kann Defense:«-Präfix
+                    # weglassen — so verschmilzt »…: Two Knights Attack« mit dem
+                    # Kapitel-Rückfall »Two Knights Attack …« zu EINER Gruppe.
+                    nm = nm.split(":", 1)[1].strip()
             else:
                 # ECO kennt nur die nackte Familie (oder nichts): den (gesäuberten)
                 # Kapitelnamen nehmen — sonst klumpen alle unbenannten Linien.
                 nm = clean_chapter_name(tr.name) or eco or (tr.name or "").strip()
+                if strip_family and nm:
+                    # auf die Haupt-Variante kürzen (»Two Knights Attack - Karpov«
+                    # → »Two Knights Attack«), damit Unterkapitel zusammenlaufen.
+                    nm = re.split(r"\s[-–]\s", nm, maxsplit=1)[0].strip()
         if nm not in bucket:
             bucket[nm] = []
             order.append(nm)

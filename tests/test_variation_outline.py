@@ -83,6 +83,24 @@ def test_instructional_chapters_go_to_misc_group_last():
     assert any("Advance Variation" in n for n in names)
 
 
+KLASS = ["e4", "c6", "d4", "d5", "Nc3", "dxe4", "Nxe4", "Bf5", "Ng3"]   # ECO nur Familie
+
+
+def test_strip_family_shortens_eco_and_merges_fallback():
+    out = variation_outline([
+        _black("Kapitel A", ADV),                                  # ECO: Advance
+        _black("Classical Variation - Karpov", KLASS + ["Bg6"]),   # ECO nur Familie -> Rückfall
+        _black("Classical Variation - Capablanca", KLASS + ["Bd7"]),
+    ], chess.BLACK, strip_family=True)
+    names = [g["name"] for g in out]
+    assert "Advance Variation" in names                            # »Caro-Kann Defense:« weg
+    assert not any(n.startswith("Caro-Kann Defense") for n in names)
+    # beide Classical-Kapitel laufen zu EINER Gruppe zusammen
+    assert names.count("Classical Variation") == 1
+    classical = next(g for g in out if g["name"] == "Classical Variation")
+    assert classical["lines"] == 2
+
+
 def test_user_move_flag_matches_side():
     out = variation_outline([_black("X", ADV)], chess.BLACK)
     first = out[0]["nodes"][0]

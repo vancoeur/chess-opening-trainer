@@ -1513,7 +1513,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self._reptree_gap = None
         trees, color = self._reptree_selected_trees()
         self._reptree_gap_map = {g["epd"]: g for g in repertoire_gaps(trees, color)}
-        groups = variation_outline(trees, color, misc_label=t("Lehrmaterial", "Study material"))
+        # Ist eine einzelne Familie gewählt (nicht »Alles«)? Dann das Familien-
+        # Präfix der Varianten-Namen weglassen (die Familie steht ja in der Auswahl).
+        single_family = self.reptree_family_combo.currentData() is not None
+        groups = variation_outline(trees, color, misc_label=t("Lehrmaterial", "Study material"),
+                                   strip_family=single_family)
         self.reptree_board.set_flipped(color == chess.BLACK)
         self.reptree_board.set_board(chess.Board())
         self.reptree_train_btn.setEnabled(bool(groups))
