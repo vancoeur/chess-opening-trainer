@@ -89,3 +89,21 @@ def test_eco_name_prefers_named_over_bare_family():
 
 def test_eco_name_empty_returns_none():
     assert identify_opening_name([]) is None
+
+
+# --- Eindeutigkeit: ECO-Name muss zur erkannten Familie passen -----------
+
+def test_grouping_name_reliable_for_normal_openings():
+    from opening_trainer.opening_id import opening_name_for_grouping
+    name, ok = opening_name_for_grouping(_u(["e4", "c6", "d4", "d5", "e5", "Bf5"]))
+    assert ok is True and "Caro-Kann Defense" in name
+
+
+def test_grouping_name_unreliable_for_transposed_setup():
+    # London-Aufbau über 1.d4 c5 -> ECO »Old Benoni« passt NICHT zu »London-System«.
+    from opening_trainer.opening_id import opening_name_for_grouping
+    name, ok = opening_name_for_grouping(_u(["d4", "c5", "Bf4", "Nf6", "e3", "d5", "c3", "Nc6"]))
+    assert ok is False                      # nicht eindeutig -> Anzeige fällt auf PGN-Namen zurück
+    # während der echte London-Aufbau gegen …d5 sehr wohl als London erkannt wird:
+    name2, ok2 = opening_name_for_grouping(_u(["d4", "d5", "Nf3", "Nf6", "Bf4", "e6"]))
+    assert ok2 is True and "London" in name2

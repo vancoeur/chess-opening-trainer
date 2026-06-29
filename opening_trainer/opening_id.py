@@ -168,6 +168,68 @@ def identify_opening(moves_uci) -> str | None:
     return best_name
 
 
+# Familie (wie ``identify_opening`` sie liefert) -> englische Stichwörter, die im
+# passenden ECO-Namen vorkommen MÜSSEN. Stimmt der tiefste ECO-Name mit der
+# erkannten Familie nicht überein (Transposition in ein fremdes System, z. B. ein
+# London-Aufbau, der über 1.d4 c5 in »Old Benoni« läuft), ist der ECO-Name NICHT
+# eindeutig für diese Eröffnung -> Rückfall auf den PGN-Namen. Familien ohne klares
+# Stichwort (z. B. »Offene Spiele«) fehlen bewusst -> dort wird ECO vertraut.
+_FAMILY_ECO_KEYWORDS = {
+    "Caro-Kann": ("caro-kann",),
+    "Sizilianisch": ("sicilian",),
+    "Französisch": ("french",),
+    "Skandinavisch": ("scandinavian",),
+    "Aljechin-Verteidigung": ("alekhine",),
+    "Pirc-Verteidigung": ("pirc",),
+    "Moderne Verteidigung": ("modern defense", "modern defence", "robatsch"),
+    "Italienisch": ("italian",),
+    "Ruy López": ("ruy lopez", "spanish"),
+    "Russische Verteidigung (Petrow)": ("petrov", "petroff", "russian game"),
+    "Schottische Partie": ("scotch",),
+    "Wiener Partie": ("vienna",),
+    "Vier-Springer": ("four knights",),
+    "Königsgambit": ("king's gambit",),
+    "Philidor-Verteidigung": ("philidor",),
+    "London-System": ("london",),
+    "Torre-Angriff": ("torre",),
+    "Damengambit": ("queen's gambit",),
+    "Damengambit Abgelehnt": ("queen's gambit declined", "qgd"),
+    "Damengambit Angenommen": ("queen's gambit accepted", "qga"),
+    "Slawische Verteidigung": ("slav",),
+    "Semi-Slawisch": ("semi-slav",),
+    "Grünfeld-Verteidigung": ("grünfeld", "grunfeld"),
+    "Nimzo-Indisch": ("nimzo",),
+    "Damenindisch": ("queen's indian", "bogo"),
+    "Königsindisch": ("king's indian",),
+    "Katalanisch": ("catalan",),
+    "Englische Eröffnung": ("english",),
+    "Holländisch": ("dutch",),
+    "Benoni": ("benoni",),
+    "Benko-Gambit": ("benko", "volga"),
+    "Réti-Eröffnung": ("réti", "reti"),
+    "Bird-Eröffnung": ("bird",),
+}
+
+
+def opening_name_for_grouping(moves_uci) -> tuple[str | None, bool]:
+    """``(eco_name, eindeutig)`` für eine Zugfolge.
+
+    ``eco_name`` ist der ECO-Eröffnungsname (oder ``None``). ``eindeutig`` ist
+    ``False``, wenn der ECO-Name klar NICHT zur erkannten Familie passt — d. h.
+    die Linie transponiert in ein fremdes System (z. B. ein London-Aufbau, den
+    ECO als »Old Benoni« führt). Dann sollte die Anzeige auf den PGN-Namen
+    zurückfallen. Familien ohne eindeutiges Stichwort gelten als vertrauenswürdig
+    (``True``), damit spezifische ECO-Namen erhalten bleiben."""
+    name = identify_opening_name(moves_uci)
+    if not name:
+        return None, False
+    fam = identify_opening(moves_uci)
+    kws = _FAMILY_ECO_KEYWORDS.get(fam or "")
+    if not kws:
+        return name, True
+    return name, any(k in name.lower() for k in kws)
+
+
 def identify_opening_name(moves_uci, maxply: int = ECO_NAME_MAXPLY) -> str | None:
     """Voller **ECO-Eröffnungsname** für eine Zugfolge (z. B. »Caro-Kann Defense:
     Advance Variation«), sonst ``None``.

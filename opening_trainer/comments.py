@@ -58,6 +58,7 @@ def clean_chapter_name(name: str) -> str:
     s = _ECO_PREFIX.sub("", s)
     s = _CHAPTER_PREFIX.sub("", s)
     s = _MOVE_TAIL.sub("", s)
+    s = re.sub(r"\s*\([^)]*\)\s*$", "", s)            # angehängter Klammer-Zusatz »(Bd3, c3)«
     s = re.sub(r"(\s*[-–]\s*){2,}", " - ", s)        # »Kasparov - - Ivanchuk« -> » - «
     s = re.sub(r"\s*[-–]\s*$", "", s).strip()
     return s

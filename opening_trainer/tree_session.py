@@ -210,7 +210,7 @@ def variation_outline(trees, side, misc_label: str = "Study material",
     ECO gar nichts erkennt. **Bewusst nicht nach Blatt-Kommentaren** (Prosa/
     Pfeil-Codes in echten Studien). Felder je Gruppe: ``name``, ``lines``,
     ``gaps``, ``preview``, ``nodes``. Reine Funktion."""
-    from opening_trainer.opening_id import identify_opening_name
+    from opening_trainer.opening_id import opening_name_for_grouping
     from opening_trainer.comments import clean_chapter_name, is_instructional
     want = _SIDE_NAME.get(side)
     chapters = [t for t in trees if t.side == want and not t.start_fen]
@@ -222,8 +222,11 @@ def variation_outline(trees, side, misc_label: str = "Study material",
             # nicht unter die Eröffnungsvarianten mischen.
             nm = misc_label
         else:
-            eco = identify_opening_name(tree_mainline_uci(tr))
-            if eco and ":" in eco:
+            eco, unique = opening_name_for_grouping(tree_mainline_uci(tr))
+            # ECO nur nehmen, wenn er einen spezifischen UND eindeutigen Namen
+            # liefert; sonst (nackte Familie oder Transposition in ein fremdes
+            # System wie London→»Old Benoni«) den PGN-Kapitelnamen.
+            if eco and ":" in eco and unique:
                 # Echter ECO-Varianten-Name: bis zum ersten Komma bündeln, damit
                 # Untervarianten (»…: Advance Variation, Short«) zur Hauptvariante
                 # (»…: Advance Variation«) zusammenlaufen statt zu zersplittern.

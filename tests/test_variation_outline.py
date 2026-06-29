@@ -3,7 +3,7 @@ ihrem ECO-Eröffnungsnamen (aus den ersten ~20 Halbzügen der Hauptlinie), je
 Gruppe ein verschachtelter Zug-Teilbaum. Reine Logik."""
 import chess
 
-from opening_trainer.repertoire_tree import RepertoireTree, BLACK
+from opening_trainer.repertoire_tree import RepertoireTree, BLACK, WHITE
 from opening_trainer.tree_session import variation_outline
 
 
@@ -128,8 +128,37 @@ def test_survives_adversarial_trees_without_crashing():
     out = variation_outline(trees, chess.BLACK, strip_family=True)   # darf nicht werfen
     names = [g["name"] for g in out]
     assert any("Advance Variation" in n for n in names)    # der gute Baum ist benannt
+
+
+def test_user_move_flag_matches_side():
     out = variation_outline([_black("X", ADV)], chess.BLACK)
     first = out[0]["nodes"][0]
     assert first["is_user_move"] is False                  # 1.e4 (Weiß)
     assert first["children"][0]["label"] == "1…c6"
     assert first["children"][0]["is_user_move"] is True
+
+
+def _white(name, sans):
+    t = RepertoireTree.new(name, WHITE)
+    p = t.root_id
+    for u in _u(sans):
+        p = t.add_child(p, u).id
+    return t
+
+
+def test_transposed_setup_falls_back_to_clean_chapter_name():
+    # London gegen …c5 (ECO »Old Benoni«): nicht eindeutig -> PGN-Name, gesäubert.
+    c5 = _white("London B1 vs ...c5 Hauptaufbau (e3, c3)",
+                ["d4", "c5", "Bf4", "Nf6", "e3", "d5", "c3", "Nc6"])
+    out = variation_outline([c5], chess.WHITE, strip_family=True)
+    names = [g["name"] for g in out]
+    assert names == ["London B1 vs ...c5 Hauptaufbau"]      # Klammer-Zusatz entfernt
+    assert not any("Benoni" in n for n in names)            # KEIN ECO-Fehletikett
+
+
+def test_reliable_eco_name_is_kept_for_real_london():
+    # London gegen …d5 ist sauber als London erkennbar -> ECO-Name bleibt.
+    d5 = _white("London A1 vs ...d5 Klassisch (Bd3, c3, Nbd2)",
+                ["d4", "d5", "Nf3", "Nf6", "Bf4", "e6", "e3", "Bd6"])
+    out = variation_outline([d5], chess.WHITE, strip_family=True)
+    assert "London System" in out[0]["name"]
