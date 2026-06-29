@@ -68,6 +68,21 @@ def test_gap_leaf_is_flagged_and_counted():
     assert leaf["label"] == "3.Nf3"
 
 
+def test_instructional_chapters_go_to_misc_group_last():
+    out = variation_outline([
+        _black("Kapitel A", ADV),
+        _black("Instructive Game #2 Kasparov - Ivanchuk", PANOV),
+        _black("Do's and Don'ts - Middlegame Plan #1", EXCH),
+    ], chess.BLACK, misc_label="Lehrmaterial")
+    names = [g["name"] for g in out]
+    assert "Lehrmaterial" in names
+    assert names[-1] == "Lehrmaterial"             # Sammelgruppe steht am Ende
+    misc = next(g for g in out if g["name"] == "Lehrmaterial")
+    assert misc["lines"] == 2                       # beide Lehr-Kapitel zusammengefasst
+    # die echte Variante bleibt eigenständig
+    assert any("Advance Variation" in n for n in names)
+
+
 def test_user_move_flag_matches_side():
     out = variation_outline([_black("X", ADV)], chess.BLACK)
     first = out[0]["nodes"][0]

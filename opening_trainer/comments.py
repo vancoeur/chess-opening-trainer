@@ -32,6 +32,23 @@ _ECO_PREFIX = re.compile(r"^\s*[A-E]\d{2}\s*[·\-–:]\s*")
 _MOVE_TAIL = re.compile(r"\s*[-–]\s*(\d+\.\s*)?[a-h][1-8]?\b.*$")
 
 
+# Schlagwörter, die ein Kapitel als LEHRMATERIAL ausweisen (kein Eröffnungs-Ast):
+# Studien-typische Einführungen, Musterpartien, Mittelspiel-Pläne usw.
+_INSTRUCTIONAL = (
+    "instructive game", "model game", "annotated game", "thematic game",
+    "do's and don'ts", "dos and don'ts", "do´s and don´ts",
+    "introduction", "middlegame plan", "acknowledg", "summary",
+    "conclusion", "quiz", "puzzle",
+)
+
+
+def is_instructional(name: str) -> bool:
+    """True, wenn der Kapitelname auf Lehrmaterial (Einführung, Musterpartie,
+    Mittelspiel-Plan …) statt auf einen Eröffnungs-Ast hindeutet."""
+    s = (name or "").lower()
+    return any(k in s for k in _INSTRUCTIONAL)
+
+
 def clean_chapter_name(name: str) -> str:
     """Macht aus einem rohen Studien-Kapitelnamen einen lesbaren Variantennamen:
     entfernt »Chapter #N:«, »Quickstarter Guide«, »Introduction«, angehängte

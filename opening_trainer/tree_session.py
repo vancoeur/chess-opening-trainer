@@ -196,7 +196,7 @@ def _common_prefix(lists):
     return pref
 
 
-def variation_outline(trees, side) -> list[dict]:
+def variation_outline(trees, side, misc_label: str = "Study material") -> list[dict]:
     """Gliedert die Bäume EINER Seite nach ihrem **ECO-Eröffnungsnamen** —
     die übersichtliche, namens-orientierte Alternative zur flachen ``overview_rows``.
 
@@ -209,26 +209,34 @@ def variation_outline(trees, side) -> list[dict]:
     Pfeil-Codes in echten Studien). Felder je Gruppe: ``name``, ``lines``,
     ``gaps``, ``preview``, ``nodes``. Reine Funktion."""
     from opening_trainer.opening_id import identify_opening_name
-    from opening_trainer.comments import clean_chapter_name
+    from opening_trainer.comments import clean_chapter_name, is_instructional
     want = _SIDE_NAME.get(side)
     chapters = [t for t in trees if t.side == want and not t.start_fen]
     order: list[str] = []
     bucket: dict[str, list] = {}
     for tr in chapters:
-        eco = identify_opening_name(tree_mainline_uci(tr))
-        if eco and ":" in eco:
-            # Echter ECO-Varianten-Name: bis zum ersten Komma bündeln, damit
-            # Untervarianten (»…: Advance Variation, Short«) zur Hauptvariante
-            # (»…: Advance Variation«) zusammenlaufen statt zu zersplittern.
-            nm = eco.split(",", 1)[0].strip()
+        if is_instructional(tr.name):
+            # Lehrmaterial (Einführung, Musterpartie, Plan …): in EINE Sammelgruppe,
+            # nicht unter die Eröffnungsvarianten mischen.
+            nm = misc_label
         else:
-            # ECO kennt nur die nackte Familie (oder nichts): den (gesäuberten)
-            # Kapitelnamen nehmen — sonst klumpen alle unbenannten Linien.
-            nm = clean_chapter_name(tr.name) or eco or (tr.name or "").strip()
+            eco = identify_opening_name(tree_mainline_uci(tr))
+            if eco and ":" in eco:
+                # Echter ECO-Varianten-Name: bis zum ersten Komma bündeln, damit
+                # Untervarianten (»…: Advance Variation, Short«) zur Hauptvariante
+                # (»…: Advance Variation«) zusammenlaufen statt zu zersplittern.
+                nm = eco.split(",", 1)[0].strip()
+            else:
+                # ECO kennt nur die nackte Familie (oder nichts): den (gesäuberten)
+                # Kapitelnamen nehmen — sonst klumpen alle unbenannten Linien.
+                nm = clean_chapter_name(tr.name) or eco or (tr.name or "").strip()
         if nm not in bucket:
             bucket[nm] = []
             order.append(nm)
         bucket[nm].append(tr)
+    if misc_label in order:                       # Lehrmaterial immer ans Ende
+        order.remove(misc_label)
+        order.append(misc_label)
 
     out_groups: list[dict] = []
     for nm in order:

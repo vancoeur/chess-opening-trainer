@@ -1,5 +1,5 @@
 """Kommentar-Aufbereitung: rohe PGN-Zeichen-Anweisungen aus der Anzeige raus."""
-from opening_trainer.comments import clean_comment_text, clean_chapter_name
+from opening_trainer.comments import clean_comment_text, clean_chapter_name, is_instructional
 
 
 def test_empty_stays_empty():
@@ -49,3 +49,12 @@ def test_chapter_collapses_double_dash():
 
 def test_chapter_empty():
     assert clean_chapter_name("") == ""
+
+
+def test_is_instructional():
+    assert is_instructional("Instructive Game #2 Kasparov - Ivanchuk")
+    assert is_instructional("Do's and Don'ts - Black's Perspective - Middlegame Plan #2")
+    assert is_instructional("Introduction: - Caro Kann - Author's Acknowledgement")
+    # echte Varianten sind KEIN Lehrmaterial
+    assert not is_instructional("Caro-Kann Defense: Advance Variation")
+    assert not is_instructional("Chapter #10: - Classical Variation - Karpov")

@@ -1513,7 +1513,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._reptree_gap = None
         trees, color = self._reptree_selected_trees()
         self._reptree_gap_map = {g["epd"]: g for g in repertoire_gaps(trees, color)}
-        groups = variation_outline(trees, color)
+        groups = variation_outline(trees, color, misc_label=t("Lehrmaterial", "Study material"))
         self.reptree_board.set_flipped(color == chess.BLACK)
         self.reptree_board.set_board(chess.Board())
         self.reptree_train_btn.setEnabled(bool(groups))
