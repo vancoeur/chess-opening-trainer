@@ -14,6 +14,18 @@ def _black(name, ucis):
     return t
 
 
+def test_bad_start_fen_does_not_crash():
+    # Red-Team: ein Baum mit ungültiger start_fen (z. B. von Hand editiert) darf
+    # die Lücken-Erkennung NICHT zum Absturz bringen — er wird übersprungen,
+    # gültige Bäume werden weiter ausgewertet.
+    good = _black("caro", ["e2e4", "c7c6", "d2d4"])
+    broken = RepertoireTree.new("kaputt", BLACK, start_fen="das ist keine FEN")
+    broken.add_child(broken.root_id, "e2e4")
+    gaps = repertoire_gaps([broken, good], chess.BLACK)   # darf nicht werfen
+    assert len(gaps) == 1
+    assert gaps[0]["tree"] is good
+
+
 def test_line_ending_on_opponent_move_is_a_gap():
     # 1.e4 c6 2.d4 — Linie endet nach Weiß' Zug, Schwarz am Zug, keine Antwort.
     t = _black("caro", ["e2e4", "c7c6", "d2d4"])

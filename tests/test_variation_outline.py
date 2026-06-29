@@ -101,7 +101,33 @@ def test_strip_family_shortens_eco_and_merges_fallback():
     assert classical["lines"] == 2
 
 
-def test_user_move_flag_matches_side():
+def test_survives_adversarial_trees_without_crashing():
+    """Red-Team: kaputte/ungewöhnliche Bäume dürfen die Namens-/Gruppen-Logik
+    NICHT zum Absturz bringen — der gute Baum wird trotzdem benannt."""
+    good = _black("Kapitel", ADV)
+
+    illegal = RepertoireTree.new("Müll", BLACK)            # illegaler Zug-UCI
+    illegal.add_child(illegal.root_id, "e2e5")
+
+    empty = RepertoireTree.new("Leer", BLACK)              # nur Wurzel
+
+    noside = RepertoireTree.new("Ohne Seite", "none")
+    p = noside.root_id
+    for u in _u(ADV):
+        p = noside.add_child(p, u).id
+
+    custom = RepertoireTree.new("Sonderstellung", BLACK,
+                                start_fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+    custom.add_child(custom.root_id, "e2e4")
+
+    weird = _black("", ["e4", "c6"])                       # leerer Name
+    weird.name = ""
+    uni = _black("Caro – Königsläufer-Variante ♞", ADV)    # Nicht-ASCII
+
+    trees = [good, illegal, empty, noside, custom, weird, uni]
+    out = variation_outline(trees, chess.BLACK, strip_family=True)   # darf nicht werfen
+    names = [g["name"] for g in out]
+    assert any("Advance Variation" in n for n in names)    # der gute Baum ist benannt
     out = variation_outline([_black("X", ADV)], chess.BLACK)
     first = out[0]["nodes"][0]
     assert first["is_user_move"] is False                  # 1.e4 (Weiß)

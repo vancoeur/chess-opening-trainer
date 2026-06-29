@@ -289,7 +289,10 @@ def repertoire_gaps(trees, side) -> list[dict]:
     for tree in trees:
         if tree.side != want:
             continue
-        board = _start_board(tree)
+        try:
+            board = _start_board(tree)          # ungültige start_fen darf nicht crashen
+        except ValueError:
+            continue
 
         def walk(node, sans):
             kids = tree.children_of(node.id)

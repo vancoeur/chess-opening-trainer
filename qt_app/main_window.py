@@ -1547,7 +1547,16 @@ class MainWindow(QtWidgets.QMainWindow):
             f"{scope}: {nvar} {nv_en} · {variations} {var_en}{gaps_en}. "
             "Expand a variation, click a row for the position — double-click a name to "
             "train that variation. ⚠ = gap."))
-        line_de = "Linie" if False else None  # (Wortwahl je Gruppe unten)
+        # Nicht stillschweigend verschwinden lassen: Bäume ohne zugeordnete Seite
+        # tauchen in keiner Seitenauswahl auf -> sichtbar machen.
+        unassigned = sum(1 for tr in self.tree_store.all()
+                         if tr.side not in ("white", "black"))
+        if unassigned:
+            self.reptree_hint.setText(self.reptree_hint.text() + t(
+                f"  ⚠ {unassigned} Eröffnung(en) ohne zugeordnete Seite — in »Alle "
+                "Eröffnungen« Weiß/Schwarz zuordnen, damit sie hier erscheinen.",
+                f"  ⚠ {unassigned} opening(s) with no side assigned — set White/Black in "
+                "»All openings« so they show up here."))
         for g in groups:
             name = g["name"] or t("ohne Namen", "unnamed")
             n = g["lines"]

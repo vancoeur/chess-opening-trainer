@@ -206,6 +206,21 @@ def test_window_title_reflects_page(tmp_path, monkeypatch):
     assert "Heute fällig" in win.windowTitle() or "Due today" in win.windowTitle()
 
 
+def test_unassigned_trees_are_flagged_not_silently_hidden(tmp_path, monkeypatch):
+    from opening_trainer.repertoire_tree import RepertoireTree
+    win = _win(tmp_path, monkeypatch)
+    _load_two_caro(win)                                # Schwarz-Repertoire (sichtbar)
+    noside = RepertoireTree.new("Ohne Seite", "none")  # nicht zugeordnet
+    p = noside.root_id
+    for u in ["e2e4", "e7e5"]:
+        p = noside.add_child(p, u).id
+    win.tree_store.add(noside)
+    win._open_repertoire_tree()
+    hint = win.reptree_hint.text().lower()
+    assert "ohne" in hint or "no side" in hint         # Warnung sichtbar
+    assert "⚠" in win.reptree_hint.text()
+
+
 def test_empty_side_shows_hint(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     _load_two_caro(win)
