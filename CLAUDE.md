@@ -13,7 +13,7 @@ kein Programmierer — er denkt in Schach- und Bedien-Begriffen, nicht in Code.
 - **Tests (Sekunden, immer zuerst):**
   `QT_QPA_PLATFORM=offscreen python3 -m pytest -q`
   (bei Hängern in der Hintergrund-Shell hilft `-p no:cacheprovider`).
-  Aktuell ~371 Tests, müssen grün bleiben.
+  Aktuell ~423 Tests, müssen grün bleiben.
 - **App aus dem Quellcode starten (Sekunden, zum Ausprobieren):**
   `python3 qt_main.py`
 - **Bundle bauen + deployen (Minuten — NUR wenn Achim es real testen/„rausgeben"
@@ -34,13 +34,29 @@ kein Programmierer — er denkt in Schach- und Bedien-Begriffen, nicht in Code.
   speist die `dominant_side` des Tree-Syncs UND die Bibliotheks-Anzeige via `_side_of_line`).
   Partien-Auswertung nutzte schon die Bäume (`build_san_book`).
 - Reine, getestete Helfer in `opening_trainer/tree_session.py`, `position_book.py`,
-  `position_training.py`, `opening_id.py` (Eröffnungs-Erkennung), `tree_sync.py`.
-- **Oberfläche/Design (modernisiert 2026-06-26):** EIN Stylesheet via
-  `build_style(UI_THEMES[...])` in `main_window.py` — **Hell/Dunkel** (Akzent Indigo,
-  Ansicht→Erscheinungsbild, QSettings `ui_theme`), feste **Navigations-Seitenleiste** links
-  (`_build_sidebar`/`_nav_buttons`, aktive Seite via `_update_nav_active`) statt „Gehe zu"-Menü;
-  Startseite = Dashboard (`_build_home_page`). Schrift: Serifen-Titel + Avenir-Body
-  (`FONT_SERIF`/`FONT_SANS`); App-Standardschrift in `__init__` früh setzen, sonst schneiden
+  `position_training.py`, `opening_id.py` (Eröffnungs-Erkennung), `tree_sync.py`,
+  `comments.py` (Kommentar-/Kapitelnamen säubern).
+- **Repertoire-Baum-Seite (Index 13) = namens-orientierte Übersicht (Stand v1.4.1):**
+  flaches QListWidget ist durch ein **aufklappbares QTreeWidget** ersetzt, gruppiert nach
+  **ECO-Eröffnungsnamen**. `tree_session.variation_outline(trees, side, misc_label, strip_family)`
+  benennt jedes Kapitel über die ersten ~20 Halbzüge via `opening_id.opening_name_for_grouping`
+  (= `identify_opening_name` + Eindeutigkeits-/Transpositions-Check gegen `identify_opening`-Familie).
+  ECO hat Vorrang; nur wenn der ECO-Name nicht zur Familie passt (Transposition, z. B. London→„Old
+  Benoni") oder nur die nackte Familie liefert → Rückfall auf den **gesäuberten PGN-Kapitelnamen**
+  (`comments.clean_chapter_name`). Lehrmaterial (`is_instructional`) in EINE „Lehrmaterial"-Gruppe.
+  Namen werden LIVE bei jedem Öffnen neu berechnet (kein Cache).
+- **ECO-Datenbank:** `opening_trainer/data/eco_openings.tsv` (3 Spalten: eco⇥name⇥uci, ~3733
+  Einträge, eingecheckt + via `.spec`/`build_app.sh` ins Bundle gepackt). Neu erzeugen mit
+  `tools/build_eco_data.py` (lädt lichess-org/chess-openings, behält die Namen).
+- **Übe-Modi:** Tagessitzung „Heute fällig" (Spaced Repetition, SM-2), **Schwächen-Radar**
+  (offene Fehler, Dashboard-Kachel, `WEAK_SESSION_LIMIT`), **Blitz** (60-Sek-Sprint `BLITZ_SECONDS`,
+  eigener `_blitz`-Modus, rührt Lernplan/Statistik NICHT an), Einzel-/Variantendrill.
+- **Oberfläche/Design (Stand v1.4.1):** EIN Stylesheet via `build_style(UI_THEMES[...])` in
+  `main_window.py` — **Hell/Dunkel** (Akzent **Blau (hell)/Grün (dunkel)**, Ansicht→Erscheinungsbild,
+  QSettings `ui_theme`), feste **Navigations-Seitenleiste** links (`_build_sidebar`/`_nav_buttons`,
+  aktive Seite via `_update_nav_active`, Bereichs-Überschriften in Akzentfarbe) statt „Gehe zu"-Menü;
+  Startseite = Dashboard (`_build_home_page`). Schrift durchgängig **Lucida Grande**
+  (`FONT_SANS`==`FONT_SERIF`); App-Standardschrift in `__init__` früh setzen, sonst schneiden
   Listen Unterlängen ab. Selbstgemalte Balken via `board_view.set_ui_palette`.
   **ACHTUNG: Offscreen-Render-/Vorschau-Skripte schreiben über `_set_ui_theme`/`_set_language` in
   die ECHTEN QSettings (nur `data_dir` ist monkeypatchbar) — danach `ui_theme`/`board_theme`/
@@ -59,8 +75,12 @@ kein Programmierer — er denkt in Schach- und Bedien-Begriffen, nicht in Code.
 - **Release** (eigener Schritt, nur auf Achims Wunsch): `APP_VERSION` in
   `qt_app/main_window.py` bumpen + `CHANGELOG.md` ergänzen + `gh release create vX.Y …`.
   **Bei sichtbaren Änderungen IMMER Bilder + Handbuch mitziehen** (Achims Regel): README-Shots
-  `docs/ui-*.png` / `docs/tour-*.gif`, Handbuch via `tools/render_manual_shots.py` +
-  `tools/make_manual_pdf.py`. Vollständige Checkliste im Memory [[opening-trainer-release-prozess]].
+  `docs/screen-de.png`/`docs/screen-en.png` (eigenes /tmp-Render-Skript), Handbuch-Shots
+  `docs/handbuch/*.png` via `tools/render_manual_shots.py` + PDF via `tools/make_manual_pdf.py`.
+  **Render-Skripte schreiben in die ECHTEN QSettings (Sprache/Theme) → vorher sichern, nachher
+  zurücksetzen** (Achims Standard: `en`/`light`/`green`). **Demo-GIFs `docs/tour-*.gif` haben
+  KEINEN Generator (imageio fehlt) — bei sichtbaren Änderungen veraltet, separat nachzuziehen.**
+  Vollständige Checkliste im Memory [[opening-trainer-release-prozess]].
 
 ## Arbeitsweise mit Achim (wichtig)
 - **Schritte einzeln quittieren** bei riskanter Arbeit: Diagnose → Vorschlag → sein OK →
@@ -75,5 +95,6 @@ kein Programmierer — er denkt in Schach- und Bedien-Begriffen, nicht in Code.
 - Längere Texte/Beiträge als **Datei** liefern (Kopieren aus dem Chat ist für ihn hakelig).
 
 ## Fortlaufender Stand
-Der detaillierte Projektstand + nächste Schritte stehen im Auto-Memory
-(`opening-trainer-repertoire-training.md`) — vor Arbeitsbeginn lesen.
+Zuletzt veröffentlicht: **v1.4.1** (2026-06-29). Der detaillierte Projektstand +
+nächste Schritte stehen im Auto-Memory (`opening-trainer-repertoire-training.md`)
+— vor Arbeitsbeginn lesen.
