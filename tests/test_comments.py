@@ -1,5 +1,5 @@
 """Kommentar-Aufbereitung: rohe PGN-Zeichen-Anweisungen aus der Anzeige raus."""
-from opening_trainer.comments import clean_comment_text
+from opening_trainer.comments import clean_comment_text, clean_chapter_name
 
 
 def test_empty_stays_empty():
@@ -19,3 +19,33 @@ def test_keeps_readable_text_around_markup():
 
 def test_collapses_whitespace():
     assert clean_comment_text("  Plan:   [%clk 0:05:00]   Druck   ") == "Plan: Druck"
+
+
+# --- clean_chapter_name (Studien-Kapitelnamen säubern) --------------------
+
+def test_chapter_strips_prefix_and_move_tail():
+    raw = "Chapter #10: - Classical Variation - Karpov - e4 c6 2. d4 d5"
+    assert clean_chapter_name(raw) == "Classical Variation - Karpov"
+
+
+def test_chapter_strips_quickstarter_and_moves():
+    assert clean_chapter_name("Quickstarter Guide - Advance Variation - e4 c6") == "Advance Variation"
+
+
+def test_chapter_plain_name_kept():
+    assert clean_chapter_name("Panov-Botvinnik Attack - Fianchetto Defence") == \
+        "Panov-Botvinnik Attack - Fianchetto Defence"
+
+
+def test_chapter_strips_eco_code_prefix():
+    assert clean_chapter_name("B18 · Caro-Kann: Klassische Variante") == \
+        "Caro-Kann: Klassische Variante"
+
+
+def test_chapter_collapses_double_dash():
+    assert clean_chapter_name("Instructive Game #2 Kasparov - - Ivanchuk") == \
+        "Instructive Game #2 Kasparov - Ivanchuk"
+
+
+def test_chapter_empty():
+    assert clean_chapter_name("") == ""

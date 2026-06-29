@@ -209,13 +209,22 @@ def variation_outline(trees, side) -> list[dict]:
     Pfeil-Codes in echten Studien). Felder je Gruppe: ``name``, ``lines``,
     ``gaps``, ``preview``, ``nodes``. Reine Funktion."""
     from opening_trainer.opening_id import identify_opening_name
+    from opening_trainer.comments import clean_chapter_name
     want = _SIDE_NAME.get(side)
     chapters = [t for t in trees if t.side == want and not t.start_fen]
     order: list[str] = []
     bucket: dict[str, list] = {}
     for tr in chapters:
         eco = identify_opening_name(tree_mainline_uci(tr))
-        nm = eco or (tr.name or "").strip()
+        if eco and ":" in eco:
+            # Echter ECO-Varianten-Name: bis zum ersten Komma bündeln, damit
+            # Untervarianten (»…: Advance Variation, Short«) zur Hauptvariante
+            # (»…: Advance Variation«) zusammenlaufen statt zu zersplittern.
+            nm = eco.split(",", 1)[0].strip()
+        else:
+            # ECO kennt nur die nackte Familie (oder nichts): den (gesäuberten)
+            # Kapitelnamen nehmen — sonst klumpen alle unbenannten Linien.
+            nm = clean_chapter_name(tr.name) or eco or (tr.name or "").strip()
         if nm not in bucket:
             bucket[nm] = []
             order.append(nm)
