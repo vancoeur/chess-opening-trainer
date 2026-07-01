@@ -1,0 +1,63 @@
+name: Verify release asset
+
+# Unabhängiges Sicherheitsnetz (zweite Instanz, NICHT auf Achims Mac):
+# Sobald ein GitHub-Release veröffentlicht wird, lädt ein sauberer macOS-Runner
+# das tatsächlich hochgeladene .app-ZIP, entpackt es und prüft die Code-Signatur.
+# Ist die Signatur ungültig (die App würde beim Download als "beschädigt" gemeldet),
+# schlägt dieser Lauf FEHL — ein sichtbares rotes ✗ am Release, egal welche Maschine
+# es gebaut hat. Fängt genau den Bug, der v1.1.0–v1.4.0 unbrauchbar machte.
+#
+# Manuell für ein beliebiges Tag ausführbar (Actions → "Verify release asset" →
+# Run workflow → Tag eingeben), z. B. um reparierte Alt-Releases zu bestätigen.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release-Tag zum Prüfen (z. B. v1.4.1)'
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify-signature:
+    runs-on: macos-latest
+    steps:
+      - name: Tag bestimmen
+        id: tag
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            echo "tag=${{ github.event.release.tag_name }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=${{ github.event.inputs.tag }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Veröffentlichtes .app-ZIP laden
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release download "${{ steps.tag.outputs.tag }}" \
+            -R "${{ github.repository }}" -p '*.zip' -D dl
+          ls -lh dl
+
+      - name: Entpacken
+        run: ditto -x -k dl/*.zip unzipped
+
+      - name: Code-Signatur prüfen (schlägt fehl, wenn "beschädigt")
+        run: |
+          set -euo pipefail
+          APP="$(find unzipped -maxdepth 1 -name '*.app' | head -1)"
+          if [ -z "$APP" ]; then
+            echo "::error::Kein .app im Release-Asset gefunden."
+            exit 1
+          fi
+          echo "Prüfe: $APP"
+          if codesign --verify --deep --strict --verbose=2 "$APP"; then
+            echo "✓ Signatur gültig — der Download zeigt kein 'beschädigt'."
+          else
+            echo "::error::Ungültige Signatur — Nutzer sähen 'beschädigt'. Asset neu signieren und ersetzen."
+            exit 1
+          fi
