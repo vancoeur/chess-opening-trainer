@@ -1,10 +1,41 @@
 # Opening Trainer — Bedienungshandbuch
 
-Persönlicher Schach-Eröffnungstrainer für macOS · Stand Juni 2026
+Persönlicher Schach-Eröffnungstrainer für macOS · Stand v1.4.1 (2026)
 
 Dieses Handbuch erklärt jede Funktion Schritt für Schritt, in Alltags- und
 Schachsprache. Du brauchst keine Vorkenntnisse außer Schach. Die Screenshots
 zeigen die App auf Deutsch mit einem geladenen Beispiel-Repertoire (Caro-Kann).
+
+---
+
+## 0. Installation & erster Start (macOS-Gatekeeper)
+
+Die App ist **nicht bei Apple registriert (nicht notarisiert)** — ein freies
+Open-Source-Projekt ohne Apple-Developer-Abo. macOS **blockiert deshalb den
+ersten Start**; auf Apple-Silicon-Macs oft mit *„… ist beschädigt und kann nicht
+geöffnet werden"*. **Die App ist NICHT beschädigt** — das ist nur Apples Sperre
+für unsignierte Programme aus dem Internet.
+
+**So startest du sie beim ersten Mal (sicherer Weg über das Terminal):**
+
+1. Das heruntergeladene ZIP entpacken und `Opening Trainer.app` in den Ordner
+   **Programme** ziehen.
+2. **Terminal** öffnen (Programme → Dienstprogramme → **Terminal**).
+3. Diesen Befehl tippen oder kopieren — **noch nicht** Enter:
+   `xattr -dr com.apple.quarantine`
+4. Einmal die **Leertaste** drücken (hinter dem Befehl **muss** ein Leerzeichen stehen).
+5. Die App **`Opening Trainer.app` aus dem Finder ins Terminal-Fenster ziehen** —
+   der Pfad wird automatisch hinter dem Leerzeichen eingefügt.
+6. **Enter** drücken. Danach die App per **Doppelklick** öffnen.
+
+Die fertige Zeile sieht etwa so aus (der Pfad wird durchs Ziehen automatisch eingefügt):
+`xattr -dr com.apple.quarantine /Applications/Opening\ Trainer.app`
+
+> Das ist **nur einmal** nötig — danach startet die App ganz normal per Doppelklick.
+> Alternativ (Oberfläche): App einmal öffnen, Warnung wegklicken, dann
+> **Systemeinstellungen → Datenschutz & Sicherheit** → *„… wurde blockiert…"* →
+> **„Dennoch öffnen"**. (Auf neueren macOS-Versionen hilft der alte
+> Rechtsklick → „Öffnen" nicht mehr zuverlässig.)
 
 ---
 

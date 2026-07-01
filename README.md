@@ -16,10 +16,6 @@ wrong, and have **Stockfish** check your lines and your played games.
 
 *Modern interface with a fixed sidebar. **Light or dark** (View → Appearance) and **English or German** (View → Language). Here in English, light — the [same window in German](docs/screen-de.png).*
 
-**A quick tour** — the home dashboard, your repertoire tree, progress, and dark mode:
-
-![Demo: a tour of the interface — dashboard, repertoire tree, progress, dark mode](docs/tour-en.gif)
-
 ## Download (ready-to-run app)
 
 **[⬇ Download the latest release](https://github.com/vancoeur/chess-opening-trainer/releases/latest)** — unzip and drag `Opening Trainer.app` into your `Applications` folder. Requires a Mac with **Apple Silicon** (M1 or newer); Intel Macs are not supported by this build.
@@ -33,18 +29,29 @@ wrong, and have **Stockfish** check your lines and your played games.
 > opened* — **the app is NOT damaged**; that is just Apple’s block on unsigned apps
 > downloaded from the internet.
 >
-> **Most reliable method (always works) — remove the quarantine flag:**
+> **Reliable method — remove the quarantine flag (Terminal):**
 > 1. Open **Terminal** (Applications → Utilities → Terminal).
-> 2. Type exactly this, **with a trailing space**, but do **not** press Enter yet:
+> 2. Type — or copy — this command, but **do not press Enter yet:**
 >    ```
->    xattr -dr com.apple.quarantine 
+>    xattr -dr com.apple.quarantine
 >    ```
-> 3. **Drag `Opening Trainer.app` from Finder into the Terminal window** (this inserts its path), then press **Enter**.
-> 4. Now open the app by **double-click**.
+> 3. Press the **spacebar once** — there **must** be a single space after the command.
+> 4. **Drag `Opening Trainer.app` from the Finder into the Terminal window.** Its path is inserted automatically after the space.
+> 5. Press **Enter**. Then open the app by **double-click**.
 >
-> **Alternative (doesn’t always work):** **Right-click** `Opening Trainer.app` →
-> **Open** → confirm **Open**; or **System Settings → Privacy & Security** →
-> *“… was blocked…”* → **“Open Anyway”**.
+> The finished line should look like this (path depends on where the app is):
+> ```
+> xattr -dr com.apple.quarantine /Users/you/Downloads/Opening\ Trainer.app
+> ```
+> *Shortcut:* if the app sits in your **Downloads** folder under its original name, you can paste this whole line and press Enter instead:
+> ```
+> xattr -dr com.apple.quarantine ~/Downloads/"Opening Trainer.app"
+> ```
+>
+> **GUI alternative:** open the app once, dismiss the warning, then go to
+> **System Settings → Privacy & Security**, scroll down to *“… was blocked…”* and
+> click **“Open Anyway”**. (On recent macOS the old right-click → *Open* trick no
+> longer bypasses this.)
 >
 > This is needed **only once** — afterwards the app starts normally by double-click.
 
@@ -57,6 +64,18 @@ The app ships with **three sample openings** (Italian Game, Caro-Kann, Queen’s
   reviewed twice. A **“Due today” overview** breaks it down per opening
   (*X due · Y new*), forecasts today / tomorrow / this week, and lets you drill a
   single opening; after each answer it shows when the position is next due.
+- **Repertoire tree, grouped by opening name:** your whole repertoire as a
+  **collapsible tree**, grouped under the **named variations** it belongs to —
+  identified from a built-in **ECO opening database** (e.g. *Caro-Kann Defense:
+  Advance Variation*, *Sicilian Defense: Alapin Variation*). Expand a variation,
+  **double-click a name to train just that variation**, and spot **gaps** (⚠ lines
+  where it’s your move but no reply is stored yet).
+- **Blitz refresh** — a **60-second sprint** across your whole repertoire: positions
+  come fast, one point per correct move. A pressure-free speed drill that
+  deliberately leaves your review schedule and mistake stats untouched.
+- **Weak-spots radar** — the positions you keep getting wrong surface as a
+  **“Not solid yet”** card on the home screen (and on *Accuracy & mistakes*), so you
+  can drill exactly those, most-missed first.
 - **Build & edit repertoires — with variations:** loading a PGN keeps its
   **branches and comments**; or build and correct a repertoire move by move in
   the **in-app editor** (add lines, promote a variation to the main line, delete,
@@ -122,8 +141,10 @@ python3 qt_main.py
 ```
 
 The script bundles Stockfish automatically (from `assets/engine/stockfish` or
-your local installation). The app is **not signed/notarised** — on another Mac,
-right-click → “Open” on first launch.
+your local installation) and re-signs the bundle **ad-hoc** after stamping the
+version (so the code signature stays valid). The app is still **not
+notarised** — on another Mac, clear the quarantine flag on first launch (see
+[Download → first launch](#download-ready-to-run-app)).
 
 ## Tests
 

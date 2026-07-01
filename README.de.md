@@ -17,10 +17,6 @@ lass dein Material *und* deine gespielten Partien von **Stockfish** prüfen.
 
 *Moderne Oberfläche mit fester Seitenleiste. **Hell oder dunkel** (Ansicht → Erscheinungsbild) und **Deutsch oder Englisch** (Ansicht → Sprache). Hier auf Deutsch, hell — das [gleiche Fenster auf Englisch](docs/screen-en.png).*
 
-**Ein kurzer Rundgang** — Start-Dashboard, Repertoire-Baum, Fortschritt und Dunkelmodus:
-
-![Demo: Rundgang durch die Oberfläche — Dashboard, Repertoire-Baum, Fortschritt, Dunkelmodus](docs/tour-de.gif)
-
 ## Download (fertige App)
 
 **[⬇ Neueste Version herunterladen](https://github.com/vancoeur/chess-opening-trainer/releases/latest)** — entpacken und `Opening Trainer.app` in den Ordner `Programme` ziehen. Benötigt einen Mac mit **Apple Silicon** (M1 oder neuer); Intel-Macs werden von diesem Build nicht unterstützt.
@@ -34,18 +30,29 @@ lass dein Material *und* deine gespielten Partien von **Stockfish** prüfen.
 > beschädigt und kann nicht geöffnet werden* — **die App ist NICHT beschädigt**,
 > das ist nur Apples Sperre für unsignierte Programme aus dem Internet.
 >
-> **Sicherste Methode (funktioniert immer) — die Quarantäne-Markierung entfernen:**
+> **Sicherer Weg — die Quarantäne-Markierung entfernen (Terminal):**
 > 1. **Terminal** öffnen (Programme → Dienstprogramme → Terminal).
-> 2. Genau dies tippen, **mit Leerzeichen am Ende**, aber noch **nicht** Enter:
+> 2. Diesen Befehl tippen — oder kopieren —, aber **noch nicht** Enter drücken:
 >    ```
->    xattr -dr com.apple.quarantine 
+>    xattr -dr com.apple.quarantine
 >    ```
-> 3. Die App **aus dem Finder in das Terminal-Fenster ziehen** (der Pfad wird eingefügt), dann **Enter**.
-> 4. App jetzt per **Doppelklick** öffnen.
+> 3. Einmal die **Leertaste** drücken — hinter dem Befehl **muss** ein Leerzeichen stehen.
+> 4. Die App **`Opening Trainer.app` aus dem Finder in das Terminal-Fenster ziehen.** Der Pfad wird automatisch hinter dem Leerzeichen eingefügt.
+> 5. **Enter** drücken. Danach die App per **Doppelklick** öffnen.
 >
-> **Alternative (klappt nicht immer):** **Rechtsklick** auf `Opening Trainer.app` →
-> **Öffnen** → **Öffnen** bestätigen; oder **Systemeinstellungen → Datenschutz &
-> Sicherheit** → *„… wurde blockiert…"* → **„Dennoch öffnen"**.
+> Die fertige Zeile sieht dann etwa so aus (Pfad je nach Speicherort):
+> ```
+> xattr -dr com.apple.quarantine /Users/du/Downloads/Opening\ Trainer.app
+> ```
+> *Abkürzung:* Liegt die App im **Downloads**-Ordner unter ihrem Originalnamen, kannst du stattdessen diese ganze Zeile einfügen und Enter drücken:
+> ```
+> xattr -dr com.apple.quarantine ~/Downloads/"Opening Trainer.app"
+> ```
+>
+> **Weg über die Oberfläche:** die App einmal öffnen, die Warnung wegklicken, dann
+> **Systemeinstellungen → Datenschutz & Sicherheit** öffnen, nach unten zu
+> *„… wurde blockiert…"* scrollen und **„Dennoch öffnen"** klicken. (Auf neueren
+> macOS-Versionen umgeht der alte Rechtsklick → *Öffnen* das nicht mehr.)
 >
 > Das ist **nur einmal** nötig — danach startet die App ganz normal per Doppelklick.
 
@@ -59,6 +66,18 @@ Die App bringt **drei Beispiel-Eröffnungen** mit (Italienische Partie, Caro-Kan
   schlüsselt es pro Eröffnung auf (*X fällig · Y neu*), zeigt einen Ausblick
   heute / morgen / diese Woche und lässt dich gezielt eine einzelne Eröffnung
   üben; nach jeder Antwort siehst du, wann die Stellung wieder fällig wird.
+- **Repertoire-Baum, nach Eröffnungsnamen gruppiert:** dein ganzes Repertoire als
+  **aufklappbarer Baum**, gruppiert nach den **benannten Varianten** — erkannt über
+  eine eingebaute **ECO-Eröffnungsdatenbank** (z. B. *Caro-Kann Defense: Advance
+  Variation*, *Sicilian Defense: Alapin Variation*). Variante aufklappen,
+  **Doppelklick auf einen Namen übt genau diese Variante**, und **Lücken** (⚠ Linien,
+  in denen du am Zug bist, aber keine Antwort hinterlegt ist) fallen sofort auf.
+- **Blitz-Auffrischung** — ein **60-Sekunden-Sprint** über dein ganzes Repertoire:
+  Stellungen kommen schnell, jeder richtige Zug ein Punkt. Eine lockere
+  Tempo-Übung, die Lernplan und Fehler-Statistik bewusst NICHT anrührt.
+- **Schwächen-Radar** — die Stellungen, die du immer wieder falsch hast, erscheinen
+  als Karte **„Das sitzt noch nicht"** auf der Startseite (und unter *Trefferquote &
+  Fehler*), damit du gezielt genau die übst — die häufigsten Fehler zuerst.
 - **Repertoires bauen & bearbeiten — mit Varianten:** beim Laden einer PGN
   bleiben **Verzweigungen und Kommentare** erhalten; oder du baust und korrigierst
   ein Repertoire Zug für Zug im **eingebauten Editor** (Linien anhängen, eine
@@ -124,8 +143,10 @@ python3 qt_main.py
 ```
 
 Das Skript bündelt Stockfish automatisch mit (aus `assets/engine/stockfish`
-oder deiner lokalen Installation). Die App ist **nicht signiert/notarisiert** —
-auf einem fremden Mac beim ersten Start ggf. Rechtsklick → „Öffnen".
+oder deiner lokalen Installation) und signiert das Bundle nach dem Versions-Stempel
+**ad-hoc neu** (damit die Code-Signatur gültig bleibt). Die App ist weiterhin
+**nicht notarisiert** — auf einem fremden Mac beim ersten Start die
+Quarantäne-Markierung entfernen (siehe [Download → erster Start](#download-fertige-app)).
 
 ## Tests
 
