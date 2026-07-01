@@ -72,15 +72,20 @@ kein Programmierer — er denkt in Schach- und Bedien-Begriffen, nicht in Code.
   germanisieren (N→S, B→L, R→T, Q→D).
 - **Commits auf Englisch**, am Ende `Co-Authored-By: Claude <noreply@anthropic.com>`.
   Direkt auf `main`, dann `git push` (Achims Workflow; nicht branchen, außer er sagt es).
-- **Release** (eigener Schritt, nur auf Achims Wunsch): `APP_VERSION` in
-  `qt_app/main_window.py` bumpen + `CHANGELOG.md` ergänzen + `gh release create vX.Y …`.
-  **Bei sichtbaren Änderungen IMMER Bilder + Handbuch mitziehen** (Achims Regel): README-Shots
-  `docs/screen-de.png`/`docs/screen-en.png` (eigenes /tmp-Render-Skript), Handbuch-Shots
-  `docs/handbuch/*.png` via `tools/render_manual_shots.py` + PDF via `tools/make_manual_pdf.py`.
-  **Render-Skripte schreiben in die ECHTEN QSettings (Sprache/Theme) → vorher sichern, nachher
-  zurücksetzen** (Achims Standard: `en`/`light`/`green`). **Demo-GIFs `docs/tour-*.gif` haben
-  KEINEN Generator (imageio fehlt) — bei sichtbaren Änderungen veraltet, separat nachzuziehen.**
-  Vollständige Checkliste im Memory [[opening-trainer-release-prozess]].
+- **Release — NUR über `./tools/release.sh`** (eigener Schritt, nur auf Achims Wunsch).
+  Das Skript hat **harte Tore** und bricht ab, wenn etwas fehlt — nie von Hand `gh release
+  create` aufrufen. Ablauf: `APP_VERSION` bumpen + `CHANGELOG.md`-Eintrag ganz oben + bei
+  **sichtbaren Änderungen IMMER README (DE+EN) + Handbuch mitziehen** (Screenshots
+  `docs/screen-*.png` eigenes /tmp-Skript, `tools/render_manual_shots.py`; Handbuch-Text +
+  PDF via `tools/make_manual_pdf.py`, `.md`+`.pdf` zusammen committen). **Render-Skripte
+  schreiben in die ECHTEN QSettings (Sprache/Theme) → vorher sichern, nachher auf
+  `en`/`light`/`green` zurücksetzen.** **Demo-GIFs `docs/tour-*.gif` haben KEINEN Generator
+  (imageio fehlt).** Dann `./tools/release.sh` (validiert+baut+verifiziert, ohne zu
+  veröffentlichen) → `./tools/release.sh --publish` (deploy+Release+Upload+Nachprüfung des
+  Live-Assets). Tore u. a.: Version==CHANGELOG, Tests grün, Doku aktualisiert, **`codesign
+  --verify` gültig** + **ZIP entpackt erneut verifiziert** (fängt den „beschädigt"-Bug:
+  build_app.sh signiert nach dem Plist-Stempeln neu). Checkliste: `docs/RELEASE_CHECKLIST.md`
+  + Memory [[opening-trainer-release-prozess]].
 
 ## Arbeitsweise mit Achim (wichtig)
 - **Schritte einzeln quittieren** bei riskanter Arbeit: Diagnose → Vorschlag → sein OK →
