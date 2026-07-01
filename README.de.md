@@ -29,15 +29,23 @@ lass dein Material *und* deine gespielten Partien von **Stockfish** prüfen.
 
 > **⚠️ Wichtig — erster Start (Gatekeeper):**
 > Die App ist **nicht signiert/notarisiert** (freies Open-Source-Projekt ohne
-> Apple-Developer-Abo). macOS **blockiert deshalb den ersten Start** mit einer
-> Meldung wie *„Opening Trainer" kann nicht geöffnet werden*. Das ist zu erwarten —
-> die App ist sicher, und du kannst hier jede Zeile ihres Quellcodes einsehen.
+> Apple-Developer-Abo). macOS **blockiert deshalb den ersten Start**. Auf
+> Apple-Silicon-Macs erscheint dabei oft die Meldung *„Opening Trainer" ist
+> beschädigt und kann nicht geöffnet werden* — **die App ist NICHT beschädigt**,
+> das ist nur Apples Sperre für unsignierte Programme aus dem Internet.
 >
-> So öffnest du sie beim **ersten Mal**:
-> 1. **Rechtsklick** (oder Ctrl-Klick) auf `Opening Trainer.app` → **Öffnen** → mit **Öffnen** bestätigen.
-> 2. Falls deine macOS-Version dort keinen „Öffnen"-Knopf anbietet:
->    **Systemeinstellungen → Datenschutz & Sicherheit** öffnen, nach unten scrollen zu
->    *„Opening Trainer" wurde blockiert…* und **„Dennoch öffnen"** klicken, dann bestätigen.
+> **Sicherste Methode (funktioniert immer) — die Quarantäne-Markierung entfernen:**
+> 1. **Terminal** öffnen (Programme → Dienstprogramme → Terminal).
+> 2. Genau dies tippen, **mit Leerzeichen am Ende**, aber noch **nicht** Enter:
+>    ```
+>    xattr -dr com.apple.quarantine 
+>    ```
+> 3. Die App **aus dem Finder in das Terminal-Fenster ziehen** (der Pfad wird eingefügt), dann **Enter**.
+> 4. App jetzt per **Doppelklick** öffnen.
+>
+> **Alternative (klappt nicht immer):** **Rechtsklick** auf `Opening Trainer.app` →
+> **Öffnen** → **Öffnen** bestätigen; oder **Systemeinstellungen → Datenschutz &
+> Sicherheit** → *„… wurde blockiert…"* → **„Dennoch öffnen"**.
 >
 > Das ist **nur einmal** nötig — danach startet die App ganz normal per Doppelklick.
 

@@ -28,15 +28,23 @@ wrong, and have **Stockfish** check your lines and your played games.
 
 > **⚠️ Important — first launch (Gatekeeper):**
 > The app is **not signed or notarised** (this is a free, open-source project without
-> an Apple Developer subscription). macOS will therefore **block the first start**
-> with a message like *“Opening Trainer” can’t be opened*. This is expected — the app
-> is safe, and you can inspect every line of its source code right here.
+> an Apple Developer subscription). macOS will therefore **block the first start**.
+> On Apple Silicon Macs you often get *“Opening Trainer” is damaged and can’t be
+> opened* — **the app is NOT damaged**; that is just Apple’s block on unsigned apps
+> downloaded from the internet.
 >
-> To open it the **first time**:
-> 1. **Right-click** (or Ctrl-click) `Opening Trainer.app` → **Open** → confirm **Open**.
-> 2. If your macOS version offers no “Open” button there: open
->    **System Settings → Privacy & Security**, scroll down to
->    *“Opening Trainer” was blocked…* and click **“Open Anyway”**, then confirm.
+> **Most reliable method (always works) — remove the quarantine flag:**
+> 1. Open **Terminal** (Applications → Utilities → Terminal).
+> 2. Type exactly this, **with a trailing space**, but do **not** press Enter yet:
+>    ```
+>    xattr -dr com.apple.quarantine 
+>    ```
+> 3. **Drag `Opening Trainer.app` from Finder into the Terminal window** (this inserts its path), then press **Enter**.
+> 4. Now open the app by **double-click**.
+>
+> **Alternative (doesn’t always work):** **Right-click** `Opening Trainer.app` →
+> **Open** → confirm **Open**; or **System Settings → Privacy & Security** →
+> *“… was blocked…”* → **“Open Anyway”**.
 >
 > This is needed **only once** — afterwards the app starts normally by double-click.
 

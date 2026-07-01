@@ -53,6 +53,20 @@ if [ -n "$APP_VERSION" ] && [ -f "$plist" ]; then
   echo "Version im Paket gesetzt: $APP_VERSION"
 fi
 
+# WICHTIG: Das Ändern der Info.plist (oben) macht die von PyInstaller gesetzte
+# Code-Signatur UNGÜLTIG ("invalid Info.plist"). Eine kaputte Signatur lässt macOS
+# beim Download als "beschädigt" melden -- und dann hilft Rechtsklick -> Öffnen
+# NICHT. Deshalb die App danach neu ad-hoc signieren: dann ist die Signatur wieder
+# gültig, und die App zeigt höchstens die normale "unbekannter Entwickler"-Meldung,
+# die per Rechtsklick -> Öffnen (oder xattr) umgangen werden kann.
+app="dist/Opening Trainer.app"
+codesign --force --deep --sign - "$app" 2>/dev/null && echo "App neu signiert (ad-hoc)."
+if codesign --verify --deep --strict "$app" 2>/dev/null; then
+  echo "Signatur gültig."
+else
+  echo "WARNUNG: Signatur-Prüfung fehlgeschlagen — bitte prüfen."
+fi
+
 echo
 echo "Fertig: dist/Opening Trainer.app"
 echo "Starten:  open 'dist/Opening Trainer.app'   (oder doppelklicken)"
