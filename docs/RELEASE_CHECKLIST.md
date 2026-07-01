@@ -56,6 +56,16 @@ um das Doku-Änderungs-Tor bewusst zu überspringen.
 - README/Handbuch wurden bei Releases **unvollständig** nachgezogen. Tor 4 erzwingt
   die Aktualisierung.
 
+## Zweites, unabhängiges Netz (Cloud)
+
+Zusätzlich zum lokalen Skript prüft eine **GitHub-Action** (`.github/workflows/
+verify-release.yml`) bei **jedem veröffentlichten Release** das tatsächlich
+hochgeladene Asset auf einem **sauberen macOS-Runner**: laden → entpacken →
+`codesign --verify`. Ungültige Signatur = **roter Lauf** am Release, unabhängig von
+der Maschine, die es gebaut hat. Manuell für ein beliebiges Tag auslösbar
+(Actions → *Verify release asset* → *Run workflow*). Die Testsuite läuft ohnehin in
+`.github/workflows/tests.yml` bei jedem Push.
+
 Die App ist unsigniert/ad-hoc (nicht notarisiert) → Endnutzer entfernen beim ersten
 Start die Quarantäne (`xattr -dr com.apple.quarantine <app>`); steht in den
 Release-Notes (`docs/release_install_note.md`) und beiden READMEs. Einziger Weg
