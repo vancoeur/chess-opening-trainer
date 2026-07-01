@@ -21,8 +21,8 @@ Signatur** („beschädigt") veröffentlicht werden.
    - **Handbuch**: `docs/Bedienungshandbuch.md` inhaltlich nachziehen, dann
      **PDF neu bauen**: `QT_QPA_PLATFORM=offscreen PYTHONPATH=. python3 tools/make_manual_pdf.py`
      — und `.md` + `.pdf` **zusammen** committen (sonst schlägt Tor 4 an).
-   - **Demo-GIFs** (`docs/tour-*.gif`) haben KEINEN Generator (imageio fehlt) — bei
-     sichtbaren Änderungen entweder entfernen oder separat neu erstellen.
+     (Es gibt bewusst KEINE Demo-GIFs mehr — sie hatten keinen Generator und
+     veralteten; nur die statischen Screenshots werden gepflegt.)
 5. **Alles committen** (Arbeitsbaum muss sauber sein) und pushen.
 
 ## Veröffentlichen
