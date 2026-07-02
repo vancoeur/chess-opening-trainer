@@ -133,10 +133,20 @@ cat docs/release_install_note.md >> "$NOTES"
 ok "Notes erzeugt"
 
 # ---------------------------------------------------------------------------
-step "Tor 10 — GitHub-Release anlegen + Asset hochladen"
+step "Tor 10 — Commits pushen + Release am gebauten Commit verankern"
+# WICHTIG: erst pushen, dann taggen. Sonst legt »gh release create« den Tag am
+# ALTEN Remote-Stand an (der gebaute Code ist noch nicht oben) — der Quellcode-Tag
+# zeigt dann auf eine falsche Version. --target pinnt den Tag hart auf den Commit,
+# aus dem wir gerade gebaut haben.
+HEAD_SHA="$(git rev-parse HEAD)"
+BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+git push origin "$BRANCH" \
+  || abort "git push fehlgeschlagen — Release abgebrochen, damit der Tag nicht auf einen alten Stand zeigt."
+ok "»$BRANCH« gepusht ($HEAD_SHA)"
 gh release create "v$VERSION" "$ZIP" -R "$REPO" \
+  --target "$HEAD_SHA" \
   --title "Opening Trainer $VERSION" --notes-file "$NOTES" >/dev/null
-ok "v$VERSION veröffentlicht"
+ok "v$VERSION veröffentlicht (Tag auf $HEAD_SHA)"
 
 # ---------------------------------------------------------------------------
 step "Tor 11 — Veröffentlichtes Asset ZURÜCKLADEN und Signatur prüfen"
