@@ -44,22 +44,17 @@ def _fen_after(ucis):
     return b.fen()
 
 
-def test_library_click_starts_tree_drill(tmp_path, monkeypatch):
+def test_library_click_routes_into_repertoire_tree(tmp_path, monkeypatch):
+    # Phase 3: ein Klick auf eine Eröffnung führt in den Repertoire-Baum
+    # (den einen Übe-Ort), nicht mehr direkt in eine Drill-Sitzung.
     win = _win(tmp_path, monkeypatch)
     _load_white(win, tmp_path)
     item = QtWidgets.QListWidgetItem()
     item.setData(QtCore.Qt.UserRole, _white_line(win))
-    win._train_from_library(item)
-    assert win.stack.currentIndex() == 10
-
-
-def test_train_side_starts_due_session(tmp_path, monkeypatch):
-    win = _win(tmp_path, monkeypatch)
-    _load_white(win, tmp_path)
-    win._side_filter = "white"
-    win._train_side()
-    assert win.stack.currentIndex() == 10
-    assert win._due_session is True
+    win.library_list.addItem(item)
+    win.library_list.setCurrentItem(item)
+    win._open_selected_in_tree()
+    assert win.stack.currentIndex() == 13
 
 
 def test_stats_error_click_drills_position(tmp_path, monkeypatch):
@@ -84,10 +79,3 @@ def test_viewer_train_drills_position(tmp_path, monkeypatch):
     assert win.stack.currentIndex() == 10
 
 
-def test_no_due_no_crash_for_side(tmp_path, monkeypatch):
-    # Seite ohne Bäume -> Tagessitzung leer, kein Absturz, landet auf Drill-Seite.
-    win = _win(tmp_path, monkeypatch)
-    _load_white(win, tmp_path)
-    win._side_filter = "black"
-    win._train_side()
-    assert win.stack.currentIndex() == 10

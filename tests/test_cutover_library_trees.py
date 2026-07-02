@@ -44,15 +44,17 @@ def test_editor_tree_appears_in_library(tmp_path, monkeypatch):
     assert not win.library_empty.isVisible()      # nicht „leer", obwohl keine Linien
 
 
-def test_editor_tree_click_starts_drill(tmp_path, monkeypatch):
+def test_editor_tree_click_routes_into_repertoire_tree(tmp_path, monkeypatch):
+    # Phase 3: auch ein Editor-eigener Baum führt per Klick in den Repertoire-Baum.
     win = _win(tmp_path, monkeypatch)
     win._side_filter = None
     win.search_query = ""
     _editor_tree(win)
     win._refresh_library()
     item = _tree_items(win)[0]
-    win._train_from_library(item)
-    assert win.stack.currentIndex() == 10
+    win.library_list.setCurrentItem(item)
+    win._open_selected_in_tree()
+    assert win.stack.currentIndex() == 13
 
 
 def test_editor_tree_row_blocks_side_assignment(tmp_path, monkeypatch):
@@ -65,7 +67,7 @@ def test_editor_tree_row_blocks_side_assignment(tmp_path, monkeypatch):
     win.library_list.setCurrentItem(item)
     win._on_library_selection()
     assert win.assign_white_btn.isEnabled() is False    # Zuordnung nur für Linien
-    assert win.train_one_btn.isEnabled() is True        # üben geht
+    assert win.reptree_open_btn.isEnabled() is True     # »im Baum öffnen« geht
     assert win._selected_library_line() is None         # zählt nicht als Linie
 
 

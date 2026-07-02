@@ -2744,22 +2744,11 @@ class MainWindow(QtWidgets.QMainWindow):
                 self._remove_pgn_source(src)
                 refresh()
 
-        def do_train() -> None:
-            item = listw.currentItem()
-            if item is None:
-                return
-            dlg.accept()
-            self._train_source(item.data(QtCore.Qt.UserRole))
-
         btns = QtWidgets.QHBoxLayout()
-        train = QtWidgets.QPushButton(t("▶  Ausgewählte üben", "▶  Train selected"))
-        train.setObjectName("primary")
-        train.clicked.connect(do_train)
         remove = QtWidgets.QPushButton(t("Ausgewählte entfernen", "Remove selected"))
         remove.clicked.connect(do_remove)
         close = QtWidgets.QPushButton(t("Schließen", "Close"))
         close.clicked.connect(dlg.accept)
-        btns.addWidget(train)
         btns.addWidget(remove)
         btns.addStretch(1)
         btns.addWidget(close)
@@ -3001,8 +2990,8 @@ class MainWindow(QtWidgets.QMainWindow):
         outer.addWidget(self.lib_title)
 
         self.lib_sub = QtWidgets.QLabel(t(
-            "Klick eine Eröffnung an (markiert sie) — dann unten „Üben“ oder zuordnen. Doppelklick übt sofort.",
-            "Click an opening to select it — then ‘Train’ below, or assign it. Double-click trains right away.",
+            "Klick eine Eröffnung an — dann unten »Im Repertoire-Baum öffnen« oder zuordnen. Doppelklick öffnet sie direkt im Baum.",
+            "Click an opening — then »Open in repertoire tree« below, or assign it. Double-click opens it in the tree.",
         ))
         self.lib_sub.setObjectName("hint")
         outer.addWidget(self.lib_sub)
@@ -3021,11 +3010,6 @@ class MainWindow(QtWidgets.QMainWindow):
             filter_row.addWidget(btn)
         self._side_buttons[None].setChecked(True)
         filter_row.addStretch(1)
-        self.train_side_btn = QtWidgets.QPushButton(t("Repertoire üben", "Train repertoire"))
-        self.train_side_btn.setObjectName("primary")
-        self.train_side_btn.clicked.connect(self._train_side)
-        self.train_side_btn.hide()
-        filter_row.addWidget(self.train_side_btn)
         outer.addLayout(filter_row)
 
         self.search_field = QtWidgets.QLineEdit()
@@ -3050,7 +3034,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.library_list = QtWidgets.QListWidget()
         self.library_list.setObjectName("library")
         self.library_list.setSpacing(2)
-        self.library_list.itemActivated.connect(self._train_from_library)  # Doppelklick / Enter
+        self.library_list.itemActivated.connect(lambda _it=None: self._open_selected_in_tree())  # Doppelklick / Enter
         self.library_list.itemSelectionChanged.connect(self._on_library_selection)
         outer.addWidget(self.library_list, 1)
 
@@ -3069,17 +3053,21 @@ class MainWindow(QtWidgets.QMainWindow):
             "Persönlichen Merktext zu dieser Eröffnung hinterlegen (erscheint 📝 in der Liste).",
             "Add a personal note to this opening (shown as 📝 in the list)."))
         self.note_btn.clicked.connect(self._edit_note_selected)
-        self.train_one_btn = QtWidgets.QPushButton(t("Üben", "Train"))
-        self.train_one_btn.setObjectName("primary")
-        self.train_one_btn.clicked.connect(self._train_selected_library)
-        for btn in (self.assign_white_btn, self.assign_black_btn, self.assign_none_btn, self.note_btn, self.train_one_btn):
+        self.reptree_open_btn = QtWidgets.QPushButton(
+            t("▶  Im Repertoire-Baum öffnen", "▶  Open in repertoire tree"))
+        self.reptree_open_btn.setObjectName("primary")
+        self.reptree_open_btn.setToolTip(t(
+            "Bringt diese Eröffnung in den Repertoire-Baum — dort übst du sie gezielt.",
+            "Takes this opening into the repertoire tree — the one place to train it."))
+        self.reptree_open_btn.clicked.connect(lambda: self._open_selected_in_tree())
+        for btn in (self.assign_white_btn, self.assign_black_btn, self.assign_none_btn, self.note_btn, self.reptree_open_btn):
             btn.setEnabled(False)
         action_bar.addWidget(self.assign_white_btn)
         action_bar.addWidget(self.assign_black_btn)
         action_bar.addWidget(self.assign_none_btn)
         action_bar.addWidget(self.note_btn)
         action_bar.addStretch(1)
-        action_bar.addWidget(self.train_one_btn)
+        action_bar.addWidget(self.reptree_open_btn)
         outer.addLayout(action_bar)
         return page
 
@@ -3114,7 +3102,7 @@ class MainWindow(QtWidgets.QMainWindow):
         outer.addWidget(self.stats_sub)
 
         # Alle offenen Fehler am Stück üben (gedeckelt) — statt nur einzeln klicken.
-        self.stats_drill_all = QtWidgets.QPushButton(t("▶  Alle üben", "▶  Drill all"))
+        self.stats_drill_all = QtWidgets.QPushButton(t("▶  Schwächen üben", "▶  Drill weak spots"))
         self.stats_drill_all.setObjectName("primary")
         self.stats_drill_all.clicked.connect(self._start_weak_session)
         outer.addWidget(self.stats_drill_all, 0, QtCore.Qt.AlignLeft)
@@ -4967,27 +4955,18 @@ class MainWindow(QtWidgets.QMainWindow):
         trainable = [l for l in self._filtered_lines() if l.moves_uci]
         if key in ("white", "black"):
             side = t("Weiß", "White") if key == "white" else t("Schwarz", "Black")
-            self.train_side_btn.setText(t(f"{side}-Repertoire üben  ({len(trainable)})", f"Train {side} repertoire  ({len(trainable)})"))
-            self.train_side_btn.setVisible(bool(trainable))
             self.lib_sub.setText(t(f"{len(trainable)} Eröffnungen in deinem {side}-Repertoire.", f"{len(trainable)} openings in your {side} repertoire."))
         elif key == "none":
-            self.train_side_btn.hide()
             self.lib_sub.setText(t(
                 "Noch keinem Repertoire zugeordnet. Wähle eine aus und ordne sie unten zu.",
                 "Not assigned to a repertoire yet. Pick one and assign it below.",
             ))
         else:
-            self.train_side_btn.hide()
             self.lib_sub.setText(t(
-                "Wähle eine Eröffnung, dann unten zuordnen oder „Üben“. (Doppelklick übt direkt.)",
-                "Pick an opening, then assign it below or ‘Train’. (Double-click trains directly.)",
+                "Wähle eine Eröffnung, dann unten zuordnen oder »Im Repertoire-Baum öffnen«. (Doppelklick öffnet direkt.)",
+                "Pick an opening, then assign it below or »Open in repertoire tree«. (Double-click opens directly.)",
             ))
         self._refresh_library()
-
-    def _train_side(self) -> None:
-        # Stellungs-basiert: fällige/neue Stellungen dieser Repertoire-Seite.
-        if self._side_filter in ("white", "black"):
-            self._start_due_session(only_side=self._side_filter)
 
     def _open_library(self) -> None:
         self._refresh_library()
@@ -4999,21 +4978,41 @@ class MainWindow(QtWidgets.QMainWindow):
     def _is_tree_item(self, data) -> bool:
         return data is not None and hasattr(data, "id") and data.id in self.tree_store.trees
 
-    def _train_from_library(self, item: QtWidgets.QListWidgetItem) -> None:
-        data = item.data(QtCore.Qt.UserRole)
-        if self._is_tree_item(data):           # Editor-eigener Baum -> direkt drillen
-            self._start_tree_drill(data)
+    def _open_selected_in_tree(self) -> None:
+        """Bringt die in der Bibliothek markierte Eröffnung in den Repertoire-Baum
+        (der eine Übe-Ort). Seite + Familie werden dort vorgewählt; ist keine
+        Seite zugeordnet, öffnet der Baum ganz normal."""
+        items = self.library_list.selectedItems()
+        if not items:
+            return
+        data = items[0].data(QtCore.Qt.UserRole)
+        if self._is_tree_item(data):                       # Editor-eigener Baum
+            self._reptree_show(data.side, self._tree_family(data))
             return
         if data is None or not getattr(data, "moves_uci", None):
             return
         side = self._side_of_line(data)
         if side not in ("white", "black"):
-            return                    # ohne Seiten-Zuordnung kein Baum-Drill (erst zuordnen)
-        from opening_trainer.tree_session import tree_for_moves
-        color = chess.WHITE if side == "white" else chess.BLACK
-        tree = tree_for_moves(self.tree_store.by_side(side), data.moves_uci, color)
-        if tree is not None:
-            self._start_tree_drill(tree)
+            self._open_repertoire_tree()                   # ohne Seite: Baum normal öffnen
+            return
+        from opening_trainer.opening_id import identify_opening
+        self._reptree_show(side, identify_opening(data.moves_uci) or None)
+
+    def _reptree_show(self, side_name, family=None) -> None:
+        """Öffnet die Repertoire-Baum-Seite, vorselektiert auf Seite (und Familie)."""
+        idx = 1 if side_name == "black" else 0
+        self.reptree_side_combo.blockSignals(True)
+        self.reptree_side_combo.setCurrentIndex(idx)
+        self.reptree_side_combo.blockSignals(False)
+        self._reptree_refresh_families()
+        if family is not None:
+            i = next((k for k in range(self.reptree_family_combo.count())
+                      if self.reptree_family_combo.itemData(k) == family), 0)
+            self.reptree_family_combo.blockSignals(True)
+            self.reptree_family_combo.setCurrentIndex(i)
+            self.reptree_family_combo.blockSignals(False)
+        self._refresh_repertoire_tree()
+        self.stack.setCurrentIndex(13)
 
     def _selected_library_line(self):
         """Die ausgewählte LINIE (für Seiten-Zuordnung). Editor-Baum-Zeilen
@@ -5031,7 +5030,7 @@ class MainWindow(QtWidgets.QMainWindow):
         is_line = data is not None and not is_tree
         for btn in (self.assign_white_btn, self.assign_black_btn, self.assign_none_btn, self.note_btn):
             btn.setEnabled(is_line)                 # Zuordnung + Notiz nur für Linien
-        self.train_one_btn.setEnabled(is_line or is_tree)   # üben für beides
+        self.reptree_open_btn.setEnabled(is_line or is_tree)   # in den Baum: für beides
 
     def _edit_note_selected(self) -> None:
         """Persönliche Notiz zur ausgewählten Eröffnung anlegen/ändern (📝 in der Liste)."""
@@ -5048,11 +5047,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.line_notes.set_note(line.source_name, line.name, text.strip())
         self.line_notes.save(self.notes_path)
         self._refresh_library()
-
-    def _train_selected_library(self) -> None:
-        items = self.library_list.selectedItems()
-        if items:
-            self._train_from_library(items[0])
 
     def _assign_selected(self, side: str) -> None:
         line = self._selected_library_line()
@@ -5125,8 +5119,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._ask_and_assign_side(Path(path).name)
         self._open_library()                 # Ergebnis sichtbar machen (Feedback am richtigen Ort)
         self.lib_sub.setText(t(
-            f"{added} Eröffnungen hinzugefügt — {len(self._catalog())} insgesamt. Klick eine an, um sie zu üben.",
-            f"Added {added} openings — {len(self._catalog())} in total. Click one to train it."))
+            f"{added} Eröffnungen hinzugefügt — {len(self._catalog())} insgesamt. Klick eine an, um sie im Repertoire-Baum zu öffnen.",
+            f"Added {added} openings — {len(self._catalog())} in total. Click one to open it in the repertoire tree."))
         self._show_tree_report(source=path)  # Bericht + »Jetzt diese Datei üben«
 
     def _tree_report_lines(self) -> list:
