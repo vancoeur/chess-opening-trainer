@@ -39,6 +39,30 @@ def test_with_repertoire_shows_train_button(tmp_path, monkeypatch):
     assert "heute" in low or "today" in low
 
 
+def _win_with_due(tmp_path, monkeypatch):
+    from opening_trainer.repertoire_tree import RepertoireTree
+    win = _win(tmp_path, monkeypatch)
+    tr = RepertoireTree.new("X", "black")
+    nid = tr.add_child(tr.root_id, "e2e4").id
+    tr.add_child(nid, "c7c6")                     # neue Schwarz-Stellung -> heute übbar
+    win.tree_store.add(tr)
+    win._open_home()
+    return win
+
+
+def test_home_train_today_starts_session_directly(tmp_path, monkeypatch):
+    win = _win_with_due(tmp_path, monkeypatch)
+    assert win.home_due_btn.isEnabled()
+    win.home_due_btn.click()
+    assert win.stack.currentIndex() == 10        # DIREKT in die Sitzung, kein Umweg über 11
+
+
+def test_home_breakdown_link_opens_overview(tmp_path, monkeypatch):
+    win = _win_with_due(tmp_path, monkeypatch)
+    win.home_breakdown_btn.click()
+    assert win.stack.currentIndex() == 11        # Aufschlüsselung pro Eröffnung (entmachtet)
+
+
 def _black_caro(win):
     """Repertoire mit einer eigenen Schwarz-Stellung (nach 1.e4: …c6)."""
     from opening_trainer.repertoire_tree import RepertoireTree

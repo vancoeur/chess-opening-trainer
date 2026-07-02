@@ -99,6 +99,8 @@ QPushButton#more {{ background: {t['card']}; border: 1px solid {t['border']}; bo
 QPushButton#more:hover {{ background: {t['hover']}; border-color: {t['accent']}; }}
 QPushButton#more:pressed {{ background: {t['press']}; }}
 QPushButton#more:disabled {{ background: {t['card']}; color: {t['muted']}; border-color: {t['border']}; }}
+QPushButton#link {{ background: transparent; border: none; padding: 2px 0; color: {t['accent']}; font-size: 12px; text-align: left; }}
+QPushButton#link:hover {{ color: {t['accent_h']}; text-decoration: underline; }}
 QPushButton#seg {{ background: {t['card']}; border: 1px solid {t['border']}; border-radius: 9px; padding: 7px 14px; color: {t['text']}; }}
 QPushButton#seg:hover {{ background: {t['hover']}; }}
 QPushButton#seg:checked {{ background: {t['accent']}; border: 1px solid {t['accent']}; color: white; font-weight: 700; }}
@@ -1703,10 +1705,21 @@ class MainWindow(QtWidgets.QMainWindow):
         self.home_forecast.setObjectName("cardL")
         self.home_forecast.setWordWrap(True)
         col.addWidget(self.home_forecast)
+        # Dezenter Zweitweg zur Aufschlüsselung pro Eröffnung (entmachtete Übersicht).
+        self.home_breakdown_btn = QtWidgets.QPushButton(
+            t("Aufschlüsselung pro Eröffnung ansehen", "See the per-opening breakdown"))
+        self.home_breakdown_btn.setObjectName("link")
+        self.home_breakdown_btn.setCursor(QtCore.Qt.PointingHandCursor)
+        self.home_breakdown_btn.clicked.connect(self._open_due_overview)
+        col.addWidget(self.home_breakdown_btn, 0, QtCore.Qt.AlignLeft)
         hero.addLayout(col, 1)
-        self.home_due_btn = QtWidgets.QPushButton(t("▶  Jetzt üben", "▶  Train now"))
+        # Haupt-Aktion: startet die Lernplan-Sitzung DIREKT (kein Umweg über die
+        # Übersichtsseite mehr).
+        self.home_due_btn = QtWidgets.QPushButton(t("▶  Heute üben", "▶  Train today"))
         self.home_due_btn.setObjectName("primary")
-        self.home_due_btn.clicked.connect(self._open_due_overview)
+        # Lambda: das clicked(bool)-Argument NICHT an _start_due_session durchreichen
+        # (dessen optionales only_tree würde sonst das Bool schlucken).
+        self.home_due_btn.clicked.connect(lambda: self._start_due_session())
         hero.addWidget(self.home_due_btn, 0, QtCore.Qt.AlignVCenter)
         outer.addWidget(self.home_hero)
 
@@ -1832,7 +1845,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.home_forecast.setText(t(
             f"heute {fc['today']} fällig   ·   diese Woche {week_cum}   ·   noch nie geübt {fc['new']}" + round_de,
             f"today {fc['today']} due   ·   this week {week_cum}   ·   never trained {fc['new']}" + round_en))
-        self.home_due_btn.setText(t(f"▶  Jetzt üben  ({total})", f"▶  Train now  ({total})"))
+        self.home_due_btn.setText(t(f"▶  Heute üben  ({total})", f"▶  Train today  ({total})"))
         self.home_due_btn.setEnabled(total > 0)
         # Kennzahl-Karten füllen. »Repertoires« = benannte Eröffnungen JE SEITE
         # (Familie via _tree_family), NICHT Kapitel/Bäume; Lehrmaterial zählt nicht.
@@ -2390,7 +2403,7 @@ class MainWindow(QtWidgets.QMainWindow):
             ("Ctrl+6", self._open_tuv),
             ("Ctrl+R", self._open_repertoire_tree),
             ("Ctrl+E", self._open_editor),
-            ("Ctrl+D", self._open_due_overview),
+            ("Ctrl+D", self._start_due_session),
             ("Ctrl+T", self._open_tree_drill),
         ]:
             QtGui.QShortcut(QtGui.QKeySequence(keys), self).activated.connect(slot)
