@@ -60,18 +60,20 @@ Die App bringt **drei Beispiel-Eröffnungen** mit (Italienische Partie, Caro-Kan
 
 ## Was die App kann
 
-- **Tägliche Wiederholung (Spaced Repetition):** die App zeigt, was **heute
-  fällig** ist — Stellung für Stellung, sodass transponierende Linien sich eine
-  Karte teilen und nichts doppelt abgefragt wird. Eine **„Heute fällig"-Übersicht**
-  schlüsselt es pro Eröffnung auf (*X fällig · Y neu*), zeigt einen Ausblick
-  heute / morgen / diese Woche und lässt dich gezielt eine einzelne Eröffnung
-  üben; nach jeder Antwort siehst du, wann die Stellung wieder fällig wird.
+- **Tägliche Wiederholung (Spaced Repetition):** die Startseite hat **einen**
+  großen Knopf **„Heute üben"**, der die fällige Tagessitzung **sofort** startet —
+  Stellung für Stellung, sodass transponierende Linien sich eine Karte teilen und
+  nichts doppelt abgefragt wird. Ein kleiner Link öffnet bei Bedarf die
+  **Aufschlüsselung pro Eröffnung** (*heute fällig · diese Woche · noch nie geübt*);
+  nach jeder Antwort siehst du, wann die Stellung wieder fällig wird.
 - **Repertoire-Baum, nach Eröffnungsnamen gruppiert:** dein ganzes Repertoire als
   **aufklappbarer Baum**, gruppiert nach den **benannten Varianten** — erkannt über
   eine eingebaute **ECO-Eröffnungsdatenbank** (z. B. *Caro-Kann Defense: Advance
-  Variation*, *Sicilian Defense: Alapin Variation*). Variante aufklappen,
-  **Doppelklick auf einen Namen übt genau diese Variante**, und **Lücken** (⚠ Linien,
-  in denen du am Zug bist, aber keine Antwort hinterlegt ist) fallen sofort auf.
+  Variation*, *Sicilian Defense: Alapin Variation*). Markierst du eine **Variante**,
+  eine **Stellung** oder das **ganze Repertoire**, **übt ein einziger Knopf genau
+  das** — kein Rätselraten. **Lücken** (⚠ Linien, in denen du am Zug bist, aber keine
+  Antwort hinterlegt ist) fallen sofort auf, und ein Klick bringt dich an genau die
+  Stelle im Editor.
 - **Blitz-Auffrischung** — ein **60-Sekunden-Sprint** über dein ganzes Repertoire:
   Stellungen kommen schnell, jeder richtige Zug ein Punkt. Eine lockere
   Tempo-Übung, die Lernplan und Fehler-Statistik bewusst NICHT anrührt.
@@ -89,7 +91,8 @@ Die App bringt **drei Beispiel-Eröffnungen** mit (Italienische Partie, Caro-Kan
   erkannt; jederzeit zuordnen/ändern und eine ganze Seite oder dein gesamtes
   Repertoire trainieren.
 - **Bibliothek** aller Eröffnungen mit **Suchfeld** und automatischen Gruppen
-  (z. B. „Schwarz ▸ gegen 1.e4 ▸ Sizilianisch").
+  (z. B. „Schwarz ▸ gegen 1.e4 ▸ Sizilianisch"); ein Klick öffnet die gewählte
+  Eröffnung im **Repertoire-Baum** — dem einen Ort fürs gezielte Üben.
 - **Auswertung** mit Fehlerprotokoll und gezieltem Fehler-Drill.
 - **Fortschritt** — auf einen Blick sehen, welche Eröffnungen sitzen, wackeln
   oder noch nie geübt wurden, mit Filter nach Kategorie.

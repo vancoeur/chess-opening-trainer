@@ -59,17 +59,19 @@ The app ships with **three sample openings** (Italian Game, Caro-Kann, Queen’s
 
 ## What it does
 
-- **Daily review (spaced repetition):** the app shows what’s **due today** —
+- **Daily review (spaced repetition):** the home screen has **one** big
+  **“Train today”** button that starts the day’s due session **immediately** —
   position by position, so transposing lines share one card and nothing is
-  reviewed twice. A **“Due today” overview** breaks it down per opening
-  (*X due · Y new*), forecasts today / tomorrow / this week, and lets you drill a
-  single opening; after each answer it shows when the position is next due.
+  reviewed twice. A small link opens the **per-opening breakdown** when you want it
+  (*due today · this week · never trained*); after each answer it shows when the
+  position is next due.
 - **Repertoire tree, grouped by opening name:** your whole repertoire as a
   **collapsible tree**, grouped under the **named variations** it belongs to —
   identified from a built-in **ECO opening database** (e.g. *Caro-Kann Defense:
-  Advance Variation*, *Sicilian Defense: Alapin Variation*). Expand a variation,
-  **double-click a name to train just that variation**, and spot **gaps** (⚠ lines
-  where it’s your move but no reply is stored yet).
+  Advance Variation*, *Sicilian Defense: Alapin Variation*). Select a **variation**,
+  a **position** or the **whole repertoire** and **one button trains exactly that** —
+  no guesswork. **Gaps** (⚠ lines where it’s your move but no reply is stored yet)
+  stand out at once, and one click takes you to that exact spot in the editor.
 - **Blitz refresh** — a **60-second sprint** across your whole repertoire: positions
   come fast, one point per correct move. A pressure-free speed drill that
   deliberately leaves your review schedule and mistake stats untouched.
@@ -87,7 +89,8 @@ The app ships with **three sample openings** (Italian Game, Caro-Kann, Queen’s
   load; assign or change it any time, and train a whole side or your whole
   repertoire.
 - **Library** of all openings with a **search field** and automatic groups
-  (e.g. “Black ▸ vs 1.e4 ▸ Sicilian”).
+  (e.g. “Black ▸ vs 1.e4 ▸ Sicilian”); one click opens the selected opening in the
+  **repertoire tree** — the one place for targeted training.
 - **Analysis** with a mistake log and targeted mistake drills.
 - **Progress** view — see at a glance which openings are solid, shaky or
   untrained, and filter by category.

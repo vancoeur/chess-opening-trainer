@@ -80,9 +80,9 @@ und bringt dich überallhin, gruppiert in vier Bereiche:
 
 Die Seite, auf der du gerade bist, ist in der Leiste **farbig markiert**. Ganz oben
 führt **Start** (⌘1) auf die hier gezeigte **Übersicht**: eine große
-**„Heute fällig"-Karte** mit dem Knopf **„Jetzt üben"**, darunter drei Kennzahlen —
-wie viele **Repertoires**, wie viele **Stellungen** und wie viel **diese Woche
-fällig** ist. Darunter erscheinen — sobald sie etwas zu zeigen haben — zwei weitere
+**„Heute fällig"-Karte** mit dem Knopf **„Heute üben"** (startet die Tagessitzung
+sofort), darunter drei Kennzahlen — wie viele **Repertoires**, wie viele
+**Stellungen** und wie viel **diese Woche fällig** ist. Darunter erscheinen — sobald sie etwas zu zeigen haben — zwei weitere
 Karten: **„Das sitzt noch nicht"** (deine wackligen Stellungen, siehe 4.4) und
 **„Blitz-Auffrischung"** (kurzer Tempo-Modus, siehe 4.5). (Hast du noch kein
 Repertoire, steht hier stattdessen **„Beispiel-Eröffnungen ausprobieren".)**
@@ -97,11 +97,14 @@ Repertoire, steht hier stattdessen **„Beispiel-Eröffnungen ausprobieren".)**
 
 ![Heute fällig](handbuch/02_heute_faellig.png)
 
-Einstieg: der Knopf **„Jetzt üben"** auf der Startseite oder in der Seitenleiste
-**Üben → Heute fällig** (⌘D). Du siehst eine Vorschau (heute / morgen / diese Woche
-/ neu) und **pro Eröffnung**,
-wie viel fällig bzw. neu ist — jeweils mit eigenem „üben"-Knopf. **„Alles üben"**
-startet die ganze Tagessitzung.
+Der schnellste Weg: der Knopf **„Heute üben"** auf der Startseite (oder **⌘D**) —
+er startet die Tagessitzung **direkt**, ohne Zwischenschritt.
+
+Willst du vorher sehen, **was** ansteht, öffnest du über den kleinen Link
+**„Aufschlüsselung ansehen"** (oder die Seitenleiste **Üben → Heute fällig**) diese
+Übersicht: eine Vorschau (heute fällig / diese Woche / noch nie geübt) und **pro
+Eröffnung**, wie viel fällig bzw. neu ist — jeweils mit eigenem „üben"-Knopf.
+**„Alles üben"** startet die ganze Tagessitzung.
 
 ### 4.2 Die Übe-Ansicht (Abfrage)
 
@@ -139,7 +142,7 @@ durchrutschen — genau die holt dich hier ab. Eine Runde ist auf die hartnäcki
 gedeckelt, damit sie kurz bleibt; der Rest kommt in der nächsten Runde.
 
 Dieselbe Liste findest du auch unter **Auswerten → Trefferquote & Fehler** (⌘3): dort
-kannst du eine einzelne Stellung anklicken **oder** mit **„Alle üben"** die ganze
+kannst du eine einzelne Stellung anklicken **oder** mit **„Schwächen üben"** die ganze
 Liste am Stück nehmen.
 
 ### 4.5 Blitz-Auffrischung — gegen die Uhr
@@ -183,7 +186,7 @@ Scrollen mehr.
 - **Wenn ECO keinen eindeutigen Namen findet** (typisch bei Aufbausystemen wie dem **London-System**, die in fremde Schubladen transponieren), nimmt die App stattdessen deinen **eigenen Kapitelnamen** aus der PGN (gesäubert) — nie ein falsches Etikett.
 - **Lehrmaterial** (Einführungen, Musterpartien, Mittelspiel-Pläne) wird in **einer** Sammelgruppe **„Lehrmaterial"** ganz unten gebündelt, nicht unter die Varianten gemischt.
 - **Lücken (⚠):** eine ⚠-Zeile bedeutet — die Linie endet, **du bist am Zug, aber es ist keine Antwort hinterlegt**. Klick die Zeile, dann **„⚠ Im Editor ergänzen"** springt genau dorthin.
-- **Üben:** **Doppelklick auf einen Varianten-Namen** übt genau diese Variante. **„▶ Dieses Repertoire üben"** nimmt die ganze Auswahl; **„Diese Stellung üben"** drillt die angeklickte Stellung.
+- **Üben — ein Knopf, der sich anpasst:** Der große Knopf unten übt immer **genau das, was du markiert hast**. Markierst du einen **Varianten-Namen**, heißt er **„▶ Diese Variante üben"**; markierst du eine **Zug-Zeile**, wird daraus **„▶ Diese Stellung üben"**; ohne Auswahl (oder bei „Alles") **„▶ Ganzes Repertoire üben"**. Bei einer **⚠-Lücke** wird er zu **„⚠ Im Editor ergänzen"**. (Doppelklick auf einen Namen übt die Variante direkt.)
 
 > Der Repertoire-Baum ist zugleich deine **To-do-Liste**: Wo ein ⚠ steht, fehlt dir noch eine Antwort.
 
@@ -249,8 +252,10 @@ genau diese Stellung, bis sie sitzt.
 
 Hier durchsuchst du dein Repertoire, gruppiert nach Seite und erstem Zug. Du kannst
 einzelne Eröffnungen einer **Seite zuordnen** (Weiß/Schwarz), nach Namen **suchen**
-und eine Eröffnung zum Üben anklicken. Selbst im Editor gebaute Bäume erscheinen als
-eigene Sektion.
+und Notizen hinterlegen. Zum **Üben** wählst du eine Eröffnung und drückst
+**„▶ Im Repertoire-Baum öffnen"** (oder Doppelklick) — das bringt dich mit dieser
+Eröffnung in den **Repertoire-Baum**, den einen Ort fürs gezielte Üben. Selbst im
+Editor gebaute Bäume erscheinen als eigene Sektion.
 
 ---
 

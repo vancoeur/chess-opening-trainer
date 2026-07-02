@@ -7,6 +7,35 @@ version are on the [Releases page](https://github.com/vancoeur/chess-opening-tra
 The interface is bilingual (English/German); version numbers follow
 `MAJOR.MINOR.PATCH`.
 
+## [1.5.0] — 2026-07-02
+
+**One clear way to practise — a calmer, more intuitive flow.** No new learning
+machinery; the same spaced-repetition engine, reached through far fewer, clearer
+buttons.
+
+- **Home screen is one command centre.** The big **“Train today”** button now
+  starts the day’s due session **immediately** — no more landing on an
+  in-between page and pressing “Train all” again. The per-opening breakdown is
+  still there, one small link away (“View breakdown”).
+- **Clearer dashboard numbers.** The first card counts **real repertoires**
+  (named openings), not chapters; “this week” is now **cumulative** (today +
+  the rest of the week), and a one-line note explains the day’s round
+  (reviews + new positions).
+- **Repertoire tree: one button that adapts to your selection.** Select a
+  **variation**, a **position**, or the **whole repertoire** and a single
+  button trains exactly that — no greyed-out “broken-looking” buttons and no
+  hidden double-click knowledge. A **gap (⚠)** turns it into
+  “Fix in editor”, jumping straight to the missing move.
+- **Library routes into the tree.** The library’s own train buttons are gone;
+  clicking an opening (or **“Open in repertoire tree”**) takes it into the
+  repertoire tree — the one place for targeted training. The library is now for
+  finding, assigning sides and notes.
+- **Consistent wording.** The mistake list’s button is now **“Drill weak
+  spots”**, matching the home-screen card; the buried “Train selected”
+  duplicate in the manage-sources dialog is gone.
+- **Docs & help refreshed** to match the new flow (README, manual, in-app
+  “How to get started”).
+
 ## [1.4.1] — 2026-06-29
 
 **A clearer repertoire view — openings named by their ECO names.**
