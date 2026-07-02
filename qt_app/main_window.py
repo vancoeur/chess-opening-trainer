@@ -2386,7 +2386,8 @@ class MainWindow(QtWidgets.QMainWindow):
             "hat, baust du im <b>Repertoire-Editor</b> (»Gehe zu → Repertoire-Editor«, ⌘E) "
             "eigene Varianten — oder lädst eine varianten-reiche PGN (z. B. Lichess-Studie); "
             "der Import übernimmt die Verzweigungen. Üben: »Heute üben« (Tagessitzung, ⌘D) "
-            "oder »Repertoire-Baum« (⌘R) → »Dieses Repertoire üben«.</li>"
+            "oder im »Repertoire-Baum« (⌘R) eine Variante/Stellung markieren — der Knopf "
+            "unten übt genau das.</li>"
             "<li><b>Sprache:</b> Menü »Ansicht → Sprache« (gilt sofort).</li>"
             "</ul>",
             "<b>How to get started:</b>"
@@ -2406,7 +2407,8 @@ class MainWindow(QtWidgets.QMainWindow):
             "replies, build your own variations in the <b>Repertoire editor</b> "
             "(“Go → Repertoire editor”, ⌘E) — or load a variation-rich PGN (e.g. a Lichess "
             "study); the import keeps the branches. Practise via “Train today” (daily "
-            "session, ⌘D) or “Repertoire tree” (⌘R) → “Train this repertoire”.</li>"
+            "session, ⌘D) or select a variation/position in the “Repertoire tree” (⌘R) "
+            "— the button below trains exactly that.</li>"
             "<li><b>Language:</b> “View → Language” menu (takes effect immediately).</li>"
             "</ul>",
         ))
