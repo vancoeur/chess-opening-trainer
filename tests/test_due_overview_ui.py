@@ -42,7 +42,8 @@ def test_overview_lists_openings_and_forecast(tmp_path, monkeypatch):
     _load_black(win, tmp_path)
     win._open_due_overview()
     assert win.stack.currentIndex() == 11
-    assert "Today:" in win.due_overview_forecast.text()
+    ftext = win.due_overview_forecast.text()
+    assert "Due today:" in ftext and "this week:" in ftext
     # zwei Eröffnungen als Zeilen (mit Knopf-Widgets)
     rows = [win.due_overview_list.item(i) for i in range(win.due_overview_list.count())]
     widgets = [win.due_overview_list.itemWidget(it) for it in rows]
