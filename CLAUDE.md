@@ -100,6 +100,9 @@ kein Programmierer — er denkt in Schach- und Bedien-Begriffen, nicht in Code.
 - Längere Texte/Beiträge als **Datei** liefern (Kopieren aus dem Chat ist für ihn hakelig).
 
 ## Fortlaufender Stand
-Zuletzt veröffentlicht: **v1.4.1** (2026-06-29). Der detaillierte Projektstand +
-nächste Schritte stehen im Auto-Memory (`opening-trainer-repertoire-training.md`)
-— vor Arbeitsbeginn lesen.
+Zuletzt veröffentlicht: **v1.5.0** (2026-07-02) — UX-Konsolidierung (Phasen 1–4 des
+Umbau-Plans: Dashboard-Direktstart „Heute üben", ein anpassbarer Repertoire-Baum-Knopf,
+Bibliothek routet in den Baum, einheitliche „Schwächen üben"-Benennung). **Phase 5
+geplant** (Sitzungs-Abschluss-Kärtchen zuerst, dann Erst-Einstieg + Seitenleisten-
+Feinschliff). Der detaillierte Projektstand + nächste Schritte stehen im Auto-Memory
+(`opening-trainer-repertoire-training.md`) — vor Arbeitsbeginn lesen.
