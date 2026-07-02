@@ -1395,19 +1395,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self.reptree_tree.itemExpanded.connect(self._reptree_on_expanded)
         col.addWidget(self.reptree_tree, 1)
         btn_row = QtWidgets.QHBoxLayout()
-        self.reptree_train_btn = QtWidgets.QPushButton(t("▶  Dieses Repertoire üben", "▶  Train this repertoire"))
+        # EIN anpassbarer Haupt-Button: übt genau das, was markiert ist (ganzes
+        # Repertoire / eine Variante / eine Stellung). Immer sinnvoll & aktiv.
+        self._reptree_target = ("repertoire", None)
+        self.reptree_train_btn = QtWidgets.QPushButton(t("▶  Ganzes Repertoire üben", "▶  Train whole repertoire"))
         self.reptree_train_btn.setObjectName("primary")
-        self.reptree_train_btn.clicked.connect(self._reptree_train)
-        self.reptree_drill_btn = QtWidgets.QPushButton(t("Diese Stellung üben", "Drill this position"))
-        self.reptree_drill_btn.setObjectName("more")
-        self.reptree_drill_btn.setEnabled(False)
-        self.reptree_drill_btn.clicked.connect(self._reptree_drill)
+        self.reptree_train_btn.clicked.connect(lambda: self._reptree_primary_action())
         self.reptree_gap_btn = QtWidgets.QPushButton(t("⚠  Im Editor ergänzen", "⚠  Add in editor"))
         self.reptree_gap_btn.setObjectName("more")
         self.reptree_gap_btn.setEnabled(False)
         self.reptree_gap_btn.clicked.connect(self._reptree_fill_gap)
         btn_row.addWidget(self.reptree_train_btn)
-        btn_row.addWidget(self.reptree_drill_btn)
         btn_row.addWidget(self.reptree_gap_btn)
         btn_row.addStretch(1)
         col.addLayout(btn_row)
@@ -1508,10 +1506,10 @@ class MainWindow(QtWidgets.QMainWindow):
     def _refresh_repertoire_tree(self) -> None:
         from opening_trainer.tree_session import repertoire_gaps, variation_outline
         self.reptree_tree.clear()
-        self.reptree_drill_btn.setEnabled(False)
         self.reptree_gap_btn.setEnabled(False)
         self._reptree_fen = None
         self._reptree_gap = None
+        self._reptree_set_target("repertoire")     # Standard: ganzes Repertoire
         trees, color = self._reptree_selected_trees()
         self._reptree_gap_map = {g["epd"]: g for g in repertoire_gaps(trees, color)}
         # Ist eine einzelne Familie gewählt (nicht »Alles«)? Dann das Familien-
@@ -1543,11 +1541,11 @@ class MainWindow(QtWidgets.QMainWindow):
         gaps_en = f" · ⚠ {gaps_n} {gap_en}" if gaps_n else ""
         self.reptree_hint.setText(t(
             f"{scope}: {nvar} {nv_de} · {variations} {var_de}{gaps_de}. "
-            "Variante aufklappen, Zeile anklicken für die Stellung — Doppelklick auf "
-            "einen Namen übt diese Variante. ⚠ = Lücke.",
+            "Markier eine Variante oder eine Zug-Zeile — der Knopf unten übt genau das. "
+            "⚠ = Lücke (»Im Editor ergänzen«).",
             f"{scope}: {nvar} {nv_en} · {variations} {var_en}{gaps_en}. "
-            "Expand a variation, click a row for the position — double-click a name to "
-            "train that variation. ⚠ = gap."))
+            "Select a variation or a move row — the button below trains exactly that. "
+            "⚠ = gap (»Add in editor«)."))
         # Nicht stillschweigend verschwinden lassen: Bäume ohne zugeordnete Seite
         # tauchen in keiner Seitenauswahl auf -> sichtbar machen.
         unassigned = sum(1 for tr in self.tree_store.all()
@@ -1619,11 +1617,53 @@ class MainWindow(QtWidgets.QMainWindow):
         if fens:
             self._drill_positions_for_fens(fens, t("VARIANTE ÜBEN", "TRAIN VARIATION"))
 
+    def _reptree_group_of(self, item):
+        """Die Varianten-Gruppe, zu der eine (Zug-)Zeile gehört — Aufstieg zum
+        obersten Eintrag im Baum."""
+        node = item
+        while node.parent() is not None:
+            node = node.parent()
+        return (node.data(0, QtCore.Qt.UserRole) or {}).get("_group")
+
+    def _reptree_set_target(self, kind, group=None, fen=None) -> None:
+        """Legt fest, WAS der Haupt-Button übt, und passt seine Beschriftung an —
+        so ist er nie ein grauer »kaputt aussehender« Knopf, sondern immer klar."""
+        if kind == "variation":
+            self._reptree_target = ("variation", group)
+            label = t("▶  Diese Variante üben", "▶  Train this variation")
+        elif kind == "position":
+            self._reptree_target = ("position", fen)
+            label = t("▶  Diese Stellung üben", "▶  Drill this position")
+        else:
+            self._reptree_target = ("repertoire", None)
+            label = t("▶  Ganzes Repertoire üben", "▶  Train whole repertoire")
+        self.reptree_train_btn.setText(label)
+
+    def _reptree_primary_action(self) -> None:
+        kind, payload = self._reptree_target
+        if kind == "position" and payload:
+            self._drill_positions_for_fens([payload], t("STELLUNG ÜBEN", "DRILL POSITION"))
+        elif kind == "variation" and payload:
+            fens = self._reptree_group_user_fens(payload)
+            if fens:
+                self._drill_positions_for_fens(fens, t("VARIANTE ÜBEN", "TRAIN VARIATION"))
+        else:
+            self._reptree_train()
+
     def _reptree_clicked(self, item: QtWidgets.QTreeWidgetItem, _col: int = 0) -> None:
         r = item.data(0, QtCore.Qt.UserRole)
-        if not r or "_group" in r:                # Gruppen-Kopf: nur auf-/zuklappen
+        if not r or "_group" in r:                # Variante (Gruppen-Kopf)
             item.setExpanded(not item.isExpanded())
-            self.reptree_drill_btn.setEnabled(False)
+            group = (r or {}).get("_group")
+            if group is not None:
+                self._reptree_set_target("variation", group=group)
+                fens = self._reptree_group_user_fens(group)   # Brett: erste Stellung der Variante
+                if fens:
+                    try:
+                        self.reptree_board.set_board(chess.Board(fens[0]))
+                    except ValueError:
+                        pass
+            self._reptree_gap = None
             self.reptree_gap_btn.setEnabled(False)
             return
         try:
@@ -1634,17 +1674,19 @@ class MainWindow(QtWidgets.QMainWindow):
         last = (move.from_square, move.to_square)
         board.push(move)                       # Brett zeigt den Zug gespielt …
         self.reptree_board.set_board(board, last_move=last)
-        # … geübt wird die Entscheidung davor (nur bei eigenen Zügen).
-        self._reptree_fen = r["fen_before"] if r["is_user_move"] else None
-        self.reptree_drill_btn.setEnabled(bool(self._reptree_fen))
-        # Lücke? -> aus der Lücken-Karte holen (Folgestellung) und »Im Editor
-        # ergänzen« freischalten.
+        # Haupt-Button an die Auswahl anpassen: eigener Zug -> »Diese Stellung«,
+        # Gegnerzug -> die enthaltende Variante.
+        if r["is_user_move"]:
+            self._reptree_set_target("position", fen=r["fen_before"])
+        else:
+            group = self._reptree_group_of(item)
+            if group:
+                self._reptree_set_target("variation", group=group)
+            else:
+                self._reptree_set_target("repertoire")
+        # Lücke? -> aus der Lücken-Karte holen und »Im Editor ergänzen« freischalten.
         self._reptree_gap = self._reptree_gap_map.get(board.epd()) if r.get("is_gap") else None
         self.reptree_gap_btn.setEnabled(self._reptree_gap is not None)
-
-    def _reptree_drill(self) -> None:
-        if self._reptree_fen:
-            self._drill_positions_for_fens([self._reptree_fen], t("STELLUNG ÜBEN", "DRILL POSITION"))
 
     def _reptree_fill_gap(self) -> None:
         """Springt zur Lücke im Editor, damit man die fehlende Antwort eintragen kann."""

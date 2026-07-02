@@ -83,26 +83,41 @@ def test_branch_marker_within_a_named_variation(tmp_path, monkeypatch):
     assert any("⎇" in tx for tx in texts)                      # interne Verzweigung markiert
 
 
-def test_click_user_move_enables_drill_and_drills(tmp_path, monkeypatch):
+def test_click_user_move_makes_button_drill_position(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     _load_two_caro(win)
     win._open_repertoire_tree()
     item = next(it for it in _move_items(win.reptree_tree)
                 if it.data(0, QtCore.Qt.UserRole)["is_user_move"])
     win._reptree_clicked(item)
-    assert win.reptree_drill_btn.isEnabled() is True
-    win._reptree_drill()
-    assert win.stack.currentIndex() == 10                       # Stellungs-Drill
+    assert win._reptree_target[0] == "position"                 # Haupt-Button = »Diese Stellung«
+    assert "Stellung" in win.reptree_train_btn.text() or "position" in win.reptree_train_btn.text()
+    win._reptree_primary_action()
+    assert win.stack.currentIndex() == 10                       # startet die Stellungs-Sitzung
 
 
-def test_opponent_move_not_drillable(tmp_path, monkeypatch):
+def test_click_opponent_move_targets_the_variation(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     _load_two_caro(win)
     win._open_repertoire_tree()
     item = next(it for it in _move_items(win.reptree_tree)
                 if not it.data(0, QtCore.Qt.UserRole)["is_user_move"])
     win._reptree_clicked(item)
-    assert win.reptree_drill_btn.isEnabled() is False           # Weiß-Zug: nichts zu üben
+    # kein »kaputter« grauer Knopf mehr: der Gegnerzug zielt auf seine Variante
+    assert win._reptree_target[0] in ("variation", "repertoire")
+    assert "üben" in win.reptree_train_btn.text() or "Train" in win.reptree_train_btn.text()
+
+
+def test_click_variation_name_trains_that_variation(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    _load_two_caro(win)
+    win._open_repertoire_tree()
+    top = win.reptree_tree.topLevelItem(0)
+    win._reptree_clicked(top)
+    assert win._reptree_target[0] == "variation"
+    assert "Variante" in win.reptree_train_btn.text() or "variation" in win.reptree_train_btn.text()
+    win._reptree_primary_action()
+    assert win.stack.currentIndex() == 10                       # Variante wird geübt
 
 
 def test_double_click_name_trains_variation(tmp_path, monkeypatch):
