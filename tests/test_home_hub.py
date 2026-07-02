@@ -49,6 +49,28 @@ def _black_caro(win):
     return tr
 
 
+def test_repertoires_card_counts_named_openings_not_chapters(tmp_path, monkeypatch):
+    from opening_trainer.repertoire_tree import RepertoireTree
+    win = _win(tmp_path, monkeypatch)
+
+    def add(name, ucis):
+        tr = RepertoireTree.new(name, "black")
+        p = tr.root_id
+        for u in ucis:
+            p = tr.add_child(p, u).id
+        win.tree_store.add(tr)
+
+    # 3 Kapitel, aber nur 2 Eröffnungen (2× Caro-Kann + 1× Skandinavisch):
+    add("Caro Kapitel 1", ["e2e4", "c7c6", "d2d4", "d7d5"])
+    add("Caro Kapitel 2", ["e2e4", "c7c6", "d2d4", "d7d5", "b1c3"])
+    add("Skandi Kapitel", ["e2e4", "d7d5"])
+    # Lehrmaterial zählt NICHT als Repertoire:
+    add("Instructive Game #1 A - B", ["e2e4", "c7c6", "d2d4"])
+
+    win._open_home()
+    assert win._home_stat_labels[0].text() == "2"   # Repertoires = 2 Eröffnungen, nicht 4 Kapitel
+
+
 def test_weak_card_hidden_without_errors(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     _black_caro(win)                              # Repertoire, aber keine Fehler

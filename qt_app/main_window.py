@@ -1303,11 +1303,10 @@ class MainWindow(QtWidgets.QMainWindow):
                 fc[k] += f[k]
         rows.sort(key=lambda r: (-r["due"], -r["new"], r["name"]))
 
+        week_cum = fc["today"] + fc["tomorrow"] + fc["week"]   # kumulativ: fällig in 7 Tagen
         self.due_overview_forecast.setText(t(
-            f"Heute: {fc['today']}   ·   Morgen: {fc['tomorrow']}   ·   "
-            f"Diese Woche: {fc['week']}   ·   Neu: {fc['new']}",
-            f"Today: {fc['today']}   ·   Tomorrow: {fc['tomorrow']}   ·   "
-            f"This week: {fc['week']}   ·   New: {fc['new']}"))
+            f"Heute fällig: {fc['today']}   ·   diese Woche: {week_cum}   ·   noch nie geübt: {fc['new']}",
+            f"Due today: {fc['today']}   ·   this week: {week_cum}   ·   never trained: {fc['new']}"))
         total = len(self._due_items())          # echte (deduplizierte) Sitzungsgröße
         self.due_overview_all_btn.setText(t(f"▶  Alles üben  ({total})", f"▶  Train all  ({total})"))
         self.due_overview_all_btn.setEnabled(total > 0)
@@ -1821,19 +1820,32 @@ class MainWindow(QtWidgets.QMainWindow):
                 fc[k] += f[k]
         has_rep = bool(self.tree_store.all())
         total = len(self._due_items())
+        # »diese Woche« KUMULATIV (fällig in 7 Tagen, inkl. heute/morgen) — die
+        # disjunkten Eimer von due_forecast bleiben unangetastet, nur die Anzeige
+        # summiert, weil »diese Woche« intuitiv »innerhalb 7 Tagen« heißt.
+        week_cum = fc["today"] + fc["tomorrow"] + fc["week"]
+        # Knopf-Zahl selbsterklärend machen: fällige Wiederholungen + neue Stellungen.
+        due_part = min(fc["today"], total)
+        new_part = total - due_part
+        round_de = f"\nHeutige Runde: {due_part} Wiederholungen + {new_part} neue Stellungen." if total else ""
+        round_en = f"\nToday's round: {due_part} reviews + {new_part} new positions." if total else ""
         self.home_forecast.setText(t(
-            f"heute {fc['today']} fällig   ·   morgen {fc['tomorrow']}  ·  diese Woche {fc['week']}"
-            f"   ·   noch nie geübt {fc['new']}",
-            f"today {fc['today']} due   ·   tomorrow {fc['tomorrow']}  ·  this week {fc['week']}"
-            f"   ·   never trained {fc['new']}"))
-        # Tagesportion = fällige Wiederholungen + ein paar neue Stellungen.
+            f"heute {fc['today']} fällig   ·   diese Woche {week_cum}   ·   noch nie geübt {fc['new']}" + round_de,
+            f"today {fc['today']} due   ·   this week {week_cum}   ·   never trained {fc['new']}" + round_en))
         self.home_due_btn.setText(t(f"▶  Jetzt üben  ({total})", f"▶  Train now  ({total})"))
         self.home_due_btn.setEnabled(total > 0)
-        # Kennzahl-Karten füllen.
-        reps = len(self.tree_store.all())
+        # Kennzahl-Karten füllen. »Repertoires« = benannte Eröffnungen JE SEITE
+        # (Familie via _tree_family), NICHT Kapitel/Bäume; Lehrmaterial zählt nicht.
+        from opening_trainer.comments import is_instructional
+        fams = set()
+        for sn in ("white", "black"):
+            for tr in self.tree_store.by_side(sn):
+                if not is_instructional(tr.name):
+                    fams.add((sn, self._tree_family(tr)))
+        reps = len(fams)
         positions = (len(build_user_position_index(self.tree_store.all(), chess.WHITE))
                      + len(build_user_position_index(self.tree_store.all(), chess.BLACK)))
-        for label, value in zip(self._home_stat_labels, (reps, positions, fc["week"])):
+        for label, value in zip(self._home_stat_labels, (reps, positions, week_cum)):
             label.setText(str(value))
         # Schwächen-Karte: nur zeigen, wenn es offene Fehler gibt.
         weak = len(self._weak_fens())
