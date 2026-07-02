@@ -8,7 +8,7 @@ from opening_trainer.repertoire_tree import RepertoireTree, BLACK
 from opening_trainer.position_schedule_store import PositionScheduleStore
 from opening_trainer.scheduler import Card
 from opening_trainer.tree_session import (
-    due_breakdown, due_forecast, due_items_for_tree,
+    due_breakdown, due_forecast, due_items_for_tree, build_user_position_index,
 )
 
 TODAY = date(2026, 6, 20)
@@ -54,6 +54,32 @@ def test_forecast_buckets_today_tomorrow_week():
     f = due_forecast([t], chess.BLACK, sched, TODAY)
     assert f["today"] == 1 and f["tomorrow"] == 1 and f["week"] == 1
     assert f["new"] == 0
+
+
+def test_forecast_buckets_partition_all_positions_without_overlap():
+    """Absicherung der Dashboard-Zahlen: die Eimer today/tomorrow/week/new sind
+    DISJUNKT, »week« ist der Tag-3–7-Rest (NICHT kumulativ), und Stellungen, die
+    erst NACH einer Woche fällig sind, zählen in KEINEN Eimer. Summe der Eimer +
+    »später« == alle eigenen Stellungen."""
+    line = ["e2e4", "c7c6", "d2d4", "d7d5", "b1c3", "d5e4", "c3e4", "c8f5", "e4g3", "f5g6"]
+    t = _black_tree("Caro-Kann", line)          # 5 eigene Schwarz-Stellungen
+    total = len(build_user_position_index([t], chess.BLACK))
+    assert total == 5
+
+    sched = PositionScheduleStore()
+    sched.set_card(_epd(["e2e4"]), Card(due=TODAY.isoformat(), reps=1))                                 # heute
+    sched.set_card(_epd(["e2e4", "c7c6", "d2d4"]), Card(due=(TODAY + timedelta(days=1)).isoformat(), reps=1))  # morgen
+    sched.set_card(_epd(["e2e4", "c7c6", "d2d4", "d7d5", "b1c3"]),
+                   Card(due=(TODAY + timedelta(days=4)).isoformat(), reps=1))                            # diese Woche (Tag 4)
+    sched.set_card(_epd(["e2e4", "c7c6", "d2d4", "d7d5", "b1c3", "d5e4", "c3e4"]),
+                   Card(due=(TODAY + timedelta(days=30)).isoformat(), reps=1))                           # SPÄTER (kein Eimer)
+    # die 5. Stellung (nach 9.Ng3) bleibt untrainiert -> new
+
+    f = due_forecast([t], chess.BLACK, sched, TODAY)
+    assert (f["today"], f["tomorrow"], f["week"], f["new"]) == (1, 1, 1, 1)
+    bucketed = f["today"] + f["tomorrow"] + f["week"] + f["new"]
+    assert bucketed == 4                        # die »später«-Stellung ist in KEINEM Eimer
+    assert total - bucketed == 1                # genau diese eine fehlt -> Summe + später == alle
 
 
 def test_due_items_for_single_tree():
