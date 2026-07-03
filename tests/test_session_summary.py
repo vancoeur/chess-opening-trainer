@@ -114,6 +114,31 @@ def test_weak_session_card_is_context_specific(tmp_path, monkeypatch):
     assert win._summary_primary_kind in ("weak", None)
 
 
+def test_weak_session_tests_directly_no_learn_mode(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    _caro_black(win)
+    b = chess.Board()
+    b.push(chess.Move.from_uci("e2e4"))
+    win.stats_store.add_event(source_name="s", line_name="Caro", fen_before=b.fen(),
+                              expected_san="c6", played_san="e6", correct=False)
+    win._drill_learn_new = True                 # würde sonst erst zeigen
+    win._start_weak_session()
+    assert win._due_kind == "weak"
+    assert win._drill_learn_active is False      # Schwächen werden direkt abgefragt
+
+
+def test_back_button_hidden_while_card_shows(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    tr = _caro_black(win)
+    win._drill_learn_new = False
+    win._start_due_session()
+    win._tree_drill_on_move(chess.C7, chess.C6)
+    assert not win.drill_summary.isHidden()
+    assert win.drill_back_btn.isHidden()         # kein doppelter Zurück-Knopf
+    win._start_tree_drill(tr)                    # neuer Drill
+    assert not win.drill_back_btn.isHidden()     # normaler Zurück wieder da
+
+
 def test_counters_reset_between_sessions(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     _caro_black(win)

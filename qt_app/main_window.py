@@ -2180,7 +2180,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.drill_summary.setVisible(False)
         for w in (self.tree_drill_board, self.tree_drill_name,
                   self.tree_drill_status, self.tree_drill_feedback,
-                  self.drill_action_row):
+                  self.drill_action_row, self.drill_back_btn):
             w.setVisible(True)
 
     def _due_forecast_all(self) -> dict:
@@ -2199,7 +2199,8 @@ class MainWindow(QtWidgets.QMainWindow):
         for w in (self.tree_drill_board, self.tree_drill_combo, self.drill_manual_check,
                   self.drill_learn_check, self.tree_drill_name, self.tree_drill_line,
                   self.tree_drill_note, self.tree_drill_status, self.tree_drill_feedback,
-                  self.drill_learned_btn, self.drill_action_row, self.blitz_bar):
+                  self.drill_learned_btn, self.drill_action_row, self.blitz_bar,
+                  self.drill_back_btn):
             w.setVisible(False)
 
         def _primary_weak(n):    # Haupt-Knopf: »Schwächen üben (N)«
@@ -2308,7 +2309,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.tree_drill_board.set_board(self._tree_trainer.board, last_move=last)
         from opening_trainer.scheduler import is_new
         epd = self._tree_trainer.board.epd()
-        learn = bool(self._drill_learn_new and is_new(self.position_schedule.card_for(epd)))
+        # Schwächen-Runde: immer direkt abfragen (nicht erst zeigen) — man will
+        # genau die wackligen Stellungen geprüft bekommen, nicht vorgesagt.
+        learn = bool(self._drill_learn_new and self._due_kind != "weak"
+                     and is_new(self.position_schedule.card_for(epd)))
         self._drill_learn_active = learn
         self.drill_learned_btn.setVisible(learn)
         if learn:
