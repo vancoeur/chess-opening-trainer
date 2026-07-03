@@ -2011,7 +2011,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.drill_eyebrow.setText(eyebrow)
         self.tree_drill_combo.setVisible(False)
         self.drill_manual_check.setVisible(False)
-        self.drill_learn_check.setVisible(True)    # Learn-Modus hier wählbar
+        # Learn-Modus ist nur in Tages-/gezielten Runden wählbar — Schwächen werden
+        # IMMER direkt abgefragt, dort hätte das Häkchen keine Wirkung.
+        self.drill_learn_check.setVisible(kind != "weak")
         self.stack.setCurrentIndex(10)
         self._due_present_current()
 
