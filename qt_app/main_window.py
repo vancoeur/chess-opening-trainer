@@ -1765,10 +1765,10 @@ class MainWindow(QtWidgets.QMainWindow):
         title = QtWidgets.QLabel(t("Start", "Home"))
         title.setObjectName("name")
         outer.addWidget(title)
-        subtitle = QtWidgets.QLabel(t("Willkommen zurück — hier ist dein Überblick.",
-                                      "Welcome back — here's your overview."))
-        subtitle.setObjectName("hint")
-        outer.addWidget(subtitle)
+        self.home_sub = QtWidgets.QLabel(t("Willkommen zurück — hier ist dein Überblick.",
+                                           "Welcome back — here's your overview."))
+        self.home_sub.setObjectName("hint")
+        outer.addWidget(self.home_sub)
 
         # --- Hero-Karte: heutige Übung (sichtbar, sobald ein Repertoire da ist) ---
         self.home_hero = QtWidgets.QFrame()
@@ -1877,23 +1877,44 @@ class MainWindow(QtWidgets.QMainWindow):
         blitz.addWidget(self.home_blitz_btn, 0, QtCore.Qt.AlignVCenter)
         outer.addWidget(self.home_blitz)
 
-        # --- Leer-Zustand (kein Repertoire): Beispiele / Hinweis ---
-        self.home_empty = QtWidgets.QWidget()
+        # --- Leer-Zustand (kein Repertoire): sanfter Erst-Einstieg in 3 Schritten ---
+        self.home_empty = QtWidgets.QFrame()
+        self.home_empty.setObjectName("hero")
         ev = QtWidgets.QVBoxLayout(self.home_empty)
-        ev.setContentsMargins(0, 0, 0, 0)
-        ev.setSpacing(10)
-        self.home_sample_btn = QtWidgets.QPushButton(
-            t("🎁  Beispiel-Eröffnungen ausprobieren", "🎁  Try the sample openings"))
-        self.home_sample_btn.setObjectName("primary")
-        self.home_sample_btn.clicked.connect(self._load_sample_lines)
-        ev.addWidget(self.home_sample_btn, 0, QtCore.Qt.AlignLeft)
-        self.home_new_hint = self._plain_label(t(
-            "Noch kein Repertoire geladen — hol dir die Beispiele oder lade ein PGN "
-            "links über »Alle Eröffnungen«.",
-            "No repertoire loaded yet — grab the samples or load a PGN via »All openings« on the left."))
-        self.home_new_hint.setObjectName("hint")
+        ev.setSpacing(12)
+        welcome = QtWidgets.QLabel(t("Willkommen! 👋", "Welcome! 👋"))
+        welcome.setObjectName("heroT")
+        ev.addWidget(welcome)
+        # Statischer, selbst kontrollierter Text -> RichText für Fett/Nummern ok.
+        self.home_new_hint = QtWidgets.QLabel(t(
+            "In 3 Schritten loslegen:<br>"
+            "<b>1. Repertoire laden</b> — ein PGN (z. B. eine Lichess-Studie) über den Knopf "
+            "unten, oder gleich die Beispiele ausprobieren.<br>"
+            "<b>2. Seite zuordnen</b> — Weiß oder Schwarz. Wird aus dem Dateinamen erkannt und "
+            "ist in »Alle Eröffnungen« jederzeit änderbar.<br>"
+            "<b>3. Heute üben</b> — die App plant die Wiederholungen; du drückst nur »Heute üben«.",
+            "Get going in 3 steps:<br>"
+            "<b>1. Load a repertoire</b> — a PGN (e.g. a Lichess study) via the button below, "
+            "or just try the samples.<br>"
+            "<b>2. Assign a side</b> — White or Black. Auto-detected from the file name and "
+            "adjustable any time in »All openings«.<br>"
+            "<b>3. Train today</b> — the app schedules the reviews; you just press »Train today«."))
+        self.home_new_hint.setTextFormat(QtCore.Qt.TextFormat.RichText)
         self.home_new_hint.setWordWrap(True)
         ev.addWidget(self.home_new_hint)
+        row = QtWidgets.QHBoxLayout()
+        self.home_sample_btn = QtWidgets.QPushButton(
+            t("🎁  Beispiele ausprobieren", "🎁  Try the samples"))
+        self.home_sample_btn.setObjectName("primary")
+        self.home_sample_btn.clicked.connect(self._load_sample_lines)
+        self.home_load_btn = QtWidgets.QPushButton(
+            t("📂  Eigenes PGN laden …", "📂  Load your PGN …"))
+        self.home_load_btn.setObjectName("more")
+        self.home_load_btn.clicked.connect(lambda: self._load_pgn_dialog())
+        row.addWidget(self.home_sample_btn)
+        row.addWidget(self.home_load_btn)
+        row.addStretch(1)
+        ev.addLayout(row)
         outer.addWidget(self.home_empty)
 
         outer.addStretch(1)
@@ -1961,9 +1982,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.home_weak.setVisible(has_rep and weak > 0)
         self.home_blitz.setVisible(has_rep)
         self.home_empty.setVisible(not has_rep)
+        self.home_sub.setVisible(has_rep)           # »Willkommen zurück« nur für Rückkehrer
         self.home_forecast.setVisible(has_rep)      # explizit (Tests prüfen die Knöpfe direkt)
         self.home_due_btn.setVisible(has_rep)
         self.home_sample_btn.setVisible(not has_rep)
+        self.home_load_btn.setVisible(not has_rep)
         self.home_new_hint.setVisible(not has_rep)
 
     def _open_default_session(self) -> None:

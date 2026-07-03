@@ -24,6 +24,28 @@ def test_new_user_sees_sample_prompt(tmp_path, monkeypatch):
     assert win.home_due_btn.isHidden()           # keine Tagesaktion
 
 
+def test_new_user_sees_three_step_onboarding(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)              # kein Repertoire
+    win._open_home()
+    assert not win.home_empty.isHidden()           # Erst-Einstiegs-Kärtchen
+    assert not win.home_load_btn.isHidden()        # »PGN laden«-Knopf da
+    txt = win.home_new_hint.text()
+    assert "3" in txt                              # »In 3 Schritten«
+    assert ("Repertoire laden" in txt or "Load a repertoire" in txt)
+    assert ("Seite zuordnen" in txt or "Assign a side" in txt)
+    assert ("Heute üben" in txt or "Train today" in txt)
+
+
+def test_loading_samples_dismisses_onboarding(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    win._open_home()
+    assert not win.home_empty.isHidden()
+    win._load_sample_lines()                       # Beispiele laden
+    win._open_home()
+    assert win.home_empty.isHidden()               # Erst-Einstieg verschwindet
+    assert not win.home_due_btn.isHidden()         # Tagesaktion erscheint
+
+
 def test_with_repertoire_shows_train_button(tmp_path, monkeypatch):
     from opening_trainer.repertoire_tree import RepertoireTree
     win = _win(tmp_path, monkeypatch)
