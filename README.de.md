@@ -65,7 +65,13 @@ Die App bringt **drei Beispiel-Eröffnungen** mit (Italienische Partie, Caro-Kan
   Stellung für Stellung, sodass transponierende Linien sich eine Karte teilen und
   nichts doppelt abgefragt wird. Ein kleiner Link öffnet bei Bedarf die
   **Aufschlüsselung pro Eröffnung** (*heute fällig · diese Woche · noch nie geübt*);
-  nach jeder Antwort siehst du, wann die Stellung wieder fällig wird.
+  nach jeder Antwort siehst du, wann die Stellung wieder fällig wird. Am Ende der
+  Runde fasst ein **Abschluss-Kärtchen** ehrlich zusammen — *wie viel auf Anhieb
+  saß, was gewackelt hat, was neu gelernt wurde* — und schlägt den nächsten
+  Schritt vor.
+- **Sanfter Einstieg:** Beim ersten Start führt dich eine **Willkommens-Karte in
+  drei Schritten** los (Repertoire laden → Seite zuordnen → „Heute üben") — oder du
+  probierst mit einem Klick die **Beispiel-Eröffnungen**.
 - **Repertoire-Baum, nach Eröffnungsnamen gruppiert:** dein ganzes Repertoire als
   **aufklappbarer Baum**, gruppiert nach den **benannten Varianten** — erkannt über
   eine eingebaute **ECO-Eröffnungsdatenbank** (z. B. *Caro-Kann Defense: Advance

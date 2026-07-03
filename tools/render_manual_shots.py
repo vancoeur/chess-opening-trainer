@@ -19,6 +19,11 @@ tmp = pathlib.Path(tempfile.mkdtemp()); data = tmp / "data"; data.mkdir()
 mw.data_dir = lambda: data
 win = mw.MainWindow(); win._set_language("de")
 win._set_ui_theme("light")          # Handbuch zeigt den hellen Standard-Look
+win.resize(1120, 720)
+
+# Erst-Einstieg (noch KEIN Repertoire geladen) — Willkommens-Karte.
+app.processEvents(); (ROOT / "docs/handbuch").mkdir(parents=True, exist_ok=True)
+win._go_home(); win.grab().save(str(OUT / "00_willkommen.png")); print("shot: 00_willkommen")
 
 pgn = '''[Event "x"]
 [ChapterName "B18 · Caro-Kann: Klassisch"]

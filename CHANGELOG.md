@@ -7,6 +7,26 @@ version are on the [Releases page](https://github.com/vancoeur/chess-opening-tra
 The interface is bilingual (English/German); version numbers follow
 `MAJOR.MINOR.PATCH`.
 
+## [1.6.0] — 2026-07-03
+
+**A friendlier finish and a gentler start.** Small touches that make the daily
+loop feel complete and welcome newcomers.
+
+- **Session-end summary card.** Finishing your "Train today" round now ends on
+  a proper card instead of a bare line: how many you got **right first try**,
+  how many needed **help**, how many were **newly learned** — plus an honest
+  look ahead (still open today, or due again tomorrow) and one adaptive button
+  (**Keep training** / **Drill weak spots**). The card knows its context: after
+  a weak-spots round it talks about weak spots, not the daily plan.
+- **Gentle 3-step onboarding.** A brand-new user is greeted with a **Welcome**
+  card spelling out the three steps — load a repertoire · assign a side · train
+  today — with **Try the samples** and **Load your PGN …** right there.
+- **Weak spots are always quizzed.** Drilling your weak spots now tests you
+  directly instead of showing the move first.
+- **Sharper sidebar.** "Free-play" drops the "tree" jargon, and **Repertoire
+  check** moved from *Practice* to *Review* (it's engine analysis, not
+  practice) — so *Practice* now holds only real practice.
+
 ## [1.5.0] — 2026-07-02
 
 **One clear way to practise — a calmer, more intuitive flow.** No new learning

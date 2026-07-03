@@ -64,7 +64,12 @@ The app ships with **three sample openings** (Italian Game, Caro-Kann, Queen’s
   position by position, so transposing lines share one card and nothing is
   reviewed twice. A small link opens the **per-opening breakdown** when you want it
   (*due today · this week · never trained*); after each answer it shows when the
-  position is next due.
+  position is next due. When the round is done, a **summary card** sums it up
+  honestly — *how many you got right first try, wobbled on, or newly learned* —
+  and suggests your next move.
+- **Gentle onboarding:** on first launch a **Welcome card walks you through three
+  steps** (load a repertoire → assign a side → “Train today”) — or try the
+  **sample openings** in one click.
 - **Repertoire tree, grouped by opening name:** your whole repertoire as a
   **collapsible tree**, grouped under the **named variations** it belongs to —
   identified from a built-in **ECO opening database** (e.g. *Caro-Kann Defense:

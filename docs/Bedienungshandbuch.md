@@ -73,9 +73,9 @@ verzweigte Bäume und besitzt sie dann selbst (speichern, üben, bearbeiten).
 Links liegt die **Navigations-Seitenleiste** — sie ist auf **jeder** Seite sichtbar
 und bringt dich überallhin, gruppiert in vier Bereiche:
 
-- **Üben:** Heute fällig · ⏱ Blitz · Baum frei durchspielen · Repertoire-Prüfung
+- **Üben:** Heute fällig · ⏱ Blitz · Frei durchspielen
 - **Repertoire:** Repertoire-Baum · Alle Eröffnungen · Repertoire-Editor
-- **Auswerten:** Fortschritt · Trefferquote & Fehler · Partien auswerten
+- **Auswerten:** Fortschritt · Trefferquote & Fehler · Partien auswerten · Repertoire-Prüfung
 - **Erkunden:** Eröffnungs-Explorer · Gegen Stockfish
 
 Die Seite, auf der du gerade bist, ist in der Leiste **farbig markiert**. Ganz oben
@@ -84,8 +84,12 @@ führt **Start** (⌘1) auf die hier gezeigte **Übersicht**: eine große
 sofort), darunter drei Kennzahlen — wie viele **Repertoires**, wie viele
 **Stellungen** und wie viel **diese Woche fällig** ist. Darunter erscheinen — sobald sie etwas zu zeigen haben — zwei weitere
 Karten: **„Das sitzt noch nicht"** (deine wackligen Stellungen, siehe 4.4) und
-**„Blitz-Auffrischung"** (kurzer Tempo-Modus, siehe 4.5). (Hast du noch kein
-Repertoire, steht hier stattdessen **„Beispiel-Eröffnungen ausprobieren".)**
+**„Blitz-Auffrischung"** (kurzer Tempo-Modus, siehe 4.5). Hast du noch **kein
+Repertoire**, begrüßt dich hier stattdessen eine **Willkommens-Karte, die dich in
+drei Schritten** loslässt (Repertoire laden → Seite zuordnen → „Heute üben") — mit
+den Knöpfen **„🎁 Beispiele ausprobieren"** und **„📂 Eigenes PGN laden …"**.
+
+![Erst-Einstieg: Willkommens-Karte in drei Schritten](handbuch/00_willkommen.png)
 
 > **Orientierung:** Die markierte Seite in der Leiste und der Fenstertitel zeigen immer, wo du gerade bist. Mit **„‹ Zurück"** geht es zur vorigen Seite.
 
@@ -120,6 +124,13 @@ Alles auf einem Bildschirm, kein Hin- und Herspringen:
 
 Richtig → der Gegnerzug kommt automatisch, nächste Stellung. Falsch → kurzer
 Hinweis, du versuchst es erneut.
+
+**Am Ende der Runde** erscheint ein **Abschluss-Kärtchen** („Geschafft! 🎉") mit
+einer ehrlichen Bilanz — *wie viele Stellungen auf Anhieb saßen, wie viele du mit
+Hilfe gelöst hast, wie viele neu gelernt wurden* — und einer Vorschau: entweder
+*„Heute noch offen: N"* (die mit Hilfe gelösten kommen gleich nochmal) oder *„Morgen
+wieder fällig: N"*. Ein Knopf schlägt den nächsten Schritt vor (**„Weiter üben"**
+bzw. **„Schwächen üben"**), daneben **„Zurück zum Start"**.
 
 ### 4.3 Learn-Modus — neue Stellungen erst zeigen
 
