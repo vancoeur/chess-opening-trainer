@@ -7,6 +7,15 @@ version are on the [Releases page](https://github.com/vancoeur/chess-opening-tra
 The interface is bilingual (English/German); version numbers follow
 `MAJOR.MINOR.PATCH`.
 
+## [1.6.1] — 2026-07-03
+
+**Small polish on the practice screen.**
+
+- The opening name above the board is now a modest one-line label instead of a
+  page-title-sized heading that could wrap across two lines.
+- In a weak-spots round the "Show new positions first (learn)" checkbox is
+  hidden — weak spots are always quizzed directly, so it had no effect there.
+
 ## [1.6.0] — 2026-07-03
 
 **A friendlier finish and a gentler start.** Small touches that make the daily
