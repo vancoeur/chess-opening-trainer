@@ -77,7 +77,7 @@ QLabel {{ background: transparent; color: {t['text']}; }}
 QLabel#eyebrow {{ color: {t['accent']}; font-size: 12px; font-weight: 700; }}
 QLabel#pagehead {{ background: {t['header']}; color: {t['text']}; font-size: 15px; font-weight: 700; padding: 11px 20px; border-bottom: 1px solid {t['border']}; }}
 QLabel#name    {{ font-size: 27px; font-weight: 800; color: {t['text']}; }}
-QLabel#drillname {{ font-size: 19px; font-weight: 700; color: {t['text']}; }}
+QLabel#drillname {{ font-size: 15px; font-weight: 600; color: {t['text']}; }}
 QLabel#hint    {{ color: {t['muted']}; font-size: 14px; }}
 QLabel#note    {{ color: {t['muted']}; font-size: 13px; font-style: italic; }}
 QLabel#status  {{ font-size: 15px; color: {t['text']}; }}
