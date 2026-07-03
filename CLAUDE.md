@@ -100,7 +100,10 @@ kein Programmierer — er denkt in Schach- und Bedien-Begriffen, nicht in Code.
 - Längere Texte/Beiträge als **Datei** liefern (Kopieren aus dem Chat ist für ihn hakelig).
 
 ## Fortlaufender Stand
-Zuletzt veröffentlicht: **v1.6.0** (2026-07-03) — Phase 5 des Umbau-Plans komplett:
+Zuletzt veröffentlicht: **v1.6.1** (2026-07-03, Patch) — Feinschliff Übe-Bildschirm:
+Drill-Überschrift kleiner (eigener `#drillname`-Stil, 15px, statt Seitentitel-27px),
+Lern-Häkchen in der Schwächen-Runde ausgeblendet (dort wirkungslos). Davor **v1.6.0**
+(2026-07-03) — Phase 5 des Umbau-Plans komplett:
 **Sitzungs-Abschluss-Kärtchen** (ehrliche Bilanz + kontext-abhängiger nächster Schritt),
 **Erst-Einstieg in 3 Schritten** für neue Nutzer, **Schwächen werden direkt abgefragt**,
 **schärfere Seitenleiste** („Frei durchspielen"; „Repertoire-Prüfung" unter Auswerten).
