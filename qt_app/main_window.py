@@ -77,6 +77,7 @@ QLabel {{ background: transparent; color: {t['text']}; }}
 QLabel#eyebrow {{ color: {t['accent']}; font-size: 12px; font-weight: 700; }}
 QLabel#pagehead {{ background: {t['header']}; color: {t['text']}; font-size: 15px; font-weight: 700; padding: 11px 20px; border-bottom: 1px solid {t['border']}; }}
 QLabel#name    {{ font-size: 27px; font-weight: 800; color: {t['text']}; }}
+QLabel#drillname {{ font-size: 19px; font-weight: 700; color: {t['text']}; }}
 QLabel#hint    {{ color: {t['muted']}; font-size: 14px; }}
 QLabel#note    {{ color: {t['muted']}; font-size: 13px; font-style: italic; }}
 QLabel#status  {{ font-size: 15px; color: {t['text']}; }}
@@ -1117,7 +1118,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.drill_learn_check.toggled.connect(self._drill_toggle_learn)
         side.addWidget(self.drill_learn_check)
         self.tree_drill_name = self._plain_label("—")
-        self.tree_drill_name.setObjectName("name")
+        self.tree_drill_name.setObjectName("drillname")   # kleiner als ein Seitentitel
         self.tree_drill_name.setWordWrap(True)
         side.addWidget(self.tree_drill_name)
         # Linien-Kontext: die Züge bis zur aktuellen Stellung (»wo bin ich?«).
