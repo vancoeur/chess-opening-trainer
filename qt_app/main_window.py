@@ -3023,8 +3023,7 @@ class MainWindow(QtWidgets.QMainWindow):
             (t("ÜBEN", "PRACTICE"), [
                 (t("▶  Heute fällig", "▶  Due today"), self._open_due_overview, 11),
                 (t("⏱  Blitz", "⏱  Blitz"), self._start_blitz_session, None),
-                (t("Baum frei durchspielen", "Free-play a tree"), self._open_tree_drill, 10),
-                (t("Repertoire-Prüfung", "Repertoire check"), self._open_tuv, 3),
+                (t("Frei durchspielen", "Free-play"), self._open_tree_drill, 10),
             ]),
             (t("REPERTOIRE", "REPERTOIRE"), [
                 (t("Repertoire-Baum", "Repertoire tree"), self._open_repertoire_tree, 13),
@@ -3035,6 +3034,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 (t("Fortschritt", "Progress"), self._open_progress, 5),
                 (t("Trefferquote & Fehler", "Accuracy & mistakes"), self._open_stats, 2),
                 (t("Partien auswerten", "Review games"), self._open_game_review, 7),
+                (t("Repertoire-Prüfung", "Repertoire check"), self._open_tuv, 3),
             ]),
             (t("ERKUNDEN", "EXPLORE"), [
                 (t("Eröffnungs-Explorer", "Opening explorer"), self._open_explorer, 6),
