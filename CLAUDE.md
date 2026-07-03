@@ -100,9 +100,11 @@ kein Programmierer — er denkt in Schach- und Bedien-Begriffen, nicht in Code.
 - Längere Texte/Beiträge als **Datei** liefern (Kopieren aus dem Chat ist für ihn hakelig).
 
 ## Fortlaufender Stand
-Zuletzt veröffentlicht: **v1.5.0** (2026-07-02) — UX-Konsolidierung (Phasen 1–4 des
-Umbau-Plans: Dashboard-Direktstart „Heute üben", ein anpassbarer Repertoire-Baum-Knopf,
-Bibliothek routet in den Baum, einheitliche „Schwächen üben"-Benennung). **Phase 5
-geplant** (Sitzungs-Abschluss-Kärtchen zuerst, dann Erst-Einstieg + Seitenleisten-
-Feinschliff). Der detaillierte Projektstand + nächste Schritte stehen im Auto-Memory
+Zuletzt veröffentlicht: **v1.6.0** (2026-07-03) — Phase 5 des Umbau-Plans komplett:
+**Sitzungs-Abschluss-Kärtchen** (ehrliche Bilanz + kontext-abhängiger nächster Schritt),
+**Erst-Einstieg in 3 Schritten** für neue Nutzer, **Schwächen werden direkt abgefragt**,
+**schärfere Seitenleiste** („Frei durchspielen"; „Repertoire-Prüfung" unter Auswerten).
+Davor v1.5.0 (Phasen 1–4: Dashboard-Direktstart, anpassbarer Baum-Knopf, Bibliothek→Baum,
+„Schwächen üben"-Benennung). **Der gesamte Umbau-Plan (Phasen 1–5) ist damit ausgeliefert.**
+Der detaillierte Projektstand + nächste Schritte stehen im Auto-Memory
 (`opening-trainer-repertoire-training.md`) — vor Arbeitsbeginn lesen.
