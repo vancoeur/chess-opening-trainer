@@ -476,6 +476,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self._due_session = False      # True: „Heute fällig (Bäume)"-Sitzung läuft
         self._due_queue: list = []     # offene fällige Stellungen (tree, node_id, color)
         self._due_total = 0
+        # Zähler für das Sitzungs-Abschluss-Kärtchen (pro Runde zurückgesetzt):
+        self._due_passed = 0           # auf Anhieb richtig
+        self._due_wobbled = 0          # richtig, aber mit Hilfe/nach Fehler
+        self._due_learned = 0          # neue Stellung im Lern-Modus abgehakt
+        self._summary_primary_kind = None   # Haupt-Knopf des Abschluss-Kärtchens
         # Blitz-Sprint (Tempo-Auffrischung): eigener Modus neben _due_session,
         # rührt Lernplan/Statistik NICHT an — zählt nur den Punktestand.
         self._blitz = False
@@ -1137,6 +1142,35 @@ class MainWindow(QtWidgets.QMainWindow):
         self.tree_drill_feedback.setWordWrap(True)
         side.addWidget(self.tree_drill_feedback)
 
+        # Sitzungs-Abschluss-Kärtchen: erscheint, wenn die Runde leer läuft.
+        self.drill_summary = QtWidgets.QFrame()
+        self.drill_summary.setObjectName("hero")
+        self.drill_summary.setVisible(False)
+        sm = QtWidgets.QVBoxLayout(self.drill_summary)
+        sm.setSpacing(10)
+        self.drill_summary_title = QtWidgets.QLabel(t("Geschafft! 🎉", "Done! 🎉"))
+        self.drill_summary_title.setObjectName("heroT")
+        self.drill_summary_stats = self._plain_label("")
+        self.drill_summary_stats.setWordWrap(True)
+        self.drill_summary_next = self._plain_label("")
+        self.drill_summary_next.setObjectName("hint")
+        self.drill_summary_next.setWordWrap(True)
+        sm.addWidget(self.drill_summary_title)
+        sm.addWidget(self.drill_summary_stats)
+        sm.addWidget(self.drill_summary_next)
+        sm_btns = QtWidgets.QHBoxLayout()
+        self.drill_summary_primary = QtWidgets.QPushButton("")
+        self.drill_summary_primary.setObjectName("primary")
+        self.drill_summary_primary.clicked.connect(lambda: self._drill_summary_primary_action())
+        self.drill_summary_home = QtWidgets.QPushButton(t("‹  Zurück zum Start", "‹  Back to home"))
+        self.drill_summary_home.setObjectName("more")
+        self.drill_summary_home.clicked.connect(lambda: self._open_home())
+        sm_btns.addWidget(self.drill_summary_primary)
+        sm_btns.addWidget(self.drill_summary_home)
+        sm_btns.addStretch(1)
+        sm.addLayout(sm_btns)
+        side.addWidget(self.drill_summary)
+
         # Learn-Modus: »Verstanden, weiter« (nur sichtbar, wenn eine neue Stellung gezeigt wird).
         self.drill_learned_btn = QtWidgets.QPushButton(t("✓  Verstanden, weiter", "✓  Got it, next"))
         self.drill_learned_btn.setObjectName("primary")
@@ -1144,14 +1178,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.drill_learned_btn.setVisible(False)
         side.addWidget(self.drill_learned_btn, 0, QtCore.Qt.AlignLeft)
 
-        btns = QtWidgets.QHBoxLayout()
+        self.drill_action_row = QtWidgets.QWidget()
+        btns = QtWidgets.QHBoxLayout(self.drill_action_row)
+        btns.setContentsMargins(0, 0, 0, 0)
         sol = QtWidgets.QPushButton(t("Lösung zeigen", "Show solution"))
         sol.clicked.connect(self._tree_drill_solution)
         again = QtWidgets.QPushButton(t("Neu", "Restart"))
         again.clicked.connect(self._tree_drill_restart)
         btns.addWidget(sol)
         btns.addWidget(again)
-        side.addLayout(btns)
+        side.addWidget(self.drill_action_row)
         side.addStretch(1)
 
         self.drill_back_btn = QtWidgets.QPushButton(t("‹  Zurück", "‹  Back"))
@@ -1181,6 +1217,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if tree is None:
             return
         self._blitz_stop()                         # falls vorher ein Blitz lief
+        self._hide_session_summary()               # falls das Abschluss-Kärtchen noch stand
         self._due_session = False
         self.tree_drill_feedback.setText("")
         self.drill_eyebrow.setText(t("BAUM ÜBEN", "TRAIN TREE"))
@@ -1940,6 +1977,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._blitz_stop()                         # falls vorher ein Blitz lief
         self._due_queue = list(items)
         self._due_total = len(self._due_queue)
+        self._due_passed = self._due_wobbled = self._due_learned = 0
+        self._hide_session_summary()
         self._due_session = True
         self._drill_manual = False
         self.tree_drill_feedback.setText("")
@@ -2020,6 +2059,7 @@ class MainWindow(QtWidgets.QMainWindow):
                   "Load a repertoire first — then there are positions to blitz."))
             return
         self._blitz_pool = pool
+        self._hide_session_summary()               # falls das Abschluss-Kärtchen noch stand
         self._blitz = True
         self._due_session = False
         self._blitz_over = False
@@ -2132,20 +2172,96 @@ class MainWindow(QtWidgets.QMainWindow):
                 return (hit[0], hit[1], color)
         return None
 
+    def _hide_session_summary(self) -> None:
+        """Kärtchen weg, normale Drill-Ansicht zurück (Brett + per-Stellung-Zeilen)."""
+        self.drill_summary.setVisible(False)
+        for w in (self.tree_drill_board, self.tree_drill_name,
+                  self.tree_drill_status, self.tree_drill_feedback,
+                  self.drill_action_row):
+            w.setVisible(True)
+
+    def _due_forecast_all(self) -> dict:
+        """Fällig-Vorschau über beide Seiten zusammengefasst (heute/morgen/Woche/neu)."""
+        from opening_trainer.tree_session import due_forecast
+        today = date.today()
+        fc = {"today": 0, "tomorrow": 0, "week": 0, "new": 0}
+        for side_name, color in (("white", chess.WHITE), ("black", chess.BLACK)):
+            f = due_forecast(self.tree_store.by_side(side_name), color, self.position_schedule, today)
+            for k in fc:
+                fc[k] += f.get(k, 0)
+        return fc
+
+    def _show_session_summary(self) -> None:
+        """Sitzungs-Abschluss-Kärtchen mit ehrlichen Zahlen + passender Weiter-Aktion."""
+        for w in (self.tree_drill_board, self.tree_drill_combo, self.drill_manual_check,
+                  self.drill_learn_check, self.tree_drill_name, self.tree_drill_line,
+                  self.tree_drill_note, self.tree_drill_status, self.tree_drill_feedback,
+                  self.drill_learned_btn, self.drill_action_row, self.blitz_bar):
+            w.setVisible(False)
+
+        if not self._due_total:
+            self.drill_summary_title.setText(t("Nichts fällig 🎉", "Nothing due 🎉"))
+            self.drill_summary_stats.setText(t(
+                "Für heute ist alles wiederholt — schau morgen wieder vorbei.",
+                "Everything's reviewed for today — come back tomorrow."))
+            self.drill_summary_next.setText("")
+        else:
+            self.drill_summary_title.setText(t("Geschafft! 🎉", "Done! 🎉"))
+            parts_de, parts_en = [], []
+            if self._due_passed:
+                parts_de.append(f"{self._due_passed} auf Anhieb")
+                parts_en.append(f"{self._due_passed} first try")
+            if self._due_wobbled:
+                parts_de.append(f"{self._due_wobbled} mit Hilfe")
+                parts_en.append(f"{self._due_wobbled} with help")
+            if self._due_learned:
+                parts_de.append(f"{self._due_learned} neu gelernt")
+                parts_en.append(f"{self._due_learned} newly learned")
+            done = self._due_passed + self._due_wobbled + self._due_learned
+            detail_de = (" — " + " · ".join(parts_de)) if parts_de else ""
+            detail_en = (" — " + " · ".join(parts_en)) if parts_en else ""
+            noun_de = "Stellung" if done == 1 else "Stellungen"
+            noun_en = "position" if done == 1 else "positions"
+            self.drill_summary_stats.setText(t(
+                f"{done} {noun_de} geübt{detail_de}",
+                f"{done} {noun_en} practised{detail_en}"))
+            fc = self._due_forecast_all()
+            if fc["today"] > 0:
+                self.drill_summary_next.setText(t(
+                    f"Heute noch offen: {fc['today']} (die mit Hilfe gelösten kommen gleich nochmal).",
+                    f"Still open today: {fc['today']} (the ones you needed help with come up again)."))
+            else:
+                self.drill_summary_next.setText(t(
+                    f"Alles erledigt. Morgen wieder fällig: {fc['tomorrow']}.",
+                    f"All done. Due again tomorrow: {fc['tomorrow']}."))
+
+        # Haupt-Knopf passt sich an: erst offene von heute, dann Schwächen, sonst nichts.
+        fc = self._due_forecast_all()
+        weak = len(self._weak_fens())
+        if fc["today"] > 0:
+            self._summary_primary_kind = "continue"
+            self.drill_summary_primary.setText(t("▶  Weiter üben", "▶  Keep training"))
+            self.drill_summary_primary.setVisible(True)
+        elif weak > 0:
+            self._summary_primary_kind = "weak"
+            self.drill_summary_primary.setText(
+                t(f"▶  Schwächen üben ({weak})", f"▶  Drill weak spots ({weak})"))
+            self.drill_summary_primary.setVisible(True)
+        else:
+            self._summary_primary_kind = None
+            self.drill_summary_primary.setVisible(False)
+        self.drill_summary.setVisible(True)
+
+    def _drill_summary_primary_action(self) -> None:
+        if self._summary_primary_kind == "continue":
+            self._start_due_session()
+        elif self._summary_primary_kind == "weak":
+            self._start_weak_session()
+
     def _due_present_current(self) -> None:
         if not self._due_queue:
             self._tree_trainer = None
-            self.tree_drill_name.setText(t("Heute fällig", "Due today"))
-            if self._due_total:
-                self.tree_drill_status.setText(t(
-                    f"Geschafft 🎉 — {self._due_total} Stellungen wiederholt. Nichts mehr fällig.",
-                    f"Done 🎉 — reviewed {self._due_total} positions. Nothing left due."))
-            else:
-                self.tree_drill_status.setText(t(
-                    "Nichts fällig — schau morgen wieder vorbei. 🎉",
-                    "Nothing due — come back tomorrow. 🎉"))
-            self.tree_drill_board.set_board(chess.Board())
-            self._drill_update_context()
+            self._show_session_summary()
             return
         tree, node_id, color = self._due_queue[0]
         from opening_trainer.position_training import PositionTrainer
@@ -2265,6 +2381,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._show_next_review(new_card, True)
         self._drill_learn_active = False
         self.drill_learned_btn.setVisible(False)
+        if self._due_session:
+            self._due_learned += 1
         if self._due_queue:
             self._due_queue.pop(0)
         self._due_present_current()
@@ -2313,6 +2431,11 @@ class MainWindow(QtWidgets.QMainWindow):
                 self._blitz_advance()
                 return
             passed = not self._tree_drill_wrong
+            if self._due_session:
+                if passed:
+                    self._due_passed += 1
+                else:
+                    self._due_wobbled += 1
             today = date.today()
             card = self.position_schedule.card_for(epd_before)
             new_card = schedule_review(card, passed, today)
