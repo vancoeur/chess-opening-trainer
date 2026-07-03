@@ -481,6 +481,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._due_wobbled = 0          # richtig, aber mit Hilfe/nach Fehler
         self._due_learned = 0          # neue Stellung im Lern-Modus abgehakt
         self._summary_primary_kind = None   # Haupt-Knopf des Abschluss-Kärtchens
+        self._due_kind = "due"              # Sitzungstyp: due | weak | targeted
         # Blitz-Sprint (Tempo-Auffrischung): eigener Modus neben _due_session,
         # rührt Lernplan/Statistik NICHT an — zählt nur den Punktestand.
         self._blitz = False
@@ -1970,13 +1971,15 @@ class MainWindow(QtWidgets.QMainWindow):
         Navigations-Historie zu füllen (man startet frisch zuhause)."""
         self._go_home()
 
-    def _run_position_session(self, items, eyebrow: str) -> None:
+    def _run_position_session(self, items, eyebrow: str, kind: str = "targeted") -> None:
         """Fährt eine stellungs-basierte Sitzung über die übergebenen
         ``(tree, node_id, color)``-Items auf der Drill-Seite — gemeinsamer Kern
-        für »Heute fällig«, »Stellung üben« (Einzel-Drill) und »Fehler üben«."""
+        für »Heute fällig«, »Stellung üben« (Einzel-Drill) und »Fehler üben«.
+        ``kind`` steuert das Abschluss-Kärtchen: due | weak | targeted."""
         self._blitz_stop()                         # falls vorher ein Blitz lief
         self._due_queue = list(items)
         self._due_total = len(self._due_queue)
+        self._due_kind = kind
         self._due_passed = self._due_wobbled = self._due_learned = 0
         self._hide_session_summary()
         self._due_session = True
@@ -2023,7 +2026,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _start_due_session(self, only_tree=None, only_side=None) -> None:
         self._run_position_session(
-            self._due_items(only_tree, only_side), t("HEUTE FÄLLIG", "DUE TODAY"))
+            self._due_items(only_tree, only_side), t("HEUTE FÄLLIG", "DUE TODAY"), kind="due")
 
     def _weak_fens(self, limit=None) -> list:
         """FENs der offenen Fehlerstellungen über beide Seiten (häufigste zuerst)
@@ -2042,7 +2045,7 @@ class MainWindow(QtWidgets.QMainWindow):
         zuerst und auf eine Runde gedeckelt — nutzt dieselbe Sitzungs-Maschinerie
         wie »Heute fällig«."""
         self._drill_positions_for_fens(
-            self._weak_fens(limit=WEAK_SESSION_LIMIT), t("SCHWÄCHEN", "WEAK SPOTS"))
+            self._weak_fens(limit=WEAK_SESSION_LIMIT), t("SCHWÄCHEN", "WEAK SPOTS"), kind="weak")
 
     # --- Blitz-Sprint (Tempo-Auffrischung) -------------------------------
 
@@ -2148,7 +2151,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._blitz_over = False
         self.blitz_bar.setVisible(False)
 
-    def _drill_positions_for_fens(self, fens, eyebrow: str) -> None:
+    def _drill_positions_for_fens(self, fens, eyebrow: str, kind: str = "targeted") -> None:
         """Lenkt die alten Einzelstellungs-Drills (Statistik-Fehler, »Fehler
         üben«, Partie-Abweichung) auf eine stellungs-basierte Sitzung um, indem
         jede Stellung über die Bäume auf (tree, node, color) aufgelöst wird."""
@@ -2158,7 +2161,7 @@ class MainWindow(QtWidgets.QMainWindow):
             if loc is not None:
                 items.append(loc)
         if items:
-            self._run_position_session(items, eyebrow)
+            self._run_position_session(items, eyebrow, kind=kind)
 
     def _locate_in_trees(self, fen: str):
         """(tree, node_id, color) für eine Stellung (FEN) über beide Seiten,
@@ -2199,57 +2202,83 @@ class MainWindow(QtWidgets.QMainWindow):
                   self.drill_learned_btn, self.drill_action_row, self.blitz_bar):
             w.setVisible(False)
 
+        def _primary_weak(n):    # Haupt-Knopf: »Schwächen üben (N)«
+            self._summary_primary_kind = "weak"
+            self.drill_summary_primary.setText(
+                t(f"▶  Schwächen üben ({n})", f"▶  Drill weak spots ({n})"))
+            self.drill_summary_primary.setVisible(True)
+
+        def _primary_none():
+            self._summary_primary_kind = None
+            self.drill_summary_primary.setVisible(False)
+
         if not self._due_total:
+            # Nur bei »Heute üben« mit leerem Lernplan erreichbar.
             self.drill_summary_title.setText(t("Nichts fällig 🎉", "Nothing due 🎉"))
             self.drill_summary_stats.setText(t(
                 "Für heute ist alles wiederholt — schau morgen wieder vorbei.",
                 "Everything's reviewed for today — come back tomorrow."))
             self.drill_summary_next.setText("")
+            weak = len(self._weak_fens())
+            _primary_weak(weak) if weak else _primary_none()
+            self.drill_summary.setVisible(True)
+            return
+
+        # --- abgeschlossene Runde: Zahlen (für alle Sitzungstypen gleich) ---
+        self.drill_summary_title.setText(t("Geschafft! 🎉", "Done! 🎉"))
+        parts_de, parts_en = [], []
+        if self._due_passed:
+            parts_de.append(f"{self._due_passed} auf Anhieb")
+            parts_en.append(f"{self._due_passed} first try")
+        if self._due_wobbled:
+            parts_de.append(f"{self._due_wobbled} mit Hilfe")
+            parts_en.append(f"{self._due_wobbled} with help")
+        if self._due_learned:
+            parts_de.append(f"{self._due_learned} neu gelernt")
+            parts_en.append(f"{self._due_learned} newly learned")
+        done = self._due_passed + self._due_wobbled + self._due_learned
+        detail_de = (" — " + " · ".join(parts_de)) if parts_de else ""
+        detail_en = (" — " + " · ".join(parts_en)) if parts_en else ""
+        noun_de = "Stellung" if done == 1 else "Stellungen"
+        noun_en = "position" if done == 1 else "positions"
+        self.drill_summary_stats.setText(t(
+            f"{done} {noun_de} geübt{detail_de}",
+            f"{done} {noun_en} practised{detail_en}"))
+
+        # --- Vorschau + Haupt-Knopf: passend zum Sitzungstyp ---
+        if self._due_kind == "weak":
+            remaining = len(self._weak_fens())
+            if remaining:
+                sp = "Stellung" if remaining == 1 else "Stellungen"
+                self.drill_summary_next.setText(t(
+                    f"Noch {remaining} wacklige {sp} übrig.",
+                    f"{remaining} weak spot{'s' if remaining != 1 else ''} still to go."))
+                self.drill_summary_primary.setText(
+                    t(f"▶  Weiter: Schwächen üben ({remaining})",
+                      f"▶  Keep drilling weak spots ({remaining})"))
+                self._summary_primary_kind = "weak"
+                self.drill_summary_primary.setVisible(True)
+            else:
+                self.drill_summary_next.setText(t(
+                    "Alle Schwächen abgearbeitet — stark! 💪",
+                    "All weak spots cleared — nice! 💪"))
+                _primary_none()
         else:
-            self.drill_summary_title.setText(t("Geschafft! 🎉", "Done! 🎉"))
-            parts_de, parts_en = [], []
-            if self._due_passed:
-                parts_de.append(f"{self._due_passed} auf Anhieb")
-                parts_en.append(f"{self._due_passed} first try")
-            if self._due_wobbled:
-                parts_de.append(f"{self._due_wobbled} mit Hilfe")
-                parts_en.append(f"{self._due_wobbled} with help")
-            if self._due_learned:
-                parts_de.append(f"{self._due_learned} neu gelernt")
-                parts_en.append(f"{self._due_learned} newly learned")
-            done = self._due_passed + self._due_wobbled + self._due_learned
-            detail_de = (" — " + " · ".join(parts_de)) if parts_de else ""
-            detail_en = (" — " + " · ".join(parts_en)) if parts_en else ""
-            noun_de = "Stellung" if done == 1 else "Stellungen"
-            noun_en = "position" if done == 1 else "positions"
-            self.drill_summary_stats.setText(t(
-                f"{done} {noun_de} geübt{detail_de}",
-                f"{done} {noun_en} practised{detail_en}"))
+            # due / targeted: Lernplan-Vorschau
             fc = self._due_forecast_all()
             if fc["today"] > 0:
                 self.drill_summary_next.setText(t(
                     f"Heute noch offen: {fc['today']} (die mit Hilfe gelösten kommen gleich nochmal).",
                     f"Still open today: {fc['today']} (the ones you needed help with come up again)."))
+                self._summary_primary_kind = "continue"
+                self.drill_summary_primary.setText(t("▶  Weiter üben", "▶  Keep training"))
+                self.drill_summary_primary.setVisible(True)
             else:
                 self.drill_summary_next.setText(t(
                     f"Alles erledigt. Morgen wieder fällig: {fc['tomorrow']}.",
                     f"All done. Due again tomorrow: {fc['tomorrow']}."))
-
-        # Haupt-Knopf passt sich an: erst offene von heute, dann Schwächen, sonst nichts.
-        fc = self._due_forecast_all()
-        weak = len(self._weak_fens())
-        if fc["today"] > 0:
-            self._summary_primary_kind = "continue"
-            self.drill_summary_primary.setText(t("▶  Weiter üben", "▶  Keep training"))
-            self.drill_summary_primary.setVisible(True)
-        elif weak > 0:
-            self._summary_primary_kind = "weak"
-            self.drill_summary_primary.setText(
-                t(f"▶  Schwächen üben ({weak})", f"▶  Drill weak spots ({weak})"))
-            self.drill_summary_primary.setVisible(True)
-        else:
-            self._summary_primary_kind = None
-            self.drill_summary_primary.setVisible(False)
+                weak = len(self._weak_fens())
+                _primary_weak(weak) if weak else _primary_none()
         self.drill_summary.setVisible(True)
 
     def _drill_summary_primary_action(self) -> None:

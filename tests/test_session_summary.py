@@ -94,6 +94,26 @@ def test_card_home_button_goes_to_dashboard(tmp_path, monkeypatch):
     assert win.stack.currentIndex() == 12          # Startseite/Dashboard
 
 
+def test_weak_session_card_is_context_specific(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    _caro_black(win)
+    # offener Fehler an der …c6-Stellung (nach 1.e4)
+    b = chess.Board()
+    b.push(chess.Move.from_uci("e2e4"))
+    win.stats_store.add_event(source_name="s", line_name="Caro", fen_before=b.fen(),
+                              expected_san="c6", played_san="e6", correct=False)
+    win._drill_learn_new = False
+    win._start_weak_session()
+    assert win._due_kind == "weak"
+    assert win._due_total >= 1
+    win._tree_drill_on_move(chess.C7, chess.C6)          # Schwäche ausgebügelt
+    assert not win.drill_summary.isHidden()
+    # KEINE Lernplan-Vorschau (»morgen fällig«) nach einer Schwächen-Runde
+    assert "fällig" not in win.drill_summary_next.text()
+    # Haupt-Knopf zielt nie auf die Tagessitzung, nur auf Schwächen (oder nichts)
+    assert win._summary_primary_kind in ("weak", None)
+
+
 def test_counters_reset_between_sessions(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     _caro_black(win)
