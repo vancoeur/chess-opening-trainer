@@ -1676,6 +1676,23 @@ class MainWindow(QtWidgets.QMainWindow):
                 items.append((hit[0], hit[1], color))
         return items
 
+    def _reptree_locate_fen(self, group, fen):
+        """Löst EINE Stellung (FEN) im EIGENEN Baum der gewählten Gruppe auf →
+        (Baum, Knoten, Farbe). Gleiche Absicherung wie bei der Variante: eine
+        geteilte Stellung (v. a. die Grundstellung) landet NICHT über den
+        mehrdeutigen Gesamt-Index bei einer fremden Eröffnung. Ohne Baum
+        (alte Gruppen) Rückfall auf die seitenweite Suche."""
+        tree = (group or {}).get("tree") if group else None
+        if tree is None:
+            return self._locate_in_trees(fen)
+        from opening_trainer.tree_session import build_user_position_index, locate_position
+        color = chess.WHITE if self.reptree_side_combo.currentData() == "white" else chess.BLACK
+        hit = locate_position(build_user_position_index([tree], color),
+                              " ".join(fen.split(" ")[:4]))
+        if hit is not None:
+            return (hit[0], hit[1], color)
+        return self._locate_in_trees(fen)
+
     def _reptree_item_double_clicked(self, item: QtWidgets.QTreeWidgetItem, _col: int = 0) -> None:
         data = item.data(0, QtCore.Qt.UserRole) or {}
         group = data.get("_group")
@@ -1700,7 +1717,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self._reptree_target = ("variation", group)
             label = t("▶  Diese Variante üben", "▶  Train this variation")
         elif kind == "position":
-            self._reptree_target = ("position", fen)
+            self._reptree_target = ("position", (group, fen))
             label = t("▶  Diese Stellung üben", "▶  Drill this position")
         else:
             self._reptree_target = ("repertoire", None)
@@ -1710,7 +1727,10 @@ class MainWindow(QtWidgets.QMainWindow):
     def _reptree_primary_action(self) -> None:
         kind, payload = self._reptree_target
         if kind == "position" and payload:
-            self._drill_positions_for_fens([payload], t("STELLUNG ÜBEN", "DRILL POSITION"))
+            group, fen = payload
+            item = self._reptree_locate_fen(group, fen)
+            if item:
+                self._run_position_session([item], t("STELLUNG ÜBEN", "DRILL POSITION"), kind="targeted")
         elif kind == "variation" and payload:
             items = self._reptree_group_user_items(payload)
             if items:
@@ -1745,7 +1765,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # Haupt-Button an die Auswahl anpassen: eigener Zug -> »Diese Stellung«,
         # Gegnerzug -> die enthaltende Variante.
         if r["is_user_move"]:
-            self._reptree_set_target("position", fen=r["fen_before"])
+            self._reptree_set_target("position", group=self._reptree_group_of(item), fen=r["fen_before"])
         else:
             group = self._reptree_group_of(item)
             if group:

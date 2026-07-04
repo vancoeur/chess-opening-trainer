@@ -210,6 +210,36 @@ def test_train_variation_keeps_opening_at_shared_start(tmp_path, monkeypatch):
     assert sol is not None and sol.san == "e4"               # Italienisch e4, NICHT Englisch c4
 
 
+def test_drill_position_keeps_opening_at_shared_start(tmp_path, monkeypatch):
+    """Selbe Absicherung fuer den »Diese Stellung üben«-Knopf: die Grundstellung
+    des Italieners darf nicht als Englisch (c4) aufgeloest werden."""
+    import chess
+    from opening_trainer.tree_session import variation_outline
+    from opening_trainer.position_training import PositionTrainer
+    win = _win(tmp_path, monkeypatch)
+
+    def white(name, ucis):
+        t = RepertoireTree.new(name, "white")
+        p = t.root_id
+        for u in ucis:
+            p = t.add_child(p, u).id
+        return t
+
+    win.tree_store.add(white("Englisch", ["c2c4", "e7e5", "b1c3", "g8f6"]))
+    win.tree_store.add(white("Italienisch", ["e2e4", "e7e5", "g1f3", "b8c6", "f1c4", "f8c5"]))
+    win._open_repertoire_tree()
+    win.reptree_side_combo.setCurrentIndex(0)                 # Weiss
+
+    groups = variation_outline(win.tree_store.by_side("white"), chess.WHITE)
+    ital = next(g for g in groups if "Italian" in g["name"])
+    start_fen = chess.Board().fen()                          # geteilte Grundstellung
+    item = win._reptree_locate_fen(ital, start_fen)
+    assert item is not None
+    tree, node_id, color = item
+    sol = PositionTrainer(tree, color, start_node_id=node_id, auto_opponent=True).expected_solution()
+    assert sol is not None and sol.san == "e4"
+
+
 def test_gap_shown_and_jumps_to_editor(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     # Linie endet nach Weiß' 2.d4 -> Schwarz am Zug, keine Antwort = Lücke
