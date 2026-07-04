@@ -7,6 +7,35 @@ version are on the [Releases page](https://github.com/vancoeur/chess-opening-tra
 The interface is bilingual (English/German); version numbers follow
 `MAJOR.MINOR.PATCH`.
 
+## [1.6.3] — 2026-07-04
+
+**A deep hardening pass — five review rounds across every part of the app.** The
+look and the way you work are unchanged; the app just behaves correctly in many
+more places, and a few things that could lose data or freeze can no longer happen.
+Highlights:
+
+- **No silent data loss.** Two different files that happen to share a filename and
+  a chapter name no longer overwrite each other — both repertoires are kept.
+  Editing a loaded opening survives restart. Notes are written safely so a crash
+  mid-save can't wipe them.
+- **No freezes or crashes.** A daily-review streak on one position can no longer
+  overflow the schedule and crash the drill; "Play Stockfish" no longer freezes on
+  "Stockfish is thinking…" after an engine hiccup.
+- **Displays always current.** Deleting or loading a repertoire immediately updates
+  the repertoire-tree list, dashboard and stats — no more stale entries lingering
+  until restart. Study/puzzle chapters no longer clutter the opening selector.
+- **Correct numbers and review.** The mistakes list shows the move you actually
+  played (not the correct one); overall accuracy ignores openings you've deleted;
+  games and the repertoire check honour a study's own start position (Chess960 /
+  set-up positions) instead of misreading them; the repertoire check no longer
+  shows stale results after you edit.
+- **Look & language polish.** Switching light/dark keeps your chosen board colour;
+  a board-colour change now recolours every board; German move notation is used in
+  the drill hints ("Lösung: Sf3"); the opening explorer cancels superseded requests
+  and shows a clear "too many requests — wait a moment" message.
+- Import/export now preserves move glyphs (!, ?, !!) and a chapter's intro comment,
+  and warns when a PGN has unreadable moves.
+
 ## [1.6.2] — 2026-07-04
 
 **Correctness pass — ten fixes from a full review of every flow, each with a test.**

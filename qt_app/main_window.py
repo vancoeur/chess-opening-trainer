@@ -155,7 +155,7 @@ QScrollBar::add-page, QScrollBar::sub-page {{ background: none; }}
 """
 
 
-APP_VERSION = "1.6.2"
+APP_VERSION = "1.6.3"
 REPO_URL = "https://github.com/vancoeur/chess-opening-trainer"
 
 # Eine »Schwächen üben«-Runde nimmt höchstens so viele Stellungen (hartnäckigste
