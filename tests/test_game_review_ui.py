@@ -51,3 +51,15 @@ def test_changing_player_name_rereviews_games(tmp_path, monkeypatch):
     win._set_player_name()
     assert captured[-1][0]["status"] != "unknown"          # jetzt als Weiß erkannt
     assert captured[-1][0]["color"] == chess.WHITE
+
+
+def test_corrupt_games_pgn_warns(tmp_path, monkeypatch):
+    win = _win(tmp_path, monkeypatch)
+    win._player_name = "alice"
+    # zweiter Zug 'Zz9' ist unlesbar -> python-chess kürzt die Partie + füllt errors
+    pgn = ('[Event "x"]\n[White "alice"]\n[Black "bob"]\n[Result "*"]\n\n'
+           '1. e4 e5 2. Zz9 *\n')
+    p = tmp_path / "bad.pgn"
+    p.write_text(pgn, encoding="utf-8")
+    win._load_games_from_path(str(p), interactive=False)
+    assert "⚠" in win.games_status.text()              # ⚠-Warnung erscheint

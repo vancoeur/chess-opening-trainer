@@ -3131,6 +3131,16 @@ class MainWindow(QtWidgets.QMainWindow):
             self._refresh_library()
         elif new == 2:
             self._refresh_stats()
+        elif new == 3:
+            # Repertoire-Prüfung: veraltete Ergebnisse (Repertoire seit dem Lauf
+            # geändert) nicht als aktuelle Korrektheits-Aussage stehen lassen.
+            if (self._tuv_thread is None and self._tuv_shown_sig is not None
+                    and self._tuv_shown_sig != self._repertoire_signature()):
+                self.tuv_list.clear()
+                self._tuv_shown_sig = None
+                self.tuv_status.setText(t(
+                    "Repertoire hat sich geändert — bitte erneut prüfen.",
+                    "Repertoire changed — please run the check again."))
         elif new == 11:
             self._refresh_due_overview()
         elif new == 12:
@@ -3507,7 +3517,14 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self._tuv_thread = None
         self._tuv_worker = None
+        self._tuv_run_sig = None      # Repertoire-Signatur beim Start des laufenden Checks
+        self._tuv_shown_sig = None    # ... zu der die aktuell angezeigten Ergebnisse gehören
         return page
+
+    def _repertoire_signature(self):
+        """Billiger Fingerabdruck des Repertoires (Baum-ID + Seite + Knotenzahl).
+        Ändert er sich, gehören alte Prüf-Ergebnisse nicht mehr zum jetzigen Stand."""
+        return tuple(sorted((t.id, t.side, len(t.nodes)) for t in self.tree_store.all()))
 
     def _open_tuv(self) -> None:
         self.stack.setCurrentIndex(3)
@@ -3533,6 +3550,7 @@ class MainWindow(QtWidgets.QMainWindow):
             ))
             return
         self.tuv_list.clear()
+        self._tuv_run_sig = self._repertoire_signature()   # an diesen Stand gebunden
         self.tuv_start_btn.setEnabled(False)
         self.tuv_cancel_btn.setVisible(True)
         self.tuv_status.setText(t(f"Starte Prüfung von {len(jobs)} Varianten …", f"Checking {len(jobs)} variations …"))
@@ -3578,6 +3596,15 @@ class MainWindow(QtWidgets.QMainWindow):
     def _on_tuv_finished(self, results: list) -> None:
         self._teardown_tuv_thread()
         self.tuv_list.clear()
+        if self._repertoire_signature() != self._tuv_run_sig:
+            # Repertoire wurde während der Prüfung geändert -> Ergebnis gehört zum
+            # ALTEN Stand, nicht anzeigen (sonst falsche Korrektheits-Aussagen).
+            self._tuv_shown_sig = None
+            self.tuv_status.setText(t(
+                "Repertoire hat sich geändert — bitte erneut prüfen.",
+                "Repertoire changed — please run the check again."))
+            return
+        self._tuv_shown_sig = self._tuv_run_sig
         total_issues = sum(len(r["issues"]) for r in results)
         if not results:
             self.tuv_status.setText(t(
@@ -4523,12 +4550,15 @@ class MainWindow(QtWidgets.QMainWindow):
         black_book = build_san_book(self.tree_store.by_side("black"), chess.BLACK)
         uname = self._player_name.strip().lower()
         results = []
+        error_games = 0
         try:
             with open(path, encoding="utf-8", errors="replace") as fh:
                 while True:
                     game = chess.pgn.read_game(fh)
                     if game is None:
                         break
+                    if game.errors:            # PGN mit kaputtem Zug -> unvollständig gelesen
+                        error_games += 1
                     results.append(self._review_one_game(game, uname, white_book, black_book))
         except PermissionError:
             # macOS blockt geschützte Ordner (Downloads/Schreibtisch/Dokumente). Beim
@@ -4548,6 +4578,10 @@ class MainWindow(QtWidgets.QMainWindow):
             return
         self._games_loaded_path = path        # gemerkt für Neu-Auswertung bei Namensänderung
         self._render_game_reviews(results)
+        if error_games:                       # nicht still übergehen: PGN war teils kaputt
+            self.games_status.setText(self.games_status.text() + t(
+                f"   ⚠ {error_games} Partie(n) mit PGN-Fehlern — evtl. unvollständig ausgewertet.",
+                f"   ⚠ {error_games} game(s) had PGN errors — may be reviewed incompletely."))
 
     def _review_one_game(self, game, uname: str, white_book, black_book) -> dict:
         white = (game.headers.get("White", "") or "").strip()
