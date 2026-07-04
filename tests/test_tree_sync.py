@@ -134,6 +134,23 @@ def test_sync_does_not_duplicate_same_file_via_folder_and_file(tmp_path):
     assert names.count("Skandinavisch") == 1, names
 
 
+def test_sync_dedupes_same_basename_same_chapter(tmp_path):
+    """R3/F2-Regression: zwei Dateien mit GLEICHEM Namen in verschiedenen Ordnern
+    (gleiches Kapitel) dürfen keine Dublette erzeugen — sie teilen sich ohnehin
+    Seiten-/Lernplan-Schlüssel (Basename)."""
+    (tmp_path / "a").mkdir(); (tmp_path / "b").mkdir()
+    (tmp_path / "a" / "Rep.pgn").write_text(PGN_BLACK, encoding="utf-8")
+    (tmp_path / "b" / "Rep.pgn").write_text(PGN_BLACK, encoding="utf-8")
+    sides = OpeningSides(); sides.set_side("Rep.pgn", "Skandinavisch", "black")
+    schedule = ScheduleStore()
+    ts, ps = _stores()
+    tree_sync.sync_auto_trees(
+        [str(tmp_path / "a" / "Rep.pgn"), str(tmp_path / "b" / "Rep.pgn")],
+        sides, schedule, ts, ps)
+    names = [t.name for t in ts.all()]
+    assert names.count("Skandinavisch") == 1, names
+
+
 def test_mixed_side_file_uses_per_chapter_side(tmp_path):
     """L2-Regression: eine Datei mit Weiß- UND Schwarz-Kapiteln — jedes Kapitel
     bekommt SEINE Seite (per-Kapitel-Zuordnung), nicht die Datei-Mehrheit."""

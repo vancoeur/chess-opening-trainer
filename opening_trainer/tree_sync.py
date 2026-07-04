@@ -116,6 +116,7 @@ def sync_auto_trees(sources, sides, schedule, tree_store, position_schedule) -> 
     # 2) pro Quelldatei varianten-erhaltend neu bauen + Karten seeden
     auto_paths_by_side: dict = {}
     seen_files: set = set()                # aufgelöste Dateipfade -> jede Datei NUR EINMAL
+    built_keys: set = set()                # (Quellname, Kapitelname) -> nie zwei gleiche Einträge
     for src in sources:
         for f in pgn_files_of_source(src):
             try:
@@ -134,6 +135,9 @@ def sync_auto_trees(sources, sides, schedule, tree_store, position_schedule) -> 
             for tr in trees:
                 if (source_name, tr.name) in owned:
                     continue                       # vom Editor übernommen -> nicht doppeln
+                if (source_name, tr.name) in built_keys:
+                    continue                       # gleicher Dateiname+Kapitel aus anderem Ordner -> keine Dublette
+                built_keys.add((source_name, tr.name))
                 # Seite PRO KAPITEL: eine Datei kann Weiß- UND Schwarz-Kapitel
                 # enthalten; die per-Kapitel-Zuordnung schlägt die Datei-Mehrheit,
                 # damit Minderheits-Kapitel nicht auf der falschen Seite landen.

@@ -1489,8 +1489,13 @@ class MainWindow(QtWidgets.QMainWindow):
         return self._family_of_name(raw) if raw else t("Sonstige", "Other")
 
     def _reptree_families(self, side_name: str) -> list:
-        """Sortierte, eindeutige Repertoire-Familien der Seite (für die Auswahl)."""
-        fams = {self._tree_family(tr) for tr in self.tree_store.by_side(side_name)}
+        """Sortierte, eindeutige Repertoire-Familien der Seite (für die Auswahl).
+        Lehr-/Puzzle-Material (Einführung, Musterpartie, »Game Puzzle« …) gehört
+        NICHT als eigene Familie hierher — es landet in der Übersicht in der
+        Sammelgruppe »Lehrmaterial«, nicht in den Eröffnungs-Filter."""
+        from opening_trainer.comments import is_instructional
+        fams = {self._tree_family(tr) for tr in self.tree_store.by_side(side_name)
+                if not is_instructional(tr.name)}
         return sorted(fams, key=str.casefold)
 
     def _open_repertoire_tree(self) -> None:
@@ -2846,8 +2851,24 @@ class MainWindow(QtWidgets.QMainWindow):
         Zahl der neu hinzugekommenen Eröffnungen zurück."""
         before = len(self._catalog())
         srcs = self._effective_sources()
-        path = str(Path(path))
-        if path not in srcs:
+        p = Path(path)
+        path = str(p)
+
+        def _within(child: Path, folder: Path) -> bool:
+            try:
+                child.resolve().relative_to(folder.resolve())
+                return True
+            except (ValueError, OSError):
+                return False
+
+        # Redundante Quellen vermeiden (sonst dieselbe PGN doppelt -> Dubletten):
+        # eine Datei, die schon in einem geladenen Ordner liegt, NICHT separat
+        # aufnehmen; ein neuer Ordner ERSETZT darin liegende Einzeldatei-Quellen.
+        if p.is_file() and any(Path(s).is_dir() and _within(p, Path(s)) for s in srcs):
+            path = None
+        elif p.is_dir():
+            srcs = [s for s in srcs if not (Path(s).is_file() and _within(Path(s), p))]
+        if path is not None and path not in srcs:
             srcs.append(path)
         self.settings_store.update(pgn_sources=tuple(srcs))
         self.settings_store.save(self.settings_path)
@@ -2944,6 +2965,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # das Leeren und verfälschen weiter Zähler/Repertoire-Baum.
         self.tree_store = RepertoireTreeStore()
         self.tree_store.save(self.trees_path)
+        self._prune_orphan_sides()           # verwaiste Seiten-Zuordnungen mit leeren -> alle weg
         self._sync_auto_trees()              # baut aus den (nun leeren) Quellen = nichts
         self._refresh_all_views()
 
@@ -2956,10 +2978,22 @@ class MainWindow(QtWidgets.QMainWindow):
         except Exception:  # noqa: BLE001
             return 0
 
+    def _prune_orphan_sides(self) -> None:
+        """Seiten-Zuordnungen verwerfen, deren Quelldatei nicht mehr geladen ist —
+        sonst erbt eine später gleichnamig nachgeladene Datei die alte Seite."""
+        from opening_trainer.tree_sync import pgn_files_of_source
+        loaded = {f.name for s in self._effective_sources() for f in pgn_files_of_source(s)}
+        sides = self.opening_sides.sides
+        keep = {k: v for k, v in sides.items() if k.split("\t", 1)[0] in loaded}
+        if len(keep) != len(sides):
+            self.opening_sides.sides = keep
+            self.opening_sides.save(self.sides_path)
+
     def _remove_pgn_source(self, src: str) -> None:
         srcs = [s for s in self._effective_sources() if s != src]
         self.settings_store.update(pgn_sources=tuple(srcs))
         self.settings_store.save(self.settings_path)
+        self._prune_orphan_sides()
         self._sync_auto_trees()
         self._refresh_all_views()
 
