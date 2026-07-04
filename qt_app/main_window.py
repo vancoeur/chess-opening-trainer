@@ -2245,6 +2245,15 @@ class MainWindow(QtWidgets.QMainWindow):
                 items.append(loc)
         if items:
             self._run_position_session(items, eyebrow, kind=kind)
+        else:
+            # Nicht kommentarlos nichts tun: die Stellungen gehören zu keinem
+            # geladenen Repertoire (mehr) — z. B. Datei entfernt/umbenannt.
+            QtWidgets.QMessageBox.information(
+                self, t("Nichts zu üben", "Nothing to train"),
+                t("Diese Stellungen gehören zu keinem geladenen Repertoire mehr — "
+                  "vielleicht wurde die Eröffnung entfernt oder umbenannt.",
+                  "These positions no longer belong to any loaded repertoire — "
+                  "the opening may have been removed or renamed."))
 
     def _locate_in_trees(self, fen: str):
         """(tree, node_id, color) für eine Stellung (FEN) über beide Seiten,

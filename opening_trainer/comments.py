@@ -28,8 +28,11 @@ _CHAPTER_PREFIX = re.compile(
 )
 # Vorangestellter ECO-Code (»B18 · …«, »C65 - …«).
 _ECO_PREFIX = re.compile(r"^\s*[A-E]\d{2}\s*[·\-–:]\s*")
-# Angehängtes Zugfragment am Ende (»… - e4 c6 2. d4 …«).
-_MOVE_TAIL = re.compile(r"\s*[-–]\s*(\d+\.\s*)?[a-h][1-8]?\b.*$")
+# Angehängtes Zugfragment am Ende (»… - e4 c6 2. d4 …«). Nur ECHTE Zugfolgen bis
+# zum Ende — ein Zug braucht ein Zielfeld (Datei+Reihe). So bleibt beschreibender
+# Text wie »- d4 setup« oder »- a6 line« erhalten (früher fälschlich abgeschnitten).
+_MOVE = r"(?:O-O(?:-O)?|[KQRBN]?[a-h]?x?[a-h][1-8](?:=[QRBN])?)[+#]?"
+_MOVE_TAIL = re.compile(rf"\s*[-–]\s*(?:\d+\.+\s*)?{_MOVE}(?:\s+(?:\d+\.+\s*)?{_MOVE})*\s*$")
 
 
 # Schlagwörter, die ein Kapitel als LEHRMATERIAL ausweisen (kein Eröffnungs-Ast):

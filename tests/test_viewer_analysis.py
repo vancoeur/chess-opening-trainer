@@ -47,3 +47,16 @@ def test_fresh_analysis_is_applied(tmp_path, monkeypatch):
     win._viewer_anal_owner = win._viewer_moves         # Analyse für die AKTUELLE Partie
     win._on_viewer_analysis([_issue(2)])
     assert 2 in win._viewer_issues                     # auf die aktuelle Partie angewendet
+
+
+def test_unresolvable_drill_shows_message(tmp_path, monkeypatch):
+    """S3-Regression: lassen sich die Stellungen keinem Repertoire zuordnen, kommt
+    ein Hinweis statt kommentarlos nichts."""
+    win = _win(tmp_path, monkeypatch)                  # leeres Repertoire -> nichts auflösbar
+    calls = []
+    monkeypatch.setattr(QtWidgets.QMessageBox, "information",
+                        lambda *a, **k: calls.append(a))
+    started = []
+    monkeypatch.setattr(win, "_run_position_session", lambda *a, **k: started.append(a))
+    win._drill_positions_for_fens([chess.Board().fen()], "SCHWÄCHEN", kind="weak")
+    assert calls and not started                       # Meldung ja, Sitzung nein

@@ -37,6 +37,15 @@ def test_chapter_plain_name_kept():
         "Panov-Botvinnik Attack - Fianchetto Defence"
 
 
+def test_chapter_keeps_descriptive_suffix_starting_with_a_move():
+    """L5-Regression: beschreibende Zusätze, die zufällig mit einem Zug-Feld
+    beginnen, dürfen NICHT als Zugfragment abgeschnitten werden."""
+    assert clean_chapter_name("London - d4 setup") == "London - d4 setup"
+    assert clean_chapter_name("Slav - a6 line") == "Slav - a6 line"
+    # echte Zugfolgen werden weiterhin entfernt
+    assert clean_chapter_name("Advance Variation - e4 c6 2. d4") == "Advance Variation"
+
+
 def test_chapter_strips_eco_code_prefix():
     assert clean_chapter_name("B18 · Caro-Kann: Klassische Variante") == \
         "Caro-Kann: Klassische Variante"
