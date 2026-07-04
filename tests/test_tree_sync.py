@@ -121,6 +121,19 @@ def test_editor_tree_survives_legacy_subtree_pruned(tmp_path):
     assert any(t.headers.get("_auto") == "1" for t in ts.all())
 
 
+def test_sync_does_not_duplicate_same_file_via_folder_and_file(tmp_path):
+    """R2-Regression: dieselbe PGN über Ordner UND Datei (oder Ordner doppelt)
+    geladen darf die Bäume NICHT doppelt aufbauen."""
+    f = _write(tmp_path, "Rep.pgn", PGN_BLACK)
+    sides = OpeningSides(); sides.set_side("Rep.pgn", "Skandinavisch", "black")
+    schedule = ScheduleStore()
+    ts, ps = _stores()
+    # Quelle 1 = Ordner, Quelle 2 = Datei darin -> lösen auf dieselbe Datei auf
+    tree_sync.sync_auto_trees([str(tmp_path), str(f)], sides, schedule, ts, ps)
+    names = [t.name for t in ts.all()]
+    assert names.count("Skandinavisch") == 1, names
+
+
 def test_mixed_side_file_uses_per_chapter_side(tmp_path):
     """L2-Regression: eine Datei mit Weiß- UND Schwarz-Kapiteln — jedes Kapitel
     bekommt SEINE Seite (per-Kapitel-Zuordnung), nicht die Datei-Mehrheit."""

@@ -115,8 +115,16 @@ def sync_auto_trees(sources, sides, schedule, tree_store, position_schedule) -> 
 
     # 2) pro Quelldatei varianten-erhaltend neu bauen + Karten seeden
     auto_paths_by_side: dict = {}
+    seen_files: set = set()                # aufgelöste Dateipfade -> jede Datei NUR EINMAL
     for src in sources:
         for f in pgn_files_of_source(src):
+            try:
+                key = f.resolve()          # dieselbe PGN über Ordner UND Datei geladen? nur 1×
+            except OSError:
+                key = f
+            if key in seen_files:
+                continue                   # schon über eine andere Quelle gebaut -> keine Dublette
+            seen_files.add(key)
             source_name = f.name
             side = dominant_side(sides, source_name)
             try:

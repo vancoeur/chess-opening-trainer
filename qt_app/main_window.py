@@ -1525,14 +1525,34 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _reptree_refresh_families(self) -> None:
         """Füllt die Repertoire-Auswahl passend zur gewählten Seite: »Alles«
-        plus jede benannte Familie (Verteidigungen als »gegen …« bei Weiß)."""
-        self.reptree_family_combo.blockSignals(True)
-        self.reptree_family_combo.clear()
+        plus jede benannte Familie (Verteidigungen als »gegen …« bei Weiß).
+        Die aktuelle Auswahl bleibt erhalten, wenn es sie noch gibt — so springt der
+        Filter beim Auffrischen/Seitenwechsel nicht ungewollt zurück auf »Alles«."""
+        combo = self.reptree_family_combo
+        keep = combo.currentData()
+        combo.blockSignals(True)
+        combo.clear()
         side_name = self.reptree_side_combo.currentData()
-        self.reptree_family_combo.addItem(t("Alles", "All"), None)
+        combo.addItem(t("Alles", "All"), None)
         for fam in self._reptree_families(side_name):
-            self.reptree_family_combo.addItem(self._reptree_family_label(fam, side_name), fam)
-        self.reptree_family_combo.blockSignals(False)
+            combo.addItem(self._reptree_family_label(fam, side_name), fam)
+        idx = combo.findData(keep) if keep is not None else 0
+        combo.setCurrentIndex(idx if idx >= 0 else 0)
+        combo.blockSignals(False)
+
+    def _refresh_all_views(self) -> None:
+        """Nach JEDER Änderung an Bäumen/Quellen/Seiten ALLE abgeleiteten Ansichten
+        nachziehen — nicht nur die Bibliothek. Sonst zeigt eine Liste/Combo/Kachel
+        (Repertoire-Baum-Auswahl, Dashboard, Fällig-Übersicht) veralteten Stand, bis
+        man die Seite wechselt oder neu startet. Jede Auffrischung ist einzeln
+        abgesichert, damit eine fehlschlagende die Datenänderung nicht sabotiert."""
+        for fn in (self._refresh_library, self._reptree_refresh_families,
+                   self._refresh_repertoire_tree, self._refresh_home,
+                   self._refresh_due_overview):
+            try:
+                fn()
+            except Exception:  # noqa: BLE001 — Anzeige-Auffrischung darf die Operation nie brechen
+                pass
 
     def _reptree_selected_trees(self):
         """(Bäume, Farbe) für die aktuelle Seiten-/Repertoire-Auswahl."""
@@ -2833,7 +2853,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.settings_store.save(self.settings_path)
         self._migrate_sides_from_groups(self._load_lines())
         self._sync_auto_trees()
-        self._refresh_library()
+        self._refresh_all_views()
         return max(0, len(self._catalog()) - before)
 
     def _custom_trees(self) -> list:
@@ -2887,7 +2907,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 for tid in ids:
                     self.tree_store.remove(tid)
                 self.tree_store.save(self.trees_path)
-                self._refresh_library()
+                self._refresh_all_views()
                 refresh()
 
         refresh()
@@ -2925,9 +2945,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.tree_store = RepertoireTreeStore()
         self.tree_store.save(self.trees_path)
         self._sync_auto_trees()              # baut aus den (nun leeren) Quellen = nichts
-        pass
-        self._refresh_library()
-        pass
+        self._refresh_all_views()
 
     def _source_opening_count(self, src: str) -> int:
         p = Path(src)
@@ -2943,7 +2961,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.settings_store.update(pgn_sources=tuple(srcs))
         self.settings_store.save(self.settings_path)
         self._sync_auto_trees()
-        self._refresh_library()
+        self._refresh_all_views()
 
     def _manage_sources(self) -> None:
         dlg = QtWidgets.QDialog(self)
@@ -3055,10 +3073,20 @@ class MainWindow(QtWidgets.QMainWindow):
         self._update_nav_active(new)             # aktive Seite in der Leiste markieren
         if new != 10 and self._blitz:            # Drill-Seite verlassen -> Blitz beenden
             self._blitz_stop()
-        if new == 11:                            # »Heute fällig«-Übersicht stets frisch zeigen
+        # Jede daten-abgeleitete Seite bei ANKUNFT frisch aufbauen — so heilt sie sich
+        # selbst, egal welche Änderung woanders (Editor, Dialog, Laden) sie veraltet hat.
+        # (Früher nur Home/Fällig; Bibliothek/Statistik/Repertoire-Baum blieben stehen.)
+        if new == 1:
+            self._refresh_library()
+        elif new == 2:
+            self._refresh_stats()
+        elif new == 11:
             self._refresh_due_overview()
-        elif new == 12:                          # Start-Hub aktualisieren
+        elif new == 12:
             self._refresh_home()
+        elif new == 13:
+            self._reptree_refresh_families()     # Auswahl bleibt erhalten (siehe Methode)
+            self._refresh_repertoire_tree()
 
     # --- Seitenleiste (feste Navigation) ---------------------------------
 
@@ -5140,7 +5168,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if count:
             self.opening_sides.save(self.sides_path)
             self._sync_auto_trees()
-            self._refresh_library()
+            self._refresh_all_views()
         return count
 
     def _auto_fill_sides_by_filename(self) -> int:
@@ -5158,7 +5186,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if count:
             self.opening_sides.save(self.sides_path)
             self._sync_auto_trees()
-            self._refresh_library()
+            self._refresh_all_views()
         return count
 
     def _side_of_line(self, line) -> str | None:
@@ -5313,6 +5341,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.opening_sides.save(self.sides_path)
         self._sync_auto_trees()                    # Auto-Baum-Seite an die Zuordnung angleichen
         self._set_side_filter(self._side_filter)  # Liste, Titel und Zähler auffrischen
+        self._refresh_all_views()                  # auch Repertoire-Baum/Dashboard/Fällig nachziehen
 
     # Seiten der mitgelieferten Beispiele: Italienisch übt man als Weiß,
     # Caro-Kann und Damengambit-Abgelehnt als Schwarz.
@@ -5350,9 +5379,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.opening_sides.set_side(line.source_name, line.name, side)
         self.opening_sides.save(self.sides_path)
         self._sync_auto_trees()
-        pass
-        self._refresh_library()
-        pass
+        self._refresh_all_views()
 
     def _load_pgn_dialog(self) -> None:
         path, _ = QtWidgets.QFileDialog.getOpenFileName(

@@ -35,6 +35,64 @@ def _load_two_caro(win):
     win.tree_store.add(_black("Klassisch", ["e2e4", "c7c6", "d2d4", "d7d5", "b1c3", "d5e4"]))
 
 
+def _fam_set(win):
+    c = win.reptree_family_combo
+    return {c.itemData(i) for i in range(c.count())}
+
+
+def test_family_combo_updates_after_tree_removed(tmp_path, monkeypatch):
+    """R1-Regression (der gemeldete Fehler): Baum löschen -> die Familie verschwindet
+    SOFORT aus der Repertoire-Baum-Auswahl (nicht erst nach Neustart)."""
+    win = _win(tmp_path, monkeypatch)
+    caro = _black("Caro", ["e2e4", "c7c6", "d2d4", "d7d5", "e4e5", "c8f5"])
+    skandi = _black("Skandi", ["e2e4", "d7d5", "e4d5", "d8d5", "b1c3", "d5a5"])
+    win.tree_store.add(caro)
+    win.tree_store.add(skandi)
+    win._open_repertoire_tree()
+    win.reptree_side_combo.setCurrentIndex(1)              # Schwarz
+    win._reptree_refresh_families()
+    fam = win._tree_family(skandi)
+    assert fam in _fam_set(win)
+    win.tree_store.remove(skandi.id)                       # löschen wie im Verwalten-Dialog
+    win._refresh_all_views()                               # zentrale Auffrischung
+    assert fam not in _fam_set(win)                        # sofort weg
+
+
+def test_reptree_self_heals_on_navigation(tmp_path, monkeypatch):
+    """Auch wenn eine Änderung anderswo passiert (Baum weg, während man NICHT auf der
+    Seite ist): beim Zurückkehren baut sich die Repertoire-Baum-Seite frisch auf."""
+    win = _win(tmp_path, monkeypatch)
+    caro = _black("Caro", ["e2e4", "c7c6", "d2d4", "d7d5", "e4e5", "c8f5"])
+    skandi = _black("Skandi", ["e2e4", "d7d5", "e4d5", "d8d5", "b1c3", "d5a5"])
+    win.tree_store.add(caro)
+    win.tree_store.add(skandi)
+    win._open_repertoire_tree()
+    win.reptree_side_combo.setCurrentIndex(1)
+    win._reptree_refresh_families()
+    fam = win._tree_family(skandi)
+    win.stack.setCurrentIndex(12)                          # weg (Start-Hub)
+    win.tree_store.remove(skandi.id)                       # Änderung ohne explizite Auffrischung
+    win.stack.setCurrentIndex(13)                          # zurück -> _on_page_changed heilt
+    assert fam not in _fam_set(win)
+
+
+def test_reptree_family_filter_preserved_on_refresh(tmp_path, monkeypatch):
+    """Papierschnitt: das Auffrischen darf die gewählte Familie nicht auf »Alles«
+    zurückwerfen, solange es sie noch gibt."""
+    win = _win(tmp_path, monkeypatch)
+    caro = _black("Caro", ["e2e4", "c7c6", "d2d4", "d7d5", "e4e5", "c8f5"])
+    skandi = _black("Skandi", ["e2e4", "d7d5", "e4d5", "d8d5", "b1c3", "d5a5"])
+    win.tree_store.add(caro)
+    win.tree_store.add(skandi)
+    win._open_repertoire_tree()
+    win.reptree_side_combo.setCurrentIndex(1)
+    win._reptree_refresh_families()
+    fam = win._tree_family(caro)
+    win.reptree_family_combo.setCurrentIndex(win.reptree_family_combo.findData(fam))
+    win._reptree_refresh_families()                        # erneut auffrischen
+    assert win.reptree_family_combo.currentData() == fam   # Auswahl bleibt
+
+
 def _all_items(tree):
     out = []
 
