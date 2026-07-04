@@ -179,6 +179,37 @@ def test_generic_chapter_name_gets_detected_opening(tmp_path, monkeypatch):
     assert "Chapter #24" not in fams        # generischer Name ersetzt
 
 
+def test_train_variation_keeps_opening_at_shared_start(tmp_path, monkeypatch):
+    """Regression: mehrere Weiss-Repertoires teilen die Grundstellung (e4 vs c4).
+    »Diese Variante üben« fuer Italienisch darf die Grundstellung NICHT dem
+    Englisch-Baum (c4) zuordnen, sondern muss beim Italiener (e4) bleiben."""
+    import chess
+    from opening_trainer.tree_session import variation_outline
+    from opening_trainer.position_training import PositionTrainer
+    win = _win(tmp_path, monkeypatch)
+
+    def white(name, ucis):
+        t = RepertoireTree.new(name, "white")
+        p = t.root_id
+        for u in ucis:
+            p = t.add_child(p, u).id
+        return t
+
+    # Englisch ZUERST laden (erster Treffer im Index) -> genau der Fehlerfall.
+    win.tree_store.add(white("Englisch", ["c2c4", "e7e5", "b1c3", "g8f6"]))
+    win.tree_store.add(white("Italienisch", ["e2e4", "e7e5", "g1f3", "b8c6", "f1c4", "f8c5"]))
+    win._open_repertoire_tree()
+    win.reptree_side_combo.setCurrentIndex(0)                 # Weiss
+
+    groups = variation_outline(win.tree_store.by_side("white"), chess.WHITE)
+    ital = next(g for g in groups if "Italian" in g["name"])
+    items = win._reptree_group_user_items(ital)
+    assert items, "die Variante sollte trainierbare Stellungen haben"
+    tree, node_id, color = items[0]                          # erste = Grundstellung
+    sol = PositionTrainer(tree, color, start_node_id=node_id, auto_opponent=True).expected_solution()
+    assert sol is not None and sol.san == "e4"               # Italienisch e4, NICHT Englisch c4
+
+
 def test_gap_shown_and_jumps_to_editor(tmp_path, monkeypatch):
     win = _win(tmp_path, monkeypatch)
     # Linie endet nach Weiß' 2.d4 -> Schwarz am Zug, keine Antwort = Lücke

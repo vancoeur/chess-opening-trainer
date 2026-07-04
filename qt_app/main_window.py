@@ -1633,7 +1633,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _reptree_group_user_fens(self, group) -> list:
         """Alle eigenen Stellungen (FEN vor dem Zug) einer Varianten-Gruppe — für
-        »diese Variante üben«."""
+        die Brett-Vorschau."""
         fens: list = []
         seen: set = set()
 
@@ -1647,14 +1647,43 @@ class MainWindow(QtWidgets.QMainWindow):
         walk(group["nodes"])
         return fens
 
+    def _reptree_group_user_items(self, group) -> list:
+        """Eigene Stellungen einer Varianten-Gruppe als (Baum, Knoten, Farbe) —
+        nachgeschlagen im EIGENEN (verschmolzenen) Baum der Gruppe. So bleibt die
+        gewählte Eröffnung erhalten: eine geteilte Stellung (v. a. die Grundstellung)
+        wird NICHT über den mehrdeutigen Gesamt-Index einem fremden Baum (z. B.
+        Englisch statt Italienisch) zugeordnet."""
+        tree = group.get("tree")
+        if tree is None:                                   # Rückfall (alte Gruppen ohne Baum)
+            out = []
+            for f in self._reptree_group_user_fens(group):
+                loc = self._locate_in_trees(f)
+                if loc is not None:
+                    out.append(loc)
+            return out
+        from opening_trainer.tree_session import build_user_position_index, locate_position
+        color = chess.WHITE if self.reptree_side_combo.currentData() == "white" else chess.BLACK
+        index = build_user_position_index([tree], color)   # NUR dieser Baum -> eindeutig
+        items: list = []
+        seen: set = set()
+        for fen in self._reptree_group_user_fens(group):
+            epd = " ".join(fen.split(" ")[:4])
+            if epd in seen:
+                continue
+            hit = locate_position(index, epd)
+            if hit is not None:
+                seen.add(epd)
+                items.append((hit[0], hit[1], color))
+        return items
+
     def _reptree_item_double_clicked(self, item: QtWidgets.QTreeWidgetItem, _col: int = 0) -> None:
         data = item.data(0, QtCore.Qt.UserRole) or {}
         group = data.get("_group")
         if group is None:
             return
-        fens = self._reptree_group_user_fens(group)
-        if fens:
-            self._drill_positions_for_fens(fens, t("VARIANTE ÜBEN", "TRAIN VARIATION"))
+        items = self._reptree_group_user_items(group)
+        if items:
+            self._run_position_session(items, t("VARIANTE ÜBEN", "TRAIN VARIATION"), kind="targeted")
 
     def _reptree_group_of(self, item):
         """Die Varianten-Gruppe, zu der eine (Zug-)Zeile gehört — Aufstieg zum
@@ -1683,9 +1712,9 @@ class MainWindow(QtWidgets.QMainWindow):
         if kind == "position" and payload:
             self._drill_positions_for_fens([payload], t("STELLUNG ÜBEN", "DRILL POSITION"))
         elif kind == "variation" and payload:
-            fens = self._reptree_group_user_fens(payload)
-            if fens:
-                self._drill_positions_for_fens(fens, t("VARIANTE ÜBEN", "TRAIN VARIATION"))
+            items = self._reptree_group_user_items(payload)
+            if items:
+                self._run_position_session(items, t("VARIANTE ÜBEN", "TRAIN VARIATION"), kind="targeted")
         else:
             self._reptree_train()
 

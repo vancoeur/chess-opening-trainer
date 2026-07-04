@@ -255,6 +255,7 @@ def variation_outline(trees, side, misc_label: str = "Study material",
     out_groups: list[dict] = []
     for nm in order:
         sub = merge_side_trees(bucket[nm], side)      # gleichnamige Kapitel vereinen
+        sub.name = nm                                 # Übe-Überschrift = Variantenname
         nodes, leaves, gaps = _outline_nodes(sub, side)
         if not nodes:
             continue
@@ -265,7 +266,7 @@ def variation_outline(trees, side, misc_label: str = "Study material",
             preview = (preview + " …").strip()
         out_groups.append({
             "name": nm, "lines": leaves, "gaps": gaps,
-            "preview": preview, "nodes": nodes,
+            "preview": preview, "nodes": nodes, "tree": sub,
         })
     return out_groups
 
