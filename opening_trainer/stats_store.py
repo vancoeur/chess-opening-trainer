@@ -5,6 +5,8 @@ from datetime import datetime, timezone
 import json
 from pathlib import Path
 
+from opening_trainer.atomic_io import atomic_write_text
+
 
 @dataclass(frozen=True)
 class TrainingEvent:
@@ -319,12 +321,7 @@ class StatsStore:
         return store
 
     def save(self, path: str | Path) -> None:
-        p = Path(path)
-        p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(
-            json.dumps(self.to_dict(), ensure_ascii=False, indent=2),
-            encoding="utf-8",
-        )
+        atomic_write_text(path, json.dumps(self.to_dict(), ensure_ascii=False, indent=2))
 
     @classmethod
     def load(cls, path: str | Path) -> "StatsStore":

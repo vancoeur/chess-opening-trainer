@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from opening_trainer.atomic_io import atomic_write_text
+
 # Seiten-Werte
 WHITE = "white"
 BLACK = "black"
@@ -74,9 +76,7 @@ class OpeningSides:
         return store
 
     def save(self, path: str | Path) -> None:
-        p = Path(path)
-        p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(json.dumps(self.to_dict(), ensure_ascii=False, indent=2), encoding="utf-8")
+        atomic_write_text(path, json.dumps(self.to_dict(), ensure_ascii=False, indent=2))
 
     @classmethod
     def load(cls, path: str | Path) -> "OpeningSides":

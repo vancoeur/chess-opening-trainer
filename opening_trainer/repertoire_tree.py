@@ -160,11 +160,23 @@ class RepertoireTree:
                 children_ids=[str(c) for c in raw.get("children_ids", [])],
                 comment=str(raw.get("comment", "")),
             )
+        # Struktur prüfen, BEVOR ein kaputter Baum geladen wird: sonst lädt er
+        # klaglos und stürzt erst später beim ersten Zugriff (root/children_of) ab.
+        # Ein ValueError hier lässt der Store das eine defekte Kapitel überspringen.
+        root_id = str(data["root_id"])
+        if root_id not in nodes:
+            raise ValueError(f"root_id {root_id!r} fehlt in nodes")
+        for n in nodes.values():
+            for cid in n.children_ids:
+                if cid not in nodes:
+                    raise ValueError(f"Kind {cid!r} fehlt in nodes")
+            if n.parent_id is not None and n.parent_id not in nodes:
+                raise ValueError(f"Elternknoten {n.parent_id!r} fehlt in nodes")
         return cls(
             id=str(data["id"]),
             name=str(data.get("name", "")),
             side=str(data.get("side", NONE)),
-            root_id=str(data["root_id"]),
+            root_id=root_id,
             nodes=nodes,
             headers={str(k): str(v) for k, v in data.get("headers", {}).items()},
             start_fen=data.get("start_fen"),
