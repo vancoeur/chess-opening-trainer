@@ -6,6 +6,7 @@ from datetime import date, timedelta
 
 DEFAULT_EASE = 2.5
 MIN_EASE = 1.3
+MAX_INTERVAL = 3650   # 10-Jahre-Deckel: verhindert Überlauf über date.max (Jahr 9999)
 
 
 @dataclass(frozen=True)
@@ -60,6 +61,7 @@ def review(card: Card, passed: bool, today: date) -> Card:
         ease = max(MIN_EASE, round(card.ease - 0.2, 2))
         reps = 0
 
+    interval = min(max(0, interval), MAX_INTERVAL)      # deckeln (auch beschädigte Karten)
     due = (today + timedelta(days=interval)).isoformat()
     return replace(
         card,

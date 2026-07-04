@@ -1614,6 +1614,22 @@ def test_scheduler_fail_resets_and_lowers_ease():
     assert c.ease == 2.3
 
 
+def test_scheduler_interval_capped_no_overflow():
+    """M1-Regression: das Intervall wird gedeckelt — auch eine beschädigte Karte mit
+    riesigem interval_days darf keinen OverflowError (Datum > Jahr 9999) auslösen."""
+    from opening_trainer.scheduler import MAX_INTERVAL
+    today = date(2026, 6, 3)
+    # viele Treffer hintereinander -> Intervall bleibt gedeckelt, kein Absturz
+    c = new_card()
+    for _ in range(40):
+        c = review(c, True, today)
+        assert c.interval_days <= MAX_INTERVAL
+    # sogar eine kaputte Karte mit absurdem Intervall bleibt handhabbar
+    c = review(Card(interval_days=10**9, ease=2.5, due="2026-06-11", reps=9), True, today)
+    assert c.interval_days == MAX_INTERVAL
+    assert date.fromisoformat(c.due) > today          # gültiges Datum, kein Overflow
+
+
 def test_scheduler_ease_has_floor():
     today = date(2026, 6, 3)
     c = new_card()

@@ -135,9 +135,13 @@ def sync_auto_trees(sources, sides, schedule, tree_store, position_schedule) -> 
             for tr in trees:
                 if (source_name, tr.name) in owned:
                     continue                       # vom Editor übernommen -> nicht doppeln
-                if (source_name, tr.name) in built_keys:
-                    continue                       # gleicher Dateiname+Kapitel aus anderem Ordner -> keine Dublette
-                built_keys.add((source_name, tr.name))
+                # Nur ECHTE Dubletten (gleicher Name UND gleicher Inhalt) überspringen —
+                # ein gleichnamiges Kapitel mit ANDEREM Inhalt (zwei verschiedene Dateien
+                # mit gleichem Dateinamen) darf NICHT verschwinden.
+                sig = (source_name, tr.name, tuple(sorted(tree_move_paths(tr))))
+                if sig in built_keys:
+                    continue
+                built_keys.add(sig)
                 # Seite PRO KAPITEL: eine Datei kann Weiß- UND Schwarz-Kapitel
                 # enthalten; die per-Kapitel-Zuordnung schlägt die Datei-Mehrheit,
                 # damit Minderheits-Kapitel nicht auf der falschen Seite landen.

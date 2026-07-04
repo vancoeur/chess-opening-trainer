@@ -134,6 +134,21 @@ def test_sync_does_not_duplicate_same_file_via_folder_and_file(tmp_path):
     assert names.count("Skandinavisch") == 1, names
 
 
+def test_sync_keeps_same_basename_chapter_with_different_content(tmp_path):
+    """M1-Regression: zwei VERSCHIEDENE Dateien mit gleichem Dateinamen und gleichem
+    Kapitelnamen, aber ANDEREM Inhalt, dürfen NICHT zu einer verschmelzen (Datenverlust)."""
+    (tmp_path / "w").mkdir(); (tmp_path / "b").mkdir()
+    (tmp_path / "w" / "Rep.pgn").write_text(
+        '[Event "x"]\n[ChapterName "Najdorf"]\n\n1. e4 c5 2. Nf3 d6 *\n', encoding="utf-8")
+    (tmp_path / "b" / "Rep.pgn").write_text(
+        '[Event "x"]\n[ChapterName "Najdorf"]\n\n1. d4 Nf6 2. c4 g6 *\n', encoding="utf-8")
+    ts, ps = _stores()
+    tree_sync.sync_auto_trees(
+        [str(tmp_path / "w" / "Rep.pgn"), str(tmp_path / "b" / "Rep.pgn")],
+        OpeningSides(), ScheduleStore(), ts, ps)
+    assert len(ts.all()) == 2                       # beide Repertoires bleiben erhalten
+
+
 def test_sync_dedupes_same_basename_same_chapter(tmp_path):
     """R3/F2-Regression: zwei Dateien mit GLEICHEM Namen in verschiedenen Ordnern
     (gleiches Kapitel) dürfen keine Dublette erzeugen — sie teilen sich ohnehin

@@ -7,6 +7,25 @@ def test_empty_store_returns_blank():
     assert n.has_note("a.pgn", "Linie 1") is False
 
 
+def test_notes_save_is_atomic(tmp_path, monkeypatch):
+    """M1-Regression: ein abgebrochenes Speichern lässt die alte Notizen-Datei
+    unversehrt (atomar über temp + os.replace)."""
+    import opening_trainer.atomic_io as aio
+    p = tmp_path / "line_notes.json"
+    n = LineNotes()
+    n.set_note("a.pgn", "Caro", "alte Notiz")
+    n.save(p)                                          # gültiger Erststand
+    n.set_note("a.pgn", "Caro", "neue Notiz")
+    monkeypatch.setattr(aio.os, "replace", lambda *a: (_ for _ in ()).throw(OSError("boom")))
+    try:
+        n.save(p)
+    except OSError:
+        pass
+    reloaded = LineNotes.load(p)
+    assert reloaded.note_of("a.pgn", "Caro") == "alte Notiz"   # Original unversehrt
+    assert list(tmp_path.glob("*.tmp")) == []                  # keine Temp-Reste
+
+
 def test_set_and_get_note():
     n = LineNotes()
     n.set_note("a.pgn", "Sizilianisch", "  typischer Plan: …  ")
