@@ -305,6 +305,7 @@ class _SparringWorker(QtCore.QObject):
         super().__init__()
         self._engine = None
         self._broken = False
+        self._fail_reason = "nostockfish"
 
     def _start_engine(self):
         import chess.engine
@@ -313,13 +314,13 @@ class _SparringWorker(QtCore.QObject):
             sf = find_stockfish()
             if sf is None:
                 self._broken = True
-                self.failed.emit("nostockfish")
+                self._fail_reason = "nostockfish"
                 return None
             try:
                 self._engine = chess.engine.SimpleEngine.popen_uci(str(sf))
             except Exception as exc:  # noqa: BLE001
                 self._broken = True
-                self.failed.emit(str(exc))
+                self._fail_reason = str(exc)
                 return None
         return self._engine
 
@@ -349,6 +350,7 @@ class _SparringWorker(QtCore.QObject):
         import chess.engine
         engine = self._start_engine()
         if engine is None:
+            self.failed.emit(self._fail_reason)   # sonst hängt das Brett ewig auf »denkt …«
             return
         try:
             board = chess.Board(fen)
@@ -3842,6 +3844,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self._spar_engine_move()
 
     def _on_spar_played(self, req_fen: str, uci: str, e1: int, e2_cp: int, e2_mate: int) -> None:
+        if self.stack.currentIndex() != 4:
+            self._spar_thinking = False   # Seite verlassen -> Engine-Zug NICHT im Hintergrund spielen
+            return
         if self._spar_board is None or self._spar_board.fen() != req_fen:
             return  # veraltet (Stellung hat sich geändert)
         try:
