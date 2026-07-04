@@ -28,7 +28,9 @@ def _add_variations(tree: RepertoireTree, pgn_node: chess.pgn.GameNode, tree_nod
         move = variation.move
         if move is None:
             continue
-        child = tree.add_child(tree_node_id, move.uci(), comment=(variation.comment or "").strip())
+        child = tree.add_child(tree_node_id, move.uci(),
+                               comment=(variation.comment or "").strip(),
+                               nags=sorted(variation.nags))    # !, ?, !! … als NAGs erhalten
         _add_variations(tree, variation, child.id)
 
 
@@ -38,6 +40,7 @@ def tree_from_game(game: chess.pgn.Game, side: str) -> RepertoireTree:
     start_fen = headers.get("FEN") or None
     tree = RepertoireTree.new(name=name, side=side, start_fen=start_fen)
     tree.headers = headers
+    tree.root.comment = (game.comment or "").strip()   # Kapitel-Intro (Kommentar vor 1. Zug)
     _add_variations(tree, game, tree.root_id)
     return tree
 

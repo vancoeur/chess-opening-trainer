@@ -34,6 +34,7 @@ class RepertoireNode:
     parent_id: str | None
     children_ids: list[str] = field(default_factory=list)   # [0] = Hauptlinie
     comment: str = ""
+    nags: list[int] = field(default_factory=list)           # PGN-Zugsymbole ($1=!, $2=? …)
 
 
 @dataclass
@@ -87,15 +88,19 @@ class RepertoireTree:
         return iter(self.nodes.values())
 
     # --- Mutationen -----------------------------------------------------
-    def add_child(self, parent_id: str, move_uci: str, comment: str = "") -> RepertoireNode:
+    def add_child(self, parent_id: str, move_uci: str, comment: str = "",
+                  nags: list[int] | None = None) -> RepertoireNode:
         """Hängt einen Zug an. Existiert der Zug bereits als Kind, wird der
         vorhandene Knoten zurückgegeben (keine doppelten Geschwister-Züge)."""
         existing = self.child_with_move(parent_id, move_uci)
         if existing is not None:
             if comment and not existing.comment:
                 existing.comment = comment
+            if nags and not existing.nags:
+                existing.nags = list(nags)
             return existing
-        node = RepertoireNode(id=_new_id(), move_uci=move_uci, parent_id=parent_id, comment=comment)
+        node = RepertoireNode(id=_new_id(), move_uci=move_uci, parent_id=parent_id,
+                              comment=comment, nags=list(nags or []))
         self.nodes[node.id] = node
         self.nodes[parent_id].children_ids.append(node.id)
         return node
@@ -144,6 +149,7 @@ class RepertoireTree:
                     "parent_id": n.parent_id,
                     "children_ids": list(n.children_ids),
                     "comment": n.comment,
+                    **({"nags": list(n.nags)} if n.nags else {}),
                 }
                 for n in self.nodes.values()
             ],
@@ -159,6 +165,7 @@ class RepertoireTree:
                 parent_id=raw.get("parent_id"),
                 children_ids=[str(c) for c in raw.get("children_ids", [])],
                 comment=str(raw.get("comment", "")),
+                nags=[int(x) for x in raw.get("nags", []) if isinstance(x, (int, str)) and str(x).lstrip("-").isdigit()],
             )
         # Struktur prüfen, BEVOR ein kaputter Baum geladen wird: sonst lädt er
         # klaglos und stürzt erst später beim ersten Zugriff (root/children_of) ab.

@@ -18,6 +18,8 @@ def _build(pgn_node: chess.pgn.GameNode, tree: RepertoireTree, tree_node) -> Non
             continue
         move = chess.Move.from_uci(child.move_uci)
         new_node = pgn_node.add_variation(move, comment=child.comment or "")
+        for nag in getattr(child, "nags", []) or []:
+            new_node.nags.add(int(nag))
         _build(new_node, tree, child)
 
 
@@ -27,6 +29,8 @@ def tree_to_game(tree: RepertoireTree) -> chess.pgn.Game:
         game.setup(chess.Board(tree.start_fen))
     for key, value in tree.headers.items():
         game.headers[key] = value
+    if tree.root.comment:
+        game.comment = tree.root.comment      # Kapitel-Intro zurückschreiben
     _build(game, tree, tree.root)
     return game
 

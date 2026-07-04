@@ -5482,6 +5482,24 @@ class MainWindow(QtWidgets.QMainWindow):
         self._sync_auto_trees()
         self._refresh_all_views()
 
+    def _pgn_error_count(self, paths) -> int:
+        """Zahl der Kapitel mit PGN-Lesefehlern (python-chess kürzt eine Linie am
+        ersten kaputten Zug still ab) — damit der Import nicht heimlich verkürzt."""
+        import chess.pgn
+        n = 0
+        for p in paths:
+            try:
+                with open(p, encoding="utf-8-sig", errors="replace") as fh:
+                    while True:
+                        g = chess.pgn.read_game(fh)
+                        if g is None:
+                            break
+                        if g.errors:
+                            n += 1
+            except OSError:
+                continue
+        return n
+
     def _load_pgn_dialog(self) -> None:
         path, _ = QtWidgets.QFileDialog.getOpenFileName(
             self, t("PGN-Datei laden", "Load PGN file"), "",
@@ -5506,6 +5524,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.lib_sub.setText(t(
             f"{added} Eröffnungen hinzugefügt — {len(self._catalog())} insgesamt. Klick eine an, um sie im Repertoire-Baum zu öffnen.",
             f"Added {added} openings — {len(self._catalog())} in total. Click one to open it in the repertoire tree."))
+        errs = self._pgn_error_count([path])
+        if errs:
+            self.lib_sub.setText(self.lib_sub.text() + t(
+                f"   ⚠ {errs} Kapitel mit PGN-Fehlern — evtl. unvollständig importiert.",
+                f"   ⚠ {errs} chapter(s) had PGN errors — may be imported incompletely."))
         self._show_tree_report(source=path)  # Bericht + »Jetzt diese Datei üben«
 
     def _tree_report_lines(self) -> list:
@@ -5615,6 +5638,11 @@ class MainWindow(QtWidgets.QMainWindow):
                        "und ordne sie Weiß/Schwarz zu.")
             msg_en += (f" {unassigned} without a color — pick them via the »Unassigned« filter "
                        "and assign them to White/Black.")
+        from opening_trainer.tree_sync import pgn_files_of_source
+        errs = self._pgn_error_count(pgn_files_of_source(folder))
+        if errs:
+            msg_de += f" ⚠ {errs} Kapitel mit PGN-Fehlern — evtl. unvollständig importiert."
+            msg_en += f" ⚠ {errs} chapter(s) had PGN errors — may be imported incompletely."
         self._open_library()                  # Ergebnis sichtbar machen (Feedback am richtigen Ort)
         self.lib_sub.setText(t(msg_de, msg_en))
         self._show_tree_report(source=folder)  # Bericht + »Jetzt diesen Ordner üben«
