@@ -63,3 +63,32 @@ def test_learn_toggle_off_quizzes_new(tmp_path, monkeypatch):
     win.drill_learn_check.setChecked(False)        # Learn aus -> abfragen
     assert win._drill_learn_active is False
     assert win.drill_learned_btn.isHidden()
+
+
+def _sided_tree(win):
+    return [t for t in win.tree_store.all() if t.side in ("white", "black")][0]
+
+
+def test_learn_mode_does_not_freeze_a_later_tree_drill(tmp_path, monkeypatch):
+    """S1-Regression: im Learn-Modus einer Tagessitzung stehen bleiben und dann zu
+    einem freien Baum-Drill wechseln darf das Brett NICHT taub machen."""
+    win = _win(tmp_path, monkeypatch)
+    win._drill_learn_new = True
+    win._start_due_session()
+    assert win._drill_learn_active is True          # steckt im Learn-Modus
+    # ohne »Verstanden« zu klicken in einen freien Baum-Drill wechseln
+    win._start_tree_drill(_sided_tree(win))
+    assert win._drill_learn_active is False          # Lern-Flag zurückgesetzt -> Brett nimmt Züge an
+    assert win._tree_trainer is not None
+
+
+def test_manual_checkbox_stays_in_sync_after_due_session(tmp_path, monkeypatch):
+    """S2-Regression: das »Gegnerzüge selbst spielen«-Häkchen und das tatsächliche
+    Verhalten dürfen nach einer Tagessitzung nicht auseinanderlaufen."""
+    win = _win(tmp_path, monkeypatch)
+    win._start_tree_drill(_sided_tree(win))
+    win.drill_manual_check.setChecked(True)          # Nutzer will Gegnerzüge selbst spielen
+    assert win._drill_manual is True
+    win._start_due_session()                         # Tagessitzung setzt _drill_manual intern auf False
+    win._start_tree_drill(_sided_tree(win))          # zurück in den Baum-Drill
+    assert win._drill_manual == win.drill_manual_check.isChecked()   # Häkchen ist maßgeblich, kein Widerspruch

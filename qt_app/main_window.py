@@ -1226,6 +1226,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._blitz_stop()                         # falls vorher ein Blitz lief
         self._hide_session_summary()               # falls das Abschluss-Kärtchen noch stand
         self._due_session = False
+        self._drill_learn_active = False           # Lern-Modus einer Tagessitzung nicht mitschleppen (sonst Brett taub)
+        self._drill_manual = self.drill_manual_check.isChecked()  # Häkchen ist maßgeblich (Tagessitzung setzte es intern auf False)
         self.tree_drill_feedback.setText("")
         self.drill_eyebrow.setText(t("BAUM ÜBEN", "TRAIN TREE"))
         self.tree_drill_combo.setVisible(True)
