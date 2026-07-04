@@ -121,6 +121,23 @@ def test_editor_tree_survives_legacy_subtree_pruned(tmp_path):
     assert any(t.headers.get("_auto") == "1" for t in ts.all())
 
 
+def test_mixed_side_file_uses_per_chapter_side(tmp_path):
+    """L2-Regression: eine Datei mit Weiß- UND Schwarz-Kapiteln — jedes Kapitel
+    bekommt SEINE Seite (per-Kapitel-Zuordnung), nicht die Datei-Mehrheit."""
+    pgn = ('[Event "x"]\n[ChapterName "WeissLinie"]\n\n1. e4 e5 2. Nf3 *\n\n'
+           '[Event "x"]\n[ChapterName "SchwarzLinie"]\n\n1. d4 d5 2. c4 e6 *\n')
+    f = _write(tmp_path, "Gemischt.pgn", pgn)
+    sides = OpeningSides()
+    sides.set_side("Gemischt.pgn", "WeissLinie", "white")
+    sides.set_side("Gemischt.pgn", "SchwarzLinie", "black")
+    schedule = ScheduleStore()
+    ts, ps = _stores()
+    tree_sync.sync_auto_trees([f], sides, schedule, ts, ps)
+    by = {t.name: t.side for t in ts.all() if t.headers.get("_auto") == "1"}
+    assert by["WeissLinie"] == "white"
+    assert by["SchwarzLinie"] == "black"
+
+
 def test_edited_auto_tree_survives_resync(tmp_path):
     """E1-Regression: eine im Editor bearbeitete (übernommene) Auto-Eröffnung darf
     beim nächsten Sync NICHT verloren gehen und NICHT als Dublette neu entstehen."""

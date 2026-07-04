@@ -42,9 +42,24 @@ def tree_from_game(game: chess.pgn.Game, side: str) -> RepertoireTree:
     return tree
 
 
+def _dedupe_names(trees: list[RepertoireTree]) -> None:
+    """Macht Kapitelnamen INNERHALB einer Quelle eindeutig (»X«, »X (2)«, …).
+    Sonst teilten sich gleichnamige Kapitel (z. B. mehrere namenlose Studien-Spiele,
+    die alle auf »Gegner – Repertoire« zurückfallen) EINEN Seiten-/Lernplan-Schlüssel
+    und ließen sich in der Bibliothek nicht auseinanderhalten."""
+    seen: dict[str, int] = {}
+    for tr in trees:
+        base = tr.name or ""
+        seen[base] = seen.get(base, 0) + 1
+        if seen[base] > 1:
+            tr.name = f"{base} ({seen[base]})" if base else f"({seen[base]})"
+
+
 def import_pgn_text(pgn_text: str, side: str = "none") -> list[RepertoireTree]:
     """Ein Baum pro Spiel im PGN-Text (Varianten erhalten)."""
-    return [tree_from_game(game, side) for game in _read_games_from_text(pgn_text)]
+    trees = [tree_from_game(game, side) for game in _read_games_from_text(pgn_text)]
+    _dedupe_names(trees)
+    return trees
 
 
 def import_pgn_file(path: str | Path, side: str = "none") -> list[RepertoireTree]:

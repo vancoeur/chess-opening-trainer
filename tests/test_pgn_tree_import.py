@@ -23,6 +23,17 @@ def _child_by_uci(tree, node_id, uci):
     return tree.child_with_move(node_id, uci)
 
 
+def test_duplicate_chapter_names_are_made_unique():
+    """L4-Regression: mehrere namenlose Spiele fallen alle auf denselben Namen
+    zurück — sie müssen eindeutig werden, sonst teilen sie Seiten-/Lernplan-Schlüssel."""
+    pgn = ('[Event "x"]\n\n1. e4 e5 *\n\n'
+           '[Event "x"]\n\n1. d4 d5 *\n\n'
+           '[Event "x"]\n\n1. c4 e5 *\n')
+    names = [t.name for t in import_pgn_text(pgn, side="white")]
+    assert len(names) == len(set(names))          # alle eindeutig
+    assert names[1].endswith("(2)") and names[2].endswith("(3)")
+
+
 def test_variation_becomes_a_branch_with_two_children():
     trees = import_pgn_text(PGN_WITH_VARIATION, side="white")
     assert len(trees) == 1

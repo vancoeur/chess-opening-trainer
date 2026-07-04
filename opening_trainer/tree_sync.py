@@ -126,16 +126,22 @@ def sync_auto_trees(sources, sides, schedule, tree_store, position_schedule) -> 
             for tr in trees:
                 if (source_name, tr.name) in owned:
                     continue                       # vom Editor übernommen -> nicht doppeln
+                # Seite PRO KAPITEL: eine Datei kann Weiß- UND Schwarz-Kapitel
+                # enthalten; die per-Kapitel-Zuordnung schlägt die Datei-Mehrheit,
+                # damit Minderheits-Kapitel nicht auf der falschen Seite landen.
+                chap_side = sides.side_of(source_name, tr.name)
+                if chap_side in _SIDE_COLOR:
+                    tr.side = chap_side
                 tr.headers[AUTO] = "1"
                 tr.headers["_source"] = source_name
                 tree_store.add(tr)
                 report.trees += 1
                 auto_paths_by_side.setdefault(tr.side, []).append(tree_move_paths(tr))
-                if side in _SIDE_COLOR:
+                if tr.side in _SIDE_COLOR:
                     report.sided += 1
                     card = schedule.card_for(source_name, tr.name)
                     if not is_new(card):
-                        _seed_missing(tr, _SIDE_COLOR[side], card, position_schedule, report)
+                        _seed_missing(tr, _SIDE_COLOR[tr.side], card, position_schedule, report)
 
     # 3) NUR einmal-migrierte Einzweig-Bäume entfernen, die ein Auto-Baum
     #    derselben Seite VOLLSTÄNDIG enthält (= Alt-Dubletten aus der Migration).
