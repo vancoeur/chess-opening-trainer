@@ -531,6 +531,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._spar_judge = False         # nächste Engine-Antwort betrifft einen Zug von Achim?
         self._lichess_token = self._eval_settings.value("lichess_token", "", type=str)
         self._player_name = self._eval_settings.value("player_name", "", type=str)
+        self._games_loaded_path = None   # zuletzt geladene Partien-PGN (für Neu-Auswertung)
         self._viewer_moves: list = []
         self._viewer_pos = 0
         self._viewer_dev = None
@@ -4488,6 +4489,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self._player_name = text.strip()
         self._eval_settings.setValue("player_name", self._player_name)
         self._update_games_name_btn()
+        # Bereits geladene Partien mit dem neuen Namen NEU auswerten — Farbe, Gegner
+        # und Abweichung hängen am Namen; sonst bliebe die Liste auf dem alten Stand.
+        if self._games_loaded_path and Path(self._games_loaded_path).exists():
+            self._load_games_from_path(self._games_loaded_path, interactive=False)
 
     def _load_games_dialog(self) -> None:
         if not self._player_name.strip():
@@ -4537,6 +4542,7 @@ class MainWindow(QtWidgets.QMainWindow):
         except Exception as exc:  # noqa: BLE001
             self.games_status.setText(t(f"Konnte die PGN nicht lesen: {exc}", f"Could not read the PGN: {exc}"))
             return
+        self._games_loaded_path = path        # gemerkt für Neu-Auswertung bei Namensänderung
         self._render_game_reviews(results)
 
     def _review_one_game(self, game, uname: str, white_book, black_book) -> dict:
