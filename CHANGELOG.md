@@ -7,6 +7,35 @@ version are on the [Releases page](https://github.com/vancoeur/chess-opening-tra
 The interface is bilingual (English/German); version numbers follow
 `MAJOR.MINOR.PATCH`.
 
+## [1.6.2] — 2026-07-04
+
+**Correctness pass — ten fixes from a full review of every flow, each with a test.**
+Nothing about the look or the way you work changes; the app just behaves correctly
+in more places. Highlights:
+
+- **No more lost edits.** Editing a loaded opening in the editor (adding a note,
+  deleting a move, promoting a line, changing the side) used to be silently wiped
+  the next time the app started. Your edits now survive, with no duplicate opening
+  appearing beside them.
+- **"Train this variation" stays on the opening you picked.** With several
+  repertoires loaded, training a variation (or the starting move) could jump to a
+  different opening that shares the same position — e.g. the Italian showing the
+  English's 1.c4. It now always trains the opening you selected.
+- **Game analysis can't land on the wrong game.** Starting Stockfish analysis and
+  then switching games no longer paints the old game's blunder marks onto the new
+  one.
+- **Practice sessions don't leak state.** Leaving a daily session's learn mode for
+  a free tree drill no longer freezes the board; the "play opponent moves myself"
+  checkbox no longer disagrees with what actually happens.
+- **Safer saved data.** All data is now written atomically, so a crash mid-save
+  can't leave a truncated file that wipes your repertoire; a corrupt opening is
+  skipped on load instead of crashing the editor.
+- Smaller fixes: the "due today" per-opening counts no longer double-count shared
+  positions; a file mixing White and Black chapters tags each chapter correctly;
+  "Drill weak spots" shows a message instead of doing nothing when a position
+  can't be found; descriptive chapter names like "London - d4 setup" are no longer
+  truncated.
+
 ## [1.6.1] — 2026-07-03
 
 **Small polish on the practice screen.**
