@@ -2778,6 +2778,13 @@ class MainWindow(QtWidgets.QMainWindow):
         if getattr(self, "_threads_stopped", False):
             return
         self._threads_stopped = True
+        prev = getattr(self, "_explorer_reply", None)   # laufende Explorer-Anfrage abbrechen
+        if prev is not None:
+            try:
+                prev.abort()
+            except RuntimeError:
+                pass
+            self._explorer_reply = None
 
         worker = getattr(self, "_tuv_worker", None)
         if worker is not None:
@@ -4305,10 +4312,19 @@ class MainWindow(QtWidgets.QMainWindow):
         req.setAttribute(QtNetwork.QNetworkRequest.Attribute.Http2AllowedAttribute, False)
         if self._lichess_token:
             req.setRawHeader(b"Authorization", b"Bearer " + self._lichess_token.encode("ascii", "ignore"))
+        prev = getattr(self, "_explorer_reply", None)
+        if prev is not None:
+            try:
+                prev.abort()      # vorige Anfrage abbrechen -> keine Flut paralleler Anfragen (429)
+            except RuntimeError:
+                pass
         reply = self._explorer_nam_instance().get(req)
         reply.setProperty("fen", fen)
+        self._explorer_reply = reply
 
     def _on_explorer_reply(self, reply) -> None:
+        if getattr(self, "_explorer_reply", None) is reply:
+            self._explorer_reply = None
         fen = reply.property("fen")
         err = reply.error()
         err_text = reply.errorString()
@@ -4333,6 +4349,12 @@ class MainWindow(QtWidgets.QMainWindow):
                             "Lichess requires a (free) token. "
                             "Click »🔑 Lichess token« and enter your lip_… token.",
                         ))
+                elif http == 429:
+                    self.explorer_status.setText(t(
+                        "Zu viele Anfragen an Lichess — kurz warten und erneut versuchen.",
+                        "Too many requests to Lichess — wait a moment and try again."))
+                elif err == QtNetwork.QNetworkReply.NetworkError.OperationCanceledError:
+                    pass                       # von uns abgebrochen (neue Anfrage läuft) -> keine Meldung
                 else:
                     detail = f"{err_text}" + (f" (HTTP {http})" if http else f" [{int(err)}]")
                     self.explorer_status.setText(t(f"Lichess nicht erreichbar: {detail}", f"Lichess not reachable: {detail}"))
