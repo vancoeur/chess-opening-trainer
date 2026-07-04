@@ -22,6 +22,27 @@ def _black_tree(name, ucis):
     return t
 
 
+def _white_tree(name, ucis):
+    from opening_trainer.repertoire_tree import WHITE
+    t = RepertoireTree.new(name, WHITE)
+    p = t.root_id
+    for u in ucis:
+        p = t.add_child(p, u).id
+    return t
+
+
+def test_breakdown_totals_match_deduped_index():
+    """Sch1-Regression: geteilte Stellungen (v. a. die Grundstellung) dürfen die
+    Pro-Eröffnung-Zahlen NICHT über die (deduplizierte) Gesamtzahl treiben."""
+    ital = _white_tree("Italienisch", ["e2e4", "e7e5", "g1f3", "b8c6", "f1c4"])   # 3 Weiss-Stellungen
+    english = _white_tree("Englisch", ["c2c4", "e7e5", "b1c3"])                    # 2, davon Start geteilt
+    sched = PositionScheduleStore()
+    rows = due_breakdown([ital, english], chess.WHITE, sched, TODAY)
+    total_index = len(build_user_position_index([ital, english], chess.WHITE))
+    assert sum(r["total"] for r in rows) == total_index          # keine Doppelzählung
+    assert sum(r["new"] for r in rows) == total_index            # alles neu, ohne Übersteigen
+
+
 def _epd(ucis):
     b = chess.Board()
     for u in ucis:

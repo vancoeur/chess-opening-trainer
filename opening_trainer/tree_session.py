@@ -405,13 +405,20 @@ def _tree_user_epds(tree, side) -> set:
 
 def due_breakdown(trees, side, schedule, today) -> list[dict]:
     """Pro Eröffnung (Baum) der Seite: Name + Anzahl »fällig« + Anzahl »neu«.
-    Sortiert: meiste fällige zuerst. (Transpositionen werden pro Baum gezählt.)"""
+    Sortiert: meiste fällige zuerst.
+
+    Eine geteilte Stellung (Transposition, v. a. die Grundstellung) zählt nur beim
+    ERSTEN Baum, der sie enthält — genau wie ``build_user_position_index`` sie der
+    Tages-Sitzung nur EINMAL vorlegt. So passen die Pro-Eröffnung-Zahlen zur
+    Kopf-/»Alle üben«-Gesamtzahl, statt sie zu übersteigen."""
     want = _SIDE_NAME.get(side)
     out: list[dict] = []
+    seen: set = set()
     for tree in trees:
         if tree.side != want:
             continue
-        epds = _tree_user_epds(tree, side)
+        epds = [e for e in _tree_user_epds(tree, side) if e not in seen]
+        seen.update(epds)
         if not epds:
             continue
         due = new = 0
