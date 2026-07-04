@@ -470,6 +470,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._editor_pos = chess.Board()
         self._tree_trainer = None      # PositionTrainer für das Baum-Üben
         self._tree_drill_wrong = False
+        self._tree_wrong_played_san = None
         self._drill_tree = None        # aktuell geübter Baum
         self._drill_manual = False     # True: Gegnerzüge selbst spielen
         self._drill_learn_new = True   # neue Stellungen erst zeigen (Learn-Modus)
@@ -1253,6 +1254,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._tree_trainer = PositionTrainer(
             tree, side, opponent_pick=random.choice, auto_opponent=not self._drill_manual)
         self._tree_drill_wrong = False
+        self._tree_wrong_played_san = None
         self.tree_drill_board.train_color = side
         self.tree_drill_board.edit_mode = self._drill_manual   # manuell: beide Farben ziehbar
         self._tree_drill_present()
@@ -2178,6 +2180,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._blitz_remaining = BLITZ_SECONDS
         self._drill_manual = False
         self._tree_drill_wrong = False
+        self._tree_wrong_played_san = None
         self.drill_eyebrow.setText(t("⏱ BLITZ", "⏱ BLITZ"))
         self.tree_drill_feedback.setText(t(
             "Tempo! So viele richtige Züge wie möglich, bis die Zeit abläuft.",
@@ -2214,6 +2217,7 @@ class MainWindow(QtWidgets.QMainWindow):
         from opening_trainer.position_training import PositionTrainer
         self._tree_trainer = PositionTrainer(tree, color, start_node_id=node_id, auto_opponent=True)
         self._tree_drill_wrong = False
+        self._tree_wrong_played_san = None
         self._drill_learn_active = False
         self.tree_drill_board.edit_mode = False
         self.tree_drill_board.train_color = color
@@ -2414,6 +2418,7 @@ class MainWindow(QtWidgets.QMainWindow):
         from opening_trainer.position_training import PositionTrainer
         self._tree_trainer = PositionTrainer(tree, color, start_node_id=node_id, auto_opponent=True)
         self._tree_drill_wrong = False
+        self._tree_wrong_played_san = None
         self.tree_drill_board.edit_mode = False
         self.tree_drill_board.train_color = color
         done = self._due_total - len(self._due_queue)
@@ -2566,6 +2571,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         if result.kind == "wrong":
             self._tree_drill_wrong = True
+            self._tree_wrong_played_san = result.played_san   # den TATSÄCHLICHEN Fehlzug merken
             self.tree_drill_board.flash_wrong(to_square)
             # Im Blitz keinen verratenden Hinweis zeigen — nur »nochmal«.
             hint = ""
@@ -2592,11 +2598,17 @@ class MainWindow(QtWidgets.QMainWindow):
             self.position_schedule.set_card(epd_before, new_card)
             self.position_schedule.save(self.position_schedule_path)
             self._show_next_review(new_card, passed)
+            # Bei »mit Hilfe« (passed=False) den zuvor gespielten FALSCHEN Zug
+            # protokollieren, nicht den jetzt korrekten — sonst zeigt die Statistik
+            # als »du spieltest« immer den richtigen Zug.
+            played_for_stats = result.played_san if passed else (
+                self._tree_wrong_played_san or result.played_san)
             self.stats_store.add_event(
                 source_name="", line_name=tr.tree.name, fen_before=fen_before,
-                expected_san=result.expected_san, played_san=result.played_san, correct=passed)
+                expected_san=result.expected_san, played_san=played_for_stats, correct=passed)
             self.stats_store.save(self.stats_path)
             self._tree_drill_wrong = False
+            self._tree_wrong_played_san = None
             if self._due_session:
                 if self._due_queue:
                     self._due_queue.pop(0)        # erledigte Stellung abhaken
@@ -4901,7 +4913,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self._drill_positions_for_fens([problem["fen"]], t("STELLUNG ÜBEN", "DRILL POSITION"))
 
     def _refresh_stats(self) -> None:
-        overview = overall_progress(self.stats_store.events)
+        # Gesamt-Trefferquote NUR über Stellungen, die es noch im Repertoire gibt —
+        # sonst zählen Züge aus gelöschten Bäumen weiter mit (die anderen Ansichten
+        # vergessen sie korrekt, also müssen die Kopfzahlen dazu passen).
+        from opening_trainer.tree_session import build_user_position_index
+        valid = set(build_user_position_index(self.tree_store.by_side("white"), chess.WHITE))
+        valid |= set(build_user_position_index(self.tree_store.by_side("black"), chess.BLACK))
+        events = [e for e in self.stats_store.events
+                  if " ".join((e.fen_before or "").split(" ")[:4]) in valid]
+        overview = overall_progress(events)
         problems = self._collect_error_problems()
         self.stats_list.clear()
 
