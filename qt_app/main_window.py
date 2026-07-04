@@ -665,6 +665,11 @@ class MainWindow(QtWidgets.QMainWindow):
         Lernplan, Statistik) liegen auf self und überleben den Neuaufbau."""
         geo = self.saveGeometry()
         idx = self.stack.currentIndex() if getattr(self, "stack", None) is not None else 0
+        # Transiente Auswahl merken, die der komplette Neuaufbau sonst verliert.
+        fam_combo = getattr(self, "reptree_family_combo", None)
+        keep_family = fam_combo.currentData() if fam_combo is not None else None
+        side_combo = getattr(self, "reptree_side_combo", None)
+        keep_side = side_combo.currentData() if side_combo is not None else None
         self._nav_history.clear()           # Historie verweist auf alte Oberfläche
         # Hintergrund-Worker stoppen (sie verweisen auf die alten Widgets); sie
         # werden bei Bedarf neu erzeugt.
@@ -675,21 +680,33 @@ class MainWindow(QtWidgets.QMainWindow):
         self._build_menu()
         self._build_ui()
         self.restoreGeometry(geo)
-        # Daten-Sichten auffrischen und auf die zuvor gezeigte Seite zurück.
-        pass
         self._refresh_library()
-        pass
-        self.stack.setCurrentIndex(min(idx, self.stack.count() - 1))
+        # Repertoire-Baum-Auswahl (Seite + Familie) wiederherstellen.
+        if keep_side is not None:
+            self.reptree_side_combo.setCurrentIndex(0 if keep_side == "white" else 1)
+        self._reptree_refresh_families()
+        if keep_family is not None:
+            j = self.reptree_family_combo.findData(keep_family)
+            if j >= 0:
+                self.reptree_family_combo.setCurrentIndex(j)
+        # Eine laufende Übe-Sitzung nicht als leeres Brett zeigen: entweder frisch
+        # neu darstellen (Tages-/Baum-Drill), oder — bei Blitz/keiner Sitzung — auf
+        # einen sauberen Stand (Start-Hub) statt einer toten Drill-Seite.
+        if idx == 10 and self._tree_trainer is not None and not self._blitz:
+            (self._due_present_current if self._due_session else self._tree_drill_present)()
+            self.stack.setCurrentIndex(10)
+        elif idx == 10:
+            self.stack.setCurrentIndex(self._home_index())
+        else:
+            self.stack.setCurrentIndex(min(idx, self.stack.count() - 1))
 
     def _set_board_theme(self, code: str) -> None:
         """Brettfarbe live umschalten — alle vorhandenen Bretter neu zeichnen."""
         self._board_theme = code
         self._eval_settings.setValue("board_theme", code)
         set_board_theme(code)
-        for name in ("board", "spar_board", "explorer_board", "viewer_board"):
-            board = getattr(self, name, None)
-            if board is not None:
-                board.update()
+        for bv in self.findChildren(BoardView):   # ALLE Bretter (früher fehlten 3 + Tippfehler)
+            bv.update()
 
     @staticmethod
     def _add_board_with_eval(layout, board, eval_bar) -> None:
@@ -2511,7 +2528,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                              "End of line 🎉 — »Restart« to begin again."))
         elif not tr.is_user_turn():
             opp = self._tcolor(chess.WHITE if tr.side == chess.BLACK else chess.BLACK)
-            opts = ", ".join(sorted(tr.opponent_moves().values()))
+            opts = self._reptree_germ(", ".join(sorted(tr.opponent_moves().values())))
             self.tree_drill_status.setText(t(
                 f"{opp} am Zug — spiel eine deiner vorbereiteten Optionen: {opts}",
                 f"{opp} to move — play one of your prepared options: {opts}"))
@@ -2566,7 +2583,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 self._tree_drill_present()
             else:
                 self.tree_drill_board.flash_wrong(to_square)
-                opts = ", ".join(sorted(tr.opponent_moves().values())) or "—"
+                opts = self._reptree_germ(", ".join(sorted(tr.opponent_moves().values()))) or "—"
                 self.tree_drill_status.setText(t(
                     "Das ist nicht vorbereitet. Spiel eine deiner Optionen: " + opts,
                     "That move isn't prepared. Play one of your options: " + opts))
@@ -2583,7 +2600,7 @@ class MainWindow(QtWidgets.QMainWindow):
             # Im Blitz keinen verratenden Hinweis zeigen — nur »nochmal«.
             hint = ""
             if not self._blitz and result.expected_san:
-                hint = "  " + t("Richtig wäre:", "Correct would be:") + " " + result.expected_san
+                hint = "  " + t("Richtig wäre:", "Correct would be:") + " " + self._reptree_germ(result.expected_san)
             self.tree_drill_status.setText(t("Noch nicht.", "Not yet.") + hint)
             return
 
@@ -2654,7 +2671,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self._tree_drill_wrong = True       # Lösung gezeigt => zählt als nicht bestanden
             move = chess.Move.from_uci(sol.uci)
             self.tree_drill_board.show_solution(move.from_square, move.to_square)
-            self.tree_drill_status.setText(t("Lösung:", "Solution:") + " " + sol.san)
+            self.tree_drill_status.setText(t("Lösung:", "Solution:") + " " + self._reptree_germ(sol.san))
 
     def _show_getting_started(self) -> None:
         box = QtWidgets.QMessageBox(self)
@@ -3231,16 +3248,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setStyleSheet(build_style(UI_THEMES[code]))
         pal = UI_THEMES[code]
         set_ui_palette(pal["muted"], pal["border"], pal["neutral"])
-        # Passende Brettfarbe mitnehmen und alle Bretter neu zeichnen.
-        board_code = THEME_BOARD.get(code)
-        if board_code and board_code in BOARD_THEMES:
-            self._board_theme = board_code
-            self._eval_settings.setValue("board_theme", board_code)
-            set_board_theme(board_code)
-            for c, act in getattr(self, "_board_actions", {}).items():
-                act.setChecked(c == board_code)
+        # Die vom Nutzer gewählte Brettfarbe BLEIBT (Hell/Dunkel wechselt nur die
+        # Oberfläche, nicht das Brett). Alle selbst gemalten Widgets neu zeichnen —
+        # Bretter UND die Balken (Bewertung/Mastery/WDL), die der Palette folgen.
         for bv in self.findChildren(BoardView):
             bv.update()
+        for cls in (EvalBar, MasteryBar, WdlBar):
+            for w in self.findChildren(cls):
+                w.update()
         for c, act in getattr(self, "_theme_actions", {}).items():
             act.setChecked(c == code)
 
