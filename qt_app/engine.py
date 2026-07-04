@@ -109,15 +109,17 @@ def review_line(
     moves_uci: list[str],
     side: chess.Color,
     limit: chess.engine.Limit,
+    start_fen: str | None = None,
 ) -> list[MoveIssue]:
     """Prüft EINE Linie und meldet verdächtige Züge *der eigenen Seite*.
 
     Für jeden Halbzug, in dem ``side`` am Zug ist, vergleicht die Funktion den
     gespielten Zug mit Stockfishs Lieblingszug. Reicht der Unterschied an
     ``classify_loss`` als Patzer/Ungenauigkeit durch, landet er in der Liste.
+    ``start_fen`` = Startstellung der Linie (eigener PGN-FEN-Kopf), sonst normal.
     """
     issues: list[MoveIssue] = []
-    board = chess.Board()
+    board = chess.Board(start_fen) if start_fen else chess.Board()
     for ply, uci in enumerate(moves_uci):
         try:
             move = chess.Move.from_uci(uci)

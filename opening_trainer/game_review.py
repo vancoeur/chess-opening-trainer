@@ -49,9 +49,12 @@ def build_repertoire_book(lines_moves: list[list[str]], side: chess.Color) -> di
     return dict(book)
 
 
-def review_game(moves_uci: list[str], book: dict[str, set[str]], side: chess.Color) -> GameReview:
-    """Prüft eine Partie gegen das Repertoire-Buch der gespielten Seite."""
-    board = chess.Board()
+def review_game(moves_uci: list[str], book: dict[str, set[str]], side: chess.Color,
+                start_fen: str | None = None) -> GameReview:
+    """Prüft eine Partie gegen das Repertoire-Buch der gespielten Seite.
+    ``start_fen`` = Startstellung der Partie (PGN-Kopf FEN, z. B. Chess960/Vorgabe/
+    Mittelspiel-Studie); sonst die normale Grundstellung."""
+    board = chess.Board(start_fen) if start_fen else chess.Board()
     booked = 0
     for ply, uci in enumerate(moves_uci):
         try:

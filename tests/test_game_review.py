@@ -80,6 +80,18 @@ def test_transposition_is_matched_via_epd():
     assert r.deviation.played_san == "Nf3"
 
 
+def test_review_game_honors_start_fen():
+    """A3-Regression: eine Partie mit eigener Startstellung (PGN-FEN-Kopf) wird von
+    DIESER Stellung nachgespielt, nicht von der Grundstellung."""
+    fen = "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2"  # nach 1.e4 e5
+    board = chess.Board(fen)
+    nf3 = board.parse_san("Nf3").uci()
+    book = {board.epd(): {"Nf3"}}                     # aus der FEN: Weiß soll Nf3 spielen
+    assert review_game([nf3], book, chess.WHITE, start_fen=fen).status == "followed"
+    # Ohne start_fen zählt die (falsche) Grundstellung -> Buch trifft NICHT
+    assert review_game([nf3], book, chess.WHITE).status != "followed"
+
+
 def test_black_repertoire_side():
     # Schwarz-Repertoire gegen 1.e4: 1...c5 2.Nf3 d6
     black_line = sans_to_uci(["e4", "c5", "Nf3", "d6"])

@@ -277,7 +277,8 @@ class _TuvWorker(QtCore.QObject):
                 if self._cancel:
                     break
                 self.progress.emit(i, total, line.name)
-                issues = review_line(engine, line.moves_uci, side, limit)
+                issues = review_line(engine, line.moves_uci, side, limit,
+                                     start_fen=getattr(getattr(line, "tree", None), "start_fen", None))
                 if issues:
                     results.append({"line": line, "issues": issues})
         finally:
@@ -385,10 +386,11 @@ class _GameAnalysisWorker(QtCore.QObject):
     done = QtCore.Signal(list)     # list[MoveIssue]
     failed = QtCore.Signal(str)
 
-    def __init__(self, moves_uci: list, side: int) -> None:
+    def __init__(self, moves_uci: list, side: int, start_fen: str | None = None) -> None:
         super().__init__()
         self._moves = moves_uci
         self._side = side
+        self._start_fen = start_fen
 
     @QtCore.Slot()
     def run(self) -> None:
@@ -404,7 +406,8 @@ class _GameAnalysisWorker(QtCore.QObject):
             self.failed.emit(str(exc))
             return
         try:
-            issues = review_line(engine, self._moves, self._side, chess.engine.Limit(depth=12))
+            issues = review_line(engine, self._moves, self._side, chess.engine.Limit(depth=12),
+                                 start_fen=self._start_fen)
             self.done.emit(issues)
         except Exception as exc:  # noqa: BLE001
             self.failed.emit(str(exc))
@@ -532,6 +535,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._lichess_token = self._eval_settings.value("lichess_token", "", type=str)
         self._player_name = self._eval_settings.value("player_name", "", type=str)
         self._games_loaded_path = None   # zuletzt geladene Partien-PGN (für Neu-Auswertung)
+        self._viewer_start_fen = None    # Startstellung der gerade gezeigten Partie (FEN-Kopf)
         self._viewer_moves: list = []
         self._viewer_pos = 0
         self._viewer_dev = None
@@ -4556,10 +4560,11 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             return {"status": "unknown"}
         moves = [m.uci() for m in game.mainline_moves()]
-        review = review_game(moves, book, color)
+        start_fen = game.headers.get("FEN") or None      # Chess960/Vorgabe/Studien-Stellung
+        review = review_game(moves, book, color, start_fen=start_fen)
         return {
             "status": review.status, "review": review, "opp": opp, "result": result,
-            "moves": moves, "color": color,
+            "moves": moves, "color": color, "start_fen": start_fen,
         }
 
     def _render_game_reviews(self, results: list) -> None:
@@ -4723,6 +4728,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._teardown_viewer_analysis()     # eine noch laufende Analyse der VORIGEN Partie stoppen
         self._viewer_moves = payload.get("moves", [])
         self._viewer_color = payload.get("color", chess.WHITE)
+        self._viewer_start_fen = payload.get("start_fen")   # Chess960/Vorgabe: richtige Wurzel
         review = payload.get("review")
         self._viewer_dev = review.deviation if (review and review.status == "deviated") else None
         # „Diese Stellung üben" nur, wenn die Abweichungs-Stellung im Repertoire
@@ -4747,7 +4753,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._viewer_render()
 
     def _viewer_render(self) -> None:
-        board = chess.Board()
+        board = chess.Board(self._viewer_start_fen) if self._viewer_start_fen else chess.Board()
         last = None
         for i in range(self._viewer_pos):
             try:
@@ -4807,7 +4813,7 @@ class MainWindow(QtWidgets.QMainWindow):
         dev = self._viewer_dev
         if dev is None:
             return None
-        board = chess.Board()
+        board = chess.Board(self._viewer_start_fen) if self._viewer_start_fen else chess.Board()
         for i in range(dev.ply):
             try:
                 board.push(chess.Move.from_uci(self._viewer_moves[i]))
@@ -4830,7 +4836,8 @@ class MainWindow(QtWidgets.QMainWindow):
         ))
         self._viewer_anal_thread = QtCore.QThread(self)
         self._viewer_anal_owner = self._viewer_moves    # Ergebnisse gehören zu GENAU dieser Partie
-        self._viewer_anal_worker = _GameAnalysisWorker(list(self._viewer_moves), self._viewer_color)
+        self._viewer_anal_worker = _GameAnalysisWorker(
+            list(self._viewer_moves), self._viewer_color, self._viewer_start_fen)
         self._viewer_anal_worker.moveToThread(self._viewer_anal_thread)
         self._viewer_anal_thread.started.connect(self._viewer_anal_worker.run)
         self._viewer_anal_worker.done.connect(self._on_viewer_analysis)
