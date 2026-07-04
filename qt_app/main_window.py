@@ -538,6 +538,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._viewer_issues: dict = {}   # ply -> MoveIssue (Stockfish-Patzer der Partie)
         self._viewer_anal_thread = None
         self._viewer_anal_worker = None
+        self._viewer_anal_owner = None   # die Zugliste, für die die laufende Analyse gestartet wurde
 
         self._threads_stopped = False
         # Navigations-Historie: »Zurück« führt zur zuletzt besuchten Seite.
@@ -4608,7 +4609,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         back = QtWidgets.QPushButton(t("‹  Zurück zu den Partien", "‹  Back to games"))
         back.setObjectName("more")
-        back.clicked.connect(lambda: self.stack.setCurrentIndex(7))
+        back.clicked.connect(self._viewer_back_to_games)
 
         side.addWidget(eyebrow)
         side.addWidget(self.viewer_title)
@@ -4625,7 +4626,12 @@ class MainWindow(QtWidgets.QMainWindow):
         layout.addWidget(side_widget, 1)
         return page
 
+    def _viewer_back_to_games(self) -> None:
+        self._teardown_viewer_analysis()     # laufende Analyse nicht verwaist weiterlaufen lassen
+        self.stack.setCurrentIndex(7)
+
     def _open_game_viewer(self, payload: dict) -> None:
+        self._teardown_viewer_analysis()     # eine noch laufende Analyse der VORIGEN Partie stoppen
         self._viewer_moves = payload.get("moves", [])
         self._viewer_color = payload.get("color", chess.WHITE)
         review = payload.get("review")
@@ -4734,6 +4740,7 @@ class MainWindow(QtWidgets.QMainWindow):
             "Stockfish is checking your moves in this game …",
         ))
         self._viewer_anal_thread = QtCore.QThread(self)
+        self._viewer_anal_owner = self._viewer_moves    # Ergebnisse gehören zu GENAU dieser Partie
         self._viewer_anal_worker = _GameAnalysisWorker(list(self._viewer_moves), self._viewer_color)
         self._viewer_anal_worker.moveToThread(self._viewer_anal_thread)
         self._viewer_anal_thread.started.connect(self._viewer_anal_worker.run)
@@ -4749,7 +4756,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self._viewer_anal_worker = None
 
     def _on_viewer_analysis(self, issues: list) -> None:
+        stale = self._viewer_moves is not self._viewer_anal_owner
         self._teardown_viewer_analysis()
+        if stale:
+            return                       # der Nutzer hat inzwischen zu einer anderen Partie gewechselt
         self._viewer_issues = {it.ply: it for it in issues}
         self.viewer_analyze_btn.setVisible(False)
         patzer = sum(1 for it in issues if it.severity == "patzer")
