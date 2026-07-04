@@ -59,6 +59,7 @@ def tree_from_line(line: OpeningLine, side: str) -> RepertoireTree:
     """Einzel-Pfad-Baum aus einer linearen Linie (verlustfrei für lineare Daten)."""
     tree = RepertoireTree.new(name=line.name, side=side)
     tree.headers = dict(line.headers)
+    tree.headers["_migrated"] = "1"      # nur SO darf der Sync-Pruner ihn als Alt-Dublette schlucken
     parent = tree.root_id
     for uci in line.moves_uci:
         parent = tree.add_child(parent, uci).id

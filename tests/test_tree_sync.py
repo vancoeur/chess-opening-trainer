@@ -91,8 +91,9 @@ def test_editor_tree_survives_legacy_subtree_pruned(tmp_path):
     schedule = ScheduleStore()
     ts, ps = _stores()
 
-    # (a) Alt-Migrationsbaum: dieselbe Hauptlinie, KEINE Marke -> wird vom Auto-Baum geschluckt
+    # (a) Alt-Migrationsbaum: dieselbe Hauptlinie, MIGRATIONS-Marke -> Alt-Dublette, wird geschluckt
     legacy = RepertoireTree.new("Skandinavisch alt", "black")
+    legacy.headers["_migrated"] = "1"
     nid = legacy.root_id
     for u in ["e2e4", "d7d5", "e4d5", "d8d5", "b1c3", "d5a5"]:
         nid = legacy.add_child(nid, u).id
@@ -103,10 +104,45 @@ def test_editor_tree_survives_legacy_subtree_pruned(tmp_path):
     for u in ["e2e4", "c7c6", "d2d4", "d7d5"]:
         nid = editor.add_child(nid, u).id
     ts.add(editor)
+    # (c) Selbst gebauter Baum, der ZUFÄLLIG Teilmenge des Auto-Baums ist, aber KEINE
+    #     Migrations-Marke trägt -> darf NICHT gelöscht werden (früher = Datenverlust)
+    handmade = RepertoireTree.new("Mein Skandi-Anfang", "black")
+    nid = handmade.root_id
+    for u in ["e2e4", "d7d5", "e4d5"]:
+        nid = handmade.add_child(nid, u).id
+    ts.add(handmade)
 
     tree_sync.sync_auto_trees([f], sides, schedule, ts, ps)
 
     names = {t.name for t in ts.all()}
-    assert "Skandinavisch alt" not in names           # Alt-Dublette entfernt
+    assert "Skandinavisch alt" not in names           # migrierte Alt-Dublette entfernt
     assert "Mein Caro" in names                        # Editor-Baum erhalten
+    assert "Mein Skandi-Anfang" in names               # selbst gebauter Teilmengen-Baum bleibt
     assert any(t.headers.get("_auto") == "1" for t in ts.all())
+
+
+def test_edited_auto_tree_survives_resync(tmp_path):
+    """E1-Regression: eine im Editor bearbeitete (übernommene) Auto-Eröffnung darf
+    beim nächsten Sync NICHT verloren gehen und NICHT als Dublette neu entstehen."""
+    f = _write(tmp_path, "Schwarz Skandi.pgn", PGN_BLACK)
+    sides = OpeningSides(); sides.set_side("Schwarz Skandi.pgn", "Skandinavisch", "black")
+    schedule = ScheduleStore()
+    ts, ps = _stores()
+
+    tree_sync.sync_auto_trees([f], sides, schedule, ts, ps)
+    auto = [t for t in ts.all() if t.headers.get("_auto") == "1"][0]
+
+    # Editor übernimmt das Kapitel (wie _editor_make_permanent) und ergänzt einen Kommentar
+    auto.headers.pop("_auto", None)
+    auto.headers["_edited"] = "1"
+    src = auto.headers.pop("_source", None)
+    auto.headers["_from_source"] = src
+    child = auto.children_of(auto.root_id)[0]
+    auto.nodes[child.id].comment = "MEINE NOTIZ"
+
+    tree_sync.sync_auto_trees([f], sides, schedule, ts, ps)   # zweiter Sync (App-Neustart)
+
+    skandi = [t for t in ts.all() if t.name == "Skandinavisch"]
+    assert len(skandi) == 1                                   # keine Dublette
+    assert skandi[0].headers.get("_edited") == "1"            # die bearbeitete Version blieb
+    assert any(getattr(n, "comment", "") == "MEINE NOTIZ" for n in skandi[0].nodes.values())

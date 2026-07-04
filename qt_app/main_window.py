@@ -961,11 +961,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self._editor_render_list()
 
     def _editor_make_permanent(self) -> None:
-        """Bearbeiten eines Auto-Baums macht ihn zu einem dauerhaften Editor-Baum
-        (Marke entfernen) — sonst überschriebe ihn der nächste Auto-Sync."""
+        """Bearbeiten eines Auto-Baums macht ihn zu einem dauerhaften Editor-Baum:
+        Auto-Marke weg (sonst würfe ihn der nächste Sync in Schritt 1 weg), Editor-
+        Marke setzen (schützt vor dem Pruner) und die Herkunfts-Quelle merken, damit
+        der Sync für dieses Kapitel KEINEN frischen Auto-Baum daneben stellt."""
         tr = self.editor_tree
         if tr is not None and tr.headers.pop("_auto", None) is not None:
-            tr.headers.pop("_source", None)
+            tr.headers["_edited"] = "1"
+            src = tr.headers.pop("_source", None)     # von der Quelle lösen (Quelle-Entfernen betrifft ihn nicht)
+            if src is not None:
+                tr.headers["_from_source"] = src      # ... aber Kapitel-Abgleich im Sync bleibt möglich
 
     def _editor_on_move(self, from_square: int, to_square: int) -> None:
         if self.editor_tree is None or self.editor_node is None:

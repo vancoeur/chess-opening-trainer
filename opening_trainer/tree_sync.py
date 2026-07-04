@@ -24,6 +24,9 @@ from opening_trainer.pgn_tree_import import import_pgn_file
 from opening_trainer.scheduler import is_new
 
 AUTO = "_auto"
+EDITED = "_edited"          # ein im Editor übernommener (ehemals Auto-)Baum
+FROM_SOURCE = "_from_source"  # Herkunfts-Quelle eines übernommenen Baums (für den Kapitel-Abgleich)
+MIGRATED = "_migrated"      # einmal aus linearen Alt-Daten migrierter Einzweig-Baum
 _SIDE_COLOR = {WHITE: chess.WHITE, BLACK: chess.BLACK}
 _SEP = "\t"
 
@@ -104,6 +107,12 @@ def sync_auto_trees(sources, sides, schedule, tree_store, position_schedule) -> 
     for tid in [t.id for t in tree_store.all() if t.headers.get(AUTO) == "1"]:
         tree_store.remove(tid)
 
+    # Kapitel, die der Editor übernommen hat (bearbeitet) -> NICHT als Auto-Baum
+    #    neu bauen, sonst stünde die Eröffnung doppelt da (Editor-Version + frische
+    #    Auto-Version) und die Bearbeitung ginge verloren.
+    owned = {(t.headers.get(FROM_SOURCE), t.name)
+             for t in tree_store.all() if t.headers.get(EDITED) == "1"}
+
     # 2) pro Quelldatei varianten-erhaltend neu bauen + Karten seeden
     auto_paths_by_side: dict = {}
     for src in sources:
@@ -115,6 +124,8 @@ def sync_auto_trees(sources, sides, schedule, tree_store, position_schedule) -> 
             except Exception:  # noqa: BLE001 — eine kaputte Quelle blockiert die anderen nicht
                 continue
             for tr in trees:
+                if (source_name, tr.name) in owned:
+                    continue                       # vom Editor übernommen -> nicht doppeln
                 tr.headers[AUTO] = "1"
                 tr.headers["_source"] = source_name
                 tree_store.add(tr)
@@ -126,11 +137,13 @@ def sync_auto_trees(sources, sides, schedule, tree_store, position_schedule) -> 
                     if not is_new(card):
                         _seed_missing(tr, _SIDE_COLOR[side], card, position_schedule, report)
 
-    # 3) alte unmarkierte Bäume entfernen, die ein Auto-Baum derselben Seite
-    #    VOLLSTÄNDIG enthält (= einmal-migrierte Einzweig-Bäume). Editor-/Import-
-    #    Bäume mit eigenem Inhalt sind kein Teilbaum und bleiben erhalten.
+    # 3) NUR einmal-migrierte Einzweig-Bäume entfernen, die ein Auto-Baum
+    #    derselben Seite VOLLSTÄNDIG enthält (= Alt-Dubletten aus der Migration).
+    #    Editor-, Import- und selbst gebaute Bäume tragen KEINE Migrations-Marke und
+    #    bleiben erhalten — auch dann, wenn sie zufällig Teilmenge eines Auto-Baums
+    #    sind (früher wurden sie hier fälschlich mitgelöscht = Datenverlust).
     for t in list(tree_store.all()):
-        if t.headers.get(AUTO) == "1":
+        if t.headers.get(MIGRATED) != "1":
             continue
         paths = tree_move_paths(t)
         if paths and any(paths <= ap for ap in auto_paths_by_side.get(t.side, [])):
