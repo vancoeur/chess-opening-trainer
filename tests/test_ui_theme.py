@@ -30,16 +30,17 @@ def test_theme_toggle_applies_and_remembers(tmp_path, monkeypatch):
     # Echte Einstellungen sichern (Tests dürfen Achims Wahl nicht verändern).
     orig_ui = win._eval_settings.value("ui_theme")
     orig_board = win._eval_settings.value("board_theme")
+    board_before = win._board_theme     # Hell/Dunkel darf die Brettfarbe NICHT anfassen
     try:
         win._set_ui_theme("dark")
         assert win._ui_theme == "dark"
         assert win._eval_settings.value("ui_theme") == "dark"
-        assert win._board_theme == "green"          # passendes Brett-Set
+        assert win._board_theme == board_before     # Brettfarbe bleibt (Achims Wahl)
         assert "#302e2a" in win.styleSheet()        # dunkle (Anthrazit) Grundfarbe aktiv
 
         win._set_ui_theme("light")
         assert win._ui_theme == "light"
-        assert win._board_theme == "green"
+        assert win._board_theme == board_before
         assert "#eff6fd" in win.styleSheet()        # helle Grundfarbe (dezent hellblau) aktiv
     finally:
         win._eval_settings.setValue("ui_theme", orig_ui if orig_ui is not None else "light")

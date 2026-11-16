@@ -22,6 +22,7 @@ from opening_trainer.line_notes import LineNotes
 from opening_trainer.session_log import overall_progress
 from opening_trainer.engine_review import sparring_strength, is_blunder_move
 from opening_trainer.scheduler import review as schedule_review
+from opening_trainer.scheduler import review_if_due, days_until_due
 from opening_trainer.training_state import TrainingState
 from opening_trainer.repertoire_tree_store import RepertoireTreeStore
 from opening_trainer.position_schedule_store import PositionScheduleStore
@@ -2618,7 +2619,9 @@ class MainWindow(QtWidgets.QMainWindow):
                     self._due_wobbled += 1
             today = date.today()
             card = self.position_schedule.card_for(epd_before)
-            new_card = schedule_review(card, passed, today)
+            # Nicht fällige Karte + richtig = Lernplan bleibt (kein Aufblähen durch
+            # mehrfaches Üben am selben Tag); ein Fehler setzt immer zurück.
+            new_card = review_if_due(card, passed, today)
             self.position_schedule.set_card(epd_before, new_card)
             self.position_schedule.save(self.position_schedule_path)
             self._show_next_review(new_card, passed)
@@ -2644,7 +2647,7 @@ class MainWindow(QtWidgets.QMainWindow):
         """Macht die Spaced-Repetition-Mechanik sichtbar: wann die Stellung wieder
         fällig wird."""
         if passed:
-            x = card.interval_days
+            x = days_until_due(card, date.today())
             unit = t("Tag", "day") if x == 1 else t("Tagen", "days")
             self.tree_drill_feedback.setText(t(
                 f"✓ Sitzt — nächste Wiederholung in {x} {unit}.",

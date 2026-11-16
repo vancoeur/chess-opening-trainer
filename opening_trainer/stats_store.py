@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 import json
 from pathlib import Path
 
-from opening_trainer.atomic_io import atomic_write_text
+from opening_trainer.atomic_io import atomic_write_text, keep_damaged_copy
 
 
 @dataclass(frozen=True)
@@ -238,7 +238,7 @@ class StatsStore:
         return summaries
 
     @staticmethod
-    def _open_error_positions(events: list[TrainingEvent]) -> list[ErrorPosition]:
+    def _open_error_positions(events: list[TrainingEvent], by_position: bool = False) -> list[ErrorPosition]:
         """Aus einer (bereits gefilterten) Ereignisliste die noch offenen
         Fehlerstellungen ableiten: pro (Stellung, erwarteter Zug) zählt ein
         Fehlversuch hoch, ein späterer Treffer baut ihn wieder ab; bleibt am
@@ -246,7 +246,11 @@ class StatsStore:
         Gemeinsame Grundlage für die linien- und die positions-basierte Sicht."""
         grouped: dict[tuple[str, str | None], list[TrainingEvent]] = {}
         for event in events:
-            key = (event.fen_before, event.expected_san)
+            # by_position: EINE Gruppe je Stellung (EPD) — jeder saubere Treffer in
+            # dieser Stellung baut den Fehler ab, egal mit welchem der erlaubten Züge
+            # und egal über welche Zugfolge (andere Zugzähler) sie erreicht wurde.
+            key = ((_epd_of_fen(event.fen_before), None) if by_position
+                   else (event.fen_before, event.expected_san))
             grouped.setdefault(key, []).append(event)
 
         positions: list[ErrorPosition] = []
@@ -267,6 +271,9 @@ class StatsStore:
             if open_wrong_count <= 0 or last_wrong_event is None:
                 continue
 
+            if by_position:      # Anzeige-Daten vom letzten Fehlversuch nehmen
+                fen_before = last_wrong_event.fen_before
+                expected_san = last_wrong_event.expected_san
             positions.append(
                 ErrorPosition(
                     fen_before=fen_before,
@@ -292,7 +299,7 @@ class StatsStore:
         FEN-Felder), FEN-genau über ALLE Eröffnungen. Grundlage des
         positions-basierten Fehler-Überblicks (Cutover Statistik/Fortschritt)."""
         relevant = [e for e in self.events if _epd_of_fen(e.fen_before) == epd]
-        return self._open_error_positions(relevant)
+        return self._open_error_positions(relevant, by_position=True)
 
     def most_common_error_position(self, *, source_name: str, line_name: str) -> ErrorPosition | None:
         positions = self.error_positions_for_line(source_name=source_name, line_name=line_name)
@@ -306,18 +313,22 @@ class StatsStore:
     @classmethod
     def from_dict(cls, data: dict) -> "StatsStore":
         store = cls()
-        for raw in data.get("events", []):
-            store.events.append(
-                TrainingEvent(
-                    timestamp=str(raw["timestamp"]),
-                    source_name=str(raw["source_name"]),
-                    line_name=str(raw["line_name"]),
-                    fen_before=str(raw["fen_before"]),
-                    expected_san=raw.get("expected_san"),
-                    played_san=raw.get("played_san"),
-                    correct=bool(raw["correct"]),
+        events = data.get("events") if isinstance(data, dict) else None
+        for raw in events if isinstance(events, list) else []:
+            try:
+                store.events.append(
+                    TrainingEvent(
+                        timestamp=str(raw["timestamp"]),
+                        source_name=str(raw["source_name"]),
+                        line_name=str(raw["line_name"]),
+                        fen_before=str(raw["fen_before"]),
+                        expected_san=raw.get("expected_san"),
+                        played_san=raw.get("played_san"),
+                        correct=bool(raw["correct"]),
+                    )
                 )
-            )
+            except (KeyError, TypeError, AttributeError):
+                continue          # ein defektes Ereignis überspringen, den Rest behalten
         return store
 
     def save(self, path: str | Path) -> None:
@@ -330,6 +341,9 @@ class StatsStore:
             return cls()
         try:
             data = json.loads(p.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
+            if not isinstance(data, dict) or not isinstance(data.get("events", []), list):
+                raise ValueError("unerwartete Form")
+        except (json.JSONDecodeError, UnicodeDecodeError, ValueError):
+            keep_damaged_copy(p)   # nicht beim nächsten Speichern kommentarlos überschreiben
             return cls()
         return cls.from_dict(data)

@@ -38,7 +38,31 @@ def is_due(card: Card, today: date) -> bool:
     fällig – sie werden über das Tageslimit für Neues eingeführt."""
     if not card.due:
         return False
-    return date.fromisoformat(card.due) <= today
+    try:
+        return date.fromisoformat(card.due) <= today
+    except ValueError:
+        # Beschädigtes Datum: als fällig behandeln — die nächste Wiederholung
+        # schreibt ein gültiges Datum und heilt die Karte (statt abzustürzen).
+        return True
+
+
+def review_if_due(card: Card, passed: bool, today: date) -> Card:
+    """Wie ``review``, aber eine RICHTIGE Antwort auf eine noch NICHT fällige Karte
+    lässt den Lernplan unverändert. Sonst würde mehrfaches Üben derselben Linie am
+    selben Tag das Intervall jedes Mal vervielfachen (1 → 3 → 8 → 20 Tage …) und die
+    Stellung wochenlang aus »Heute fällig« verschwinden, obwohl sie nur kurz
+    gepaukt wurde. Ein FEHLER zählt immer (Vergessen ist echte Information)."""
+    if passed and card.due and not is_due(card, today):
+        return card
+    return review(card, passed, today)
+
+
+def days_until_due(card: Card, today: date) -> int:
+    """Tage bis zur nächsten Wiederholung (nie negativ; kaputtes Datum = 0)."""
+    try:
+        return max(0, (date.fromisoformat(card.due) - today).days)
+    except ValueError:
+        return 0
 
 
 def review(card: Card, passed: bool, today: date) -> Card:

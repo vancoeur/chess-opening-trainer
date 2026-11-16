@@ -87,6 +87,8 @@ class SettingsStore:
 
         try:
             data = json.loads(p.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
+            if not isinstance(data, dict):
+                return cls()
+            return cls.from_dict(data)
+        except (json.JSONDecodeError, UnicodeDecodeError, TypeError, ValueError):
             return cls()
-        return cls.from_dict(data)

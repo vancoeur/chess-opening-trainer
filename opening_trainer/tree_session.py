@@ -597,7 +597,7 @@ def due_forecast(trees, side, schedule, today) -> dict:
         try:
             d = date.fromisoformat(card.due)
         except ValueError:
-            continue
+            d = today              # beschädigtes Datum = fällig (wie ``is_due``)
         if d <= today:
             res["today"] += 1
         elif d == tomorrow:

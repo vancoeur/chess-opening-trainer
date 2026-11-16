@@ -29,3 +29,16 @@ def atomic_write_text(path: str | Path, text: str, encoding: str = "utf-8") -> N
         except OSError:
             pass
         raise
+
+
+def keep_damaged_copy(path: str | Path) -> None:
+    """Legt von einer unlesbaren Speicherdatei eine Kopie »<name>.defekt« daneben,
+    bevor die App mit leerem Speicher weitermacht — so überschreibt das nächste
+    Speichern die (evtl. noch rettbaren) Daten nicht ersatzlos. Fehler dabei werden
+    geschluckt: die Sicherung darf den Start nie verhindern."""
+    import shutil
+    p = Path(path)
+    try:
+        shutil.copyfile(p, p.with_name(p.name + ".defekt"))
+    except OSError:
+        pass
